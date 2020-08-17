@@ -35,31 +35,48 @@ export default [
   {
     url: '/template',
     name: 'Templates',
-    icon: 'HomeIcon',
+    icon_url: 'icon3.png',
     i18n: 'Templates',
   },
   {
     url: '/flows',
     name: 'Flows',
-    icon: 'HomeIcon',
+    icon_url: 'icon4.png',
     i18n: 'Flows',
   },
   {
     url: '/identity',
     name: 'Identity',
-    icon: 'HomeIcon',
+    icon_url: 'icon5.png',
     i18n: 'Identity',
   },
   {
     url: '/notarizations',
     name: 'NotariZations',
-    icon: 'HomeIcon',
+    icon_url: 'icon6.png',
     i18n: 'NotariZations',
   },
   {
     url: '/extra',
     name: 'Extra',
-    icon: 'HomeIcon',
+    icon_url: 'icon7.png',
     i18n: 'Extra',
+  },
+  {
+    url: '/setting',
+    name: 'Setting',
+    icon_url: 'setting.png',
+    i18n: 'Setting',
+  },
+  {
+    url: '/help',
+    name: 'Help',
+    icon_url: 'message.png',
+    i18n: 'Help',
+  },
+  {
+    name: 'Authenticated',
+    icon_url: 'check.png',
+    i18n: 'Authenticated',
   },
 ]

@@ -31,8 +31,8 @@
 
           <!-- Logo -->
           <router-link tag="div" class="vx-logo cursor-pointer flex items-center" to="/">
-            <logo class="w-10 mr-4 fill-current text-primary" />
-            <span class="vx-logo-text text-primary" v-show="isMouseEnter || !reduce" v-if="title">{{ title }}</span>
+            <logo class="mr-4 fill-current text-primary" />
+            <!-- <span class="vx-logo-text text-primary" v-show="isMouseEnter || !reduce" v-if="title">{{ title }}</span> -->
           </router-link>
           <!-- /Logo -->
 
@@ -42,7 +42,6 @@
             <template v-if="showCloseButton">
               <feather-icon icon="XIcon" class="m-0 cursor-pointer" @click="$store.commit('TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE', false)" />
             </template>
-
             <!-- Toggle Buttons -->
             <template v-else-if="!showCloseButton && !verticalNavMenuItemsMin">
               <feather-icon
@@ -84,7 +83,10 @@
                 :isDisabled="item.isDisabled"
                 :slug="item.slug">
                   <!-- <img v-bind:src="require( `src/assets/images/sidebar_icon/${item.icon_url}`)" alt="123"> -->
-                  <img v-bind:src="getImagepath(item.icon_url)" alt="123">
+                  <!-- <img v-bind:src="getImagepath(item.icon_url)" alt="123"> -->
+                  <img :src="require('../../../assets/images/sidebar_icon/' + item.icon_url)">
+                  <!-- <img src="../../../assets/images/sidebar_icon/icon2.png" alt="123"> -->
+
                   <span v-show="!verticalNavMenuItemsMin" class="truncate">{{ $t(item.i18n) || item.name }}</span>
                   <vs-chip class="ml-auto" :color="item.tagColor" v-if="item.tag && (isMouseEnter || !reduce)">{{ item.tag }}</vs-chip>
               </v-nav-menu-item>

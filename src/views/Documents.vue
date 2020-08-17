@@ -27,10 +27,16 @@
             <div class="navbar-header">
               <ul>
                 <li v-for="files in filesList" :key="files">
-                  <span> {{files.title}} </span>
-                  <!-- <li v-for="file in files.sub-Files" :key="file">
+                  <!-- <a :href="/document/ + files.slug "> -->
+                    {{files.title}}
+                  <!-- </a> -->
+                  <!-- <router-link tag="div" class="vx-logo cursor-pointer flex items-center" :to="'/document/' + files.slug"> -->
+                  <!-- </router-link> -->
+                  <!-- <ul>
+                    <li v-for="file in files.sub-Files" :key="file">
                     {{file.title}}
-                  </li> -->
+                    </li>
+                  </ul> -->
                 </li>
               </ul>
             </div>
@@ -49,12 +55,16 @@
 
 <script>
   import axios from '../axios.js'
+  import subDocument from './Sub-Document/sub-document.vue'
 export default {
   data() {
     return {
       filesList:[],
       search:''
     }
+  },
+  components:{
+    subDocument
   },
   created() {
     return axios
