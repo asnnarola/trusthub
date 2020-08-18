@@ -36,12 +36,12 @@
                 <div :class="isNavOpen ? 'block': 'hidden'" class="w-full flex-grow sm:flex sm:items-center sm:w-auto">
                     <div class="text-sm sm:flex-grow">
                         <ul class="sm:flex justify-around mt-8 w-full md:mt-0 md:ml-auto md:w-3/4">
-                            <li class="p-2 sm:p-0"><router-link to="/pages/profile">Timeline</router-link></li>
-                            <li class="p-2 sm:p-0"><router-link to="/pages/profile">About</router-link></li>
-                            <li class="p-2 sm:p-0"><router-link to="/pages/profile">Photos</router-link></li>
-                            <li class="p-2 sm:p-0"><router-link to="/pages/profile">Friends</router-link></li>
-                            <li class="p-2 sm:p-0"><router-link to="/pages/profile">Videos</router-link></li>
-                            <li class="p-2 sm:p-0"><router-link to="/pages/profile">Events</router-link></li>
+                            <li class="p-2 sm:p-0"><router-link to="/profile">Timeline</router-link></li>
+                            <li class="p-2 sm:p-0"><router-link to="/profile">About</router-link></li>
+                            <li class="p-2 sm:p-0"><router-link to="/profile">Photos</router-link></li>
+                            <li class="p-2 sm:p-0"><router-link to="/profile">Friends</router-link></li>
+                            <li class="p-2 sm:p-0"><router-link to="/profile">Videos</router-link></li>
+                            <li class="p-2 sm:p-0"><router-link to="/profile">Events</router-link></li>
                         </ul>
                     </div>
                 </div>

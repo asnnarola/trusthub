@@ -70,22 +70,120 @@ export default {
       {title: "Form Input Group",          url: "/forms/form-input-group",             icon: "MenuIcon",           is_bookmarked: false},
 
       // PAGES
-      {title: "Login Page",                url: "/pages/login",                        icon: "LockIcon",           is_bookmarked: false},
-      {title: "Register Page",             url: "/pages/register",                     icon: "UserPlusIcon",       is_bookmarked: false},
-      {title: "Forgot Password Page",      url: "/pages/forgot-password",              icon: "HelpCircleIcon",     is_bookmarked: false},
-      {title: "Reset Password Page",       url: "/pages/reset-password",               icon: "UnlockIcon",         is_bookmarked: false},
-      {title: "Lock Screen Page",          url: "/pages/lock-screen",                  icon: "LockIcon",           is_bookmarked: false},
-      {title: "Coming Soon Page",          url: "/pages/comingsoon",                   icon: "ClockIcon",          is_bookmarked: false},
-      {title: "404 Page",                  url: "/pages/error-404",                    icon: "MonitorIcon",        is_bookmarked: false},
-      {title: "500 Page",                  url: "/pages/error-500",                    icon: "MonitorIcon",        is_bookmarked: false},
-      {title: "Not Authorized Page",       url: "/pages/not-authorized",               icon: "XCircleIcon",        is_bookmarked: false},
-      {title: "Maintenance Page",          url: "/pages/maintenance",                  icon: "MonitorIcon",        is_bookmarked: false},
-      {title: "Profile Page",              url: "/pages/profile",                      icon: "UserIcon",           is_bookmarked: false},
-      {title: "User Settings",             url: "/pages/user-settings",                icon: "SettingsIcon",       is_bookmarked: false},
-      {title: "FAQ Page",                  url: "/pages/faq",                          icon: "HelpCircleIcon",     is_bookmarked: false},
-      {title: "KnowledgeBase Page",        url: "/pages/knowledge-base",               icon: "BookIcon",           is_bookmarked: false},
-      {title: "Search Page",               url: "/pages/search",                       icon: "SearchIcon",         is_bookmarked: false},
-      {title: "Invoice Page",              url: "/pages/invoice",                      icon: "FileIcon",           is_bookmarked: false},
+      {
+        title: "Login Page",
+        // url: "/pages/login",
+        url: "/login",
+        icon: "LockIcon",
+        is_bookmarked: false
+      },
+      {
+        title: "Register Page",
+        // url: "/pages/register",
+        url: "/register",
+        icon: "UserPlusIcon",
+        is_bookmarked: false
+      },
+      {
+        title: "Forgot Password Page",
+        // url: "/pages/forgot-password",
+        url: "/forgot-password",
+        icon: "HelpCircleIcon",
+        is_bookmarked: false
+      },
+      {
+        title: "Reset Password Page",
+        // url: "/pages/reset-password",
+        url: "/reset-password",
+        icon: "UnlockIcon",
+        is_bookmarked: false
+    },
+      {
+        title: "Lock Screen Page",
+        // url: "/pages/lock-screen",
+        url: "/lock-screen",
+        icon: "LockIcon",
+        is_bookmarked: false
+      },
+      {
+        title: "Coming Soon Page",
+        // url: "/pages/comingsoon",
+        url: "/comingsoon",
+        icon: "ClockIcon",
+        is_bookmarked: false
+      },
+      {
+        title: "404 Page",
+        // url: "/pages/error-404",
+        url: "/error-404",
+        icon: "MonitorIcon",
+        is_bookmarked: false
+      },
+      {
+        title: "500 Page",
+        // url: "/pages/error-500",
+        url: "/error-500",
+        icon: "MonitorIcon",
+        is_bookmarked: false
+      },
+      {
+        title: "Not Authorized Page",
+        // url: "/pages/not-authorized",
+        url: "/not-authorized",
+        icon: "XCircleIcon",
+        is_bookmarked: false
+      },
+      {
+        title: "Maintenance Page",
+        // url: "/pages/maintenance",
+        url: "/maintenance",
+        icon: "MonitorIcon",
+        is_bookmarked: false
+      },
+      {
+        title: "Profile Page",
+        // url: "/pages/profile",
+        url: "/profile",
+        icon: "UserIcon",
+        is_bookmarked: false
+      },
+      {
+        title: "User Settings",
+        // url: "/pages/user-settings",
+        url: "/user-settings",
+        icon: "SettingsIcon",
+        is_bookmarked: false
+      },
+      {
+        title: "FAQ Page",
+        // url: "/pages/faq",
+        url: "/faq",
+        icon: "HelpCircleIcon",
+        is_bookmarked: false
+      },
+
+      {
+        title: "KnowledgeBase Page",
+        //  url: "/pages/knowledge-base",
+         url: "/knowledge-base",
+        icon: "BookIcon",
+        is_bookmarked: false
+      },
+
+      {
+        title: "Search Page",
+        // url: "/pages/search",
+        url: "/search",
+        icon: "SearchIcon",
+        is_bookmarked: false
+      },
+      {
+        title: "Invoice Page",
+        // url: "/pages/invoice",
+        url: "/invoice",
+        icon: "FileIcon",
+        is_bookmarked: false
+      },
 
       // CHARTS & MAPS
       {title: "Apex Charts",               url: "/charts-and-maps/charts/apex-charts", icon: "PieChartIcon",       is_bookmarked: false},

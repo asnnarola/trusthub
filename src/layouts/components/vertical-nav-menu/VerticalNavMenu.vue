@@ -82,11 +82,7 @@
                 :icon="item.icon" :target="item.target"
                 :isDisabled="item.isDisabled"
                 :slug="item.slug">
-                  <!-- <img v-bind:src="require( `src/assets/images/sidebar_icon/${item.icon_url}`)" alt="123"> -->
-                  <!-- <img v-bind:src="getImagepath(item.icon_url)" alt="123"> -->
                   <img :src="require('../../../assets/images/sidebar_icon/' + item.icon_url)">
-                  <!-- <img src="../../../assets/images/sidebar_icon/icon2.png" alt="123"> -->
-
                   <span v-show="!verticalNavMenuItemsMin" class="truncate">{{ $t(item.i18n) || item.name }}</span>
                   <vs-chip class="ml-auto" :color="item.tagColor" v-if="item.tag && (isMouseEnter || !reduce)">{{ item.tag }}</vs-chip>
               </v-nav-menu-item>
@@ -103,6 +99,24 @@
               <!-- /Nav-Group -->
             </template>
           </template>
+          <ul>
+                <li v-for="data in bottom_data" :key="data" class="vs-sidebar--item">
+                  <div v-if="data.url">
+                    <router-link :to="data.url">
+                    <span class="feather-icon select-none relative"><!----></span>
+                    <img :src="require('../../../assets/images/sidebar_icon/' +data.icon_url)">
+                    <span v-show="!verticalNavMenuItemsMin" class="truncate">{{ $t(data.i18n) || data.name }}</span>
+                    </router-link>
+                  </div>
+                  <div v-else>
+                    <a>
+                    <span class="feather-icon select-none relative"><!----></span>
+                    <img :src="require('../../../assets/images/sidebar_icon/' +data.icon_url)">
+                    <span v-show="!verticalNavMenuItemsMin" class="truncate">{{ $t(data.i18n) || data.name }}</span>
+                    </a>
+                  </div>
+                </li>
+              </ul>
         </component>
         <!-- /Menu Items -->
       </div>
@@ -141,6 +155,26 @@ export default {
     title:            { type: String }
   },
   data: () => ({
+    bottom_data : [{
+    url: '/setting',
+    name: 'Setting',
+    icon_url: 'setting.png',
+    i18n: 'Setting',
+    isbottom: true
+  },
+  {
+    url: '/help',
+    name: 'Help',
+    icon_url: 'message.png',
+    i18n: 'Help',
+    isbottom: true
+  },
+  {
+    name: 'Authenticated',
+    icon_url: 'check.png',
+    i18n: 'Authenticated',
+    isbottom: true
+  },],
     clickNotClose       : false, // disable close navMenu on outside click
     isMouseEnter        : false,
     reduce              : false, // determines if navMenu is reduce - component property

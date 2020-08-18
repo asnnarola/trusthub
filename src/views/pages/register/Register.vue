@@ -7,43 +7,76 @@
     Author URL: http://www.themeforest.net/user/pixinvent
 ========================================================================================== -->
 
-
 <template>
-    <div class="h-screen flex w-full bg-img vx-row no-gutter items-center justify-center">
-        <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4">
-            <vx-card>
-                <div slot="no-body" class="full-page-bg-color">
-                    <div class="vx-row no-gutter">
-                        <div class="vx-col hidden sm:hidden md:hidden lg:block lg:w-1/2 mx-auto self-center">
-                            <img src="@/assets/images/pages/register.jpg" alt="register" class="mx-auto">
-                        </div>
-                        <div class="vx-col sm:w-full md:w-full lg:w-1/2 mx-auto self-center  d-theme-dark-bg">
-                            <div class="px-8 pt-8 register-tabs-container">
-                                <div class="vx-card__title mb-4">
-                                    <h4 class="mb-4">Create Account</h4>
-                                    <p>Fill the below form to create a new account.</p>
-                                </div>
-                                <vs-tabs>
-                                  <vs-tab label="JWT">
-                                    <register-jwt></register-jwt>
-                                  </vs-tab>
+  <div class="h-screen flex w-full bg-img vx-row no-gutter items-center justify-center login-wrapper" id="page-register">
+    <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4">
+      <vx-card>
+        <div slot="no-body" class="full-page-bg-color">
+          <div class="vx-row no-gutter justify-center">
+            <div class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column">
+              <div class="login-logo">
+                <img src="@/assets/images/sidebar_icon/logo-xl.png" alt="login" class="img-fluid" />
+              </div>
+              <div class="appstore-wrapper d-flex mb-10 mr-10 justify-content-end">
+                <router-link to="/">
+                  <img
+                    src="@/assets/images/login_icon/Android-store.png"
+                    alt="login"
+                    class="img-fluid"
+                  />
+                </router-link>
+                <router-link to="/">
+                  <img src="@/assets/images/login_icon/App-store.png" alt="login" class="img-fluid" />
+                </router-link>
+              </div>
+            </div>
 
-                                  <vs-tab label="Firebase">
-                                    <register-firebase></register-firebase>
-                                  </vs-tab>
-
-                                  <vs-tab label="Auth0">
-                                    <register-auth0></register-auth0>
-                                  </vs-tab>
-                                </vs-tabs>
-                            </div>
-                        </div>
+            <div class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg right-wrapper">
+              <div class="px-8 pt-8 login-tabs-container tab-wrapper d-flex flex-column">
+                <div class="form-wrap">
+                  <div class="vx-card__title mb-4 d-flex justify-content-between">
+                    <div class="wrapper-heading">
+                      <h4 class="mb-4">Create Account</h4>
+                      <p>Fill The Below Form To Create a New Account</p>
                     </div>
+                    <div class="msg-wrapper-icon">
+                      <img
+                        src="@/assets/images/sidebar_icon/message-gray.png"
+                        alt="login"
+                        class="img-fluid"
+                      />
+                    </div>
+                  </div>
+                  <hr class="border-lightgray" />
+                  <!-- <vs-tabs>
+                  <vs-tab label="JWT">-->
+                  <register-jwt></register-jwt>
                 </div>
-            </vx-card>
+
+                <!-- </vs-tab>
+
+                  <vs-tab label="Firebase">
+                    <login-firebase></login-firebase>
+                  </vs-tab>
+
+                  <vs-tab label="Auth0">
+                    <login-auth0></login-auth0>
+                  </vs-tab>
+                </vs-tabs>-->
+              </div>
+            </div>
+          </div>
         </div>
+      </vx-card>
+      <div class="cpy-txt">
+        <p class="text-right mt-2 txt-black">
+          Copyright © 2020 - Gurucube Corp. - All Rights Reserved | Rev 4.7.4
+          </p>
+      </div>
     </div>
+  </div>
 </template>
+
 
 <script>
 import RegisterJwt from './RegisterJWT.vue'
@@ -60,6 +93,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "src/assets/scss/vuexy/login/index.scss";
 .register-tabs-container {
   min-height: 517px;
 

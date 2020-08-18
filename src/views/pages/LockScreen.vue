@@ -26,7 +26,7 @@
                                 <vs-input icon-no-border icon="icon icon-lock" icon-pack="feather" type="password" label-placeholder="Password" v-model="value2" class="w-full mb-6" />
 
                                 <div class="flex justify-between flex-wrap">
-                                    <router-link to="/pages/login" class="mb-4">Are you not John Doe?</router-link>
+                                    <router-link to="/login" class="mb-4">Are you not John Doe?</router-link>
                                     <vs-button class="ml-2">Unlock</vs-button>
                                 </div>
 

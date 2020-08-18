@@ -86,7 +86,7 @@
 
                   <vs-dropdown-menu class="w-32">
                     <vs-dropdown-item>
-                      <div @click="$router.push('/pages/profile').catch(() => {})" class="flex items-center">
+                      <div @click="$router.push('/profile').catch(() => {})" class="flex items-center">
                         <feather-icon icon="UserIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
                         <span>Profile</span>
                       </div>
@@ -131,7 +131,7 @@
 
 <script>
 import BackToTop           from 'vue-backtotop'
-import HNavMenu            from '@/layouts/components/horizontal-nav-menu/HorizontalNavMenu.vue'
+import HNavMenu from '@/layouts/components/horizontal-nav-menu/HorizontalNavMenu.vue'
 import navMenuItems        from '@/layouts/components/vertical-nav-menu/navMenuItems.js'
 import TheCustomizer       from '@/layouts/components/customizer/TheCustomizer.vue'
 import TheNavbarHorizontal from '@/layouts/components/navbar/TheNavbarHorizontal.vue'
@@ -312,3 +312,4 @@ export default {
 
 </script>
 
+<sty

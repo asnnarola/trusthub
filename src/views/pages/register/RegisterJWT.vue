@@ -17,7 +17,8 @@ Author URL: http://www.themeforest.net/user/pixinvent
       name="displayName"
       placeholder="Name"
       v-model="displayName"
-      class="w-full" />
+      class="w-full"
+    />
     <span class="text-danger text-sm">{{ errors.first('displayName') }}</span>
 
     <vs-input
@@ -28,7 +29,8 @@ Author URL: http://www.themeforest.net/user/pixinvent
       label-placeholder="Email"
       placeholder="Email"
       v-model="email"
-      class="w-full mt-6" />
+      class="w-full mt-6"
+    />
     <span class="text-danger text-sm">{{ errors.first('email') }}</span>
 
     <vs-input
@@ -40,7 +42,8 @@ Author URL: http://www.themeforest.net/user/pixinvent
       label-placeholder="Password"
       placeholder="Password"
       v-model="password"
-      class="w-full mt-6" />
+      class="w-full mt-6"
+    />
     <span class="text-danger text-sm">{{ errors.first('password') }}</span>
 
     <vs-input
@@ -52,12 +55,26 @@ Author URL: http://www.themeforest.net/user/pixinvent
       label-placeholder="Confirm Password"
       placeholder="Confirm Password"
       v-model="confirm_password"
-      class="w-full mt-6" />
+      class="w-full mt-6"
+    />
     <span class="text-danger text-sm">{{ errors.first('confirm_password') }}</span>
 
     <vs-checkbox v-model="isTermsConditionAccepted" class="mt-6">I accept the terms & conditions.</vs-checkbox>
-    <vs-button  type="border" to="/pages/login" class="mt-6">Login</vs-button>
-    <vs-button class="float-right mt-6" @click="registerUserJWt" :disabled="!validateForm">Register</vs-button>
+    <!-- <vs-button  type="border" to="/login" class="mt-6 mb-10 btn-green">Login</vs-button> -->
+    <div class="text-right">
+      <vs-button
+        class="mt-6 btn-green w-225px"
+        @click="registerUserJWt"
+        :disabled="!validateForm"
+      >Subscribe</vs-button>
+    </div>
+    <div>
+      <p class="sub-trial-txt mt-5 text-right mb-10">
+        <a class="f-size-14">
+          <u>Login To An Existing Account</u>
+        </a>
+      </p>
+    </div>
   </div>
 </template>
 

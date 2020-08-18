@@ -73,7 +73,6 @@ export default {
       this.filesList = document_res.data
       console.log('Respo =>', this.filesList);
     })
-    console.log('I am here');
   },
 }
 </script>

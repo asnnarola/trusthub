@@ -13,16 +13,25 @@ import jwt from '../../http/requests/auth/jwt/index.js'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import router from '@/router'
+import axios from '../../axios'
 
 export default {
+  // simpleLogin ({ commit, dispatch }) {
+  //   return axios
+  //     .get('/Users')
+  //     .then(res => {
+  //       console.log('DATA =>', res)
+  //     })
+  // },
   loginAttempt ({ dispatch }, payload) {
-
     // New payload for login action
     const newPayload = {
       userDetails: payload.userDetails,
       notify: payload.notify,
       closeAnimation: payload.closeAnimation
     }
+
+    console.log('NEW =>', newPayload);
 
     // If remember_me is enabled change firebase Persistence
     if (!payload.checkbox_remember_me) {
@@ -103,7 +112,7 @@ export default {
         // just reload the page to get fresh data
         // set new user data in localstorage
         if (!isUsernameUpdateRequired) {
-          router.push(router.currentRoute.query.to || '/')
+          router.push(router.currentRoute.query.to || '/dashboard')
           commit('UPDATE_USER_INFO', result.user.providerData[0], {root: true})
         }
       }, (err) => {
@@ -138,7 +147,7 @@ export default {
 
     firebase.auth().signInWithPopup(provider)
       .then((result) => {
-        router.push(router.currentRoute.query.to || '/')
+        router.push(router.currentRoute.query.to || '/dashboard')
         commit('UPDATE_USER_INFO', result.user.providerData[0], {root: true})
       }).catch((err) => {
         payload.notify({
@@ -168,7 +177,7 @@ export default {
 
     firebase.auth().signInWithPopup(provider)
       .then((result) => {
-        router.push(router.currentRoute.query.to || '/')
+        router.push(router.currentRoute.query.to || '/dashboard')
         commit('UPDATE_USER_INFO', result.user.providerData[0], {root: true})
       }).catch((err) => {
         payload.notify({
@@ -198,7 +207,7 @@ export default {
 
     firebase.auth().signInWithPopup(provider)
       .then((result) => {
-        router.push(router.currentRoute.query.to || '/')
+        router.push(router.currentRoute.query.to || '/dashboard')
         commit('UPDATE_USER_INFO', result.user.providerData[0], {root: true})
       }).catch((err) => {
         payload.notify({
@@ -228,7 +237,7 @@ export default {
 
     firebase.auth().signInWithPopup(provider)
       .then((result) => {
-        router.push(router.currentRoute.query.to || '/')
+        router.push(router.currentRoute.query.to || '/dashboard')
         commit('UPDATE_USER_INFO', result.user.providerData[0], {root: true})
       }).catch((err) => {
         payload.notify({
@@ -284,7 +293,7 @@ export default {
       // If reload is required to get fresh data after update
       // Reload current page
       if (payload.isReloadRequired) {
-        router.push(router.currentRoute.query.to || '/')
+        router.push(router.currentRoute.query.to || '/dashboard')
       }
     }).catch((err) => {
       payload.notify({
@@ -309,7 +318,7 @@ export default {
           // If there's user data in response
           if (response.data.userData) {
             // Navigate User to homepage
-            router.push(router.currentRoute.query.to || '/')
+            router.push(router.currentRoute.query.to || '/dashboard')
 
             // Set accessToken
             localStorage.setItem('accessToken', response.data.accessToken)
@@ -343,7 +352,7 @@ export default {
       jwt.registerUser(displayName, email, password)
         .then(response => {
           // Redirect User
-          router.push(router.currentRoute.query.to || '/')
+          router.push(router.currentRoute.query.to || '/dashboard')
 
           // Update data in localStorage
           localStorage.setItem('accessToken', response.data.accessToken)

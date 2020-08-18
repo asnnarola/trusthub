@@ -88,9 +88,13 @@
     position: relative;
     margin: auto;
     width: 100%;
-    height: calc(var(--vh, 1vh) * 100 - 57px);
+    height: calc(var(--vh, 1vh) * 100 - 44px);
     background: #5b5b5b;
-
+    display: flex;
+    flex-direction: column;
+    ul{
+      margin-top: auto;
+    }
     &:not(.ps) {
       overflow-y: auto;
     }

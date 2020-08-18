@@ -1,0 +1,169 @@
+body {
+  color: #333;
+}
+.txt-gray{
+  color: #aeaeae;
+}
+.d-flex {
+  display: -ms-flexbox !important;
+  display: flex !important;
+}
+.flex-column {
+  -ms-flex-direction: column !important;
+  flex-direction: column !important;
+}
+.justify-content-between {
+  justify-content: space-between !important;
+  -ms-justify-content: space-between !important;
+}
+.justify-content-end {
+  justify-content: flex-end !important;
+  -ms-justify-content: flex-end !important;
+}
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+// .vuesax-app-is-ltr{
+.f-size-14 {
+  font-size: 14px;
+}
+.w-225px {
+  width: 225px;
+  max-width: 250px;
+}
+.btn-green {
+  font-weight: bold;
+  font-size: 16px;
+  background-color: #4ec12d !important;
+  background: #4ec12d !important;
+  border-radius: 0px;
+  border: 2px solid #4ec12d;
+  box-shadow: none !important;
+  outline: none;
+  text-decoration: none;
+  transition: ease 0.1s;
+  color: #fff !important;
+  &:hover {
+    background: #fff !important;
+    color: #4ec12d !important;
+  }
+}
+.btn-gray {
+  background-color: #888888 !important;
+  background: #888888 !important;
+  border-radius: 0px;
+  border: 2px solid #888888;
+  box-shadow: none !important;
+  -webkit-transition: ease 0.1s;
+  color: #fff !important;
+  font-weight: bold;
+  font-size: 16px;
+  max-width: 200px;
+  width: 180px;
+  &:hover {
+    background: #fff !important;
+    color: #888888 !important;
+  }
+}
+
+.vs-checkbox-primary {
+  input:checked {
+    + .vs-checkbox {
+      background: #4ec12d !important;
+      border: 2px solid #4ec12d !important;
+    }
+  }
+}
+
+.login-wrapper {
+  .vx-col {
+    .vx-card {
+      .vx-card__collapsible-content {
+        .full-page-bg-color {
+          .vx-row {
+            .vx-col {
+              .login-logo {
+                margin-bottom: auto;
+                max-width: 85%;
+                margin-left: 3rem !important;
+                margin-top: 3rem;
+                img {
+                  max-width: 100%;
+                  height: auto;
+                }
+              }
+              .appstore-wrapper {
+                a {
+                  max-width: 150px;
+                  margin-left: 15px;
+                  img {
+                    height: 45px;
+                  }
+                }
+              }
+              &.right-wrapper {
+                .tab-wrapper {
+                  .vx-card__title {
+                    .wrapper-heading {
+                    }
+                  }
+                  .border-lightgray {
+                    border: 1px solid #e7e7e7 !important;
+                  }
+                  .tab-wrapper-form {
+                    margin-top: 2rem;
+                    .vs-component {
+                      .vs-con-input {
+                        .vs-input--input {
+                          &.hasValue {
+                            + .vs-placeholder-label {
+                              display: none;
+                            }
+                          }
+                          &.hasIcon:not(.icon-after-input) {
+                            + .vs-input--placeholder {
+                            }
+                          }
+                        }
+                      }
+                    }
+                    .RF-content {
+                      a {
+                        color: #6d6d6d;
+                      }
+                    }
+                    .LT-wrap {
+                    }
+                  }
+                  .sub-trial-txt {
+                    a {
+                      color: #606060;
+                    }
+                  }
+                  .bottom-menu-icon {
+                    margin-top: auto;
+                    display: flex;
+                    background: #4ec12d;
+                    flex-wrap: wrap;
+                    justify-content: space-around;
+                    margin-bottom: 2rem;
+                    height: 60px;
+                    align-items: center;
+                    li {
+                      list-style: none;
+                      img {
+                        width: 30px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+// }

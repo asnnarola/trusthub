@@ -40,32 +40,32 @@ export default{
             {
               'id': 0,
               'question': 'Cake icing gummi bears?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 1,
               'question': 'Jelly soufflé apple pie?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 2,
               'question': 'Soufflé apple pie ice cream cotton?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 3,
               'question': 'Powder wafer brownie?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 4,
               'question': 'Toffee donut dragée cotton candy?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 5,
               'question': 'Soufflé chupa chups chocolate bar?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             }
           ]
         },
@@ -76,22 +76,22 @@ export default{
             {
               'id': 0,
               'question': 'Dessert halvah carrot cake sweet?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 1,
               'question': 'Jelly beans bonbon marshmallow?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 2,
               'question': 'Marzipan chocolate gummi bears bonbon powder?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 3,
               'question': 'Chupa chups lemon drops caramels?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             }
           ]
         },
@@ -102,27 +102,27 @@ export default{
             {
               'id': 0,
               'question': 'Oat cake lemon drops sweet sweet?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 1,
               'question': 'Cotton candy brownie ice cream wafer roll?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 2,
               'question': 'Chocolate bonbon cake sugar plum?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 3,
               'question': 'Cake fruitcake chupa chups?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 4,
               'question': 'Fruitcake bonbon dessert gingerbread powder?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             }
           ]
         },
@@ -133,32 +133,32 @@ export default{
             {
               'id': 0,
               'question': 'Marshmallow jelly beans oat cake?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 1,
               'question': 'Cake ice cream jujubes cookie?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 2,
               'question': 'Sesame snaps tart cake pie chocolate?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 3,
               'question': 'Chocolate cake chocolate tootsi?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 4,
               'question': 'Caramels lemon drops tiramisu cake?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 5,
               'question': 'Brownie dessert gummies. Tiramisu bear claw apple?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             }
           ]
         },
@@ -169,32 +169,32 @@ export default{
             {
               'id': 0,
               'question': 'Macaroon tootsie roll?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 1,
               'question': 'Cheesecake sweet soufflé jelly tiramisu chocolate?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 2,
               'question': 'Carrot cake topping tiramisu oat?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 3,
               'question': 'Ice cream soufflé marshmallow?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 4,
               'question': 'Dragée liquorice dragée jelly beans?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 5,
               'question': 'Lemon drops gingerbread chupa chups tiramisu?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             }
           ]
         },
@@ -205,22 +205,22 @@ export default{
             {
               'id': 0,
               'question': 'Brownie dessert gummies?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 1,
               'question': 'Cookie tiramisu lollipop?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 2,
               'question': 'Bonbon sugar plum jelly-o?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             },
             {
               'id': 3,
               'question': 'Halvah chupa chups chupa chups?',
-              'answerUrl': '/pages/knowledge-base/category/question'
+              'answerUrl': '/knowledge-base/category/question'
             }
           ]
         }

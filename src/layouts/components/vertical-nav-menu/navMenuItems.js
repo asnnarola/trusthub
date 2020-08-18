@@ -61,22 +61,5 @@ export default [
     name: 'Extra',
     icon_url: 'icon7.png',
     i18n: 'Extra',
-  },
-  {
-    url: '/setting',
-    name: 'Setting',
-    icon_url: 'setting.png',
-    i18n: 'Setting',
-  },
-  {
-    url: '/help',
-    name: 'Help',
-    icon_url: 'message.png',
-    i18n: 'Help',
-  },
-  {
-    name: 'Authenticated',
-    icon_url: 'check.png',
-    i18n: 'Authenticated',
-  },
+  }
 ]

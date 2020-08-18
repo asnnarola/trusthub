@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="tab-wrapper-form">
     <vs-input
         v-validate="'required|email|min:3'"
         data-vv-validate-on="blur"
@@ -25,14 +25,18 @@
         class="w-full mt-6" />
     <span class="text-danger text-sm">{{ errors.first('password') }}</span>
 
-    <div class="flex flex-wrap justify-between my-5">
+    <div class="flex flex-wrap justify-between my-5 RF-content">
         <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Remember Me</vs-checkbox>
-        <router-link to="/pages/forgot-password">Forgot Password?</router-link>
+        <!-- <router-link to="/pages/forgot-password">Forgot Password?</router-link> -->
+        <a><u>Forgot Password?</u></a>
     </div>
-    <div class="flex flex-wrap justify-between mb-3">
-      <vs-button  type="border" @click="registerUser">Register</vs-button>
-      <vs-button :disabled="!validateForm" @click="loginJWT">Login</vs-button>
+    <div class="flex flex-wrap justify-between mb-3 LT-wrap">
+      <vs-button class="btn-green" :disabled="!validateForm" @click="loginJWT">Login</vs-button>
+      <vs-button class="btn-gray"  type="border" >Trusthub</vs-button>
     </div>
+    <p class="sub-trial-txt mt-5">
+      <a class="f-size-14"><u>Subscrib Free Trial Account</u></a>
+    </p>
   </div>
 </template>
 
@@ -98,7 +102,7 @@ export default {
     },
     registerUser () {
       if (!this.checkLogin()) return
-      this.$router.push('/pages/register').catch(() => {})
+      this.$router.push('/register').catch(() => {})
     }
   }
 }

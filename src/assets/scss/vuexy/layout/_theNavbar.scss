@@ -33,6 +33,7 @@
   // transition: all .5s;
 
   .vx-navbar {
+    background: #4ec12d !important;
     .vs-con-items {
       width: 100%;
 
@@ -80,12 +81,12 @@
 
   .vx-navbar-wrapper {
     @media (min-width: 577px) {
-      padding: 1.3rem 2.2rem 2.2rem;
+      padding: 0rem 0rem 1rem;
     }
   }
 
   .vx-navbar {
-    border-radius: .5rem;
+    border-radius: 0rem;
     padding: .8rem 1rem;
 
     .search-full-container {

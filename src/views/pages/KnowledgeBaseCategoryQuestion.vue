@@ -43,8 +43,8 @@
                     <!-- Footer -->
                     <template slot="footer">
                         <div class="flex items-center justify-between">
-                            <router-link to="/pages/knowledge-base/category/question" class="flex items-center"><feather-icon :icon="$vs.rtl ? 'ChevronsRightIcon' : 'ChevronsLeftIcon'" class="mr-2" svgClasses="h-4 w-4"></feather-icon> Previous Article</router-link>
-                            <router-link to="/pages/knowledge-base/category/question" class="flex items-center">Next Article <feather-icon :icon="$vs.rtl ? 'ChevronsLeftIcon' : 'ChevronsRightIcon'" class="ml-2" svgClasses="h-4 w-4"></feather-icon></router-link>
+                            <router-link to="/knowledge-base/category/question" class="flex items-center"><feather-icon :icon="$vs.rtl ? 'ChevronsRightIcon' : 'ChevronsLeftIcon'" class="mr-2" svgClasses="h-4 w-4"></feather-icon> Previous Article</router-link>
+                            <router-link to="/knowledge-base/category/question" class="flex items-center">Next Article <feather-icon :icon="$vs.rtl ? 'ChevronsLeftIcon' : 'ChevronsRightIcon'" class="ml-2" svgClasses="h-4 w-4"></feather-icon></router-link>
                         </div>
                     </template>
                 </vx-card>
@@ -68,32 +68,32 @@ export default{
         {
           'id'        : 0,
           'question'  : 'Cake icing gummi bears?',
-          'answerUrl' : '/pages/knowledge-base/category/question'
+          'answerUrl' : '/knowledge-base/category/question'
         },
         {
           'id'        : 1,
           'question'  : 'Jelly soufflé apple pie?',
-          'answerUrl' : '/pages/knowledge-base/category/question'
+          'answerUrl' : '/knowledge-base/category/question'
         },
         {
           'id'        : 2,
           'question'  : 'Soufflé apple pie ice cream cotton?',
-          'answerUrl' : '/pages/knowledge-base/category/question'
+          'answerUrl' : '/knowledge-base/category/question'
         },
         {
           'id'        : 3,
           'question'  : 'Powder wafer brownie?',
-          'answerUrl' : '/pages/knowledge-base/category/question'
+          'answerUrl' : '/knowledge-base/category/question'
         },
         {
           'id'        : 4,
           'question'  : 'Toffee donut dragée cotton candy?',
-          'answerUrl' : '/pages/knowledge-base/category/question'
+          'answerUrl' : '/knowledge-base/category/question'
         },
         {
           'id'        : 5,
           'question'  : 'Soufflé chupa chups chocolate bar?',
-          'answerUrl' : '/pages/knowledge-base/category/question'
+          'answerUrl' : '/knowledge-base/category/question'
         }
       ]
     }

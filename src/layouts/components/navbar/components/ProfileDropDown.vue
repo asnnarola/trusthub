@@ -17,7 +17,7 @@
 
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-            @click="$router.push('/pages/profile').catch(() => {})">
+            @click="$router.push('/profile').catch(() => {})">
             <feather-icon icon="UserIcon" svgClasses="w-4 h-4" />
             <span class="ml-2">Profile</span>
           </li>
@@ -90,13 +90,13 @@ export default {
 
       if (firebaseCurrentUser) {
         firebase.auth().signOut().then(() => {
-          this.$router.push('/pages/login').catch(() => {})
+          this.$router.push('/login').catch(() => {})
         })
       }
       // If JWT login
       if (localStorage.getItem('accessToken')) {
         localStorage.removeItem('accessToken')
-        this.$router.push('/pages/login').catch(() => {})
+        this.$router.push('/login').catch(() => {})
       }
 
       // Change role on logout. Same value as initialRole of acj.js
@@ -104,7 +104,7 @@ export default {
       localStorage.removeItem('userInfo')
 
       // This is just for demo Purpose. If user clicks on logout -> redirect
-      this.$router.push('/pages/login').catch(() => {})
+      this.$router.push('/login').catch(() => {})
     }
   }
 }

@@ -46,7 +46,7 @@ const router = new Router({
         // =============================================================================
         {
           path: '/',
-          redirect: '/dashboard'
+          redirect: '/login'
         },
         {
           path: '/dashboard',
@@ -961,7 +961,8 @@ const router = new Router({
         // Pages Routes
         // =============================================================================
         {
-          path: '/pages/profile',
+          // path: '/pages/profile',
+          path: '/profile',
           name: 'page-profile',
           component: () => import('@/views/pages/Profile.vue'),
           meta: {
@@ -975,7 +976,8 @@ const router = new Router({
           }
         },
         {
-          path: '/pages/user-settings',
+          // path: '/pages/user-settings',
+          path: '/user-settings',
           name: 'page-user-settings',
           component: () => import('@/views/pages/user-settings/UserSettings.vue'),
           meta: {
@@ -989,7 +991,8 @@ const router = new Router({
           }
         },
         {
-          path: '/pages/faq',
+          // path: '/pages/faq',
+          path: '/faq',
           name: 'page-faq',
           component: () => import('@/views/pages/Faq.vue'),
           meta: {
@@ -1003,7 +1006,8 @@ const router = new Router({
           }
         },
         {
-          path: '/pages/knowledge-base',
+          // path: '/pages/knowledge-base',
+          path: '/knowledge-base',
           name: 'page-knowledge-base',
           component: () => import('@/views/pages/KnowledgeBase.vue'),
           meta: {
@@ -1017,14 +1021,16 @@ const router = new Router({
           }
         },
         {
-          path: '/pages/knowledge-base/category',
+          // path: '/pages/knowledge-base/category',
+          path: '/knowledge-base/category',
           name: 'page-knowledge-base-category',
           component: () => import('@/views/pages/KnowledgeBaseCategory.vue'),
           meta: {
             breadcrumb: [
               { title: 'Home', url: '/' },
               { title: 'Pages' },
-              { title: 'KnowledgeBase', url: '/pages/knowledge-base' },
+              // { title: 'KnowledgeBase', url: '/pages/knowledge-base' },
+              { title: 'KnowledgeBase', url: '/knowledge-base' },
               { title: 'Category', active: true }
             ],
             parent: 'page-knowledge-base',
@@ -1032,15 +1038,18 @@ const router = new Router({
           }
         },
         {
-          path: '/pages/knowledge-base/category/question',
+          // path: '/pages/knowledge-base/category/question',
+          path: '/knowledge-base/category/question',
           name: 'page-knowledge-base-category-question',
           component: () => import('@/views/pages/KnowledgeBaseCategoryQuestion.vue'),
           meta: {
             breadcrumb: [
               { title: 'Home', url: '/' },
               { title: 'Pages' },
-              { title: 'KnowledgeBase', url: '/pages/knowledge-base' },
-              { title: 'Category', url: '/pages/knowledge-base/category' },
+              { title: 'KnowledgeBase', url: '/knowledge-base' },
+              { title: 'Category', url: '/knowledge-base/category' },
+              // { title: 'KnowledgeBase', url: '/pages/knowledge-base' },
+              // { title: 'Category', url: '/pages/knowledge-base/category' },
               { title: 'Question', active: true }
             ],
             parent: 'page-knowledge-base',
@@ -1048,7 +1057,8 @@ const router = new Router({
           }
         },
         {
-          path: '/pages/search',
+          // path: '/pages/search',
+          path: '/search',
           name: 'page-search',
           component: () => import('@/views/pages/Search.vue'),
           meta: {
@@ -1062,7 +1072,8 @@ const router = new Router({
           }
         },
         {
-          path: '/pages/invoice',
+          // path: '/pages/invoice',
+          path: '/invoice',
           name: 'page-invoice',
           component: () => import('@/views/pages/Invoice.vue'),
           meta: {
@@ -1388,7 +1399,8 @@ const router = new Router({
           }
         },
         {
-          path: '/pages/login',
+          // path: '/pages/login',
+          path: '/login',
           name: 'page-login',
           component: () => import('@/views/pages/login/Login.vue'),
           meta: {
@@ -1396,7 +1408,8 @@ const router = new Router({
           }
         },
         {
-          path: '/pages/register',
+          // path: '/pages/register',
+          path: '/register',
           name: 'page-register',
           component: () => import('@/views/pages/register/Register.vue'),
           meta: {
@@ -1404,7 +1417,8 @@ const router = new Router({
           }
         },
         {
-          path: '/pages/forgot-password',
+          // path: '/pages/forgot-password',
+          path: '/forgot-password',
           name: 'page-forgot-password',
           component: () => import('@/views/pages/ForgotPassword.vue'),
           meta: {
@@ -1412,7 +1426,8 @@ const router = new Router({
           }
         },
         {
-          path: '/pages/reset-password',
+          // path: '/pages/reset-password',
+          path: '/reset-password',
           name: 'page-reset-password',
           component: () => import('@/views/pages/ResetPassword.vue'),
           meta: {
@@ -1420,7 +1435,8 @@ const router = new Router({
           }
         },
         {
-          path: '/pages/lock-screen',
+          // path: '/pages/lock-screen',
+          path: '/lock-screen',
           name: 'page-lock-screen',
           component: () => import('@/views/pages/LockScreen.vue'),
           meta: {
@@ -1428,7 +1444,8 @@ const router = new Router({
           }
         },
         {
-          path: '/pages/comingsoon',
+          // path: '/pages/comingsoon',
+          path: '/comingsoon',
           name: 'page-coming-soon',
           component: () => import('@/views/pages/ComingSoon.vue'),
           meta: {
@@ -1436,7 +1453,8 @@ const router = new Router({
           }
         },
         {
-          path: '/pages/error-404',
+          // path: '/pages/error-404',
+          path: '/error-404',
           name: 'page-error-404',
           component: () => import('@/views/pages/Error404.vue'),
           meta: {
@@ -1444,7 +1462,8 @@ const router = new Router({
           }
         },
         {
-          path: '/pages/error-500',
+          // path: '/pages/error-500',
+          path: '/error-500',
           name: 'page-error-500',
           component: () => import('@/views/pages/Error500.vue'),
           meta: {
@@ -1452,7 +1471,8 @@ const router = new Router({
           }
         },
         {
-          path: '/pages/not-authorized',
+          // path: '/pages/not-authorized',
+          path: '/not-authorized',
           name: 'page-not-authorized',
           component: () => import('@/views/pages/NotAuthorized.vue'),
           meta: {
@@ -1460,7 +1480,8 @@ const router = new Router({
           }
         },
         {
-          path: '/pages/maintenance',
+          // path: '/pages/maintenance',
+          path: '/maintenance',
           name: 'page-maintenance',
           component: () => import('@/views/pages/Maintenance.vue'),
           meta: {
@@ -1472,6 +1493,7 @@ const router = new Router({
     // Redirect to 404 page, if no match found
     {
       path: '*',
+      // redirect: '/error-404'
       redirect: '/pages/error-404'
     }
   ]
@@ -1507,7 +1529,8 @@ router.beforeEach((to, from, next) => {
     // If auth required, check login. If login fails redirect to login page
     if (to.meta.authRequired) {
       if (!(auth.isAuthenticated() || firebaseCurrentUser)) {
-        router.push({ path: '/pages/login', query: { to: to.path } })
+        // router.push({ path: '/pages/login', query: { to: to.path } })
+        router.push({ path: '/login', query: { to: to.path } })
       }
     }
 

@@ -1,4 +1,34 @@
 {
+  "Users":[
+    {
+      "id" : "1",
+      "username" : "user1",
+      "email" : "user1@abc.com" ,
+      "password" : "User1#123",
+      "isLogin" : false
+    },
+    {
+      "id" : "2",
+      "username" : "user2",
+      "email" : "user2@abc.com" ,
+      "password" : "User2#123",
+      "isLogin" : false
+    },
+    {
+      "id" : "3",
+      "username" : "user3",
+      "email" : "user3@abc.com" ,
+      "password" : "User3#123",
+      "isLogin" : false
+    },
+    {
+      "id" : "4",
+      "username" : "user4",
+      "email" : "user4@abc.com" ,
+      "password" : "User4#123",
+      "isLogin" : false
+    }
+  ],
   "Documents": [
     {
       "id" : "1",

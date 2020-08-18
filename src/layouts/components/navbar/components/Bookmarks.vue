@@ -3,10 +3,11 @@
     <!-- STARRED PAGES - FIRST 10 -->
     <ul class="vx-navbar__starred-pages">
       <draggable v-model="starredPagesLimited" :group="{name: 'pinList'}" class="flex cursor-move">
-        <li class="starred-page" v-for="page in starredPagesLimited" :key="page.url">
-          <vx-tooltip :text="page.title" position="bottom" delay=".3s">
+        <li class="starred-page" v-for="img in headr_Icon" :key="img">
+          <img :src="require('@/assets/images/sidebar_icon/' + img.icon_url)">
+          <!-- <vx-tooltip :text="page.title" position="bottom" delay=".3s">
             <feather-icon :svgClasses="['h-6 w-6 stroke-current', textColor]" class="p-2 cursor-pointer" :icon="page.icon" @click="$router.push(page.url).catch(() => {})" />
-          </vx-tooltip>
+          </vx-tooltip> -->
         </li>
       </draggable>
     </ul>
@@ -26,42 +27,6 @@
           </ul>
         </vs-dropdown-menu>
       </vs-dropdown>
-    </div>
-
-    <div class="bookmark-container">
-      <feather-icon icon="StarIcon" :svgClasses="['stoke-current text-warning', textColor]" class="cursor-pointer p-2" @click.stop="showBookmarkPagesDropdown = !showBookmarkPagesDropdown" />
-      <div v-click-outside="outside" class="absolute bookmark-list w-1/3 xl:w-1/4 mt-4" v-if="showBookmarkPagesDropdown">
-        <vx-auto-suggest
-          ref="bookmarkAutoSuggest"
-          :autoFocus="true"
-          :data="navbarSearchAndPinList"
-          :initalData="{pages: starredPagesLimited.concat(starredPagesMore)}"
-          :searchLimit="5"
-          placeholder="Explore Vuexy..."
-          inputClassses="w-full"
-          show-action
-          show-pinned
-          hideGroupTitle
-          background-overlay
-          @input="hnd_search_query_update"
-          @selected="selected">
-
-          <!-- Pages Suggestion -->
-          <template v-slot:pages="{ suggestion }">
-            <div class="flex items-center justify-between">
-              <div class="flex items-end leading-none py-1">
-                <feather-icon :icon="suggestion.icon" svgClasses="h-5 w-5" class="mr-4" />
-                <span class="mt-1">{{ suggestion.title }}</span>
-              </div>
-              <feather-icon
-                icon="StarIcon"
-                :svgClasses="[{'text-warning': suggestion.is_bookmarked}, 'h-5 w-5 stroke-current mt-1']"
-                @click.stop="actionClicked(suggestion)" />
-            </div>
-          </template>
-
-        </vx-auto-suggest>
-      </div>
     </div>
   </div>
 </template>
@@ -83,6 +48,32 @@ export default {
   },
   data () {
     return {
+      headr_Icon:[
+        {
+          icon_url:'h1.png'
+        },
+        {
+          icon_url:'h2.png'
+        },
+        {
+          icon_url:'h3.png'
+        },
+        {
+          icon_url:'h4.png'
+        },
+        {
+          icon_url:'h5.png'
+        },
+        {
+          icon_url:'h6.png'
+        },
+        {
+          icon_url:'h7.png'
+        },
+        {
+          icon_url:'h8.png'
+        },
+      ],
       showBookmarkPagesDropdown : false
     }
   },
