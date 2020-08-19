@@ -2,32 +2,26 @@
   <div class="navbar-bookmarks flex items-center">
     <!-- STARRED PAGES - FIRST 10 -->
     <ul class="vx-navbar__starred-pages">
-      <draggable v-model="starredPagesLimited" :group="{name: 'pinList'}" class="flex cursor-move">
-        <li class="starred-page" v-for="img in headr_Icon" :key="img">
+      <draggable v-model="starredPagesLimited" :group="{name: 'pinList'}" class="flex cursor-move h-top-icon">
+        <li class="starred-page" v-for="img in headr_Icon1" :key="img">
           <img :src="require('@/assets/images/sidebar_icon/' + img.icon_url)">
-          <!-- <vx-tooltip :text="page.title" position="bottom" delay=".3s">
-            <feather-icon :svgClasses="['h-6 w-6 stroke-current', textColor]" class="p-2 cursor-pointer" :icon="page.icon" @click="$router.push(page.url).catch(() => {})" />
-          </vx-tooltip> -->
         </li>
       </draggable>
     </ul>
-
-
-    <div class="vx-navbar__starred-pages--more-dropdown" v-if="starredPagesMore.length">
-      <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
-        <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" class="cursor-pointer p-2"></feather-icon>
-        <vs-dropdown-menu>
-          <ul class="vx-navbar__starred-pages-more--list">
-            <draggable v-model="starredPagesMore" :group="{name: 'pinList'}" class="cursor-move">
-              <li class="starred-page--more flex items-center cursor-pointer" v-for="page in starredPagesMore" :key="page.url" @click="$router.push(page.url).catch(() => {})">
-                <feather-icon class="ml-2 mr-1" :icon="page.icon" :svgClasses="['h-5 w-5 stroke-current', textColor]"></feather-icon>
-                <span class="px-2 pt-2 pb-1">{{ page.title }}</span>
-              </li>
-            </draggable>
-          </ul>
-        </vs-dropdown-menu>
-      </vs-dropdown>
-    </div>
+    <ul class="vx-navbar__starred-pages">
+      <draggable v-model="starredPagesLimited" :group="{name: 'pinList'}" class="flex cursor-move h-top-icon">
+        <li class="starred-page" v-for="img in header_Icon2" :key="img">
+          <img :src="require('@/assets/images/sidebar_icon/' + img.icon_url)">
+        </li>
+      </draggable>
+    </ul>
+    <ul class="vx-navbar__starred-pages">
+      <draggable v-model="starredPagesLimited" :group="{name: 'pinList'}" class="flex cursor-move h-top-icon">
+        <li class="starred-page" v-for="img in header_Icon3" :key="img">
+          <img :src="require('@/assets/images/sidebar_icon/' + img.icon_url)">
+        </li>
+      </draggable>
+    </ul>
   </div>
 </template>
 
@@ -48,13 +42,15 @@ export default {
   },
   data () {
     return {
-      headr_Icon:[
-        // {
-        //   icon_url:'h1.png'
-        // },
+      headr_Icon1:[
+        {
+          icon_url:'h1.png'
+        },
         {
           icon_url:'h2.png'
-        },
+        }
+      ],
+        header_Icon2:[
         {
           icon_url:'h3.png'
         },
@@ -69,10 +65,11 @@ export default {
         },
         {
           icon_url:'h7.png'
-        },
+        }],
+        header_Icon3:[
         {
           icon_url:'h8.png'
-        }
+        },
       ],
       showBookmarkPagesDropdown : false
     }

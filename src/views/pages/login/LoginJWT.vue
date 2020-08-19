@@ -28,14 +28,14 @@
     <div class="flex flex-wrap justify-between my-5 RF-content">
         <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Remember Me</vs-checkbox>
         <!-- <router-link to="/pages/forgot-password">Forgot Password?</router-link> -->
-        <a><u>Forgot Password?</u></a>
+        <a href="/forgot-password"><u>Forgot Password?</u></a>
     </div>
     <div class="flex flex-wrap justify-between mb-3 LT-wrap">
       <vs-button class="btn-green" :disabled="!validateForm" @click="loginJWT">Login</vs-button>
       <vs-button class="btn-gray"  type="border" >Trusthub</vs-button>
     </div>
     <p class="sub-trial-txt mt-5">
-      <a class="f-size-14"><u>Subscrib Free Trial Account</u></a>
+      <a class="f-size-14" href="/register"><u>Subscrib Free Trial Account</u></a>
     </p>
   </div>
 </template>

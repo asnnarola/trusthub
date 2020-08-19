@@ -61,5 +61,5 @@ export default [
     name: 'Extra',
     icon_url: 'icon7.png',
     i18n: 'Extra',
-  }
+  },
 ]

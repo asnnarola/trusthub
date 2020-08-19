@@ -60,21 +60,9 @@ const router = new Router({
           path: '/document',
           name: 'documents',
           component: () => import('./views/Documents.vue'),
-          // children: [
-          //   {
-          //     path: '/:slug',
-          //     name:'Sub-Document',
-          //     component: () => import('./views/Sub-Document/sub-document.vue')
-          //   }
-          // ],
           meta: {
             rule: 'editor'
-          }
-        },
-        {
-          path: '/document/:slug',
-          name:'Sub-Document',
-          component: () => import('./views/Sub-Document/sub-document.vue')
+          },
         },
         {
           path: '/template',
@@ -133,23 +121,6 @@ const router = new Router({
             rule: 'editor'
           }
         },
-        // {
-        //   path: '/dashboard/analytics',
-        //   name: 'dashboard-analytics',
-        //   component: () => import('./views/DashboardAnalytics.vue'),
-        //   meta: {
-        //     rule: 'editor'
-        //   }
-        // },
-        // {
-        //   path: '/dashboard/ecommerce',
-        //   name: 'dashboard-ecommerce',
-        //   component: () => import('./views/DashboardECommerce.vue'),
-        //   meta: {
-        //     rule: 'admin'
-        //   }
-        // },
-
 
         // =============================================================================
         // Application Routes

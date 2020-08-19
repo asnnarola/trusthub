@@ -1,7 +1,7 @@
 body {
   color: #333;
 }
-.txt-gray{
+.txt-gray {
   color: #aeaeae;
 }
 .d-flex {
@@ -148,13 +148,33 @@ body {
                     flex-wrap: wrap;
                     justify-content: space-around;
                     margin-bottom: 2rem;
-                    height: 60px;
+                    height: 55px;
                     align-items: center;
-                    li {
-                      list-style: none;
-                      img {
-                        width: 30px;
+                    ul {
+                      &:nth-child(1),
+                      &:nth-child(2) {
+                        border-right: 1px solid #fff;
+                        padding-right: 18px;
                       }
+                      li {
+                        padding: 0px 5px 0px 7px;
+                        list-style: none;
+                        img {
+                          width: 30px;
+                        }
+                      }
+                    }
+                  }
+                  .txt-or {
+                    span {
+                      background: #fff;
+                      padding-left: 10px;
+                      padding-right: 10px;
+                    }
+                    .separte-border {
+                      border: 1px solid #e7e7e7;
+                      margin-top: -12px;
+                      margin-bottom: 10px;
                     }
                   }
                 }

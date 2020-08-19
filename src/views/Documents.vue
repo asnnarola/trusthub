@@ -1,5 +1,6 @@
 <template>
   <div class="grid-demo__layout-container">
+    <h1>Documents</h1>
     <vs-row>
       <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="2" class="sm:p-2 p-4">
         <vx-card class="box-shadow-none">
@@ -27,16 +28,9 @@
             <div class="navbar-header">
               <ul>
                 <li v-for="files in filesList" :key="files">
-                  <!-- <a :href="/document/ + files.slug "> -->
+                  <span @click="getData(files.id)" style="cursor:pointer">
                     {{files.title}}
-                  <!-- </a> -->
-                  <!-- <router-link tag="div" class="vx-logo cursor-pointer flex items-center" :to="'/document/' + files.slug"> -->
-                  <!-- </router-link> -->
-                  <!-- <ul>
-                    <li v-for="file in files.sub-Files" :key="file">
-                    {{file.title}}
-                    </li>
-                  </ul> -->
+                  </span>
                 </li>
               </ul>
             </div>
@@ -48,6 +42,32 @@
         </nav>
       </vs-col>
       <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="left" vs-w="10" class="sm:p-2 p-4">
+        <template>
+          <vs-table :data="subFilesdata">
+            <template slot="thead">
+              <vs-th>Title</vs-th>
+              <vs-th>author</vs-th>
+              <vs-th>slug</vs-th>
+            </template>
+
+            <template slot-scope="{data}">
+              <vs-tr :key="file" v-for="(tr, file) in data">
+
+                <vs-td :data="data[file].title">
+                  {{ data[file].title }}
+                </vs-td>
+
+                <vs-td :data="data[file].author">
+                  {{ data[file].author }}
+                </vs-td>
+
+                <vs-td :data="data[file].slug">
+                  {{ data[file].slug }}
+                </vs-td>
+              </vs-tr>
+            </template>
+          </vs-table>
+        </template>
       </vs-col>
     </vs-row>
   </div>
@@ -60,6 +80,7 @@ export default {
   data() {
     return {
       filesList:[],
+      subFilesdata:[],
       search:''
     }
   },
@@ -73,6 +94,16 @@ export default {
       this.filesList = document_res.data
       console.log('Respo =>', this.filesList);
     })
+  },
+  methods: {
+    getData(id){
+      console.log('IDD =>', id );
+      return axios.get('/Documents/' + id)
+      .then(data_res => {
+        this.subFilesdata = data_res.data
+        console.log('Data =>',this.subFilesdata);
+      })
+    }
   },
 }
 </script>

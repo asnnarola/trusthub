@@ -4,7 +4,7 @@
 <script>
 export default {
   data(){
-    slug : this.$router.params.slug
+    slug : this.$router.params.id
   },
 }
 </script>

@@ -37,7 +37,7 @@
 
             <div class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg right-wrapper">
               <div class="px-8 pt-8 login-tabs-container tab-wrapper d-flex flex-column">
-                <div class="form-wrap">
+                <div class="form-wrap mb-10">
                   <div class="vx-card__title mb-4 d-flex justify-content-between">
                     <div class="wrapper-heading">
                       <h4 class="mb-4">Login</h4>
@@ -56,13 +56,20 @@
                   <vs-tab label="JWT">-->
                   <login-jwt></login-jwt>
                 </div>
+                <div class="txt-or text-center mb-2">
+                  <span>OR</span>
+                  <div class="separte-border"></div>
+                </div>
                 <div class="bottom-menu-icon">
-                  <!-- <li class="starred-page">
+                <ul class="d-flex flex-wrap">
+                  <li class="starred-page">
                     <img src="@/assets/images/sidebar_icon/h1.png" />
-                  </li> -->
+                  </li>
                   <li class="starred-page">
                     <img src="@/assets/images/sidebar_icon/h2.png" />
                   </li>
+                </ul>
+                <ul class="d-flex flex-wrap">
                   <li class="starred-page">
                     <img src="@/assets/images/sidebar_icon/h3.png" />
                   </li>
@@ -78,9 +85,12 @@
                   <li class="starred-page">
                     <img src="@/assets/images/sidebar_icon/h7.png" />
                   </li>
+                </ul>
+                <ul class="d-flex flex-wrap">
                   <li class="starred-page">
                     <img src="@/assets/images/sidebar_icon/h8.png" />
                   </li>
+                </ul>
                 </div>
                 <!-- </vs-tab>
 
@@ -116,7 +126,7 @@ export default {
     LoginJwt,
     LoginFirebase,
     LoginAuth0
-  }
+  },
   // created() {
   //   return axios
   //     .get('/Users')

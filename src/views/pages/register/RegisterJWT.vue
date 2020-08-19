@@ -70,7 +70,7 @@ Author URL: http://www.themeforest.net/user/pixinvent
     </div>
     <div>
       <p class="sub-trial-txt mt-5 text-right mb-10">
-        <a class="f-size-14">
+        <a class="f-size-14" href="/login">
           <u>Login To An Existing Account</u>
         </a>
       </p>

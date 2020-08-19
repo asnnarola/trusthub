@@ -1,3 +1,3 @@
 <template>
-  <h1>Hello I am Extra</h1>
+  <h1>Extra</h1>
 </template>

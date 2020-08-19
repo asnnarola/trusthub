@@ -7,7 +7,6 @@
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
 
-
 html {
   font-size: $font-size-base;
   height: 100%;
@@ -23,7 +22,7 @@ body {
   overflow-x: hidden;
   max-width: 100%;
   height: 100%;
-  transition: background-color .3s ease;
+  transition: background-color 0.3s ease;
 }
 
 #app {
@@ -31,7 +30,7 @@ body {
 }
 
 .vx-logo {
-  .vx-logo-text{
+  .vx-logo-text {
     font-size: 22px;
     font-weight: 600;
     animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
@@ -44,7 +43,6 @@ body {
 
   @media (max-width: 576px) {
     padding: 1.2rem !important;
-
 
     .footer-sticky & {
       padding-bottom: 5rem !important;
@@ -74,7 +72,7 @@ body {
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   cursor: pointer;
-  transition: opacity .7s;
+  transition: opacity 0.7s;
   z-index: -1;
 
   .show-overlay & {
@@ -93,7 +91,6 @@ body {
 // ======================================================================================
 
 #content-area {
-
   height: 100%;
   transition: margin-left 0.5s;
 
@@ -116,8 +113,40 @@ body {
   &.content-area-full {
     margin-left: 0px;
   }
+  .vx-navbar-wrapper {
+    .vs-navbar {
+      .vs-con-items {
+        .navbar-bookmarks {
+          .vx-navbar__starred-pages {
+            &:nth-child(1),
+            &:nth-child(2) {
+              border-right: 1px solid #fff;
+            }
+            padding-right: 15px;
+            .h-top-icon {
+              padding-left: 15px;
+              li.starred-page {
+                padding-left: 7px;
+                padding-right: 7px;
+                img {
+                  width: 30px;
+                }
+              }
+            }
+          }
+        }
+        .h-top-Right-icon {
+          border-right: 1px solid #fff;
+          margin-right: 18px;
+          img {
+            margin-right: 20px;
+            width: 30px;
+          }
+        }
+      }
+    }
+  }
 }
-
 
 // ======================================================================================
 // NavBar
@@ -146,7 +175,6 @@ div[id$="demo"] {
   z-index: 51000 !important;
 }
 
-
 // ======================================================================================
 // Component Demo
 // ======================================================================================
@@ -157,7 +185,7 @@ div[id$="demo"] {
   justify-content: flex-start;
   align-items: center;
 
-  &>* {
+  & > * {
     margin-right: 1.5rem;
     margin-top: 1.5rem;
   }
@@ -169,7 +197,6 @@ div[id$="demo"] {
   padding: 10px;
   border-radius: 10px;
 }
-
 
 // ======================================================================================
 // Applications Page
