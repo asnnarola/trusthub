@@ -116,7 +116,7 @@ export default {
     LoginJwt,
     LoginFirebase,
     LoginAuth0
-  },
+  }
   // created() {
   //   return axios
   //     .get('/Users')
