@@ -72,7 +72,7 @@ export default {
         },
         {
           icon_url:'h8.png'
-        },
+        }
       ],
       showBookmarkPagesDropdown : false
     }
