@@ -12,7 +12,7 @@
       </draggable>
     </ul>
 
-    <!-- STARRED PAGES MORE -->
+
     <div class="vx-navbar__starred-pages--more-dropdown" v-if="starredPagesMore.length">
       <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
         <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" class="cursor-pointer p-2"></feather-icon>
