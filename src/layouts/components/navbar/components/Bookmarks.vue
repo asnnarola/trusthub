@@ -49,9 +49,9 @@ export default {
   data () {
     return {
       headr_Icon:[
-        {
-          icon_url:'h1.png'
-        },
+        // {
+        //   icon_url:'h1.png'
+        // },
         {
           icon_url:'h2.png'
         },

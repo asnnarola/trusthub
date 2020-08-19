@@ -57,9 +57,9 @@
                   <login-jwt></login-jwt>
                 </div>
                 <div class="bottom-menu-icon">
-                  <li class="starred-page">
+                  <!-- <li class="starred-page">
                     <img src="@/assets/images/sidebar_icon/h1.png" />
-                  </li>
+                  </li> -->
                   <li class="starred-page">
                     <img src="@/assets/images/sidebar_icon/h2.png" />
                   </li>
