@@ -12,23 +12,23 @@
     margin-top: 1.25rem;
 
     .vs-row {
-        border-top: 1px solid #808080;
+        border-top: 1px solid #cdcdcd;
 
         &:last-child {
-            border-bottom: 1px solid #808080;
+            border-bottom: 1px solid #cdcdcd;
         }
 
         &:not(:last-of-type) {
-            border-bottom: 0px solid #808080;
+            border-bottom: 0px solid #cdcdcd;
         }
 
         .vs-col {
             padding: 0.5rem;
             background-color: #ffffff;
-            border-left: 1px solid #808080;
+            border-left: 1px solid #cdcdcd;
 
             &:last-of-type {
-                border-right: 1px solid #808080;
+                border-right: 1px solid #cdcdcd;
             }
         }
     }

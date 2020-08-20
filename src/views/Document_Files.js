@@ -3,19 +3,19 @@ export default [
     "id" : "1",
     "title":"My Files",
     "author": "AB",
-    "slug": "my-files",
+    "isOpen": false,
     "sub_Files": [
       {
         "id": 1,
         "title": "File-1",
         "author": "ABC",
-        "slug": "files-1",
+        "isOpen": false,
         "sub_Files": [
           {
             "id": 1,
             "title": "File-1.1",
             "author": "ABC",
-            "slug": "files-1_1",
+            "isOpen": false,
             "sub_Files": []
           }
         ]
@@ -24,13 +24,13 @@ export default [
         "id": 2,
         "title": "File-2",
         "author": "ABC",
-        "slug": "files-2",
+        "isOpen": false,
         "sub_Files": [
           {
             "id": 1,
             "title": "File-2.1",
             "author": "ABC",
-            "slug": "files-2.1",
+            "isOpen": false,
             "sub_Files": []
           }
         ]
@@ -41,13 +41,13 @@ export default [
     "id" : "2",
     "title":"My Pictures",
     "author": "AB",
-    "slug": "my-pictures",
+    "isOpen": false,
     "sub_Files": [
       {
         "id": 1,
         "title": "Pictures-1",
         "author": "ABC",
-        "slug": "pictures-1",
+        "isOpen": false,
         "sub_Files": []
       }
     ]
@@ -56,13 +56,13 @@ export default [
     "id" : "3",
     "title":"Downloads",
     "author": "AB",
-    "slug": "downloads",
+    "isOpen": false,
     "sub_Files": [
       {
         "id": 1,
         "title": "File1",
         "author": "ABC",
-        "slug": "download-file-1",
+        "isOpen": false,
         "sub_Files": []
       }
     ]
@@ -71,13 +71,13 @@ export default [
     "id" : "4",
     "title":"MY Documents",
     "author": "AB",
-    "slug": "my-document",
+    "isOpen": false,
     "sub_Files": [
       {
         "id": 1,
         "title": "File1",
         "author": "ABC",
-        "slug": "document-files-1",
+        "isOpen": false,
         "sub_Files": []
       }
     ]

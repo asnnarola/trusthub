@@ -1,6 +1,5 @@
 <template>
   <div class="grid-demo__layout-container">
-    <h1>Documents</h1>
     <vs-row>
       <vs-col
         vs-offset="0"
@@ -11,8 +10,8 @@
         class="sm:p-2 p-4"
       >
         <vx-card class="box-shadow-none">
-          <vs-button color="gray" class="mr-3 mb-6">New</vs-button>
-          <vs-button color="gray" class="mr-3 mb-6">Upload</vs-button>
+          <vs-button color="gray" class="border-radius-0 w-100 mr-3 mb-6">New</vs-button>
+          <vs-button color="gray" class="mr-3 border-radius-0 w-100">Upload</vs-button>
         </vx-card>
       </vs-col>
       <vs-col
@@ -23,12 +22,12 @@
         vs-w="10"
         class="sm:p-2 p-4"
       >
-        <vx-card>
-          <vx-input-group class="mb-base">
-            <vs-input icon-pack="feather" icon="icon-search" placeholder="Search" v-model="search" />
+        <vx-card class="box-shadow-none serach-wrapper">
+          <vx-input-group class="mb-base serach-box">
+            <vs-input icon-pack="feather" class="border-0" icon="icon-search" placeholder="Search" v-model="search" />
             <template slot="append">
               <div class="append-text btn-addon">
-                <vs-button color="gray">Search</vs-button>
+                <vs-button color="gray" class="border-radius-0">Search</vs-button>
               </div>
             </template>
           </vx-input-group>
@@ -54,11 +53,27 @@
           <div class="navbar-wrapper">
             <div class="navbar-header">
               <ul>
-                <li v-for="file in files" :key="file" @click="subFileShow = !subFileShow">
-                  <span @click="getData(file.id)" style="cursor:pointer">{{file.title}}</span>
-                  <ul v-if="subFileShow">
-                    <li v-for="data in file.sub_Files" :key="data">{{data.title}}</li>
+                <li v-for="file in files" :key="file.id">
+                  <div class="tree-view d-flex align-items-center cursor-pointer" @click="getFiles(file)" >
+                    <img src="../assets/images/documents_icon/folder_img.png" />
+
+                    <span>{{file.title}}</span>
+                  </div>
+                  <ul v-if="file.isOpen == true && file.sub_Files.length > 0">
+                    <li v-for="data in file.sub_Files" :key="data.id">
+                      <div class="pl-3 tree-view d-flex align-items-center cursor-pointer" @click="getFiles(data)">
+
+                        <img
+                          src="../assets/images/documents_icon/folder_img.png"
+                          v-if="data.sub_Files.length > 0"
+                        />
+                        {{data.title}}
+                      </div>
+                    </li>
                   </ul>
+                  <span
+                    v-if="file.isOpen == true && file.sub_Files.length <= 0"
+                  >There is no any files in this folder.</span>
                 </li>
               </ul>
             </div>
@@ -71,40 +86,26 @@
       <vs-col
         vs-offset="0"
         vs-type="flex"
-        vs-justify="center"
         vs-align="left"
         vs-w="10"
         class="sm:p-2 p-4"
       >
-        <template>
-          <vs-table :data="subFilesdata">
-            <template slot="thead">
-              <vs-th>Name</vs-th>
-              <vs-th>Stars</vs-th>
-              <vs-th>Signed</vs-th>
-              <vs-th>Owner</vs-th>
-              <vs-th>Size</vs-th>
-            </template>
+        <div v-if="subFilesdata.length" class="w-100 d-flex flex-wrap folder-main">
+          <div class="folder-wrapper" v-for="subData in subFilesdata" :key="subData.id">
+            <span @click="getFiles(subData)" class="cursor-pointer">
+              <div class="file-icon text-center"  v-if="subData.sub_Files.length > 0">
+                <img src="../assets/images/documents_icon/folder_img.png" class="img-fluid"/>
 
-            {{data}}
-            <!-- <template slot-scope="{data}">
-              <vs-tr :key="file" v-for="(tr, file) in data">
-
-                <vs-td :data="data[file].title">
-                  {{ data[file].title }}
-                </vs-td>
-
-                <vs-td :data="data[file].author">
-                  {{ data[file].author }}
-                </vs-td>
-
-                <vs-td :data="data[file].slug">
-                  {{ data[file].slug }}
-                </vs-td>
-              </vs-tr>
-            </template>-->
-          </vs-table>
-        </template>
+                <span>{{subData.title}}</span>
+              </div>
+              <div class="file-icon text-center"  v-else>
+                <img src="../assets/images/documents_icon/folder_img.png" />
+                <span>{{subData.title}}</span>
+              </div>
+            </span>
+          </div>
+        </div>
+        <!-- <div>{{subFilesdata}}</div> -->
       </vs-col>
     </vs-row>
   </div>
@@ -118,31 +119,15 @@ export default {
   data () {
     return {
       files: filesList,
-      subFileShow: false,
       subFilesdata: [],
       search: ''
     }
   },
-  components: {
-    subDocument
-  },
-  created () {
-    console.log('Files =>', this.files);
-    // return axios
-    // .get("/Documents")
-    // .then(document_res =>{
-    //   this.filesList = document_res.data
-    //   console.log('Respo =>', this.filesList);
-    // })
-  },
   methods: {
-    getData (id) {
-      console.log('IDD =>', id);
-      return axios.get('/Documents/' + id)
-        .then(data_res => {
-          this.subFilesdata = data_res.data
-          console.log('Data =>', this.subFilesdata);
-        })
+    getFiles (file) {
+      file.isOpen = !file.isOpen
+      this.subFilesdata = file.sub_Files
+      console.log('Files =>>>', this.subFilesdata);
     }
   },
 }
@@ -150,6 +135,7 @@ export default {
 
 <style lang="scss">
 @import "@/assets/scss/vuexy/pages/grid.scss";
+@import "@/assets/scss/style.scss";
 .content-area-reduced {
   .content-wrapper {
     .router-view {

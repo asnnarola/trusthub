@@ -9,31 +9,50 @@
 
 
 <template>
-    <div class="h-screen flex w-full bg-img">
-        <div class="vx-col w-4/5 sm:w-4/5 md:w-3/5 lg:w-3/4 xl:w-3/5 mx-auto self-center">
-            <vx-card>
-                <div slot="no-body" class="full-page-bg-color">
-                    <div class="vx-row">
-                        <div class="vx-col hidden sm:hidden md:hidden lg:block lg:w-1/2 mx-auto self-center">
-                            <img src="@/assets/images/pages/forgot-password.png" alt="login" class="mx-auto">
-                        </div>
-                        <div class="vx-col sm:w-full md:w-full lg:w-1/2 mx-auto self-center d-theme-dark-bg">
-                            <div class="p-8">
-                                <div class="vx-card__title mb-8">
-                                    <h4 class="mb-4">Recover your password</h4>
-                                    <p>Please enter your email address and we'll send you instructions on how to reset your password.</p>
-                                </div>
+    <div
+    class="h-screen flex-column flex w-full bg-img vx-row no-gutter items-center justify-center login-wrapper"
+    id="page-login"
+  >
+    <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4">
+      <vx-card>
+        <div slot="no-body" class="full-page-bg-color">
+          <div class="vx-row no-gutter justify-center">
+            <div class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column">
+              <div class="login-logo">
+                <img src="@/assets/images/sidebar_icon/logo-xl.png" alt="login" class="img-fluid" />
+              </div>
+            </div>
 
-                                <vs-input type="email" label-placeholder="Email" v-model="value1" class="w-full mb-8" />
-                                <vs-button type="border" to="/login" class="px-4 w-full md:w-auto">Back To Login</vs-button>
-                                <vs-button class="float-right px-4 w-full md:w-auto mt-3 mb-8 md:mt-0 md:mb-0">Recover Password</vs-button>
-                            </div>
-                        </div>
+            <div class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg right-wrapper">
+              <div class="px-8 pt-8 login-tabs-container tab-wrapper d-flex flex-column">
+                <div class="form-wrap mb-10">
+                  <div class="vx-card__title mb-4 d-flex justify-content-between">
+                    <div class="wrapper-heading">
+                      <h4 class="mb-4">Recover your password</h4>
+                      <p>Please enter your email address and we'll send you instructions on how to reset your password.</p>
                     </div>
+                  </div>
+                  <hr class="border-lightgray" />
+                  <div class="tab-wrapper-form">
+                    <vs-input type="email" label-placeholder="Email" v-model="value1" class="w-full mb-8" />
+                    <div class="flex flex-wrap justify-between mb-3 LT-wrap">
+                      <vs-button type="border" to="/login" class="btn-green">Back To Login</vs-button>
+                      <vs-button class="btn-gray">Recover Password</vs-button>
+                    </div>
+                  </div>
                 </div>
-            </vx-card>
+              </div>
+            </div>
+          </div>
         </div>
+      </vx-card>
+      <div class="cpy-txt">
+        <p class="text-right mt-2 txt-black"
+        >Copyright © 2020  - Gurucube Corp. - All Rights Reserved | Rev 4.7.4</p>
+      </div>
     </div>
+  </div>
+
 </template>
 
 <script>
