@@ -63,7 +63,7 @@
                 <div class="bottom-menu-icon">
                 <ul class="d-flex flex-wrap">
                   <li class="starred-page">
-                    <img src="@/assets/images/sidebar_icon/h1.png" />
+                    <img src="@/assets/images/sidebar_icon/hhh1.png" />
                   </li>
                   <li class="starred-page">
                     <img src="@/assets/images/sidebar_icon/h2.png" />

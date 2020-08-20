@@ -44,7 +44,7 @@ export default {
     return {
       headr_Icon1:[
         {
-          icon_url:'h1.png'
+          icon_url:'hhh1.png'
         },
         {
           icon_url:'h2.png'
