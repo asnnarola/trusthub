@@ -1201,10 +1201,12 @@
                       .vx-card__collapsible-content {
                         .vx-card__body {
                           display: flex;
+                          justify-content: space-between;
                           .vx-input-group {
                             &.serach-box {
                               max-width: 100%;
-                              width: 100%;
+                              width: calc(100% - 120px);
+                              margin-bottom: 0px !important;
                             }
                             .vx-input-group-default {
                               .vs-component {
@@ -1249,14 +1251,54 @@
                       }
                     }
                   }
-                  .folder-main{
-                    .folder-wrapper{
+                  .folder-main {
+                    .folder-wrapper {
                       margin: 1rem;
-                      span{
-                        .file-icon{
+                      span {
+                        .file-icon {
                           width: 90px;
-                          span{
+                          span {
                             font-weight: 500;
+                          }
+                        }
+                      }
+                    }
+                  }
+                  ul {
+                    li {
+                      &.tree-node {
+                        line-height: 1.75;
+                        label, label:before{
+                         background: transparent;
+                        }
+                        input[type=radio]{
+                          :checked{
+                            +label{
+                              &:before{
+                              }
+                            }
+                          }
+                        }
+                      }
+                      span {
+                        &.toggle-icon {
+                          width: 10px;
+                        }
+                      }
+                      span {
+                        &.tree-icon {
+                          color: #f9c201;
+                          font-size: 25px;
+                        }
+                      }
+                      label {
+                        .tree-text {
+                          position: relative;
+                          top: -2px;
+                          &:hover {
+                            &:before {
+                              background: transparent !important;
+                            }
                           }
                         }
                       }

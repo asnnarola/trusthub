@@ -7,10 +7,10 @@
         vs-justify="center"
         vs-align="center"
         vs-w="2"
-        class="sm:p-2 p-4"
+        class="sm:p-4 p-4"
       >
         <vx-card class="box-shadow-none">
-          <vs-button color="gray" class="border-radius-0 w-100 mr-3 mb-6">New</vs-button>
+          <vs-button color="gray" class="border-radius-0 w-100 mr-3 mb-3">New</vs-button>
           <vs-button color="gray" class="mr-3 border-radius-0 w-100">Upload</vs-button>
         </vx-card>
       </vs-col>
@@ -31,9 +31,9 @@
               </div>
             </template>
           </vx-input-group>
-          <div>
-            <vs-button color="gray">List</vs-button>
-            <vs-button color="gray">Gride</vs-button>
+          <div class="d-flex">
+            <img class="mr-3" src="../assets/images/documents_icon/sorting-active.png" />
+            <img src="../assets/images/documents_icon/grid-icon.png" />
           </div>
         </vx-card>
       </vs-col>
@@ -42,12 +42,11 @@
       <vs-col
         vs-offset="0"
         vs-type="flex"
-        vs-justify="center"
         vs-align="center"
         vs-w="2"
         class="sm:p-2 p-4"
       >
-        <nav
+        <!-- <nav
           class="header-navbar navbar-expand-md navbar navbar-with-menu fixed-top navbar-light navbar-shadow"
         >
           <div class="navbar-wrapper">
@@ -81,8 +80,17 @@
               <div id="navbar-mobile" class="navbar-collapse"></div>
             </div>
           </div>
-        </nav>
-      </vs-col>
+        </nav> -->
+
+        <v-treeview
+        v-model="treeData"
+        :treeTypes="treeTypes"
+        @selected="selected"
+        :openAll="openAll"
+        :contextItems="contextItems"
+        @contextSelected="contextSelected">
+        </v-treeview>
+     </vs-col>
       <vs-col
         vs-offset="0"
         vs-type="flex"
@@ -93,14 +101,13 @@
         <div v-if="subFilesdata.length" class="w-100 d-flex flex-wrap folder-main">
           <div class="folder-wrapper" v-for="subData in subFilesdata" :key="subData.id">
             <span @click="getFiles(subData)" class="cursor-pointer">
-              <div class="file-icon text-center"  v-if="subData.sub_Files.length > 0">
+              <div class="file-icon text-center"  v-if="subData.children.length > 0">
                 <img src="../assets/images/documents_icon/folder_img.png" class="img-fluid"/>
-
-                <span>{{subData.title}}</span>
+                <span>{{subData.text}}</span>
               </div>
               <div class="file-icon text-center"  v-else>
                 <img src="../assets/images/documents_icon/folder_img.png" />
-                <span>{{subData.title}}</span>
+                <span>{{subData.text}}</span>
               </div>
             </span>
           </div>
@@ -115,21 +122,131 @@
 import axios from '../axios.js'
 import subDocument from './Sub-Document/sub-document.vue'
 import filesList from './Document_Files.js'
+import VTreeview from 'v-treeview'
 export default {
   data () {
     return {
-      files: filesList,
       subFilesdata: [],
-      search: ''
+      search: '',
+      openAll: false,
+      treeTypes: [
+        {
+          type: "#",
+          max_children: 6,
+          max_depth: 4,
+          valid_children: [
+            "FMM_EMPLOYEE",
+            "FMM_SPOUSE",
+            "FMM_CHILD",
+            "FMM_SIBLING",
+            "FMM_PARENT",
+            "FMM_PARENT_IN_LAW"
+          ]
+        },
+        {
+          type: "FMM_EMPLOYEE",
+          icon: "fas fa-folder",
+          valid_children: ["Basic", "Top-up"]
+        },
+        {
+          type: "FMM_SPOUSE",
+          icon: "fas fa-folder",
+          valid_children: ["Basic", "Top-up"]
+        },
+        {
+          type: "FMM_CHILD",
+          icon: "fas fa-user",
+          valid_children: ["Basic", "Top-up"]
+        },
+        {
+          type: "FMM_SIBLING",
+          icon: "fas fa-user",
+          valid_children: ["Basic", "Top-up"]
+        },
+        {
+          type: "FMM_PARENT",
+          icon: "fas fa-user",
+          valid_children: ["Basic", "Top-up"]
+        },
+        {
+          type: "FMM_PARENT_IN_LAW",
+          icon: "fas fa-user",
+          valid_children: ["Basic", "Top-up"]
+        },
+        {
+          type: "Basic",
+          icon: "fas fa-hospital",
+          valid_children: ["Top-up"]
+        },
+        {
+          type: "Top-up",
+          icon: "fas fa-plus-square",
+          valid_children: []
+        }
+      ],
+      treeData: filesList,
+      contextItems: [],
+      selectedNode: null
     }
   },
   methods: {
     getFiles (file) {
-      file.isOpen = !file.isOpen
-      this.subFilesdata = file.sub_Files
       console.log('Files =>>>', this.subFilesdata);
+      file.isOpen = !file.isOpen
+      this.subFilesdata = file.children
+    },
+    getTypeRule(type) {
+      var typeRule = this.treeTypes.filter(t => t.type == type)[0];
+      return typeRule;
+    },
+    contextSelected(command) {
+      switch (command) {
+        case "Create Basic":
+          var node = {
+            text: "New Basic Plan",
+            type: "Basic",
+            children: []
+          };
+          this.selectedNode.addNode(node);
+          break;
+        case "Create Top-up":
+          var node = {
+            text: "New Top-up",
+            type: "Top-up",
+            children: []
+          };
+          this.selectedNode.addNode(node);
+          break;
+        case "Rename":
+          this.selectedNode.editName();
+          break;
+        case "Remove":
+          break;
+      }
+    },
+    selected(node) {
+      this.subFilesdata = node.model.children
+      console.log('Node =>',this.subFilesdata);
+      this.selectedNode = node;
+      this.contextItems = [];
+      var typeRule = this.getTypeRule(this.selectedNode.model.type);
+      typeRule.valid_children.map(function(type, key) {
+        var childType = this.getTypeRule(type);
+        var item = {
+          title: "Create " + type,
+          icon: childType.icon,
+          type: childType
+        };
+        this.contextItems.push(item);
+      }, this);
+
+      this.contextItems.push({ title: "Rename", icon: "far fa-edit" });
+      this.contextItems.push({ title: "Remove", icon: "far fa-trash-alt" });
     }
   },
+  components: {
+    VTreeview
+  }
 }
 </script>
 
