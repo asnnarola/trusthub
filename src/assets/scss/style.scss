@@ -1198,6 +1198,8 @@
                 .vs-col {
                   .vx-card {
                     &.serach-wrapper {
+                      border-bottom: 1px solid #b5b5b5 !important;
+                      border-radius: 0px;
                       .vx-card__collapsible-content {
                         .vx-card__body {
                           display: flex;
@@ -1205,8 +1207,15 @@
                           .vx-input-group {
                             &.serach-box {
                               max-width: 100%;
-                              width: calc(100% - 120px);
+                              width: calc(100% - 130px);
                               margin-bottom: 0px !important;
+                              .btn-addon {
+                                .addonsearch-btn {
+                                  font-weight: 500;
+                                  font-size: 16px;
+                                  width: 125px;
+                                }
+                              }
                             }
                             .vx-input-group-default {
                               .vs-component {
@@ -1232,6 +1241,26 @@
                     .vx-card__collapsible-content {
                       .vx-card__body {
                         padding: 0rem;
+                        .list-unstyled {
+                          display: none;
+                        }
+                        .NH-btn {
+                          border-bottom: 1px solid #b5b5b5 !important;
+                        }
+                        .submenu-document {
+                          .doc-submenu-list {
+                            padding-left: 15px;
+                            padding-bottom: 12px;
+                            svg {
+                              font-size: 16px;
+                              color: #8e8e8e;
+                              margin-right: 7px;
+                            }
+                            span {
+                              color: #333;
+                            }
+                          }
+                        }
                       }
                     }
                   }
@@ -1268,13 +1297,14 @@
                     li {
                       &.tree-node {
                         line-height: 1.75;
-                        label, label:before{
-                         background: transparent;
+                        label,
+                        label:before {
+                          background: transparent;
                         }
-                        input[type=radio]{
-                          :checked{
-                            +label{
-                              &:before{
+                        input[type="radio"] {
+                          :checked {
+                            + label {
+                              &:before {
                               }
                             }
                           }
@@ -1304,6 +1334,10 @@
                       }
                     }
                   }
+                }
+                .doc-detail {
+                  border: 1px solid #b5b5b5;
+                  padding: 20px;
                 }
               }
             }

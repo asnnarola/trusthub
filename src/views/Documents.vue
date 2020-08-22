@@ -1,119 +1,112 @@
 <template>
   <div class="grid-demo__layout-container">
-    <vs-row>
-      <vs-col
-        vs-offset="0"
-        vs-type="flex"
-        vs-justify="center"
-        vs-align="center"
-        vs-w="2"
-        class="sm:p-4 p-4"
-      >
-        <vx-card class="box-shadow-none">
-          <vs-button color="gray" class="border-radius-0 w-100 mr-3 mb-3">New</vs-button>
-          <vs-button color="gray" class="mr-3 border-radius-0 w-100">Upload</vs-button>
-        </vx-card>
-      </vs-col>
-      <vs-col
-        vs-offset="0"
-        vs-type="flex"
-        vs-justify="center"
-        vs-align="left"
-        vs-w="10"
-        class="sm:p-2 p-4"
-      >
-        <vx-card class="box-shadow-none serach-wrapper">
-          <vx-input-group class="mb-base serach-box">
-            <vs-input icon-pack="feather" class="border-0" icon="icon-search" placeholder="Search" v-model="search" />
-            <template slot="append">
-              <div class="append-text btn-addon">
-                <vs-button color="gray" class="border-radius-0">Search</vs-button>
+    <vs-row class="border-0">
+      <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-9">
+        <vs-row>
+          <vs-col class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-3 p-0">
+            <vx-card class="box-shadow-none">
+              <div class="p-4 NH-btn">
+                <vs-button color="gray" class="border-radius-0 w-100 mr-3 mb-3">New</vs-button>
+                <vs-button color="gray" class="mr-3 border-radius-0 w-100">Upload</vs-button>
               </div>
-            </template>
-          </vx-input-group>
-          <div class="d-flex">
-            <img class="mr-3" src="../assets/images/documents_icon/sorting-active.png" />
-            <img src="../assets/images/documents_icon/grid-icon.png" />
-          </div>
-        </vx-card>
-      </vs-col>
-    </vs-row>
-    <vs-row>
-      <vs-col
-        vs-offset="0"
-        vs-type="flex"
-        vs-align="center"
-        vs-w="2"
-        class="sm:p-2 p-4"
-      >
-        <!-- <nav
-          class="header-navbar navbar-expand-md navbar navbar-with-menu fixed-top navbar-light navbar-shadow"
-        >
-          <div class="navbar-wrapper">
-            <div class="navbar-header">
-              <ul>
-                <li v-for="file in files" :key="file.id">
-                  <div class="tree-view d-flex align-items-center cursor-pointer" @click="getFiles(file)" >
-                    <img src="../assets/images/documents_icon/folder_img.png" />
+              <v-treeview
+                v-model="treeData"
+                :treeTypes="treeTypes"
+                @selected="selected"
+                :openAll="openAll"
+                :contextItems="contextItems"
+                @contextSelected="contextSelected"
+                class="p-2 pb-0"
+              ></v-treeview>
 
-                    <span>{{file.title}}</span>
+              <div class="p-2 submenu-document">
+                <div class="doc-submenu-list" v-for="data in hilightsData" :key="data.id">
+                  <i :class="data.icon"></i>
+                  <span>{{data.title}}</span>
+                </div>
+              </div>
+            </vx-card>
+          </vs-col>
+          <vs-col class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-9 p-0">
+            <vx-card class="box-shadow-none serach-wrapper p-2">
+              <vx-input-group class="mb-base serach-box">
+                <vs-input
+                  icon-pack="feather"
+                  class="border-0"
+                  icon="icon-search"
+                  placeholder="Search"
+                  v-model="search"
+                />
+                <template slot="append">
+                  <div class="append-text btn-addon">
+                    <vs-button color="gray" class="border-radius-0 addonsearch-btn">Search</vs-button>
                   </div>
-                  <ul v-if="file.isOpen == true && file.sub_Files.length > 0">
-                    <li v-for="data in file.sub_Files" :key="data.id">
-                      <div class="pl-3 tree-view d-flex align-items-center cursor-pointer" @click="getFiles(data)">
-
-                        <img
-                          src="../assets/images/documents_icon/folder_img.png"
-                          v-if="data.sub_Files.length > 0"
-                        />
-                        {{data.title}}
-                      </div>
-                    </li>
-                  </ul>
-                  <span
-                    v-if="file.isOpen == true && file.sub_Files.length <= 0"
-                  >There is no any files in this folder.</span>
-                </li>
-              </ul>
+                </template>
+              </vx-input-group>
+              <div class="d-flex">
+                <img
+                  class="mr-3 pr-2 p-2"
+                  width="45px"
+                  height="45px"
+                  src="../assets/images/documents_icon/sorting-active.png"
+                />
+                <img
+                  class="p-2"
+                  width="45px"
+                  height="45px"
+                  src="../assets/images/documents_icon/grid-icon.png"
+                />
+              </div>
+            </vx-card>
+            <div v-if="subFilesdata.length" class="w-100 d-flex flex-wrap folder-main">
+              <div class="folder-wrapper" v-for="subData in subFilesdata" :key="subData.id">
+                <span @click="getFiles(subData)" class="cursor-pointer">
+                  <div class="file-icon text-center" v-if="subData.children.length > 0">
+                    <img src="../assets/images/documents_icon/folder_img.png" class="img-fluid" />
+                    <span>{{subData.text}}</span>
+                  </div>
+                  <div class="file-icon text-center" v-else>
+                    <img src="../assets/images/documents_icon/folder_img.png" />
+                    <span>{{subData.text}}</span>
+                  </div>
+                </span>
+              </div>
             </div>
-            <div class="navbar-container content">
-              <div id="navbar-mobile" class="navbar-collapse"></div>
+          </vs-col>
+        </vs-row>
+      </div>
+      <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-3 pl-6">
+        <div class="row border-none">
+          <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
+            <div class="vs-row border-none">
+              <div class="vs-xs-12 vs-sm-12 vs-md-12">
+                <div class="doc-detail">
+                  <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+                </div>
+              </div>
             </div>
           </div>
-        </nav> -->
-
-        <v-treeview
-        v-model="treeData"
-        :treeTypes="treeTypes"
-        @selected="selected"
-        :openAll="openAll"
-        :contextItems="contextItems"
-        @contextSelected="contextSelected">
-        </v-treeview>
-     </vs-col>
-      <vs-col
-        vs-offset="0"
-        vs-type="flex"
-        vs-align="left"
-        vs-w="10"
-        class="sm:p-2 p-4"
-      >
-        <div v-if="subFilesdata.length" class="w-100 d-flex flex-wrap folder-main">
-          <div class="folder-wrapper" v-for="subData in subFilesdata" :key="subData.id">
-            <span @click="getFiles(subData)" class="cursor-pointer">
-              <div class="file-icon text-center"  v-if="subData.children.length > 0">
-                <img src="../assets/images/documents_icon/folder_img.png" class="img-fluid"/>
-                <span>{{subData.text}}</span>
+          <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
+            <div class="vs-row border-none">
+              <div class="vs-xs-12 vs-sm-12 vs-md-12">
+                <div class="doc-detail">
+                  <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+                </div>
               </div>
-              <div class="file-icon text-center"  v-else>
-                <img src="../assets/images/documents_icon/folder_img.png" />
-                <span>{{subData.text}}</span>
+            </div>
+          </div>
+          <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
+            <div class="vs-row border-none">
+              <div class="vs-xs-12 vs-sm-12 vs-md-12">
+                <div class="doc-detail">
+                  <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+                </div>
               </div>
-            </span>
+            </div>
           </div>
         </div>
-        <!-- <div>{{subFilesdata}}</div> -->
-      </vs-col>
+      </div>
+      <!-- <vs-col vs-offset="0" vs-align="left" vs-w="2" class="sm p-0"></vs-col> -->
     </vs-row>
   </div>
 </template>
@@ -127,6 +120,38 @@ export default {
   data () {
     return {
       subFilesdata: [],
+      hilightsData: [
+        {
+          id: 1,
+          title: 'in',
+          icon: "fas fa-sign-in-alt",
+          children: []
+        },
+        {
+          id: 2,
+          title: 'Out',
+          icon: "fas fa-sign-out-alt",
+          children: []
+        },
+        {
+          id: 3,
+          title: 'Stared',
+          icon: "fas fa-star",
+          children: []
+        },
+        {
+          id: 4,
+          title: 'Shared Links',
+          icon: "fas fa-share-alt",
+          children: []
+        },
+        {
+          id: 5,
+          title: 'Trash',
+          icon: "fas fa-trash-alt",
+          children: []
+        },
+      ],
       search: '',
       openAll: false,
       treeTypes: [
@@ -135,54 +160,50 @@ export default {
           max_children: 6,
           max_depth: 4,
           valid_children: [
-            "FMM_EMPLOYEE",
-            "FMM_SPOUSE",
-            "FMM_CHILD",
-            "FMM_SIBLING",
-            "FMM_PARENT",
-            "FMM_PARENT_IN_LAW"
+            "Folder",
+            "In",
+            "Out",
+            "Stared",
+            "Trash",
+            "Shared",
+            "File"
           ]
         },
         {
-          type: "FMM_EMPLOYEE",
+          type: "Folder",
           icon: "fas fa-folder",
           valid_children: ["Basic", "Top-up"]
         },
         {
-          type: "FMM_SPOUSE",
-          icon: "fas fa-folder",
+          type: "In",
+          icon: "fas fa-sign-in-alt",
           valid_children: ["Basic", "Top-up"]
         },
         {
-          type: "FMM_CHILD",
-          icon: "fas fa-user",
+          type: "Out",
+          icon: "fas fa-sign-out-alt",
           valid_children: ["Basic", "Top-up"]
         },
         {
-          type: "FMM_SIBLING",
-          icon: "fas fa-user",
+          type: "Stared",
+          icon: "fas fa-star",
           valid_children: ["Basic", "Top-up"]
         },
         {
-          type: "FMM_PARENT",
-          icon: "fas fa-user",
+          type: "Trash",
+          icon: "fas fa-trash-alt",
           valid_children: ["Basic", "Top-up"]
         },
         {
-          type: "FMM_PARENT_IN_LAW",
-          icon: "fas fa-user",
+          type: "Shared",
+          icon: "fal fa-share-alt",
           valid_children: ["Basic", "Top-up"]
         },
         {
-          type: "Basic",
-          icon: "fas fa-hospital",
-          valid_children: ["Top-up"]
+          type: "File",
+          icon: "fas fa-file",
+          valid_children: ["Basic", "Top-up"]
         },
-        {
-          type: "Top-up",
-          icon: "fas fa-plus-square",
-          valid_children: []
-        }
       ],
       treeData: filesList,
       contextItems: [],
@@ -195,11 +216,11 @@ export default {
       file.isOpen = !file.isOpen
       this.subFilesdata = file.children
     },
-    getTypeRule(type) {
+    getTypeRule (type) {
       var typeRule = this.treeTypes.filter(t => t.type == type)[0];
       return typeRule;
     },
-    contextSelected(command) {
+    contextSelected (command) {
       switch (command) {
         case "Create Basic":
           var node = {
@@ -224,13 +245,13 @@ export default {
           break;
       }
     },
-    selected(node) {
+    selected (node) {
       this.subFilesdata = node.model.children
-      console.log('Node =>',this.subFilesdata);
+      console.log('Node =>', this.subFilesdata);
       this.selectedNode = node;
       this.contextItems = [];
       var typeRule = this.getTypeRule(this.selectedNode.model.type);
-      typeRule.valid_children.map(function(type, key) {
+      typeRule.valid_children.map(function (type, key) {
         var childType = this.getTypeRule(type);
         var item = {
           title: "Create " + type,

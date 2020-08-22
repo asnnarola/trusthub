@@ -1,88 +1,42 @@
 export default [
-  {
-    id: 100767.0, text: "Employee", type: "FMM_EMPLOYEE", count: 0,
-    children: [
-      {
-        id: 100811.0, text: "Basic plan", type: "Basic", count: 0,
-        children: [
-          {
-            id: 101161.0, text: "Top-up", type: "Top-up", count: 152, children: []
-          }
-        ]
-      },
-      {
-        id: 100812.0, text: "Basic plan", type: "Basic", count: 0, children: []
-      },
-      {
-        id: 101162.0, text: "This Top-up can be at level 2", type: "Top-up", count: 152, children: []
-      }
-    ]
-  },
-  {
-    id: 100768.0, text: "Spouse", type: "FMM_SPOUSE", count: 0,
-    children: [
-      {
-        id: 100813.0, text: "Basic plan", type: "Basic", count: 0, children: [
-          {
-            id: 101163.0, text: "Top-up", type: "Top-up", count: 152, children: []
-          }
-        ]
-      },
-      {
-        id: 100814.0, text: "Basic plan", type: "Basic", count: 0, children: [
-          {
-            id: 101164.0, text: "Top-up", type: "Top-up", count: 152, children: []
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: 100769.0, text: "Child", type: "FMM_CHILD", count: 0, children: [
-      {
-        id: 100815.0, text: "Basic plan", type: "Basic", count: 0, children: [
-          {
-            id: 101165.0, text: "Top-up", type: "Top-up", count: 152, children: []
-          }
-        ]
-      },
-      {
-        id: 100816.0, text: "Basic plan", type: "Basic", count: 0, children: [
-          {
-            id: 101166.0, text: "Top-up", type: "Top-up", count: 0, children: []
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: 100770.0, text: "Parents", type: "FMM_PARENT", count: 0, children: [
-      {
-        id: 100817.0, text: "Basic plan", type: "Basic", count: 0, children: [
-          {
-            id: 101167.0, text: "Top-up", type: "Top-up", count: 124, children: []
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: 100768.0, text: "Spouse", type: "FMM_SPOUSE", count: 0,
-    children: [
-      {
-        id: 100813.0, text: "Basic plan", type: "Basic", count: 0, children: [
-          {
-            id: 101163.0, text: "Top-up", type: "Top-up", count: 152, children: []
-          }
-        ]
-      },
-      {
-        id: 100814.0, text: "Basic plan", type: "Basic", count: 0, children: [
-          {
-            id: 101164.0, text: "Top-up", type: "Top-up", count: 152, children: []
-          }
-        ]
-      }
-    ]
-  },
-]
+    {
+      id: 1, text: "My Files", type: "Folder", count: 0,
+    children:
+      [
+        {
+          id: 1, text: "Labels", type: "Folder", count: 0, children: [
+            {
+              id: 1, text: "Labels-1", type: "File", count: 0, children: []
+            },
+          ]
+        },
+        {
+          id: 2, text: "Office", type: "Folder", count: 0, children:
+            [
+              {
+                id: 1, text: "Accounting", type: "Folder", count: 0, children: [{
+                  id: 1, text: "Accounting-1", type: "File", count: 0, children: []
+                },]
+              },
+              {
+                id: 2, text: "Excel2013", type: "File", count: 0, children: []
+              },
+            ]
+        },
+        {
+          id: 3, text: "PDF Docs", type: "Folder", count: 0, children: [
+            {
+              id: 1, text: "PDF-1", type: "File", count: 0, children: []
+            },
+          ]
+        },
+        {
+          id: 4, text: "Users", type: "Folder", count: 0, children: [
+            {
+              id: 1, text: "User-1", type: "File", count: 0, children: []
+            },
+          ]
+        },
+      ]
+  }
+  ]
