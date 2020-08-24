@@ -48,17 +48,21 @@
                   class="mr-3 pr-2 p-2"
                   width="45px"
                   height="45px"
-                  src="../assets/images/documents_icon/sorting-active.png"
+                  :src="require('../assets/images/documents_icon/' + imageforList + '.png')"
+                  @click="onListView()"
                 />
+                <span :disabled = "onGrid">
                 <img
                   class="p-2"
                   width="45px"
                   height="45px"
-                  src="../assets/images/documents_icon/grid-icon.png"
+                  :src="require('../assets/images/documents_icon/' + imageforGrid + '.png')"
+                  @click="onGridView()"
                 />
+                </span>
               </div>
             </vx-card>
-            <div v-if="subFilesdata.length" class="w-100 d-flex flex-wrap folder-main">
+            <div v-if="subFilesdata.length && !onList && onGrid" class="w-100 d-flex flex-wrap folder-main">
               <div class="folder-wrapper" v-for="subData in subFilesdata" :key="subData.id">
                 <span @click="getFiles(subData)" class="cursor-pointer">
                   <div class="file-icon text-center" v-if="subData.children.length > 0">
@@ -71,6 +75,18 @@
                   </div>
                 </span>
               </div>
+            </div>
+            <div v-if="subFilesdata.length && onList && !onGrid" class="w-100 d-flex flex-wrap folder-main">
+              <vs-table >
+                <template slot="thead">
+                  <vs-th> </vs-th>
+                  <vs-th>Name</vs-th>
+                  <vs-th>Stars</vs-th>
+                  <vs-th>Signed</vs-th>
+                  <vs-th>Owner</vs-th>
+                  <vs-th>Size</vs-th>
+                </template>
+              </vs-table>
             </div>
           </vs-col>
         </vs-row>
@@ -112,10 +128,10 @@
 </template>
 
 <script>
-import axios from '../axios.js'
 import subDocument from './Sub-Document/sub-document.vue'
 import filesList from './Document_Files.js'
 import VTreeview from 'v-treeview'
+import LoginJWTVue from './pages/login/LoginJWT.vue'
 export default {
   data () {
     return {
@@ -153,6 +169,10 @@ export default {
         },
       ],
       search: '',
+      onGrid: true,
+      imageforGrid: 'grid_icon',
+      imageforList: 'sorting_active',
+      onList: false,
       openAll: false,
       treeTypes: [
         {
@@ -263,6 +283,30 @@ export default {
 
       this.contextItems.push({ title: "Rename", icon: "far fa-edit" });
       this.contextItems.push({ title: "Remove", icon: "far fa-trash-alt" });
+    },
+    onListView(){
+      console.log('List =>',this.onList);
+      if(this.onList == true){
+        return;
+      } else{
+        this.onList = true;
+        this.onGrid = false;
+        console.log('On List view Click');
+        // if (this.imageforList == "sorting"){
+        //   this.imageforList = 'sorting_active'
+        // }else {
+        //   this.imageforList ='sorting';
+        //   }
+      }
+    },
+    onGridView(){
+      if(this.onGrid == true){
+        return
+      }else{
+        this.onList = false;
+        this.onGrid = true;
+        console.log('On List grid Click');
+      }
     }
   },
   components: {

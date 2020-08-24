@@ -128,6 +128,15 @@ body {
               li.starred-page {
                 padding-left: 7px;
                 padding-right: 7px;
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                &:nth-child(1), &:nth-child(8){
+                  img{
+                    width: 35px;
+                    height: 35px;
+                  }
+                }
                 img {
                   width: 30px;
                 }

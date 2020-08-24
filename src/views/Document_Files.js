@@ -14,9 +14,11 @@ export default [
           id: 2, text: "Office", type: "Folder", count: 0, children:
             [
               {
-                id: 1, text: "Accounting", type: "Folder", count: 0, children: [{
+                id: 1, text: "Accounting", type: "Folder", count: 0, children: [
+                  {
                   id: 1, text: "Accounting-1", type: "File", count: 0, children: []
-                },]
+                  },
+                ]
               },
               {
                 id: 2, text: "Excel2013", type: "File", count: 0, children: []

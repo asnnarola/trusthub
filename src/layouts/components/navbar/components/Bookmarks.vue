@@ -4,21 +4,21 @@
     <ul class="vx-navbar__starred-pages">
       <draggable v-model="starredPagesLimited" :group="{name: 'pinList'}" class="flex cursor-move h-top-icon">
         <li class="starred-page" v-for="img in headr_Icon1" :key="img">
-          <img :src="require('@/assets/images/sidebar_icon/' + img.icon_url)">
+          <img :src="require('@/assets/images/header_icon/' + img.icon_url)">
         </li>
       </draggable>
     </ul>
     <ul class="vx-navbar__starred-pages">
       <draggable v-model="starredPagesLimited" :group="{name: 'pinList'}" class="flex cursor-move h-top-icon">
         <li class="starred-page" v-for="img in header_Icon2" :key="img">
-          <img :src="require('@/assets/images/sidebar_icon/' + img.icon_url)">
+          <img :src="require('@/assets/images/header_icon/' + img.icon_url)">
         </li>
       </draggable>
     </ul>
     <ul class="vx-navbar__starred-pages">
       <draggable v-model="starredPagesLimited" :group="{name: 'pinList'}" class="flex cursor-move h-top-icon">
         <li class="starred-page" v-for="img in header_Icon3" :key="img">
-          <img :src="require('@/assets/images/sidebar_icon/' + img.icon_url)">
+          <img :src="require('@/assets/images/header_icon/' + img.icon_url)">
         </li>
       </draggable>
     </ul>
@@ -44,31 +44,32 @@ export default {
     return {
       headr_Icon1:[
         {
-          icon_url:'hhh1.png'
+          icon_url:'id.png'
         },
         {
-          icon_url:'h2.png'
+          icon_url:'chip.png'
         }
       ],
         header_Icon2:[
         {
-          icon_url:'h3.png'
+          icon_url:'face.png'
         },
         {
-          icon_url:'h4.png'
+          icon_url:'fingerprint.png'
         },
         {
-          icon_url:'h5.png'
+          icon_url:'palm.png'
         },
         {
-          icon_url:'h6.png'
+          icon_url:'voice.png'
         },
+
         {
-          icon_url:'h7.png'
+          icon_url:'eye.png'
         }],
         header_Icon3:[
         {
-          icon_url:'h8.png'
+          icon_url:'signature.png'
         },
       ],
       showBookmarkPagesDropdown : false

@@ -47,7 +47,7 @@
         </div>
       </vx-card>
       <div class="cpy-txt">
-        <p class="text-right mt-2 txt-black"
+        <p class="text-right mt-2 text-white"
         >Copyright © 2020  - Gurucube Corp. - All Rights Reserved | Rev 4.7.4</p>
       </div>
     </div>

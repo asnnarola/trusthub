@@ -19,7 +19,7 @@
           <div class="vx-row no-gutter justify-center">
             <div class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column">
               <div class="login-logo">
-                <img src="@/assets/images/sidebar_icon/logo-xl.png" alt="login" class="img-fluid" />
+                <img src="@/assets/images/login_icon/logo.png" alt="login" class="img-fluid" />
               </div>
               <div class="appstore-wrapper d-flex mb-10 mr-10 justify-content-end">
                 <router-link to="/">
@@ -61,34 +61,34 @@
                   <div class="separte-border"></div>
                 </div>
                 <div class="bottom-menu-icon">
-                <ul class="d-flex flex-wrap">
+                <ul class="d-flex flex-wrap align-items-center">
                   <li class="starred-page">
-                    <img src="@/assets/images/sidebar_icon/hhh1.png" />
+                    <img src="@/assets/images/header_icon/id.png" />
                   </li>
                   <li class="starred-page">
-                    <img src="@/assets/images/sidebar_icon/h2.png" />
-                  </li>
-                </ul>
-                <ul class="d-flex flex-wrap">
-                  <li class="starred-page">
-                    <img src="@/assets/images/sidebar_icon/h3.png" />
-                  </li>
-                  <li class="starred-page">
-                    <img src="@/assets/images/sidebar_icon/h4.png" />
-                  </li>
-                  <li class="starred-page">
-                    <img src="@/assets/images/sidebar_icon/h5.png" />
-                  </li>
-                  <li class="starred-page">
-                    <img src="@/assets/images/sidebar_icon/h6.png" />
-                  </li>
-                  <li class="starred-page">
-                    <img src="@/assets/images/sidebar_icon/h7.png" />
+                    <img src="@/assets/images/header_icon/chip.png" />
                   </li>
                 </ul>
-                <ul class="d-flex flex-wrap">
+                <ul class="d-flex flex-wrap align-items-center">
                   <li class="starred-page">
-                    <img src="@/assets/images/sidebar_icon/h8.png" />
+                    <img src="@/assets/images/header_icon/face.png" />
+                  </li>
+                  <li class="starred-page">
+                    <img src="@/assets/images/header_icon/fingerprint.png" />
+                  </li>
+                  <li class="starred-page">
+                    <img src="@/assets/images/header_icon/palm.png" />
+                  </li>
+                  <li class="starred-page">
+                    <img src="@/assets/images/header_icon/voice.png" />
+                  </li>
+                  <li class="starred-page">
+                    <img src="@/assets/images/header_icon/eye.png" />
+                  </li>
+                </ul>
+                <ul class="d-flex flex-wrap align-items-center">
+                  <li class="starred-page">
+                    <img src="@/assets/images/header_icon/signature.png" />
                   </li>
                 </ul>
                 </div>
@@ -108,8 +108,9 @@
         </div>
       </vx-card>
       <div class="cpy-txt">
-        <p class="text-right mt-2 txt-black"
+        <p class="text-right mt-2 text-white"
         >Copyright © 2020  - Gurucube Corp. - All Rights Reserved | Rev 4.7.4</p>
+        <!-- <p>{copyRight}</p> -->
       </div>
     </div>
   </div>
@@ -120,6 +121,7 @@
 import LoginJwt from './LoginJWT.vue'
 import LoginFirebase from './LoginFirebase.vue'
 import LoginAuth0 from './LoginAuth0.vue'
+// import copyRight from '../../components/'
 
 export default {
   components: {

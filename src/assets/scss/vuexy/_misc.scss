@@ -7,11 +7,10 @@
     Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
 
-
 code {
   font-family: $font-family-sans-serif;
   background: #eee;
-  padding: 0.1rem .3rem;
+  padding: 0.1rem 0.3rem;
   border-radius: 3px;
 }
 
@@ -28,6 +27,7 @@ ol {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    background: #aeaeae;
   }
 
   .full-page-bg-color {
@@ -55,7 +55,6 @@ ol {
   height: 240px;
 }
 
-
 // ======================================================================================
 // Video.js
 // ======================================================================================
@@ -63,7 +62,6 @@ ol {
   background-size: cover !important;
   width: 100% !important;
 }
-
 
 // ======================================================================================
 // Spinner
@@ -84,7 +82,6 @@ ol {
   }
 }
 /*! rtl:end:ignore */
-
 
 // ======================================================================================
 // Feather - Font Icon

@@ -20,6 +20,10 @@ body {
   justify-content: flex-end !important;
   -ms-justify-content: flex-end !important;
 }
+.align-items-center {
+  align-items: center !important;
+  -ms-align-items: center !important;
+}
 .img-fluid {
   max-width: 100%;
   height: auto;
@@ -159,6 +163,13 @@ body {
                       li {
                         padding: 0px 5px 0px 7px;
                         list-style: none;
+                        &:nth-child(1),
+                        &:nth-child(8) {
+                          img {
+                            width: 35px;
+                            height: 35px;
+                          }
+                        }
                         img {
                           width: 30px;
                         }

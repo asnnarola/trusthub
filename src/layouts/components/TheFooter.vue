@@ -13,6 +13,7 @@
     <footer class="the-footer flex-wrap justify-between" :class="classes">
         <p class="text-white">
           <span>Copyright © 2020 - Gurucube Corp. - All Rights Reserved  |  Rev 4.7.4 &copy;</span>
+          <!-- <span>{{a.title}}</span> -->
           <!-- <span>{{ new Date().getFullYear() }} </span>
           <a href="https://1.envato.market/vuexy_admin" target="_blank" rel="nofollow">Pixinvent</a>
           <span class="hidden sm:inline-block">, All rights Reserved</span> -->
@@ -25,12 +26,18 @@
 </template>
 
 <script>
+// import a from './copyright.js'
 export default {
   name: 'the-footer',
   props: {
     classes: {
       type: String
     }
-  }
+  },
+  created() {
+    setTimeout(() => {
+      console.log('Title =>',copyrightText);
+    }, 5000);
+  },
 }
 </script>
