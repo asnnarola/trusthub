@@ -47,8 +47,8 @@
         </div>
       </vx-card>
       <div class="cpy-txt">
-        <p class="text-right mt-2 text-white"
-        >Copyright © 2020  - Gurucube Corp. - All Rights Reserved | Rev 4.7.4</p>
+        <p class="text-right mt-2 text-white">
+        {{copyRightText}}</p>
       </div>
     </div>
   </div>
@@ -56,9 +56,11 @@
 </template>
 
 <script>
+import copyRight from '../../layouts/components/copyright.js'
 export default {
   data () {
     return {
+      copyRightText: copyRight[0].title,
       value1: ''
     }
   }

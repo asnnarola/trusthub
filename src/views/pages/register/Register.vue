@@ -15,9 +15,9 @@
           <div class="vx-row no-gutter justify-center">
             <div class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column">
               <div class="login-logo">
-                <img src="@/assets/images/sidebar_icon/logo-xl.png" alt="login" class="img-fluid" />
+                <img src="@/assets/images/login_icon/logo.png" alt="login" class="img-fluid" />
               </div>
-              <div class="appstore-wrapper d-flex mb-10 mr-10 justify-content-end">
+              <div class="appstore-wrapper d-flex mb-5 mr-10 justify-content-end">
                 <router-link to="/">
                   <img
                     src="@/assets/images/login_icon/Android-store.png"
@@ -42,27 +42,14 @@
                     <div class="msg-wrapper-icon">
                       <img
                         src="@/assets/images/sidebar_icon/message-gray.png"
-                        alt="login"
+                        alt="login" width="45"
                         class="img-fluid"
                       />
                     </div>
                   </div>
                   <hr class="border-lightgray" />
-                  <!-- <vs-tabs>
-                  <vs-tab label="JWT">-->
                   <register-jwt></register-jwt>
                 </div>
-
-                <!-- </vs-tab>
-
-                  <vs-tab label="Firebase">
-                    <login-firebase></login-firebase>
-                  </vs-tab>
-
-                  <vs-tab label="Auth0">
-                    <login-auth0></login-auth0>
-                  </vs-tab>
-                </vs-tabs>-->
               </div>
             </div>
           </div>
@@ -70,7 +57,7 @@
       </vx-card>
       <div class="cpy-txt">
         <p class="text-right mt-2 text-white">
-          Copyright © 2020 - Gurucube Corp. - All Rights Reserved | Rev 4.7.4
+          {{copyRightText}}
           </p>
       </div>
     </div>
@@ -82,13 +69,18 @@
 import RegisterJwt from './RegisterJWT.vue'
 import RegisterFirebase from './RegisterFirebase.vue'
 import RegisterAuth0 from './RegisterAuth0.vue'
-
+import Copyright from '../../../layouts/components/copyright.js'
 export default {
   components: {
     RegisterJwt,
     RegisterFirebase,
     RegisterAuth0
-  }
+  },
+  data() {
+    return {
+      copyRightText: copyRight[0].title,
+    }
+  },
 }
 </script>
 

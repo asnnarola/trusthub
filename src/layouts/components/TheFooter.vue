@@ -11,33 +11,26 @@
 
 <template functional>
     <footer class="the-footer flex-wrap justify-between" :class="classes">
-        <p class="text-white">
-          <span>Copyright © 2020 - Gurucube Corp. - All Rights Reserved  |  Rev 4.7.4 &copy;</span>
-          <!-- <span>{{a.title}}</span> -->
-          <!-- <span>{{ new Date().getFullYear() }} </span>
-          <a href="https://1.envato.market/vuexy_admin" target="_blank" rel="nofollow">Pixinvent</a>
-          <span class="hidden sm:inline-block">, All rights Reserved</span> -->
+      {{txt}}
+        <p class="text-white">aaa{{copyrightText}}
+          <!-- <span>Copyright © 2020 - Gurucube Corp. - All Rights Reserved  |  Rev 4.7.4 &copy;</span> -->
         </p>
-        <!-- <span class="md:flex hidden items-center">
-            <span>Hand-crafted & Made with</span>
-            <feather-icon icon="HeartIcon" svgClasses="stroke-current text-danger w-6 h-6" class="ml-2" />
-        </span> -->
     </footer>
 </template>
 
 <script>
-// import a from './copyright.js'
+import copyright from './copyright.js'
 export default {
   name: 'the-footer',
+  data() {
+    return {
+      copyrightText:'ABCD',
+    }
+  },
   props: {
     classes: {
       type: String
     }
-  },
-  created() {
-    setTimeout(() => {
-      console.log('Title =>',copyrightText);
-    }, 5000);
   },
 }
 </script>

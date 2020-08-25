@@ -3,21 +3,21 @@
     <!-- STARRED PAGES - FIRST 10 -->
     <ul class="vx-navbar__starred-pages">
       <draggable v-model="starredPagesLimited" :group="{name: 'pinList'}" class="flex cursor-move h-top-icon">
-        <li class="starred-page" v-for="img in headr_Icon1" :key="img">
+        <li class="starred-page" v-for="img in headr_Icon1" :key="img.icon_url">
           <img :src="require('@/assets/images/header_icon/' + img.icon_url)">
         </li>
       </draggable>
     </ul>
     <ul class="vx-navbar__starred-pages">
       <draggable v-model="starredPagesLimited" :group="{name: 'pinList'}" class="flex cursor-move h-top-icon">
-        <li class="starred-page" v-for="img in header_Icon2" :key="img">
+        <li class="starred-page" v-for="img in header_Icon2" :key="img.icon_url">
           <img :src="require('@/assets/images/header_icon/' + img.icon_url)">
         </li>
       </draggable>
     </ul>
     <ul class="vx-navbar__starred-pages">
       <draggable v-model="starredPagesLimited" :group="{name: 'pinList'}" class="flex cursor-move h-top-icon">
-        <li class="starred-page" v-for="img in header_Icon3" :key="img">
+        <li class="starred-page" v-for="img in header_Icon3" :key="img.icon_url">
           <img :src="require('@/assets/images/header_icon/' + img.icon_url)">
         </li>
       </draggable>

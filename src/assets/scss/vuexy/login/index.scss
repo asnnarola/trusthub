@@ -36,6 +36,9 @@ body {
   width: 225px;
   max-width: 250px;
 }
+.vs-button-primary.vs-button-border .vs-button-backgroundx, .vs-button-primary.vs-button-flat .vs-button-backgroundx{
+
+}
 .btn-green {
   font-weight: bold;
   font-size: 16px;
@@ -51,6 +54,9 @@ body {
   &:hover {
     background: #fff !important;
     color: #4ec12d !important;
+  }
+  &.mxw-130{
+    max-width: 130px;
   }
 }
 .btn-gray {
@@ -69,6 +75,15 @@ body {
     background: #fff !important;
     color: #888888 !important;
   }
+}
+.Trusthub-btn:focus, .Trusthub-btn:active {
+  background-color: #f1c800 !important;
+    background: #f1c800 !important;
+    color: #fff;
+    border: 2px solid #f1c800 !important;
+}
+.vs-button-primary.vs-button-border .vs-button-backgroundx, .vs-button-primary.vs-button-flat .vs-button-backgroundx{
+  background: #f1c800;
 }
 
 .vs-checkbox-primary {
@@ -99,10 +114,10 @@ body {
               }
               .appstore-wrapper {
                 a {
-                  max-width: 150px;
+                  max-width: 185px;
                   margin-left: 15px;
                   img {
-                    height: 45px;
+                    height: 60px;
                   }
                 }
               }
@@ -161,7 +176,7 @@ body {
                         padding-right: 18px;
                       }
                       li {
-                        padding: 0px 5px 0px 7px;
+                        padding: 0px 13px 0px 13px;
                         list-style: none;
                         &:nth-child(1),
                         &:nth-child(8) {
@@ -174,6 +189,11 @@ body {
                           width: 30px;
                         }
                       }
+                    }
+                  }
+                  .txt-wraper{
+                    p{
+                      color: #787878;
                     }
                   }
                   .txt-or {

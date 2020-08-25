@@ -76,7 +76,7 @@
               v-if="item.header && !verticalNavMenuItemsMin"
               class="navigation-header truncate"
               :key="`header-${index}`"
-            >
+            >{
               <!-- <img src="../../../assets/images/sidebar_icon/icon1.png" alt="123"> -->
               {{ $t(item.i18n) || item.header }}
             </span>
@@ -131,7 +131,7 @@
             </div>
           </div>
           <ul class="bt-menu-list">
-            <li v-for="data in bottom_data" :key="data" class="vs-sidebar--item">
+            <li v-for="data in bottom_data" :key="data.id" class="vs-sidebar--item">
               <div v-if="data.url">
                 <router-link :to="data.url" class="border-0">
                   <span class="feather-icon select-none relative">
