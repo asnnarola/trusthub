@@ -17,9 +17,9 @@
       <vx-card>
         <div slot="no-body" class="full-page-bg-color">
           <div class="vx-row no-gutter justify-center">
-            <div class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column">
+            <div class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column ">
               <div class="login-logo">
-                <img src="@/assets/images/sidebar_icon/logo-xl.png" alt="login" class="img-fluid" />
+                <img src="@/assets/images/login_icon/logo.png" alt="login" class="img-fluid" />
               </div>
             </div>
 
@@ -31,13 +31,22 @@
                       <h4 class="mb-4">Recover your password</h4>
                       <p>Please enter your email address and we'll send you instructions on how to reset your password.</p>
                     </div>
+                    <div class="msg-wrapper-icon">
+                      <img
+                        src="@/assets/images/sidebar_icon/message-gray.png"
+                        alt="login"
+                        width="45"
+                        class="img-fluid"
+                      />
+                    </div>
                   </div>
                   <hr class="border-lightgray" />
                   <div class="tab-wrapper-form">
                     <vs-input type="email" label-placeholder="Email" v-model="value1" class="w-full mb-8" />
                     <div class="flex flex-wrap justify-between mb-3 LT-wrap">
-                      <vs-button type="border" to="/login" class="btn-green">Back To Login</vs-button>
-                      <vs-button class="btn-gray">Recover Password</vs-button>
+                      <router-link to="/login"><u class="fw-500 txt-dark-gray">Return to Login Page</u></router-link>
+                      <!-- <vs-button type="border" to="/login" class="btn-green">Back To Login</vs-button> -->
+                      <vs-button class="btn-green">Password Recovery</vs-button>
                     </div>
                   </div>
                 </div>
@@ -66,3 +75,6 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+@import "src/assets/scss/vuexy/login/index.scss";
+</style>

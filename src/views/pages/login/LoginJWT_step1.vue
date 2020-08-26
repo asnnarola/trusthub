@@ -11,7 +11,7 @@
         label-placeholder="Id"
         v-model="id"
         class="w-full"
-        @change="getId($event.target)"/>
+        @input="getId()"/>
     <!-- <span class="text-danger text-sm">{{ errors.first('email') }}</span> -->
     <vs-input
         data-vv-validate-on="blur"
@@ -24,12 +24,8 @@
         label-placeholder="Activation Code"
         v-model="ActivationCoad"
         class="w-full mt-6"
-        @change="getactivationcode($event)"/>
-    <!-- <span class="text-danger text-sm">{{ errors.first('password') }}</span> -->
-
-    <div class="flex flex-wrap justify-between mb-3 LT-wrap">
-      <!-- <vs-button class="btn-green" :disabled="!validateForm" @click="goto()">Next</vs-button> -->
-    </div>
+        @input="getactivationcode()"/>
+    <span class="text-danger text-sm">{{ errors.first('password') }}</span>
   </div>
 </template>
 
@@ -43,18 +39,22 @@ export default {
     }
   },
   computed: {
-    getId(data){
-      console.log('ID =>', data.id);
-        this.$emit("getId", data.id);
-    },
-    getactivationcode(data){
-      console.log('Activation Code =>', data.ActivationCoad)
-        this.$emit("getActivatiobCode", data.ActivationCoad);
-    },
     validateForm () {
       return !this.errors.any() && this.email !== '' && this.password !== ''
     }
-  }
+  },
+  created() {
+    this.$emit("getActivatiobCode", this.ActivationCoad);
+    this.$emit("getId", this.id);
+  },
+  methods: {
+    getId(){
+        this.$emit("getId", this.id);
+    },
+    getactivationcode(){
+        this.$emit("getActivatiobCode", this.ActivationCoad);
+    },
+  },
 }
 
 </script>

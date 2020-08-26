@@ -4,6 +4,24 @@ body {
 .txt-gray {
   color: #aeaeae;
 }
+.txt-dark-gray {
+  color: #737373;
+}
+.txt-green {
+  color: #4ec12d;
+}
+.f-15 {
+  font-size: 15px;
+}
+.position-relative {
+  position: relative;
+}
+.fw-500 {
+  font-weight: 500;
+}
+.fw-600 {
+  font-weight: 600;
+}
 .d-flex {
   display: -ms-flexbox !important;
   display: flex !important;
@@ -36,8 +54,8 @@ body {
   width: 225px;
   max-width: 250px;
 }
-.vs-button-primary.vs-button-border .vs-button-backgroundx, .vs-button-primary.vs-button-flat .vs-button-backgroundx{
-
+.vs-button-primary.vs-button-border .vs-button-backgroundx,
+.vs-button-primary.vs-button-flat .vs-button-backgroundx {
 }
 .btn-green {
   font-weight: bold;
@@ -55,8 +73,11 @@ body {
     background: #fff !important;
     color: #4ec12d !important;
   }
-  &.mxw-130{
+  &.mxw-130 {
     max-width: 130px;
+  }
+  &.mxw-250{
+    max-width: 250px;
   }
 }
 .btn-gray {
@@ -76,13 +97,15 @@ body {
     color: #888888 !important;
   }
 }
-.Trusthub-btn:focus, .Trusthub-btn:active {
+.Trusthub-btn:focus,
+.Trusthub-btn:active {
   background-color: #f1c800 !important;
-    background: #f1c800 !important;
-    color: #fff;
-    border: 2px solid #f1c800 !important;
+  background: #f1c800 !important;
+  color: #fff;
+  border: 2px solid #f1c800 !important;
 }
-.vs-button-primary.vs-button-border .vs-button-backgroundx, .vs-button-primary.vs-button-flat .vs-button-backgroundx{
+.vs-button-primary.vs-button-border .vs-button-backgroundx,
+.vs-button-primary.vs-button-flat .vs-button-backgroundx {
   background: #f1c800;
 }
 
@@ -103,7 +126,7 @@ body {
           .vx-row {
             .vx-col {
               .login-logo {
-                margin-bottom: auto;
+                margin-bottom: 1rem;
                 max-width: 85%;
                 margin-left: 3rem !important;
                 margin-top: 3rem;
@@ -125,6 +148,7 @@ body {
                 .tab-wrapper {
                   .vx-card__title {
                     .wrapper-heading {
+                      max-width: calc(100% - 50px);
                     }
                   }
                   .border-lightgray {
@@ -167,17 +191,32 @@ body {
                     flex-wrap: wrap;
                     justify-content: space-around;
                     margin-bottom: 2rem;
-                    height: 55px;
+                    max-height: 55px;
                     align-items: center;
                     ul {
                       &:nth-child(1),
                       &:nth-child(2) {
-                        border-right: 1px solid #fff;
+                        // border-right: 1px solid #fff;
                         padding-right: 18px;
+                        &:after {
+                          content: "";
+                          position: absolute;
+                          background: #fff;
+                          width: 1px;
+                          height: 80%;
+                          right: 0;
+                        }
                       }
                       li {
                         padding: 0px 13px 0px 13px;
+                        height: 55px;
+                        display: flex;
+                        align-items: center;
                         list-style: none;
+                        transition: ease 0.25s;
+                        &:hover {
+                          background: #ffffff40;
+                        }
                         &:nth-child(1),
                         &:nth-child(8) {
                           img {
@@ -191,8 +230,8 @@ body {
                       }
                     }
                   }
-                  .txt-wraper{
-                    p{
+                  .txt-wraper {
+                    p {
                       color: #787878;
                     }
                   }
@@ -206,6 +245,16 @@ body {
                       border: 1px solid #e7e7e7;
                       margin-top: -12px;
                       margin-bottom: 10px;
+                    }
+                  }
+                  .activation-detail {
+                    background: #f4f6f9;
+                    p {
+                      line-height: 1.55;
+                      small {
+                        font-size: 13px;
+                        color: #707070;
+                      }
                     }
                   }
                 }

@@ -51,18 +51,21 @@
                   :src="require('../assets/images/documents_icon/' + imageforList + '.png')"
                   @click="onListView()"
                 />
-                <span :disabled = "onGrid">
-                <img
-                  class="p-2"
-                  width="45px"
-                  height="45px"
-                  :src="require('../assets/images/documents_icon/' + imageforGrid + '.png')"
-                  @click="onGridView()"
-                />
+                <span :disabled="onGrid">
+                  <img
+                    class="p-2"
+                    width="45px"
+                    height="45px"
+                    :src="require('../assets/images/documents_icon/' + imageforGrid + '.png')"
+                    @click="onGridView()"
+                  />
                 </span>
               </div>
             </vx-card>
-            <div v-if="subFilesdata.length && !onList && onGrid" class="w-100 d-flex flex-wrap folder-main">
+            <div
+              v-if="subFilesdata.length && !onList && onGrid"
+              class="w-100 d-flex flex-wrap folder-main"
+            >
               <div class="folder-wrapper" v-for="subData in subFilesdata" :key="subData.id">
                 <span @click="getFiles(subData)" class="cursor-pointer">
                   <div class="file-icon text-center" v-if="subData.children.length > 0">
@@ -76,15 +79,37 @@
                 </span>
               </div>
             </div>
-            <div v-if="subFilesdata.length && onList && !onGrid" class="w-100 d-flex flex-wrap folder-main">
-              <vs-table >
+            <div
+              v-if="subFilesdata.length && onList && !onGrid"
+              class="w-100 d-flex flex-wrap folder-main"
+            >
+              <vs-table>
                 <template slot="thead">
-                  <vs-th> </vs-th>
+                  <vs-th></vs-th>
                   <vs-th>Name</vs-th>
                   <vs-th>Stars</vs-th>
                   <vs-th>Signed</vs-th>
                   <vs-th>Owner</vs-th>
                   <vs-th>Size</vs-th>
+                </template>
+                <template>
+                  <vs-tr v-for="subData in subFilesdata" :key="subData.id">
+                    <vs-td>
+                      <span @click="getFiles(subData)" class="cursor-pointer">
+                        <div class="file-icon text-center" v-if="subData.children.length > 0">
+                          <img
+                            src="../assets/images/documents_icon/folder_img.png"
+                            class="img-fluid"
+                          />
+                          <span>{{subData.text}}</span>
+                        </div>
+                        <div class="file-icon text-center" v-else>
+                          <img src="../assets/images/documents_icon/folder_img.png" />
+                          <span>{{subData.text}}</span>
+                        </div>
+                      </span>
+                    </vs-td>
+                  </vs-tr>
                 </template>
               </vs-table>
             </div>
@@ -284,11 +309,11 @@ export default {
       this.contextItems.push({ title: "Rename", icon: "far fa-edit" });
       this.contextItems.push({ title: "Remove", icon: "far fa-trash-alt" });
     },
-    onListView(){
-      console.log('List =>',this.onList);
-      if(this.onList == true){
+    onListView () {
+      console.log('List =>', this.onList);
+      if (this.onList == true) {
         return;
-      } else{
+      } else {
         this.onList = true;
         this.onGrid = false;
         console.log('On List view Click');
@@ -299,10 +324,10 @@ export default {
         //   }
       }
     },
-    onGridView(){
-      if(this.onGrid == true){
+    onGridView () {
+      if (this.onGrid == true) {
         return
-      }else{
+      } else {
         this.onList = false;
         this.onGrid = true;
         console.log('On List grid Click');

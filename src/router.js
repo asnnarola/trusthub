@@ -1397,6 +1397,14 @@ const router = new Router({
           }
         },
         {
+          path: '/forgot-password-signature',
+          name: 'page-forgot-password-signature',
+          component: () => import('@/views/pages/ForgotPasswordSignature.vue'),
+          meta: {
+            rule: 'editor'
+          }
+        },
+        {
           // path: '/pages/reset-password',
           path: '/reset-password',
           name: 'page-reset-password',
