@@ -31,7 +31,7 @@
                 </div>
               </div>
 
-              <div class="vs-row" v-if="ProgressBar2 === true">
+              <div class="vs-row" v-if="ProgressBar2 === true" >
                 <div class="vs-sm-12 vs-md-12 vs-lg-12">
                   <div class="loading-bar">
                     <div class="loading-count">{{ percent }}%</div>
@@ -291,6 +291,7 @@ export default {
             step2: true,
             step3: false,
           }
+          this.ProgressBar2 = false
         }, 3900);
       } else if (this.step.step2 == true) {
         this.ProgressBar1 = false

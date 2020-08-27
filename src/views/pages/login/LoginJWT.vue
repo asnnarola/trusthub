@@ -42,7 +42,7 @@
     </div>
     <div class="flex flex-wrap justify-between mb-3 LT-wrap">
       <!-- <vs-button class="btn-green" :disabled="!validateForm" @click="loginJWT">Login</vs-button> -->
-      <vs-button class="btn-green" :disabled="!validateForm" @click="goStep1()">Login</vs-button>
+      <vs-button class="btn-green" :disabled="!validateForm" @click="loginJWT()">Login</vs-button>
       <vs-button class="btn-gray Trusthub-btn" type="border">Trusthub</vs-button>
     </div>
     <p class="sub-trial-txt mt-5 mb-3 pb-2">
@@ -57,8 +57,8 @@
 export default {
   data () {
     return {
-      email: 'admin@admin.com',
-      password: 'adminadmin',
+      email: '',
+      password: '',
       checkbox_remember_me: false,
       showProgressBar: false,
       step: {}
@@ -80,6 +80,8 @@ export default {
           step2: false,
           step3: false,
         }
+        this.showProgressBar = false;
+        this.$emit("showProgressBar", this.showProgressBar);
         this.$emit("gosetp", this.step);
       }, 3900);
       // this.$emit("startProgressBar",this.startProgressBar() )
@@ -118,7 +120,10 @@ export default {
       }
 
       this.$store.dispatch('auth/loginJWT', payload)
-        .then(() => { this.$vs.loading.close() })
+        .then(() => {
+          this.goStep1()
+          this.$vs.loading.close()
+        })
         .catch(error => {
           this.$vs.loading.close()
           this.$vs.notify({
@@ -130,6 +135,7 @@ export default {
           })
         })
     },
+
     registerUser () {
       if (!this.checkLogin()) return
       this.$router.push('/register').catch(() => { })

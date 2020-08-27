@@ -200,14 +200,14 @@ export default {
     bottom_data: [{
       url: '/setting',
       name: 'Setting',
-      icon_url: 'setting.png',
+      icon_url: 'gear.png',
       i18n: 'Setting',
       isbottom: true
     },
     {
       url: '/help',
       name: 'Help',
-      icon_url: 'message.png',
+      icon_url: 'help.png',
       i18n: 'Help',
       isbottom: true
     },

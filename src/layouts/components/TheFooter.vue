@@ -9,27 +9,22 @@
 ========================================================================================== -->
 
 
-<template functional>
-    <footer class="the-footer flex-wrap justify-between" :class="classes">
-      {{txt}}
-        <p class="text-white">aaa{{copyrightText}}
-          <!-- <span>Copyright © 2020 - Gurucube Corp. - All Rights Reserved  |  Rev 4.7.4 &copy;</span> -->
-        </p>
-    </footer>
+<template >
+    <!-- <footer class="the-footer flex-wrap justify-between" :class="classes">
+        <p class="text-white">{{copyrightText}} -->
+          <div class="the-footer flex-wrap justify-between">
+            <p class="text-white">{{copyRightText}}&copy;</p>
+          </div>
+        <!-- </p> -->
+    <!-- </footer> -->
 </template>
-
 <script>
-import copyright from './copyright.js'
+import copyRight from './copyright.js'
 export default {
   name: 'the-footer',
   data() {
     return {
-      copyrightText:'ABCD',
-    }
-  },
-  props: {
-    classes: {
-      type: String
+      copyRightText: copyRight[0].title,
     }
   },
 }

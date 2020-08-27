@@ -22,12 +22,12 @@
               <div class="p-2 submenu-document">
                 <div class="doc-submenu-list" v-for="data in hilightsData" :key="data.id">
                   <i :class="data.icon"></i>
-                  <span>{{data.title}}</span>
+                  <span>{{data.title}} ({{data.children.length}})</span>
                 </div>
               </div>
             </vx-card>
           </vs-col>
-          <vs-col class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-9 p-0">
+          <vs-col class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-9 p-0 d-flex flex-column">
             <vx-card class="box-shadow-none serach-wrapper p-2">
               <vx-input-group class="mb-base serach-box">
                 <vs-input
@@ -43,7 +43,8 @@
                   </div>
                 </template>
               </vx-input-group>
-              <div class="d-flex">
+              <div class="d-flex listgrid-wrapper">
+                <span :class="onList === true ? 'active' : ''">
                 <img
                   class="mr-3 pr-2 p-2"
                   width="45px"
@@ -51,9 +52,11 @@
                   :src="require('../assets/images/documents_icon/' + imageforList + '.png')"
                   @click="onListView()"
                 />
-                <span :disabled="onGrid">
+                </span>
+                <span :class="onGrid == true ? 'active' : ''">
                   <img
                     class="p-2"
+
                     width="45px"
                     height="45px"
                     :src="require('../assets/images/documents_icon/' + imageforGrid + '.png')"
@@ -68,12 +71,14 @@
             >
               <div class="folder-wrapper" v-for="subData in subFilesdata" :key="subData.id">
                 <span @click="getFiles(subData)" class="cursor-pointer">
-                  <div class="file-icon text-center" v-if="subData.children.length > 0">
-                    <img src="../assets/images/documents_icon/folder_img.png" class="img-fluid" />
+                  <div class="file-icon text-center d-flex flex-column justify-content-center align-items-center" v-if="subData.children.length > 0">
+                    <!-- <img src="../assets/images/documents_icon/folder_img.png" class="img-fluid" /> -->
+                    <i class="fas fa-folder"></i>
                     <span>{{subData.text}}</span>
                   </div>
                   <div class="file-icon text-center" v-else>
-                    <img src="../assets/images/documents_icon/folder_img.png" />
+                    <!-- <img src="../assets/images/documents_icon/folder_img.png" /> -->
+                    <i class="fas fa-folder"></i>
                     <span>{{subData.text}}</span>
                   </div>
                 </span>
@@ -83,7 +88,7 @@
               v-if="subFilesdata.length && onList && !onGrid"
               class="w-100 d-flex flex-wrap folder-main"
             >
-              <vs-table>
+              <vs-table class="w-100 list-folder-grid">
                 <template slot="thead">
                   <vs-th></vs-th>
                   <vs-th>Name</vs-th>
@@ -96,23 +101,45 @@
                   <vs-tr v-for="subData in subFilesdata" :key="subData.id">
                     <vs-td>
                       <span @click="getFiles(subData)" class="cursor-pointer">
-                        <div class="file-icon text-center" v-if="subData.children.length > 0">
-                          <img
+                        <div class="file-icon text-center list-svg" v-if="subData.children.length > 0">
+                          <!-- <img
                             src="../assets/images/documents_icon/folder_img.png"
                             class="img-fluid"
-                          />
+                          /> -->
+                          <i class="fas fa-folder"></i>
+                        </div>
+                        <div class="file-icon list-svg" v-else>
+                          <!-- <img src="../assets/images/documents_icon/folder_img.png" /> -->
+                          <i class="fas fa-folder"></i>
+                        </div>
+                      </span>
+                    </vs-td>
+
+                    <vs-td>
+                      <span @click="getFiles(subData)" class="cursor-pointer">
+                        <div class="file-icon" v-if="subData.children.length > 0">
                           <span>{{subData.text}}</span>
                         </div>
-                        <div class="file-icon text-center" v-else>
-                          <img src="../assets/images/documents_icon/folder_img.png" />
+                        <div class="file-icon" v-else>
                           <span>{{subData.text}}</span>
                         </div>
                       </span>
                     </vs-td>
+                    <vs-td></vs-td>
+                    <vs-td></vs-td>
+                    <vs-td></vs-td>
+                    <vs-td></vs-td>
                   </vs-tr>
                 </template>
               </vs-table>
             </div>
+            <vs-row class="border-none mt-auto mb-4">
+              <div class="col vs-sm-12 vs-md-12 vs-lg-12 pl-6 pr-6 d-flex flex-wrap justify-content-end">
+                <vs-button class="btn-gray w-auto  mb-4">Local</vs-button>
+                <vs-button class="btn-gray w-auto ml-2 mb-4">Trusthub</vs-button>
+                <vs-button class="btn-gray w-auto ml-2 mb-4">Cloud</vs-button>
+              </div>
+            </vs-row>
           </vs-col>
         </vs-row>
       </div>
@@ -140,7 +167,11 @@
             <div class="vs-row border-none">
               <div class="vs-xs-12 vs-sm-12 vs-md-12">
                 <div class="doc-detail">
-                  <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+                  <img
+                    src="../assets/images/documents_icon/QR_code.png"
+                    width="100px"
+                    height="100px"
+                  />
                 </div>
               </div>
             </div>
@@ -149,17 +180,20 @@
       </div>
       <!-- <vs-col vs-offset="0" vs-align="left" vs-w="2" class="sm p-0"></vs-col> -->
     </vs-row>
+    <!-- <VueDocPreview value="../assets/images/documents_icon/project.docx" type="office" /> -->
   </div>
 </template>
 
 <script>
 import subDocument from './Sub-Document/sub-document.vue'
 import filesList from './Document_Files.js'
-import VTreeview from 'v-treeview'
 import LoginJWTVue from './pages/login/LoginJWT.vue'
+import VTreeview from 'v-treeview'
+import VueDocPreview from 'vue-doc-preview'
 export default {
   data () {
     return {
+      showTable: false,
       subFilesdata: [],
       hilightsData: [
         {
@@ -195,8 +229,8 @@ export default {
       ],
       search: '',
       onGrid: true,
-      imageforGrid: 'grid_icon',
-      imageforList: 'sorting_active',
+      imageforGrid: 'grid',
+      imageforList: 'list',
       onList: false,
       openAll: false,
       treeTypes: [
@@ -256,6 +290,10 @@ export default {
     }
   },
   methods: {
+    showData(){
+      this.showTable = true
+      alert('hiii')
+    },
     getFiles (file) {
       console.log('Files =>>>', this.subFilesdata);
       file.isOpen = !file.isOpen
@@ -310,7 +348,7 @@ export default {
       this.contextItems.push({ title: "Remove", icon: "far fa-trash-alt" });
     },
     onListView () {
-      console.log('List =>', this.onList);
+  ;
       if (this.onList == true) {
         return;
       } else {
@@ -335,7 +373,8 @@ export default {
     }
   },
   components: {
-    VTreeview
+    VTreeview,
+    VueDocPreview
   }
 }
 </script>

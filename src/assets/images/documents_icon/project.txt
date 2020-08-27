@@ -1,0 +1,31 @@
+ Description: Lamtech is the project all about cattle purchase,induction and their delivery. Means Company creates its farm, its total contract for the cattle, purchase the number of cattle mentioned in sales contract, feed the cattle as per mentioned in feed cycle and then delivers the cattle Admin can find out the total sales of the cattle , livestock market value,total feed cost,etc 
+
+
+http://13.211.231.244/
+
+company login details:
+email : bela@lamtech.tw 
+password: Bela@2019 
+
+agent login details: 
+email : rsa@lamtech.tw 
+password: Rsa@2019 
+
+Feedlot: majid@techwitty.com.au 123456 
+Agent: design.co@gmail.com Info@2019
+
+code: https://bitbucket.org/uniqartworks/lamtech/src/master/
+
+postman collection : https://www.getpostman.com/collections/1fd990bf252f4c45d4b3
+
+swagger :
+http://localhost:3000/api/api-docs/#/
+
+Admin login:
+
+info@lamtech.tw
+Info@2019
+
+
+LAMTECH Asana link: https://app.asana.com/0/834031633598732/list
+Credentials: shd.narola@email/Dhruv@12345

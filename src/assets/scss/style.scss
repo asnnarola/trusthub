@@ -1235,6 +1235,15 @@
                               }
                             }
                           }
+                          .listgrid-wrapper {
+                            span {
+                              opacity: 0.5;
+                              cursor: pointer;
+                              &.active {
+                                opacity: 1;
+                              }
+                            }
+                          }
                         }
                       }
                     }
@@ -1281,11 +1290,39 @@
                     }
                   }
                   .folder-main {
+                    .list-folder-grid{
+                      table{
+                        thead{
+                          tr{
+                            th{
+                              background: #888;
+                              .vs-table-text{
+                                color: #fff;
+                              }
+                            }
+                          }
+                        }
+                        tr{
+                          span {
+                            .file-icon {
+                              &.list-svg {
+                                font-size: 2rem;
+                                color: #f9c201;
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
                     .folder-wrapper {
                       margin: 1rem;
                       span {
                         .file-icon {
                           width: 90px;
+                          svg {
+                            font-size: 4.5rem;
+                            color: #f9c201;
+                          }
                           span {
                             font-weight: 500;
                           }
