@@ -1,8 +1,8 @@
 <template>
   <div class="grid-demo__layout-container">
-    <vs-row class="border-0">
+    <vs-row class="border-0 filemanage-wrapper">
       <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-9">
-        <vs-row>
+        <vs-row class="h-100">
           <vs-col class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-3 p-0">
             <vx-card class="box-shadow-none">
               <div class="p-4 NH-btn">
@@ -45,18 +45,17 @@
               </vx-input-group>
               <div class="d-flex listgrid-wrapper">
                 <span :class="onList === true ? 'active' : ''">
-                <img
-                  class="mr-3 pr-2 p-2"
-                  width="45px"
-                  height="45px"
-                  :src="require('../assets/images/documents_icon/' + imageforList + '.png')"
-                  @click="onListView()"
-                />
+                  <img
+                    class="mr-3 pr-2 p-2"
+                    width="45px"
+                    height="45px"
+                    :src="require('../assets/images/documents_icon/' + imageforList + '.png')"
+                    @click="onListView()"
+                  />
                 </span>
                 <span :class="onGrid == true ? 'active' : ''">
                   <img
                     class="p-2"
-
                     width="45px"
                     height="45px"
                     :src="require('../assets/images/documents_icon/' + imageforGrid + '.png')"
@@ -70,15 +69,18 @@
               class="w-100 d-flex flex-wrap folder-main"
             >
               <div class="folder-wrapper" v-for="subData in subFilesdata" :key="subData.id">
-                <span @click="getFiles(subData)" class="cursor-pointer">
-                  <div class="file-icon text-center d-flex flex-column justify-content-center align-items-center" v-if="subData.children.length > 0">
-                    <!-- <img src="../assets/images/documents_icon/folder_img.png" class="img-fluid" /> -->
+                <span class="cursor-pointer">
+                  <div
+                    class="file-icon text-center d-flex flex-column justify-content-center align-items-center"
+                    v-if="subData.children.length > 0"
+                    @click="getFiles(subData)"
+                  >
                     <i class="fas fa-folder"></i>
                     <span>{{subData.text}}</span>
                   </div>
                   <div class="file-icon text-center" v-else>
                     <!-- <img src="../assets/images/documents_icon/folder_img.png" /> -->
-                    <i class="fas fa-folder"></i>
+                    <i class="fas fa-file"></i>
                     <span>{{subData.text}}</span>
                   </div>
                 </span>
@@ -88,7 +90,7 @@
               v-if="subFilesdata.length && onList && !onGrid"
               class="w-100 d-flex flex-wrap folder-main"
             >
-              <vs-table class="w-100 list-folder-grid">
+              <vs-table class="w-100 list-folder-grid" :data="subFilesdata">
                 <template slot="thead">
                   <vs-th></vs-th>
                   <vs-th>Name</vs-th>
@@ -97,47 +99,76 @@
                   <vs-th>Owner</vs-th>
                   <vs-th>Size</vs-th>
                 </template>
-                <template>
-                  <vs-tr v-for="subData in subFilesdata" :key="subData.id">
-                    <vs-td>
-                      <span @click="getFiles(subData)" class="cursor-pointer">
-                        <div class="file-icon text-center list-svg" v-if="subData.children.length > 0">
-                          <!-- <img
-                            src="../assets/images/documents_icon/folder_img.png"
-                            class="img-fluid"
-                          /> -->
-                          <i class="fas fa-folder"></i>
-                        </div>
-                        <div class="file-icon list-svg" v-else>
-                          <!-- <img src="../assets/images/documents_icon/folder_img.png" /> -->
-                          <i class="fas fa-folder"></i>
-                        </div>
-                      </span>
-                    </vs-td>
-
-                    <vs-td>
-                      <span @click="getFiles(subData)" class="cursor-pointer">
-                        <div class="file-icon" v-if="subData.children.length > 0">
-                          <span>{{subData.text}}</span>
-                        </div>
-                        <div class="file-icon" v-else>
-                          <span>{{subData.text}}</span>
-                        </div>
-                      </span>
-                    </vs-td>
-                    <vs-td></vs-td>
-                    <vs-td></vs-td>
-                    <vs-td></vs-td>
-                    <vs-td></vs-td>
+                <template slot-scope="{data}">
+                  <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
+                      <vs-td>
+                        <span class="cursor-pointer"  @click="getFiles(tr)">
+                          <div class="file-icon text-center list-svg" v-if="tr.type === 'Folder'">
+                            <i class="fas fa-folder"></i>
+                          </div>
+                          <div class="file-icon list-svg" v-else @click="getFiles(tr)">
+                            <i class="fas fa-file"></i>
+                          </div>
+                        </span>
+                      </vs-td>
+                      <vs-td :data="tr.text">
+                        <span class="cursor-pointer" @click="getFiles(tr)">
+                          <div class="file-icon">
+                            <span>{{tr.text}}</span>
+                          </div>
+                        </span>
+                      </vs-td>
+                      <vs-td colspan="4"></vs-td>
                   </vs-tr>
                 </template>
               </vs-table>
             </div>
+
             <vs-row class="border-none mt-auto mb-4">
-              <div class="col vs-sm-12 vs-md-12 vs-lg-12 pl-6 pr-6 d-flex flex-wrap justify-content-end">
-                <vs-button class="btn-gray w-auto  mb-4">Local</vs-button>
+              <div
+                class="col vs-sm-12 vs-md-12 vs-lg-12 pl-6 pr-6 d-flex flex-wrap justify-content-end"
+              >
+                <vs-button class="btn-gray w-auto mb-4">Local</vs-button>
                 <vs-button class="btn-gray w-auto ml-2 mb-4">Trusthub</vs-button>
-                <vs-button class="btn-gray w-auto ml-2 mb-4">Cloud</vs-button>
+                <!-- <vs-button class="btn-gray w-auto ml-2 mb-4" @click="onCloud()">Cloud</vs-button> -->
+
+                <!-- <vs-dropdown vs-trigger-click class="cursor-pointer">
+                  <vs-button class="btn-gray w-auto ml-2 mb-4">Cloud</vs-button>
+                  <vs-dropdown-menu class="cloud-wrapper">
+                    <h5 class="w-100 fw-500 ml-2 mb-2 text-white">Alternative Clouds Accounts</h5>
+                    <vs-dropdown-item v-for="(item, index) in cloudModel" :key="index" to="#">
+                      <img
+                        class="img-fluid"
+                        :src="require('../assets/images/documents_icon/cloud_Modal_Icon/' + item.image )"
+                      />
+                    </vs-dropdown-item>
+                  </vs-dropdown-menu>
+                </vs-dropdown>-->
+                <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
+                  <!-- <a class="a-icon" href.prevent>
+                    Click me open login
+                    <vs-icon class icon="expand_more"></vs-icon>
+                  </a>-->
+                  <vs-button class="btn-gray w-auto ml-2 mb-4">Cloud</vs-button>
+                  <vs-dropdown-menu class="cloud-wrapper">
+                    <h5 class="w-100 fw-500 ml-2 mb-2 text-white">Alternative Clouds Accounts</h5>
+                    <ul>
+                      <li v-for="(item, index) in cloudModel" :key="index">
+                        <router-link to="#">
+                          <img
+                            class="img-fluid"
+                            :src="require('../assets/images/documents_icon/cloud_Modal_Icon/' + item.image )"
+                          />
+                        </router-link>
+                      </li>
+                    </ul>
+                    <!-- <h3>Login</h3>
+                    <p>Welcome to vuesax, add your data to enter</p>
+                    <vs-input type="email" label-placeholder="Email" />
+                    <vs-input type="password" label-placeholder="Password" />
+                    <vs-button width="100%" color="success" type="gradient">Login</vs-button>-->
+                  </vs-dropdown-menu>
+                </vs-dropdown>
               </div>
             </vs-row>
           </vs-col>
@@ -178,8 +209,13 @@
           </div>
         </div>
       </div>
-      <!-- <vs-col vs-offset="0" vs-align="left" vs-w="2" class="sm p-0"></vs-col> -->
     </vs-row>
+
+    <template lang="html">
+      <div class="examplex"></div>
+    </template>
+  </div>
+</template>
     <!-- <VueDocPreview value="../assets/images/documents_icon/project.docx" type="office" /> -->
   </div>
 </template>
@@ -193,7 +229,6 @@ import VueDocPreview from 'vue-doc-preview'
 export default {
   data () {
     return {
-      showTable: false,
       subFilesdata: [],
       hilightsData: [
         {
@@ -240,42 +275,12 @@ export default {
           max_depth: 4,
           valid_children: [
             "Folder",
-            "In",
-            "Out",
-            "Stared",
-            "Trash",
-            "Shared",
             "File"
           ]
         },
         {
           type: "Folder",
           icon: "fas fa-folder",
-          valid_children: ["Basic", "Top-up"]
-        },
-        {
-          type: "In",
-          icon: "fas fa-sign-in-alt",
-          valid_children: ["Basic", "Top-up"]
-        },
-        {
-          type: "Out",
-          icon: "fas fa-sign-out-alt",
-          valid_children: ["Basic", "Top-up"]
-        },
-        {
-          type: "Stared",
-          icon: "fas fa-star",
-          valid_children: ["Basic", "Top-up"]
-        },
-        {
-          type: "Trash",
-          icon: "fas fa-trash-alt",
-          valid_children: ["Basic", "Top-up"]
-        },
-        {
-          type: "Shared",
-          icon: "fal fa-share-alt",
           valid_children: ["Basic", "Top-up"]
         },
         {
@@ -286,18 +291,78 @@ export default {
       ],
       treeData: filesList,
       contextItems: [],
-      selectedNode: null
+      selectedNode: null,
+      cloudModel: [
+        {
+          image: 'cloud1.jpg'
+        },
+        {
+          image: 'cloud2.jpg'
+        },
+        {
+          image: 'cloud3.jpg'
+        },
+        {
+          image: 'cloud4.jpg'
+        },
+        {
+          image: 'cloud5.jpg'
+        },
+        {
+          image: 'cloud6.jpg'
+        },
+        {
+          image: 'cloud7.jpg'
+        },
+        {
+          image: 'cloud8.jpg'
+        },
+        {
+          image: 'cloud9.jpg'
+        },
+        {
+          image: 'cloud10.jpg'
+        },
+        {
+          image: 'cloud11.jpg'
+        },
+        {
+          image: 'cloud12.jpg'
+        },
+        {
+          image: 'cloud13.jpg'
+        },
+        {
+          image: 'cloud14.jpg'
+        },
+        {
+          image: 'cloud15.jpg'
+        },
+        {
+          image: 'cloud16.jpg'
+        },
+        {
+          image: 'cloud17.jpg'
+        },
+        {
+          image: 'cloud18.jpg'
+        },
+        {
+          image: 'cloud19.jpg'
+        },
+        {
+          image: 'cloud20.jpg'
+        },
+      ]
     }
   },
   methods: {
-    showData(){
-      this.showTable = true
-      alert('hiii')
-    },
     getFiles (file) {
-      console.log('Files =>>>', this.subFilesdata);
-      file.isOpen = !file.isOpen
-      this.subFilesdata = file.children
+      console.log('==>', file.type);
+      if (file.type === 'Folder') {
+        file.isOpen = !file.isOpen
+        this.subFilesdata = file.children
+      }
     },
     getTypeRule (type) {
       var typeRule = this.treeTypes.filter(t => t.type == type)[0];
@@ -348,7 +413,7 @@ export default {
       this.contextItems.push({ title: "Remove", icon: "far fa-trash-alt" });
     },
     onListView () {
-  ;
+      ;
       if (this.onList == true) {
         return;
       } else {
@@ -384,11 +449,26 @@ export default {
 @import "@/assets/scss/style.scss";
 .content-area-reduced {
   .content-wrapper {
+    min-height: calc(var(--vh, 1vh) * 100 - 3.5rem);
+    height: 100%;
     .router-view {
+      padding: 5rem 2.2rem 2.2rem;
+      min-height: calc(var(--vh, 1vh) * 100 - 3.5rem);
+      height: 100%;
       .router-content {
+        min-height: calc(var(--vh, 1vh) * 100 - 16rem);
+        height: 100%;
         .content-area__content {
+          height: 100%;
+          min-height: calc(var(--vh, 1vh) * 100 - 11.85rem);
           .grid-demo__layout-container {
+            height: 100%;
+            min-height: calc(var(--vh, 1vh) * 100 - 11.85rem);
             .vs-row {
+              &.filemanage-wrapper {
+                height: 100%;
+                min-height: calc(var(--vh, 1vh) * 100 - 11.85rem);
+              }
               .box-shadow-none {
                 box-shadow: none !important;
               }

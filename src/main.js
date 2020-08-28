@@ -108,6 +108,8 @@ Vue.use(VueHammer)
 import 'prismjs'
 import 'prismjs/themes/prism-tomorrow.css'
 
+// FontAwsome
+require('./assets/fontawesome/scss/fontawesome.scss')
 
 // Feather font icon
 require('./assets/css/iconfont.css')

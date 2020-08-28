@@ -1,6 +1,9 @@
 .w-100 {
   width: 100%;
 }
+.h-100{
+  height: 100%;
+}
 .border-0 {
   border: 0px !important;
 }
@@ -1187,6 +1190,43 @@
 }
 
 // Documnets page scss start
+.cloud-wrapper {
+  max-width: 600px;
+  width: 100%;
+  background: #aeaeae;
+  padding: 15px;
+  // top: auto !important;
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0px;
+    justify-content: center;
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    li {
+      max-width: 100px;
+      background: #fff !important;
+      margin: 7px;
+      width: 100%;
+      border: 1px solid #7b7979;
+      border-radius: 0px;
+      transition: ease 0.25s;
+      &:hover{
+        border-color: #326081;
+      }
+      a{
+        background: #fff !important;
+      }
+    }
+  }
+  .vs-dropdown--menu--after {
+    width: 50px;
+    height: 50px;
+    background: #aeaeae;
+    border: none;
+  }
+}
 .layout--main {
   #content-area {
     .content-wrapper {
@@ -1260,7 +1300,7 @@
                           .doc-submenu-list {
                             padding-left: 15px;
                             padding-bottom: 12px;
-                            svg {
+                            i {
                               font-size: 16px;
                               color: #8e8e8e;
                               margin-right: 7px;
@@ -1290,19 +1330,19 @@
                     }
                   }
                   .folder-main {
-                    .list-folder-grid{
-                      table{
-                        thead{
-                          tr{
-                            th{
+                    .list-folder-grid {
+                      table {
+                        thead {
+                          tr {
+                            th {
                               background: #888;
-                              .vs-table-text{
+                              .vs-table-text {
                                 color: #fff;
                               }
                             }
                           }
                         }
-                        tr{
+                        tr {
                           span {
                             .file-icon {
                               &.list-svg {
@@ -1319,7 +1359,7 @@
                       span {
                         .file-icon {
                           width: 90px;
-                          svg {
+                          i {
                             font-size: 4.5rem;
                             color: #f9c201;
                           }
