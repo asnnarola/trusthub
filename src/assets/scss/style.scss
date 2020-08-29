@@ -1,7 +1,7 @@
 .w-100 {
   width: 100%;
 }
-.h-100{
+.h-100 {
   height: 100%;
 }
 .border-0 {
@@ -23,7 +23,9 @@
 .d-inline {
   display: inline !important;
 }
-
+.rounded-0{
+  border-radius: 0;
+}
 .d-inline-block {
   display: inline-block !important;
 }
@@ -1212,10 +1214,10 @@
       border: 1px solid #7b7979;
       border-radius: 0px;
       transition: ease 0.25s;
-      &:hover{
+      &:hover {
         border-color: #326081;
       }
-      a{
+      a {
         background: #fff !important;
       }
     }
@@ -1331,8 +1333,26 @@
                   }
                   .folder-main {
                     .list-folder-grid {
+                      .vs-con-tbody{
+                        border:none;
+                      }
                       table {
                         thead {
+                          th {
+                            position: relative;
+                            &:before {
+                              content: "";
+                              position: absolute;
+                              right: 0;
+                              width: 1px;
+                              height: 70%;
+                              background: #fff;
+                              top: 5px;
+                            }
+                            &:last-child:before{
+                              width: 0;
+                            }
+                          }
                           tr {
                             th {
                               background: #888;
@@ -1343,6 +1363,10 @@
                           }
                         }
                         tr {
+                          &:hover {
+                            -webkit-transform: translateY(-0px);
+                            transform: translateY(-0px);
+                          }
                           span {
                             .file-icon {
                               &.list-svg {
@@ -1415,6 +1439,13 @@
                 .doc-detail {
                   border: 1px solid #b5b5b5;
                   padding: 20px;
+                  .barcode-wrapper {
+                    width: 100px;
+                    height: 100px;
+                    img {
+                      border-left: 1px solid #333333;
+                    }
+                  }
                 }
               }
             }

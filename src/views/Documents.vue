@@ -12,12 +12,12 @@
               <v-treeview
                 v-model="treeData"
                 :treeTypes="treeTypes"
-                @selected="selected"
                 :openAll="openAll"
-                :contextItems="contextItems"
-                @contextSelected="contextSelected"
+                @selected="selected"
                 class="p-2 pb-0"
               ></v-treeview>
+                <!-- :contextItems="contextItems" -->
+                <!-- @contextSelected="contextSelected" -->
 
               <div class="p-2 submenu-document">
                 <div class="doc-submenu-list" v-for="data in hilightsData" :key="data.id">
@@ -101,54 +101,45 @@
                 </template>
                 <template slot-scope="{data}">
                   <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
-                      <vs-td>
-                        <span class="cursor-pointer"  @click="getFiles(tr)">
-                          <div class="file-icon text-center list-svg" v-if="tr.type === 'Folder'">
-                            <i class="fas fa-folder"></i>
-                          </div>
-                          <div class="file-icon list-svg" v-else @click="getFiles(tr)">
-                            <i class="fas fa-file"></i>
-                          </div>
-                        </span>
-                      </vs-td>
-                      <vs-td :data="tr.text">
-                        <span class="cursor-pointer" @click="getFiles(tr)">
-                          <div class="file-icon">
-                            <span>{{tr.text}}</span>
-                          </div>
-                        </span>
-                      </vs-td>
-                      <vs-td colspan="4"></vs-td>
+                    <vs-td>
+                      <span class="cursor-pointer" @click="getFiles(t)">
+                        <div class="file-icon text-center list-svg" v-if="tr.type === 'Folder'">
+                          <i class="fas fa-folder"></i>
+                        </div>
+                        <div class="file-icon text-center list-svg" v-else @click="getFiles(tr)">
+                          <i class="fas fa-file"></i>
+                        </div>
+                      </span>
+                    </vs-td>
+                    <vs-td :data="tr.text">
+                      <span class="cursor-pointer" @click="getFiles(tr)">
+                        <div class="file-icon">
+                          <span>{{tr.text}}</span>
+                        </div>
+                      </span>
+                    </vs-td>
+                    <vs-td colspan="4"></vs-td>
                   </vs-tr>
                 </template>
               </vs-table>
             </div>
 
             <vs-row class="border-none mt-auto mb-4">
+              <div class="col vs-sm-12 vs-md-12 vs-lg-5 pl-5">
+                <div class="process-txt d-flex justify-content-between flex-wrap">
+                  <span>Storage</span>
+                  <span>250 MB of 500 MB</span>
+                </div>
+                <div class="progressbar-block d-flex flex-wrap justify-content-end align-items-center">
+                  <vs-progress :height="12" :percent="80" color="warning" class="rounded-0"></vs-progress>
+                </div>
+              </div>
               <div
-                class="col vs-sm-12 vs-md-12 vs-lg-12 pl-6 pr-6 d-flex flex-wrap justify-content-end"
+                class="col vs-sm-12 vs-md-12 vs-lg-7 pl-6 pr-6 d-flex flex-wrap justify-content-end"
               >
                 <vs-button class="btn-gray w-auto mb-4">Local</vs-button>
                 <vs-button class="btn-gray w-auto ml-2 mb-4">Trusthub</vs-button>
-                <!-- <vs-button class="btn-gray w-auto ml-2 mb-4" @click="onCloud()">Cloud</vs-button> -->
-
-                <!-- <vs-dropdown vs-trigger-click class="cursor-pointer">
-                  <vs-button class="btn-gray w-auto ml-2 mb-4">Cloud</vs-button>
-                  <vs-dropdown-menu class="cloud-wrapper">
-                    <h5 class="w-100 fw-500 ml-2 mb-2 text-white">Alternative Clouds Accounts</h5>
-                    <vs-dropdown-item v-for="(item, index) in cloudModel" :key="index" to="#">
-                      <img
-                        class="img-fluid"
-                        :src="require('../assets/images/documents_icon/cloud_Modal_Icon/' + item.image )"
-                      />
-                    </vs-dropdown-item>
-                  </vs-dropdown-menu>
-                </vs-dropdown>-->
                 <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
-                  <!-- <a class="a-icon" href.prevent>
-                    Click me open login
-                    <vs-icon class icon="expand_more"></vs-icon>
-                  </a>-->
                   <vs-button class="btn-gray w-auto ml-2 mb-4">Cloud</vs-button>
                   <vs-dropdown-menu class="cloud-wrapper">
                     <h5 class="w-100 fw-500 ml-2 mb-2 text-white">Alternative Clouds Accounts</h5>
@@ -162,11 +153,6 @@
                         </router-link>
                       </li>
                     </ul>
-                    <!-- <h3>Login</h3>
-                    <p>Welcome to vuesax, add your data to enter</p>
-                    <vs-input type="email" label-placeholder="Email" />
-                    <vs-input type="password" label-placeholder="Password" />
-                    <vs-button width="100%" color="success" type="gradient">Login</vs-button>-->
                   </vs-dropdown-menu>
                 </vs-dropdown>
               </div>
@@ -197,12 +183,10 @@
           <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
             <div class="vs-row border-none">
               <div class="vs-xs-12 vs-sm-12 vs-md-12">
-                <div class="doc-detail">
-                  <img
-                    src="../assets/images/documents_icon/QR_code.png"
-                    width="100px"
-                    height="100px"
-                  />
+                <div class="doc-detail d-flex justify-content-end p-4 pb-3">
+                  <div class="barcode-wrapper text-right">
+                    <img src="../assets/images/documents_icon/QR_code.png" class="img-fluid pl-3" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -211,12 +195,9 @@
       </div>
     </vs-row>
 
-    <template lang="html">
-      <div class="examplex"></div>
-    </template>
+    <!-- <VueDocPreview value="../assets/images/documents_icon/project.docx" type="office" /> -->
   </div>
 </template>
-    <!-- <VueDocPreview value="../assets/images/documents_icon/project.docx" type="office" /> -->
   </div>
 </template>
 
@@ -226,6 +207,7 @@ import filesList from './Document_Files.js'
 import LoginJWTVue from './pages/login/LoginJWT.vue'
 import VTreeview from 'v-treeview'
 import VueDocPreview from 'vue-doc-preview'
+import pdf from 'vue-pdf'
 export default {
   data () {
     return {
@@ -290,7 +272,7 @@ export default {
         },
       ],
       treeData: filesList,
-      contextItems: [],
+      // contextItems: [],
       selectedNode: null,
       cloudModel: [
         {
@@ -364,67 +346,15 @@ export default {
         this.subFilesdata = file.children
       }
     },
-    getTypeRule (type) {
-      var typeRule = this.treeTypes.filter(t => t.type == type)[0];
-      return typeRule;
-    },
-    contextSelected (command) {
-      switch (command) {
-        case "Create Basic":
-          var node = {
-            text: "New Basic Plan",
-            type: "Basic",
-            children: []
-          };
-          this.selectedNode.addNode(node);
-          break;
-        case "Create Top-up":
-          var node = {
-            text: "New Top-up",
-            type: "Top-up",
-            children: []
-          };
-          this.selectedNode.addNode(node);
-          break;
-        case "Rename":
-          this.selectedNode.editName();
-          break;
-        case "Remove":
-          break;
-      }
-    },
     selected (node) {
       this.subFilesdata = node.model.children
-      console.log('Node =>', this.subFilesdata);
-      this.selectedNode = node;
-      this.contextItems = [];
-      var typeRule = this.getTypeRule(this.selectedNode.model.type);
-      typeRule.valid_children.map(function (type, key) {
-        var childType = this.getTypeRule(type);
-        var item = {
-          title: "Create " + type,
-          icon: childType.icon,
-          type: childType
-        };
-        this.contextItems.push(item);
-      }, this);
-
-      this.contextItems.push({ title: "Rename", icon: "far fa-edit" });
-      this.contextItems.push({ title: "Remove", icon: "far fa-trash-alt" });
     },
     onListView () {
-      ;
       if (this.onList == true) {
         return;
       } else {
         this.onList = true;
         this.onGrid = false;
-        console.log('On List view Click');
-        // if (this.imageforList == "sorting"){
-        //   this.imageforList = 'sorting_active'
-        // }else {
-        //   this.imageforList ='sorting';
-        //   }
       }
     },
     onGridView () {
@@ -433,13 +363,13 @@ export default {
       } else {
         this.onList = false;
         this.onGrid = true;
-        console.log('On List grid Click');
       }
     }
   },
   components: {
     VTreeview,
-    VueDocPreview
+    VueDocPreview,
+    pdf
   }
 }
 </script>
@@ -468,6 +398,11 @@ export default {
               &.filemanage-wrapper {
                 height: 100%;
                 min-height: calc(var(--vh, 1vh) * 100 - 11.85rem);
+                .progressbar-block{
+                  .vs-progress--foreground{
+                    border-radius: 0;
+                  }
+                }
               }
               .box-shadow-none {
                 box-shadow: none !important;
