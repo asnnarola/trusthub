@@ -23,7 +23,7 @@
 .d-inline {
   display: inline !important;
 }
-.rounded-0{
+.rounded-0 {
   border-radius: 0;
 }
 .d-inline-block {
@@ -1333,8 +1333,8 @@
                   }
                   .folder-main {
                     .list-folder-grid {
-                      .vs-con-tbody{
-                        border:none;
+                      .vs-con-tbody {
+                        border: none;
                       }
                       table {
                         thead {
@@ -1349,7 +1349,7 @@
                               background: #fff;
                               top: 5px;
                             }
-                            &:last-child:before{
+                            &:last-child:before {
                               width: 0;
                             }
                           }
@@ -1363,6 +1363,7 @@
                           }
                         }
                         tr {
+                          position: relative;
                           &:hover {
                             -webkit-transform: translateY(-0px);
                             transform: translateY(-0px);
@@ -1372,6 +1373,62 @@
                               &.list-svg {
                                 font-size: 2rem;
                                 color: #f9c201;
+                              }
+                            }
+                          }
+                          .rightclickmenulist-open {
+                            width: 185px;
+                            position: absolute;
+                            margin-left: 8rem;
+                            margin-top: 4rem;
+                            background: #fff;
+                            padding: 0;
+                            left: 0;
+                            top: 0;
+                            box-shadow: 0px 4px 10px 0px #0000001a;
+                            z-index: 1111;
+                            ul {
+                              border-bottom: 1px solid #eaeaea;
+                              li {
+                                padding: 10px 10px 10px 15px;
+                                border-left: 3px solid transparent;
+                                transition: ease 0.25s;
+                                &:hover {
+                                  border-color: #818181;
+                                  background: #eeeeee;
+                                }
+                                button {
+                                  width: 100%;
+                                }
+                                i {
+                                  font-size: 16px;
+                                  width: 30px;
+                                  padding-right: 1rem;
+                                  color: #807e7d;
+                                  &.fa-angle-right {
+                                    padding-right: 0px;
+                                    width: auto;
+                                  }
+                                }
+                                span {
+                                  font-weight: 500;
+                                }
+                                &.hoverfile-menu {
+                                  padding: 0px;
+                                  button {
+                                    width: 100%;
+                                    padding: 10px 10px 10px 45px;
+                                    display: flex;
+                                    color: #626262;
+                                    justify-content: space-between;
+                                    a {
+                                      color: #626262;
+                                    }
+                                  }
+                                  .icon-menu-btn {
+                                    padding: 10px 10px 10px 15px;
+                                  }
+                                }
                               }
                             }
                           }
@@ -1389,6 +1446,60 @@
                           }
                           span {
                             font-weight: 500;
+                          }
+                        }
+                      }
+                      .rightclickmenu-open {
+                        width: 185px;
+                        position: absolute;
+                        margin-left: 2rem;
+                        margin-top: -2rem;
+                        background: #fff;
+                        padding: 0;
+                        box-shadow: 0px 4px 10px 0px #0000001a;
+                        z-index: 111;
+                        ul {
+                          border-bottom: 1px solid #eaeaea;
+                          li {
+                            padding: 10px 10px 10px 15px;
+                            border-left: 3px solid transparent;
+                            transition: ease 0.25s;
+                            &:hover {
+                              border-color: #818181;
+                              background: #eeeeee;
+                            }
+                            button {
+                              width: 100%;
+                            }
+                            i {
+                              font-size: 16px;
+                              width: 30px;
+                              padding-right: 1rem;
+                              color: #807e7d;
+                              &.fa-angle-right {
+                                padding-right: 0px;
+                                width: auto;
+                              }
+                            }
+                            span {
+                              font-weight: 500;
+                            }
+                            &.hoverfile-menu {
+                              padding: 0px;
+                              button {
+                                width: 100%;
+                                padding: 10px 10px 10px 45px;
+                                display: flex;
+                                color: #626262;
+                                justify-content: space-between;
+                                a {
+                                  color: #626262;
+                                }
+                              }
+                              .icon-menu-btn {
+                                padding: 10px 10px 10px 15px;
+                              }
+                            }
                           }
                         }
                       }

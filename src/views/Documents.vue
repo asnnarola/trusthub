@@ -16,8 +16,8 @@
                 @selected="selected"
                 class="p-2 pb-0"
               ></v-treeview>
-                <!-- :contextItems="contextItems" -->
-                <!-- @contextSelected="contextSelected" -->
+              <!-- :contextItems="contextItems" -->
+              <!-- @contextSelected="contextSelected" -->
 
               <div class="p-2 submenu-document">
                 <div class="doc-submenu-list" v-for="data in hilightsData" :key="data.id">
@@ -68,8 +68,16 @@
               v-if="subFilesdata.length && !onList && onGrid"
               class="w-100 d-flex flex-wrap folder-main"
             >
-              <div class="folder-wrapper" v-for="subData in subFilesdata" :key="subData.id">
-                <span class="cursor-pointer">
+              <div
+                class="folder-wrapper"
+                v-for="(subData,index) in subFilesdata"
+                :key="index"
+                @click="closeMenu(subFilesdata[subdataIndex])"
+              >
+                <span
+                  class="cursor-pointer"
+                  @contextmenu="onRightClick($event, subFilesdata, index)"
+                >
                   <div
                     class="file-icon text-center d-flex flex-column justify-content-center align-items-center"
                     v-if="subData.children.length > 0"
@@ -78,17 +86,120 @@
                     <i class="fas fa-folder"></i>
                     <span>{{subData.text}}</span>
                   </div>
-                  <div class="file-icon text-center" v-else>
+                  <div
+                    class="file-icon text-center d-flex flex-column justify-content-center align-items-center"
+                    v-else
+                  >
                     <!-- <img src="../assets/images/documents_icon/folder_img.png" /> -->
                     <i class="fas fa-file"></i>
                     <span>{{subData.text}}</span>
                   </div>
                 </span>
+                <div class="rightclickmenu-open">
+                  <ul v-if="subData.isOpen === true">
+                    <li>
+                      <i class="fas fa-download"></i>
+                      <span>Download</span>
+                    </li>
+                    <li>
+                      <i class="far fa-eye"></i>
+                      <span>Preview</span>
+                    </li>
+                    <li class="hoverfile-menu">
+                      <vs-dropdown class="cursor-pointer">
+                        <a class="flex items-center" href.prevent>Open With</a>
+                        <i class="fas fa-angle-right"></i>
+                        <vs-dropdown-menu>
+                          <vs-dropdown-item>New Tab</vs-dropdown-item>
+                          <vs-dropdown-item>Media Info</vs-dropdown-item>
+                          <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
+                          <vs-dropdown-item>Google Docs Editor</vs-dropdown-item>
+                          <vs-dropdown-item>Google Docs Viewer</vs-dropdown-item>
+                          <vs-dropdown-item>Office</vs-dropdown-item>
+                          <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
+                          <vs-dropdown-item>Only Office</vs-dropdown-item>
+                          <vs-dropdown-item>Zoho Editor</vs-dropdown-item>
+                        </vs-dropdown-menu>
+                      </vs-dropdown>
+                    </li>
+                  </ul>
+                  <ul v-if="subData.isOpen === true">
+                    <li class="hoverfile-menu">
+                      <vs-dropdown class="cursor-pointer icon-menu-btn">
+                        <a class="flex items-center" href.prevent>
+                          <i class="fas fa-share-alt"></i>
+                          Share
+                        </a>
+                        <i class="fas fa-angle-right"></i>
+                        <vs-dropdown-menu>
+                          <vs-dropdown-item>Option 1</vs-dropdown-item>
+                          <vs-dropdown-item>Option 2</vs-dropdown-item>
+                          <vs-dropdown-item>Option 3</vs-dropdown-item>
+                        </vs-dropdown-menu>
+                      </vs-dropdown>
+                    </li>
+                    <li>
+                      <i class="fas fa-comments"></i>
+                      <span>Comment</span>
+                    </li>
+                    <li class="hoverfile-menu">
+                      <vs-dropdown class="cursor-pointer icon-menu-btn">
+                        <a class="flex items-center" href.prevent>
+                          <i class="fas fa-tag"></i>
+                          Label
+                        </a>
+                        <i class="fas fa-angle-right"></i>
+                        <vs-dropdown-menu>
+                          <vs-dropdown-item>Option 1</vs-dropdown-item>
+                          <vs-dropdown-item>Option 2</vs-dropdown-item>
+                          <vs-dropdown-item>Option 3</vs-dropdown-item>
+                        </vs-dropdown-menu>
+                      </vs-dropdown>
+                    </li>
+                    <li>
+                      <i class="fas fa-star"></i>
+                      <span>Add star</span>
+                    </li>
+                  </ul>
+                  <ul v-if="subData.isOpen === true">
+                    <li class="hoverfile-menu">
+                      <vs-dropdown class="cursor-pointer icon-menu-btn">
+                        <a class="flex items-center" href.prevent>
+                          <i class="fas fa-ellipsis-v"></i>
+                          More Options
+                        </a>
+                        <i class="fas fa-angle-right"></i>
+                        <vs-dropdown-menu>
+                          <vs-dropdown-item>Option 1</vs-dropdown-item>
+                          <vs-dropdown-item>Option 2</vs-dropdown-item>
+                          <vs-dropdown-item>Option 3</vs-dropdown-item>
+                        </vs-dropdown-menu>
+                      </vs-dropdown>
+                    </li>
+                    <li class="hoverfile-menu">
+                      <vs-dropdown class="cursor-pointer">
+                        <a class="flex items-center">Copy</a>
+                      </vs-dropdown>
+                    </li>
+                    <li class="hoverfile-menu">
+                      <vs-dropdown class="cursor-pointer">
+                        <a class="flex items-center">Rename</a>
+                      </vs-dropdown>
+                    </li>
+                  </ul>
+                  <ul v-if="subData.isOpen === true">
+                    <li>
+                      <i class="fas fa-trash-alt"></i>
+                      <span>Remove</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
             <div
               v-if="subFilesdata.length && onList && !onGrid"
               class="w-100 d-flex flex-wrap folder-main"
+              @click="closeMenu(subFilesdata[subdataIndex])"
             >
               <vs-table class="w-100 list-folder-grid" :data="subFilesdata">
                 <template slot="thead">
@@ -100,7 +211,12 @@
                   <vs-th>Size</vs-th>
                 </template>
                 <template slot-scope="{data}">
-                  <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
+                  <vs-tr
+                    :data="tr"
+                    :key="indextr"
+                    v-for="(tr, indextr) in data"
+                    class="listgrid-tr"
+                  >
                     <vs-td>
                       <span class="cursor-pointer" @click="getFiles(t)">
                         <div class="file-icon text-center list-svg" v-if="tr.type === 'Folder'">
@@ -112,13 +228,116 @@
                       </span>
                     </vs-td>
                     <vs-td :data="tr.text">
-                      <span class="cursor-pointer" @click="getFiles(tr)">
+                      <span
+                        class="cursor-pointer"
+                        @contextmenu="onRightClick($event, data, indextr)"
+                        @click="getFiles(tr)"
+                      >
                         <div class="file-icon">
                           <span>{{tr.text}}</span>
                         </div>
                       </span>
                     </vs-td>
                     <vs-td colspan="4"></vs-td>
+                    <div class="rightclickmenulist-open">
+                      <ul v-if="tr.isOpen === true">
+                        <li>
+                          <i class="fas fa-download"></i>
+                          <span>Download</span>
+                        </li>
+                        <li>
+                          <i class="far fa-eye"></i>
+                          <span>Preview</span>
+                        </li>
+                        <li class="hoverfile-menu">
+                          <vs-dropdown class="cursor-pointer">
+                            <a class="flex items-center" href.prevent>Open With</a>
+                            <i class="fas fa-angle-right"></i>
+                            <vs-dropdown-menu>
+                              <vs-dropdown-item>New Tab</vs-dropdown-item>
+                              <vs-dropdown-item>Media Info</vs-dropdown-item>
+                              <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
+                              <vs-dropdown-item>Google Docs Editor</vs-dropdown-item>
+                              <vs-dropdown-item>Google Docs Viewer</vs-dropdown-item>
+                              <vs-dropdown-item>Office</vs-dropdown-item>
+                              <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
+                              <vs-dropdown-item>Only Office</vs-dropdown-item>
+                              <vs-dropdown-item>Zoho Editor</vs-dropdown-item>
+                            </vs-dropdown-menu>
+                          </vs-dropdown>
+                        </li>
+                      </ul>
+                      <ul v-if="tr.isOpen === true">
+                        <li class="hoverfile-menu">
+                          <vs-dropdown class="cursor-pointer icon-menu-btn">
+                            <a class="flex items-center" href.prevent>
+                              <i class="fas fa-share-alt"></i>
+                              Share
+                            </a>
+                            <i class="fas fa-angle-right"></i>
+                            <vs-dropdown-menu>
+                              <vs-dropdown-item>Option 1</vs-dropdown-item>
+                              <vs-dropdown-item>Option 2</vs-dropdown-item>
+                              <vs-dropdown-item>Option 3</vs-dropdown-item>
+                            </vs-dropdown-menu>
+                          </vs-dropdown>
+                        </li>
+                        <li>
+                          <i class="fas fa-comments"></i>
+                          <span>Comment</span>
+                        </li>
+                        <li class="hoverfile-menu">
+                          <vs-dropdown class="cursor-pointer icon-menu-btn">
+                            <a class="flex items-center" href.prevent>
+                              <i class="fas fa-tag"></i>
+                              Label
+                            </a>
+                            <i class="fas fa-angle-right"></i>
+                            <vs-dropdown-menu>
+                              <vs-dropdown-item>Option 1</vs-dropdown-item>
+                              <vs-dropdown-item>Option 2</vs-dropdown-item>
+                              <vs-dropdown-item>Option 3</vs-dropdown-item>
+                            </vs-dropdown-menu>
+                          </vs-dropdown>
+                        </li>
+                        <li>
+                          <i class="fas fa-star"></i>
+                          <span>Add star</span>
+                        </li>
+                      </ul>
+                      <ul v-if="tr.isOpen === true">
+                        <li class="hoverfile-menu">
+                          <vs-dropdown class="cursor-pointer icon-menu-btn">
+                            <a class="flex items-center" href.prevent>
+                              <i class="fas fa-ellipsis-v"></i>
+                              More Options
+                            </a>
+                            <i class="fas fa-angle-right"></i>
+                            <vs-dropdown-menu>
+                              <vs-dropdown-item>Option 1</vs-dropdown-item>
+                              <vs-dropdown-item>Option 2</vs-dropdown-item>
+                              <vs-dropdown-item>Option 3</vs-dropdown-item>
+                            </vs-dropdown-menu>
+                          </vs-dropdown>
+                        </li>
+                        <li class="hoverfile-menu">
+                          <vs-dropdown class="cursor-pointer">
+                            <a class="flex items-center">Copy</a>
+                          </vs-dropdown>
+                        </li>
+                        <li class="hoverfile-menu">
+                          <vs-dropdown class="cursor-pointer">
+                            <a class="flex items-center">Rename</a>
+                          </vs-dropdown>
+                        </li>
+                      </ul>
+                      <ul v-if="tr.isOpen === true">
+                        <li>
+                          <i class="fas fa-trash-alt"></i>
+                          <span>Remove</span>
+                        </li>
+                      </ul>
+                    </div>
                   </vs-tr>
                 </template>
               </vs-table>
@@ -130,7 +349,9 @@
                   <span>Storage</span>
                   <span>250 MB of 500 MB</span>
                 </div>
-                <div class="progressbar-block d-flex flex-wrap justify-content-end align-items-center">
+                <div
+                  class="progressbar-block d-flex flex-wrap justify-content-end align-items-center"
+                >
                   <vs-progress :height="12" :percent="80" color="warning" class="rounded-0"></vs-progress>
                 </div>
               </div>
@@ -194,7 +415,6 @@
         </div>
       </div>
     </vs-row>
-
     <!-- <VueDocPreview value="../assets/images/documents_icon/project.docx" type="office" /> -->
   </div>
 </template>
@@ -207,10 +427,11 @@ import filesList from './Document_Files.js'
 import LoginJWTVue from './pages/login/LoginJWT.vue'
 import VTreeview from 'v-treeview'
 import VueDocPreview from 'vue-doc-preview'
-import pdf from 'vue-pdf'
+
 export default {
   data () {
     return {
+      subdataIndex: '-1',
       subFilesdata: [],
       hilightsData: [
         {
@@ -339,10 +560,50 @@ export default {
     }
   },
   methods: {
+    onRightClick: function (e, file, index) {
+      console.log('=>>', this.subdataIndex);
+      if (this.subdataIndex == '-1') {
+        this.subdataIndex = index
+        console.log(this.subdataIndex);
+      }
+      file[this.subdataIndex].isOpen = false
+      console.log(file[this.subdataIndex]);
+      e.preventDefault();
+      this.subdataIndex = index;
+      file[this.subdataIndex].isOpen = true
+    },
+    closeMenu (file) {
+      console.log('AB', file);
+      file.isOpen = false
+    },
+    // openMenu: function (e) {
+    //   this.viewMenu = true;
+    //   Vue.nextTick(function () {
+    //     this.$$.right.focus();
+    //     this.setMenu(e.y, e.x)
+    //   }.bind(this));
+    //   e.preventDefault();
+    // },
+    // setMenu: function (top, left) {
+
+    //   largestHeight = window.innerHeight - this.$$.right.offsetHeight - 25;
+    //   largestWidth = window.innerWidth - this.$$.right.offsetWidth - 25;
+
+    //   if (top > largestHeight) top = largestHeight;
+
+    //   if (left > largestWidth) left = largestWidth;
+
+    //   this.top = top + 'px';
+    //   this.left = left + 'px';
+    // },
+
+    // closeMenu: function () {
+    //   this.viewMenu = false;
+    // },
+
     getFiles (file) {
       console.log('==>', file.type);
       if (file.type === 'Folder') {
-        file.isOpen = !file.isOpen
         this.subFilesdata = file.children
       }
     },
@@ -368,8 +629,7 @@ export default {
   },
   components: {
     VTreeview,
-    VueDocPreview,
-    pdf
+    VueDocPreview
   }
 }
 </script>
@@ -398,8 +658,8 @@ export default {
               &.filemanage-wrapper {
                 height: 100%;
                 min-height: calc(var(--vh, 1vh) * 100 - 11.85rem);
-                .progressbar-block{
-                  .vs-progress--foreground{
+                .progressbar-block {
+                  .vs-progress--foreground {
                     border-radius: 0;
                   }
                 }
@@ -415,4 +675,45 @@ export default {
   }
 }
 // @import "@/assets/scss/vuexy/themes/_themeDark.scss
+
+// h1 {
+//   font-size: 3em;
+// }
+
+// .center {
+//   text-align: center;
+// }
+
+// #demo {
+//     width: 100%;
+//     height: 100%;
+// }
+
+// #right-click-menu{
+//     background: #FAFAFA;
+//     border: 1px solid #BDBDBD;
+//     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+//     display: block;
+//     list-style: none;
+//     margin: 0;
+//     padding: 0;
+//     position: absolute;
+//     width: 250px;
+//     z-index: 999999;
+// }
+
+// #right-click-menu li {
+//     border-bottom: 1px solid #E0E0E0;
+//     margin: 0;
+//     padding: 5px 35px;
+// }
+
+// #right-click-menu li:last-child {
+//     border-bottom: none;
+// }
+
+// #right-click-menu li:hover {
+//     background: #1E88E5;
+//     color: #FAFAFA;
+// }
 </style>
