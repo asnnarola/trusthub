@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="tab-wrapper-form">
     <div class="activation-detail mt-4 mb-4 p-3 text-right">
       <p class="fw-500">
         <small>

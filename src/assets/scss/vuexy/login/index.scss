@@ -76,8 +76,11 @@ body {
   &.mxw-130 {
     max-width: 130px;
   }
-  &.mxw-250{
+  &.mxw-250 {
     max-width: 250px;
+  }
+  @media screen and (max-width: 575px) {
+    font-size: 14px;
   }
 }
 .btn-gray {
@@ -95,6 +98,15 @@ body {
   &:hover {
     background: #fff !important;
     color: #888888 !important;
+  }
+  &.Trusthub-btn {
+    @media screen and (max-width: 575px) {
+      max-width: 110px;
+      padding: 0px !important;
+    }
+  }
+  @media screen and (max-width: 575px) {
+    font-size: 14px;
   }
 }
 .Trusthub-btn:focus,
@@ -119,36 +131,96 @@ body {
 }
 
 .login-wrapper {
+  @media screen and (max-width: 991px) {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    height: 100% !important;
+  }
   .vx-col {
+    &.login-subwrapper {
+      @media screen and (min-width: 1200px) {
+        max-width: 1130px;
+        width: 95% !important;
+      }
+      @media screen and (min-width: 992px) and (max-width: 1199px) {
+        max-width: 950px;
+        width: 95% !important;
+      }
+      @media screen and (max-width: 991px) {
+        max-width: 500px;
+        width: 90% !important;
+      }
+      .cpy-txt {
+        p {
+          @media screen and (max-width: 575px) {
+            font-size: 12px;
+          }
+        }
+      }
+    }
     .vx-card {
       .vx-card__collapsible-content {
         .full-page-bg-color {
+          @media screen and (min-width: 992px) {
+            min-height: 520px;
+          }
           .vx-row {
+            &.no-gutter {
+              @media screen and (min-width: 992px) {
+                min-height: 520px;
+              }
+            }
             .vx-col {
               .login-logo {
                 margin-bottom: 1rem;
                 max-width: 85%;
                 margin-left: 3rem !important;
                 margin-top: 3rem;
+                @media screen and (max-width: 991px) {
+                  max-width: 150px;
+                  margin-left: auto !important;
+                  margin-right: auto !important;
+                  margin-top: 2rem !important;
+                }
                 img {
                   max-width: 100%;
                   height: auto;
                 }
               }
               .appstore-wrapper {
+                @media screen and (max-width: 991px) {
+                  margin-top: 15px;
+                  margin-right: 0px !important;
+                }
                 a {
                   max-width: 185px;
                   margin-left: 15px;
+                  &:nth-child(1) {
+                    margin-left: 0px;
+                  }
                   img {
                     height: 60px;
+                    @media screen and (max-width: 991px) {
+                      height: 40px;
+                    }
                   }
                 }
               }
               &.right-wrapper {
                 .tab-wrapper {
+                  @media screen and (max-width: 575px) {
+                    padding-left: 1rem !important;
+                    padding-right: 1rem !important;
+                  }
                   .vx-card__title {
                     .wrapper-heading {
                       max-width: calc(100% - 50px);
+                      p {
+                        font-size: 13px;
+                      }
+                    }
+                    .msg-wrapper-icon {
+                      width: 36px;
                     }
                   }
                   .border-lightgray {
@@ -168,12 +240,29 @@ body {
                             + .vs-input--placeholder {
                             }
                           }
+                          &:focus {
+                            border: 1px solid #acacac !important;
+
+                            & ~ .icon-inputx,
+                            & ~ .vs-placeholder-label {
+                              color: #acacac;
+                            }
+                          }
                         }
                       }
                     }
                     .RF-content {
+                      .con-slot-label{
+                        @media screen and (max-width:575px){
+                          font-size: 12px;
+                        }
+                      }
                       a {
                         color: #6d6d6d;
+                        font-size: 12px;
+                        @media screen and (max-width: 575px) {
+                          font-size: 11px;
+                        }
                       }
                     }
                     .LT-wrap {
@@ -227,12 +316,55 @@ body {
                         img {
                           width: 30px;
                         }
+                        @media screen and (max-width: 1199px) {
+                          padding: 0px 7px 0px 7px !important;
+                          &:nth-child(1) {
+                            img {
+                              width: 33px;
+                              height: 33px;
+                            }
+                          }
+                          img {
+                            width: 27px;
+                          }
+                        }
+                        @media screen and (max-width: 450px) {
+                          padding: 0px 4px 0px 4px !important;
+                          &:nth-child(1) {
+                            img {
+                              width: 28px;
+                              height: 28px;
+                            }
+                          }
+                          img {
+                            width: 25px;
+                          }
+                        }
+                        @media screen and (max-width: 375px) {
+                          &:nth-child(1) {
+                            img {
+                              width: 25px;
+                              height: 25px;
+                            }
+                          }
+                          img {
+                            width: 22px;
+                          }
+                        }
                       }
                     }
                   }
                   .txt-wraper {
                     p {
                       color: #787878;
+                      @media screen and (max-width: 1199px) {
+                        font-size: 12px;
+                      }
+                    }
+                  }
+                  h6 {
+                    @media screen and (max-width: 1199px) {
+                      font-size: 12px;
                     }
                   }
                   .txt-or {
@@ -251,6 +383,9 @@ body {
                     background: #f4f6f9;
                     p {
                       line-height: 1.55;
+                      @media screen and (max-width:575px){
+                        font-size: 13px;
+                      }
                       small {
                         font-size: 13px;
                         color: #707070;

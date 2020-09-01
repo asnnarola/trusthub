@@ -44,7 +44,7 @@
                   <div class="tab-wrapper-form">
                     <vs-input type="email" label-placeholder="Email" v-model="value1" class="w-full mb-8" />
                     <div class="flex flex-wrap justify-between mb-3 LT-wrap">
-                      <router-link to="/login"><u class="fw-500 txt-dark-gray">Return to Login Page</u></router-link>
+                      <router-link to="/login" class="mb-3"><u class="fw-500 txt-dark-gray">Return to Login Page</u></router-link>
                       <!-- <vs-button type="border" to="/login" class="btn-green">Back To Login</vs-button> -->
                       <vs-button class="btn-green">Password Recovery</vs-button>
                     </div>

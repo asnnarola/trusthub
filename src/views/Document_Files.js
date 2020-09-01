@@ -151,19 +151,19 @@ export default [
             children: []
           }
         ]
-      },
-      {
-        id: 8,
-        text: "Users",
-        type: "Folder",
-        count: 0,
-        isOpen: false,
-        children: [
-          {
-            id: 1,
-            text: "User-1",
-            type: "File",
-            count: 0,
+        },
+        {
+          id: 8,
+          text: "Users",
+          type: "Folder",
+          count: 0,
+          isOpen: false,
+          children: [
+            {
+              id: 1,
+              text: "User-1",
+              type: "File",
+              count: 0,
             children: []
           }
         ]

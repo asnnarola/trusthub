@@ -13,7 +13,7 @@
     class="h-screen flex-column flex w-full bg-img vx-row no-gutter items-center justify-center login-wrapper"
     id="page-login"
   >
-    <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 sm:m-0 m-4">
+    <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 sm:m-0 m-4 login-subwrapper">
       <vx-card>
         <div slot="no-body" class="full-page-bg-color">
           <div class="vx-row no-gutter justify-center">

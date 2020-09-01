@@ -576,30 +576,6 @@ export default {
       console.log('AB', file);
       file.isOpen = false
     },
-    // openMenu: function (e) {
-    //   this.viewMenu = true;
-    //   Vue.nextTick(function () {
-    //     this.$$.right.focus();
-    //     this.setMenu(e.y, e.x)
-    //   }.bind(this));
-    //   e.preventDefault();
-    // },
-    // setMenu: function (top, left) {
-
-    //   largestHeight = window.innerHeight - this.$$.right.offsetHeight - 25;
-    //   largestWidth = window.innerWidth - this.$$.right.offsetWidth - 25;
-
-    //   if (top > largestHeight) top = largestHeight;
-
-    //   if (left > largestWidth) left = largestWidth;
-
-    //   this.top = top + 'px';
-    //   this.left = left + 'px';
-    // },
-
-    // closeMenu: function () {
-    //   this.viewMenu = false;
-    // },
 
     getFiles (file) {
       console.log('==>', file.type);
