@@ -39,14 +39,6 @@
                   </div>
                 </div>
               </div>
-
-              <!-- <div class="container" v-if="ProgressBar2 === true">
-                <div>{{ percent }}</div>
-                <div class="loading-bar">
-                  <div class="percentage" :style="{'width' : percentage + '%'}"></div>
-                </div>
-              </div> -->
-              <!-- End ProgressBar -->
               <div class="appstore-wrapper d-flex mb-5 mr-10 justify-content-end">
                 <router-link to="/">
                   <img

@@ -69,7 +69,7 @@
 import RegisterJwt from './RegisterJWT.vue'
 import RegisterFirebase from './RegisterFirebase.vue'
 import RegisterAuth0 from './RegisterAuth0.vue'
-import Copyright from '../../../layouts/components/copyright.js'
+import copyRight from '../../../layouts/components/copyright.js'
 export default {
   components: {
     RegisterJwt,
