@@ -1,13 +1,68 @@
 <template>
   <div class="grid-demo__layout-container">
     <vs-row class="border-0 filemanage-wrapper">
-      <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-9">
+      <div class="vs-xs-12 vs-sm-12 vs-md-9 vs-lg-9">
         <vs-row class="h-100">
-          <vs-col class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-3 p-0">
-            <vx-card class="box-shadow-none">
+          <vs-col class="vs-xs-12 vs-sm-4 vs-md-4 vs-lg-3 p-0">
+            <vx-card class="box-shadow-none left-treeheight">
               <div class="p-4 NH-btn">
                 <vs-button color="gray" class="border-radius-0 w-100 mr-3 mb-3">New</vs-button>
-                <vs-button color="gray" class="mr-3 border-radius-0 w-100">Upload</vs-button>
+                <vs-button
+                  color="gray"
+                  class="mr-3 border-radius-0 w-100"
+                  @click="popupActive=true"
+                >Upload</vs-button>
+
+                <vs-popup
+                  class="holamundo"
+                  title="Lorem ipsum dolor sit amet"
+                  :active.sync="popupActive"
+                >
+                  <div class="vx-row mb-6">
+                    <div class="vx-col w-full">
+                      <vs-input class="w-full" label="Type" v-model="popup_type" />
+                    </div>
+                  </div>
+
+                  <div class="vx-row mb-6">
+                    <div class="vx-col w-full">
+                      <vs-input class="w-full" label="Category" v-model="popup_category" />
+                    </div>
+                  </div>
+
+                  <div class="vx-row mb-6">
+                    <div class="vx-col w-full">
+                      <vs-input class="w-full" label="Folder" v-model="popup_folder" />
+                    </div>
+                  </div>
+
+                  <div class="vx-row mb-6">
+                    <div class="vx-col w-full">
+                      <vs-input class="w-full" label="Template" v-model="popup_template" />
+                    </div>
+                  </div>
+
+                  <div class="vx-row mb-6">
+                    <div class="vx-col w-full">
+                      <vs-input class="w-full" label="Labels" v-model="popup_label" />
+                      <vs-button class="mr-3 mb-2">ADD</vs-button>
+                    </div>
+                  </div>
+
+                  <div class="vx-row">
+                    <div class="vx-col w-full">
+                      <vs-button class="mr-3 mb-2">Submit</vs-button>
+                      <vs-button color="warning" type="border" class="mb-2">Reset</vs-button>
+                    </div>
+                  </div>
+
+                  <div class="vx-row">
+                    <vs-upload
+                      action="https://jsonplaceholder.typicode.com/posts/"
+                      @on-success="successUpload"
+                    />
+                  </div>
+                </vs-popup>
               </div>
               <v-treeview
                 v-model="treeData"
@@ -27,7 +82,7 @@
               </div>
             </vx-card>
           </vs-col>
-          <vs-col class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-9 p-0 d-flex flex-column">
+          <vs-col class="vs-xs-12 vs-sm-8 vs-md-8 vs-lg-9 p-0 d-flex flex-column">
             <vx-card class="box-shadow-none serach-wrapper p-2">
               <vx-input-group class="mb-base serach-box">
                 <vs-input
@@ -39,7 +94,10 @@
                 />
                 <template slot="append">
                   <div class="append-text btn-addon">
-                    <vs-button color="gray" class="border-radius-0 addonsearch-btn">Search</vs-button>
+                    <vs-button color="gray" class="border-radius-0 addonsearch-btn"> Search
+                      <!-- <span class="d-sm-block d-none">Search</span>
+                      <span class="d-block d-sm-none"><i class="fas fa-search"></i></span> -->
+                      </vs-button>
                   </div>
                 </template>
               </vx-input-group>
@@ -223,12 +281,13 @@
                 </template>
                 <template slot-scope="{data}" class="bg-white shadow overflow-hidden sm:rounded-md">
                   <!-- <vs-tr :data="tr"> -->
-                    <tr class="list-tr"
-                      v-for="(tr,index) in subFilesdata"
-                      :key="index"
-                      @contextmenu.prevent="$refs.menu.open"
-                    >
-                        <vs-td>
+                  <tr
+                    class="list-tr"
+                    v-for="(tr,index) in subFilesdata"
+                    :key="index"
+                    @contextmenu.prevent="$refs.menu.open"
+                  >
+                    <vs-td>
                       <span class="cursor-pointer" @click="getFiles(t)">
                         <div class="file-icon text-center list-svg" v-if="tr.type === 'Folder'">
                           <i class="fas fa-folder"></i>
@@ -246,7 +305,7 @@
                       </span>
                     </vs-td>
                     <vs-td colspan="4"></vs-td>
-                    </tr>
+                  </tr>
                   <!-- </vs-tr> -->
                   <vue-context ref="menu1" class="foldersubmenu-main">
                     <li>
@@ -364,7 +423,7 @@
             </div>
 
             <vs-row class="border-none mt-auto mb-4 pt-10">
-              <div class="col vs-sm-12 vs-md-12 vs-lg-5 pl-5">
+              <div class="col vs-sm-12 vs-md-12 vs-lg-5 pl-5 process-content">
                 <div class="process-txt d-flex justify-content-between flex-wrap">
                   <span class="text-dark fw-600">Storage</span>
                   <span>250 MB of 500 MB</span>
@@ -383,7 +442,7 @@
                 <vs-dropdown
                   vs-custom-content
                   vs-trigger-click
-                  class="cursor-pointer w-auto ml-2 mb-4 btn-gray"
+                  class="cursor-pointer w-auto vs-button ml-2 mb-4 btn-gray"
                 >
                   Cloud
                   <vs-dropdown-menu class="cloud-wrapper">
@@ -405,32 +464,43 @@
           </vs-col>
         </vs-row>
       </div>
-      <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-3 pl-6">
-        <div class="row border-none">
-          <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
-            <div class="vs-row border-none">
-              <div class="vs-xs-12 vs-sm-12 vs-md-12">
-                <div class="doc-detail">
-                  <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+      <div class="vs-xs-12 vs-sm-12 vs-md-3 vs-lg-3 pl-6 docreport-filesmain">
+        <div class="row border-none d-sm-flex d-md-block w-100">
+          <div class="vs-xs-12 vs-sm-6 vs-md-12 vs-lg-12 pdfdoc-view">
+            <div class="row border-none w-100">
+              <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
+                <div class="vs-row border-none w-100">
+                  <div class="vs-xs-12 vs-sm-12 vs-md-12">
+                    <div class="doc-detail">
+                      <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
-            <div class="vs-row border-none">
-              <div class="vs-xs-12 vs-sm-12 vs-md-12">
-                <div class="doc-detail">
-                  <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+          <div class="vs-xs-12 vs-sm-6 vs-md-12 vs-lg-12 barcode-view">
+            <div class="row w-100">
+              <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
+                <div class="vs-row border-none w-100">
+                  <div class="vs-xs-12 vs-sm-12 vs-md-12">
+                    <div class="doc-detail">
+                      <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
-            <div class="vs-row border-none">
-              <div class="vs-xs-12 vs-sm-12 vs-md-12">
-                <div class="doc-detail d-flex justify-content-end p-4 pb-3">
-                  <div class="barcode-wrapper text-right">
-                    <img src="../assets/images/documents_icon/QR_code.png" class="img-fluid pl-3" />
+              <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
+                <div class="vs-row border-none w-100">
+                  <div class="vs-xs-12 vs-sm-12 vs-md-12">
+                    <div class="doc-detail d-flex justify-content-end p-4 pb-3">
+                      <div class="barcode-wrapper text-right">
+                        <img
+                          src="../assets/images/documents_icon/QR_code.png"
+                          class="img-fluid pl-3"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -457,6 +527,12 @@ import LoginJWTVue from './pages/login/LoginJWT.vue'
 export default {
   data () {
     return {
+      popupActive: false,
+      popup_type: '',
+      popup_category: '',
+      popup_folder: '',
+      popup_template: '',
+      popup_label: '',
       // subdataIndex: '-1',
       items: [
         'Cras justo odio',
@@ -593,8 +669,8 @@ export default {
     }
   },
   methods: {
-    onClick (text) {
-      alert(`You clicked on: "${text}"`);
+    successUpload () {
+      this.$vs.notify({ color: 'success', title: 'Upload Success', text: 'Lorem ipsum dolor sit amet, consectetur' })
     },
 
     getFiles (file) {

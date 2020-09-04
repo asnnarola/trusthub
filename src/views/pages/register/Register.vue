@@ -64,7 +64,6 @@
   </div>
 </template>
 
-
 <script>
 import RegisterJwt from './RegisterJWT.vue'
 import RegisterFirebase from './RegisterFirebase.vue'

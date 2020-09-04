@@ -19,7 +19,7 @@
 .cursor-pointer {
   cursor: pointer;
 }
-.fw-600{
+.fw-600 {
   font-weight: 600;
 }
 
@@ -1144,6 +1144,26 @@
   }
 }
 
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .vs-md-9 {
+    width: 75% !important;
+  }
+  .vs-md-3 {
+    width: 25% !important;
+  }
+  .vs-md-12 {
+    width: 100% !important;
+  }
+}
+@media screen and (min-width: 576px) and (max-width: 767px) {
+  .vs-sm-6 {
+    width: 50% !important;
+  }
+  .vs-sm-12 {
+    width: 100% !important;
+  }
+}
+
 .user-select-all {
   -webkit-user-select: all !important;
   -moz-user-select: all !important;
@@ -1482,8 +1502,10 @@
                       span {
                         .file-icon {
                           width: 90px;
+                          margin-left: auto;
+                          margin-right: auto;
                           i {
-                            font-size: 4.5rem;
+                            font-size: 3.5rem;
                             color: #f9c201;
                           }
                           span {
@@ -1605,10 +1627,11 @@
                   .progressbar-block {
                     &.progressbar-doc {
                       border: 1px solid #a0a0a0;
-                      .vs-progress-warning{
+                      .vs-progress-warning {
                         background: #fff;
-                        .vs-progress--foreground{
+                        .vs-progress--foreground {
                           background: #f9c201;
+                          border-radius: 0px;
                         }
                       }
                     }
@@ -1635,7 +1658,7 @@
 }
 
 // Media query scss start
-@media screen and (min-width: 1600px) {
+@media screen and (min-width: 1601px) {
   .layout--main {
     .content-area-reduced {
       .content-wrapper {
@@ -1662,7 +1685,7 @@
     }
   }
 }
-@media screen and (min-width: 1200px) and (max-width: 1600px) {
+@media screen and (min-width: 1201px) and (max-width: 1600px) {
   .layout--main {
     .content-area-reduced {
       .content-wrapper {
@@ -1706,16 +1729,111 @@
     }
   }
 }
+@media screen and (min-width: 992px) {
+  .layout--main {
+    #content-area {
+      .content-wrapper {
+        .router-view {
+          .router-content {
+            .content-area__content {
+              .grid-demo__layout-container {
+                .filemanage-wrapper {
+                  .frc-wrapper {
+                    .folder-main {
+                      .folder-wrapper {
+                        width: 20%;
+                        margin: 10px 0px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
-@media screen and (max-width: 1199px) {
+@media screen and (max-width: 1200px) {
   .layout--main {
     .content-area-full {
       .navbar-full {
         .navbar-custom {
           .vs-con-items {
             .select-none {
+              display: block !important;
               svg {
                 color: #fff;
+              }
+            }
+          }
+        }
+      }
+      .content-wrapper {
+        .router-view {
+          .router-content {
+            .content-area__content {
+              .grid-demo__layout-container {
+                .filemanage-wrapper {
+                  .serach-wrapper {
+                    .serach-box {
+                      width: calc(100% - 110px) !important;
+                      .vx-input-group-append {
+                        .append-text {
+                          .addonsearch-btn {
+                            font-size: 14px !important;
+                            padding: 0px 0.75rem !important;
+                          }
+                        }
+                      }
+                    }
+                  }
+                  .left-treeheight {
+                    height: 100%;
+                    .tree-node {
+                      padding-left: 10px !important;
+                    }
+                    .submenu-document {
+                      .doc-submenu-list {
+                        padding-left: 5px !important;
+                      }
+                    }
+                  }
+                  .process-txt {
+                    span {
+                      font-size: 12px;
+                    }
+                  }
+                  .frc-wrapper {
+                    .folder-main {
+                      .folder-wrapper {
+                        .file-icon {
+                          width: 75px !important;
+                          i {
+                            font-size: 2.5rem !important;
+                          }
+                          span {
+                            font-size: 13px !important;
+                          }
+                        }
+                      }
+                    }
+                  }
+                  .LTC-btn {
+                    .btn-gray {
+                      padding: 0.75rem;
+                      font-size: 13px;
+                    }
+                  }
+                  .doc-detail {
+                    padding: 10px !important;
+                    p {
+                      font-size: 12px;
+                    }
+                  }
+                }
               }
             }
           }
@@ -1774,6 +1892,39 @@
   }
 }
 
+@media screen and (max-width: 991px) {
+  .layout--main {
+    #content-area {
+      .content-wrapper {
+        .router-view {
+          .router-content {
+            .content-area__content {
+              .grid-demo__layout-container {
+                .filemanage-wrapper {
+                  .frc-wrapper {
+                    .folder-main {
+                      .folder-wrapper {
+                        width: 25%;
+                        margin: 10px 0px;
+                      }
+                    }
+                  }
+                  .process-content{
+                    padding-right: 1.25rem !important;
+                  }
+                  .LTC-btn{
+                    margin-top:15px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 767px) {
   .layout--main {
     .content-area-full {
@@ -1794,7 +1945,28 @@
           }
         }
       }
-
+      .content-wrapper{
+        .router-view{
+          .router-content{
+            .content-area__content{
+              .grid-demo__layout-container{
+                .filemanage-wrapper{
+                  .docreport-filesmain{
+                    padding-left: 0px !important;
+                    margin-top: 2rem;
+                    .pdfdoc-view{
+                      padding-right: 15px;
+                    }
+                    .barcode-view{
+                      padding-left: 15px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
       .the-footer {
         p {
           font-size: 12px;
@@ -1809,6 +1981,33 @@
     .content-area-full {
       .navbar-full {
         padding: 0 !important;
+      }
+      .content-wrapper{
+        .router-view{
+          .router-content{
+            .content-area__content{
+              .grid-demo__layout-container{
+                .filemanage-wrapper{
+                  .frc-wrapper{
+                    .folder-main{
+                      .folder-wrapper{
+                        width: 33.333% !important;
+                      }
+                    }
+                  }
+                  .docreport-filesmain{
+                    .pdfdoc-view{
+                      padding-right: 0px;
+                    }
+                    .barcode-view{
+                      padding-left: 0px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

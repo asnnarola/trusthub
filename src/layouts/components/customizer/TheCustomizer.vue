@@ -16,9 +16,7 @@
       @click.stop="active=!active"
       color="primary"
       type="filled"
-      class="customizer-btn"
-      icon-pack="feather"
-      icon="icon-settings" />
+      class="customizer-btn"> Upload </vs-button>
 
     <!-- Customizer Content -->
     <vs-sidebar
@@ -368,4 +366,3 @@ export default {
   }
 }
 </style>
-
