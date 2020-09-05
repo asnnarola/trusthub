@@ -43,7 +43,7 @@
                 src="../../../assets/images/sidebar_icon/menu-open.png"
                 id="btnVNavMenuMinToggler"
                 class="mr-0 cursor-pointer"
-                @click="toggleReduce(!reduce)"
+                @click="toggleReduce(!reduce)" width="26px"
               />
               <!-- <feather-icon
                 id="btnVNavMenuMinToggler"

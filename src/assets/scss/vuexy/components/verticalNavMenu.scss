@@ -81,6 +81,43 @@
     color: #fff !important;
     border: 2px solid #f1c800 !important;
   }
+  &.h-38{
+    height: 38px;
+  }
+  &.pd-0{
+    padding: 0px !important;
+  }
+  &.w-100px{
+    width: 100px !important;
+  }
+  &.fw-500{
+    font-weight: 500 !important;
+  }
+}
+
+.btn-yellow {
+  background: #f9c201 !important;
+  border-radius: 0px;
+  border: 2px solid #f9c201;
+  font-weight: 500;
+  font-size: 16px;
+  &:hover {
+    box-shadow: 0px 2px 10px 0px #00000033 !important;
+    color: #f9c201 !important;
+    background: #fff !important;
+  }
+  &.mt-25px {
+    margin-top: 25px;
+  }
+  &.h-38{
+    height: 38px !important;
+  }
+  &.pd-0{
+    padding: 0px !important;
+  }
+  &.w-100px{
+    width: 100px !important;
+  }
 }
 
 // swipe area/div

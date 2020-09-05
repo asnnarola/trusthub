@@ -1,5 +1,17 @@
 <template>
   <div class="grid-demo__layout-container">
+    <the-customizer
+      v-if                    = "!disableCustomizer"
+      :footerType             = "footerType"
+      :hideScrollToTop        = "hideScrollToTop"
+      :navbarType             = "navbarType"
+      :navbarColor            = "navbarColor"
+      :routerTransition       = "routerTransition"
+      @toggleHideScrollToTop  = "toggleHideScrollToTop"
+      @updateFooter           = "updateFooter"
+      @updateNavbar           = "updateNavbar"
+      @updateNavbarColor      = "updateNavbarColor"
+      @updateRouterTransition = "updateRouterTransition" />
     <vs-row class="border-0 filemanage-wrapper">
       <div class="vs-xs-12 vs-sm-12 vs-md-9 vs-lg-9">
         <vs-row class="h-100">
@@ -522,8 +534,7 @@ import VueContext from 'vue-context';
 import 'vue-context/src/sass/vue-context.scss';
 import subDocument from './Sub-Document/sub-document.vue'
 import filesList from './Document_Files.js'
-import LoginJWTVue from './pages/login/LoginJWT.vue'
-
+import TheCustomizer from '@/layouts/components/customizer/TheCustomizer.vue'
 export default {
   data () {
     return {
@@ -703,6 +714,7 @@ export default {
     VTreeview,
     VueContext,
     VueDocPreview,
+    TheCustomizer
   }
 }
 </script>

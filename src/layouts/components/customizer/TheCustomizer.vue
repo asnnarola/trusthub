@@ -9,14 +9,17 @@
 ========================================================================================== -->
 
 <template>
-  <div id="theme-customizer">
-
+  <div id="theme-customizer" class="uploadmodal-wrapper">
     <!-- Open Customizer Button -->
     <vs-button
       @click.stop="active=!active"
       color="primary"
       type="filled"
-      class="customizer-btn"> Upload </vs-button>
+      class="customizer-btn upload-btn"
+    >
+      <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />
+      Upload
+    </vs-button>
 
     <!-- Customizer Content -->
     <vs-sidebar
@@ -24,193 +27,95 @@
       hidden-background
       position-right
       v-model="active"
-      class="items-no-padding">
+      class="items-no-padding"
+    >
       <div class="h-full">
-
-        <div class="customizer-header mt-6 flex items-center justify-between px-6">
+        <div class="customizer-header pt-4 pb-4 flex items-center justify-between px-6">
           <div>
-            <h4>THEME CUSTOMIZER</h4>
-            <small>Customize & Preview in Real Time</small>
+            <h4 class="text-white">UPLOAD</h4>
+            <small class="text-white">
+              <i>Advance Upload</i>
+            </small>
           </div>
           <feather-icon icon="XIcon" @click.stop="active = false" class="cursor-pointer"></feather-icon>
         </div>
+        <vs-divider class="mb-5 mt-0" />
+        <!-- <div class="customizer-header mt-3 flex items-center justify-between px-6">
+          <h6>UPLOAD</h6>
+          <p>Advance Upload</p>
+        </div>-->
 
-        <vs-divider class="mb-0" />
-
-        <component :is="scrollbarTag" class="scroll-area--customizer pt-4 pb-6" :settings="settings" :key="$vs.rtl">
-
-          <div class="px-6">
-
-            <!-- Layout Type -->
-            <div class="mt-4">
-              <h5 class="mb-2">Layout Type</h5>
-              <div>
-                <vs-radio v-model="layoutType" vs-value="vertical" class="mr-4" vs-name="layout-type-vertical">Vertical</vs-radio>
-                <vs-radio v-model="layoutType" vs-value="horizontal" class="mr-4" vs-name="layout-type-horizontal">Horizontal</vs-radio>
-              </div>
-            </div>
-
-            <vs-divider />
-
-            <!-- THEME COLORS -->
-            <div>
-              <h5 class="mb-4">Theme Color</h5>
-              <ul class="clearfix">
-
-                <!-- Color Square -->
-                <li
-                  v-for="color in themeColors"
-                  :key="color"
-                  :style="{backgroundColor: color}"
-                  :class="{'shadow-outline': color == primaryColor}"
-                  class="w-10 cursor-pointer h-10 rounded-lg m-2 float-left"
-                  @click="updatePrimaryColor(color)" />
-
-                <!-- Custom Color Square -->
-                <li
-                  :style="{backgroundColor: customPrimaryColor}"
-                  :class="{'shadow-outline': customPrimaryColor == primaryColor}"
-                  class="w-10 cursor-pointer h-10 rounded-lg m-2 float-left"
-                  @click="updatePrimaryColor(customPrimaryColor)" />
-                <li class="float-left"><input class="w-10 cursor-pointer h-10 rounded-lg m-2" v-model="customPrimaryColor" type="color" /></li>
-              </ul>
-            </div>
-            <!-- /THEME COLORS -->
-
-
-            <vs-divider />
-
-            <!-- THEME -->
-            <div class="mt-4">
-              <h5 class="mb-2">Theme Mode</h5>
-              <div>
-                <vs-radio v-model="themeMode" vs-value="light" class="mr-4" vs-name="theme-mode-light">Light</vs-radio>
-                <vs-radio v-model="themeMode" vs-value="dark" class="mr-4" vs-name="theme-mode-dark">Dark</vs-radio>
-                <vs-radio
-                  v-if="layoutType === 'vertical'"
-                  v-model="themeMode"
-                  vs-value="semi-dark"
-                  vs-name="theme-mode-semi-dark">Semi Dark</vs-radio>
-              </div>
-            </div>
-
-            <vs-divider />
-
-            <template v-if="layoutType === 'vertical'">
-
-              <!-- COLLAPSE SIDEBAR -->
-              <div class="mt-4 flex justify-between">
-                <h5>Collapse Sidebar</h5>
-                <vs-switch v-model="reduced_sidebar" />
-              </div>
-
-              <vs-divider />
-
-            </template>
-
-            <!-- NAVBAR COLOR -->
-
-            <template v-if="layoutType === 'vertical'">
-
-              <div class="mt-4">
-                <h5>Navbar Color</h5>
-                <ul class="clearfix">
-
-                  <!-- WHITE COLOR -->
-                  <li
-                    :style="{background: navbarColorInitial}"
-                    class="w-10 m-2 h-10 rounded-lg float-left cursor-pointer border border-solid d-theme-border-grey-light"
-                    :class="navbarColorOptionClasses(navbarColorInitial)"
-                    @click="navbarColorLocal = navbarColorInitial " />
-
-                  <!-- THEME COLORS -->
-                  <li
-                    v-for="color in themeColors"
-                    :key="color"
-                    :style="{backgroundColor: color}"
-                    :class="navbarColorOptionClasses(color)"
-                    class="w-10 cursor-pointer h-10 rounded-lg m-2 float-left"
-                    @click="navbarColorLocal = color" />
-
-                  <!-- CUSTOM COLOR -->
-                  <li
-                    :style="{backgroundColor: customNavbarColor}"
-                    :class="navbarColorOptionClasses(navbarColorOptionClasses)"
-                    class="w-10 cursor-pointer h-10 rounded-lg m-2 float-left"
-                    @click="navbarColorLocal = customNavbarColor" />
-
-                  <li class="float-left">
-                    <input class="w-10 cursor-pointer h-10 rounded-lg m-2" v-model="customNavbarColor" type="color" />
-                  </li>
-                </ul>
-              </div>
-              <!-- /NAVBAR COLOR -->
-
-              <vs-divider />
-
-            </template>
-
-            <!-- NAVBAR TYPE -->
-            <div class="mt-4">
-              <h5 class="mb-2">{{ (layoutType === 'vertical' || windowWidth &lt; 1200) ? "Navbar" : "Nav Menu" }} Type</h5>
-              <div>
-                <vs-radio
-                  v-if="layoutType === 'vertical' || windowWidth < 1200"
-                  v-model="navbarTypeLocal"
-                  vs-value="hidden"
-                  class="mr-4"
-                  vs-name="navbar-type-hidden">Hidden</vs-radio>
-
-                <vs-radio v-model="navbarTypeLocal" vs-value="static" class="mr-4" vs-name="navbar-type-static">Static</vs-radio>
-                <vs-radio v-model="navbarTypeLocal" vs-value="sticky" vs-name="navbar-type-sticky" class="mr-4">Sticky</vs-radio>
-                <vs-radio v-model="navbarTypeLocal" vs-value="floating" vs-name="navbar-type-floating">Floating</vs-radio>
-              </div>
-            </div>
-
-            <vs-divider />
-
-            <!-- FOOTER TYPE -->
-            <div class="mt-4">
-              <h5 class="mb-2">Footer Type</h5>
-              <div>
-                <vs-radio v-model="footerTypeLocal" vs-value="hidden" class="mr-4" vs-name="footer-type-hidden">Hidden</vs-radio>
-                <vs-radio v-model="footerTypeLocal" vs-value="static" class="mr-4" vs-name="footer-type-static">Static</vs-radio>
-                <vs-radio v-model="footerTypeLocal" vs-value="sticky" vs-name="footer-type-sticky">Sticky</vs-radio>
-              </div>
-            </div>
-
-            <vs-divider />
-
-            <!-- RTL -->
-            <div class="mt-4 flex justify-between">
-              <h5 class="mb-2">RTL</h5>
-              <vs-switch v-model="rtl" />
-            </div>
-
-            <vs-divider />
-
-            <!-- SHOW SCROLL TO TOP -->
-            <div class="mt-4 flex justify-between">
-              <h5 class="mb-2">Hide Scroll To Top</h5>
-              <vs-switch v-model="hideScrollToTopLocal" />
-            </div>
-
-            <vs-divider />
-
-            <!-- ROUTER ANIMATION -->
-            <div class="mt-4">
-              <h5 class="mb-2">Router Animation {{ routerTransitionLocal }}</h5>
-              <vs-select v-model="routerTransitionLocal">
-                <vs-select-item
-                  v-for="(item,index) in routerTransitionsList"
-                  :key="index"
-                  :value="item.value"
-                  :text="item.text" />
-              </vs-select>
-            </div>
-
+        <div class="vx-row mb-3 ml-3 mr-3">
+          <div class="vx-col w-full">
+            <vs-input class="w-full inputbox-style" label="Type" v-model="popup_type" />
           </div>
-        </component>
+        </div>
+
+        <div class="vx-row mb-3 ml-3 mr-3">
+          <div class="vx-col w-full">
+            <vs-input class="w-full inputbox-style" label="Category" v-model="popup_category" />
+          </div>
+        </div>
+
+        <div class="vx-row mb-3 ml-3 mr-3">
+          <div class="vx-col w-full">
+            <vs-input class="w-full inputbox-style" label="Folder" v-model="popup_folder" />
+          </div>
+        </div>
+
+        <div class="vx-row mb-3 ml-3 mr-3">
+          <div class="vx-col w-full">
+            <vs-input class="w-full inputbox-style" label="Template" v-model="popup_template" />
+          </div>
+        </div>
+
+        <div class="vx-row mb-3 ml-3 mr-3">
+          <div class="vx-col w-full d-flex justify-content-between align-items-center">
+            <vs-input
+              class="w-full inputbox-style input-btn-style"
+              label="Labels"
+              v-model="popup_label"
+            />
+            <vs-button
+              class="float-right btn-yellow mt-25px labeladd-btn ml-3 h-38 pd-0 w-100px"
+            >Add</vs-button>
+          </div>
+        </div>
+
+        <div class="vx-row ml-3 mr-3">
+          <div class="vx-col w-full text-right">
+            <p class="star-wrapper mt-1">
+              <span class="mr-3">Star</span>
+              <i class="fas fa-star pl-2"></i>
+              <i class="fas fa-star pl-2"></i>
+              <i class="fas fa-star pl-2"></i>
+              <i class="fas fa-star pl-2"></i>
+              <i class="fas fa-star pl-2"></i>
+            </p>
+          </div>
+        </div>
+        <div class="vx-row ml-3 mr-3">
+          <!-- action="https://jsonplaceholder.typicode.com/posts/" -->
+          <vs-upload @on-success="successUpload" />
+        </div>
+        <div class="vx-row ml-3 mr-3 mb-6">
+          <div class="vx-col w-full">
+            <div
+              class="toggle-wrapper w-100 text-right d-flex justify-content-end align-items-center"
+            >
+              <span class="mr-3">Convert to .pdf</span>
+              <vs-switch color="dark" v-model="tglSwitch" />
+            </div>
+          </div>
+        </div>
+        <vs-divider class="mb-5 mt-0 pl-6 pr-6 pb-2 pt-3" />
+
+        <div class="vx-row mt-3 mb-6 pb-3">
+          <div class="vx-col w-full text-center">
+            <vs-button class="mb-2 btn-yellow mr-3 h-38 pd-0 w-100px">Save</vs-button>
+            <vs-button class="mb-2 btn-gray h-38 pd-0 w-100px fw-500">Canel</vs-button>
+          </div>
+        </div>
       </div>
     </vs-sidebar>
   </div>
@@ -220,30 +125,32 @@
 <script>
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 
+
 export default {
   props: {
-    footerType       : { type: String,  required: true },
-    hideScrollToTop  : { type: Boolean, required: true },
-    navbarType       : { type: String,  required: true },
-    navbarColor      : { type: String,  required: true, default: '#fff' },
-    routerTransition : { type: String,  required: true }
+    footerType: { type: String, required: true },
+    hideScrollToTop: { type: Boolean, required: true },
+    navbarType: { type: String, required: true },
+    navbarColor: { type: String, required: true, default: '#fff' },
+    routerTransition: { type: String, required: true }
   },
   data () {
     return {
-      active             : false,
-      customPrimaryColor : '#3DC9B3',
-      customNavbarColor  : '#3DC9B3',
+      tglSwitch: true,
+      active: false,
+      customPrimaryColor: '#3DC9B3',
+      customNavbarColor: '#3DC9B3',
       routerTransitionsList: [
-        { text: 'Zoom Fade',   value: 'zoom-fade'   },
-        { text: 'Slide Fade',  value: 'slide-fade'  },
+        { text: 'Zoom Fade', value: 'zoom-fade' },
+        { text: 'Slide Fade', value: 'slide-fade' },
         { text: 'Fade Bottom', value: 'fade-bottom' },
-        { text: 'Fade',        value: 'fade'        },
-        { text: 'Zoom Out',    value: 'zoom-out'    },
-        { text: 'None',        value: 'none'        }
+        { text: 'Fade', value: 'fade' },
+        { text: 'Zoom Out', value: 'zoom-out' },
+        { text: 'None', value: 'none' }
       ],
       settings: {
-        maxScrollbarLength : 60,
-        wheelSpeed         : .60
+        maxScrollbarLength: 60,
+        wheelSpeed: .60
       },
       themeColors: ['#7367F0', '#28C76F', '#EA5455', '#FF9F43', '#1E1E1E']
     }
@@ -254,18 +161,18 @@ export default {
       // Reset unsupported options
       if (val === 'horizontal') {
         if (this.themeMode === 'semi-dark') this.themeMode = 'light'
-        if (this.navbarType === 'hidden')   this.navbarTypeLocal = 'floating'
+        if (this.navbarType === 'hidden') this.navbarTypeLocal = 'floating'
         this.$emit('updateNavbarColor', '#fff')
       }
     }
   },
   computed: {
     footerTypeLocal: {
-      get ()    { return this.footerType },
+      get () { return this.footerType },
       set (val) { this.$emit('updateFooter', val) }
     },
     hideScrollToTopLocal: {
-      get ()    { return this.hideScrollToTop },
+      get () { return this.hideScrollToTop },
       set (val) { this.$emit('toggleHideScrollToTop', val) }
     },
     navbarColorInitial () {
@@ -274,7 +181,7 @@ export default {
     navbarColorOptionClasses () {
       return (color) => {
         const classes = {}
-        if (color === this.navbarColorLocal)   classes['shadow-outline'] = true
+        if (color === this.navbarColorLocal) classes['shadow-outline'] = true
         if (this.navbarTypeLocal === 'static') classes['cursor-not-allowed'] = true
         return classes
       }
@@ -287,31 +194,31 @@ export default {
       }
     },
     navbarTypeLocal: {
-      get ()    { return this.navbarType },
+      get () { return this.navbarType },
       set (val) { this.$emit('updateNavbar', val) }
     },
     layoutType: {
-      get ()    { return this.$store.state.mainLayoutType },
+      get () { return this.$store.state.mainLayoutType },
       set (val) { this.$store.commit('UPDATE_MAIN_LAYOUT_TYPE', val) }
     },
     primaryColor: {
-      get ()    { return this.$store.state.themePrimaryColor },
+      get () { return this.$store.state.themePrimaryColor },
       set (val) { this.$store.commit('UPDATE_PRIMARY_COLOR', val) }
     },
     reduced_sidebar: {
-      get ()    { return this.$store.state.reduceButton },
+      get () { return this.$store.state.reduceButton },
       set (val) { this.$store.commit('TOGGLE_REDUCE_BUTTON', val) }
     },
     routerTransitionLocal: {
-      get ()    { return this.routerTransition },
+      get () { return this.routerTransition },
       set (val) { this.$emit('updateRouterTransition', val) }
     },
     rtl: {
-      get ()    { return this.$vs.rtl },
-      set (val) { this.$vs.rtl = val  }
+      get () { return this.$vs.rtl },
+      set (val) { this.$vs.rtl = val }
     },
     themeMode: {
-      get ()    { return this.$store.state.theme },
+      get () { return this.$store.state.theme },
       set (val) { this.$store.dispatch('updateTheme', val) }
     },
     scrollbarTag () { return this.$store.state.is_touch_device ? 'div' : 'VuePerfectScrollbar' },
@@ -341,13 +248,14 @@ export default {
     width: 400px;
     max-width: 90vw;
     // @apply shadow-lg;
-    box-shadow: 0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08);
+    box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
+      0 5px 15px 0 rgba(0, 0, 0, 0.08);
   }
 }
 
 .customizer-btn {
   position: fixed;
-  top: 50%;
+  top: 70%;
   right: 0;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
