@@ -29,6 +29,15 @@
       v-model="active"
       class="items-no-padding"
     >
+    <vs-button
+      @click.stop="active=!active"
+      color="primary"
+      type="filled"
+      class="customizer-btn upload-btn closeupload-btn"
+    >
+      <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />
+      Upload
+    </vs-button>
       <div class="h-full">
         <div class="customizer-header pt-4 pb-4 flex items-center justify-between px-6">
           <div>
@@ -40,10 +49,6 @@
           <feather-icon icon="XIcon" @click.stop="active = false" class="cursor-pointer"></feather-icon>
         </div>
         <vs-divider class="mb-5 mt-0" />
-        <!-- <div class="customizer-header mt-3 flex items-center justify-between px-6">
-          <h6>UPLOAD</h6>
-          <p>Advance Upload</p>
-        </div>-->
 
         <div class="vx-row mb-3 ml-3 mr-3">
           <div class="vx-col w-full">
@@ -78,7 +83,22 @@
             />
             <vs-button
               class="float-right btn-yellow mt-25px labeladd-btn ml-3 h-38 pd-0 w-100px"
+              :disabled="popup_label == ''"
+              @click="addLabels()"
             >Add</vs-button>
+          </div>
+        </div>
+
+        <div class="vx-row ml-6 mr-6">
+          <div class="vx-col w-full pl-1 pr-1">
+            <div class="labeladd-block">
+              <vs-chip
+                @click="remove(label)"
+                v-for="(label, index) in labels"
+                :key="index"
+                closable
+              >{{ label }}</vs-chip>
+            </div>
           </div>
         </div>
 
@@ -96,7 +116,7 @@
         </div>
         <div class="vx-row ml-3 mr-3">
           <!-- action="https://jsonplaceholder.typicode.com/posts/" -->
-          <vs-upload @on-success="successUpload" />
+          <vs-upload />
         </div>
         <div class="vx-row ml-3 mr-3 mb-6">
           <div class="vx-col w-full">
@@ -124,117 +144,33 @@
 
 <script>
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
-
-
 export default {
-  props: {
-    footerType: { type: String, required: true },
-    hideScrollToTop: { type: Boolean, required: true },
-    navbarType: { type: String, required: true },
-    navbarColor: { type: String, required: true, default: '#fff' },
-    routerTransition: { type: String, required: true }
-  },
   data () {
     return {
       tglSwitch: true,
       active: false,
-      customPrimaryColor: '#3DC9B3',
-      customNavbarColor: '#3DC9B3',
-      routerTransitionsList: [
-        { text: 'Zoom Fade', value: 'zoom-fade' },
-        { text: 'Slide Fade', value: 'slide-fade' },
-        { text: 'Fade Bottom', value: 'fade-bottom' },
-        { text: 'Fade', value: 'fade' },
-        { text: 'Zoom Out', value: 'zoom-out' },
-        { text: 'None', value: 'none' }
-      ],
-      settings: {
-        maxScrollbarLength: 60,
-        wheelSpeed: .60
-      },
-      themeColors: ['#7367F0', '#28C76F', '#EA5455', '#FF9F43', '#1E1E1E']
-    }
-  },
-  watch: {
-    layoutType (val) {
-
-      // Reset unsupported options
-      if (val === 'horizontal') {
-        if (this.themeMode === 'semi-dark') this.themeMode = 'light'
-        if (this.navbarType === 'hidden') this.navbarTypeLocal = 'floating'
-        this.$emit('updateNavbarColor', '#fff')
-      }
-    }
-  },
-  computed: {
-    footerTypeLocal: {
-      get () { return this.footerType },
-      set (val) { this.$emit('updateFooter', val) }
-    },
-    hideScrollToTopLocal: {
-      get () { return this.hideScrollToTop },
-      set (val) { this.$emit('toggleHideScrollToTop', val) }
-    },
-    navbarColorInitial () {
-      return this.$store.state.theme === 'dark' ? '#10163a' : '#fff'
-    },
-    navbarColorOptionClasses () {
-      return (color) => {
-        const classes = {}
-        if (color === this.navbarColorLocal) classes['shadow-outline'] = true
-        if (this.navbarTypeLocal === 'static') classes['cursor-not-allowed'] = true
-        return classes
-      }
-    },
-    navbarColorLocal: {
-      get () { return this.navbarColor },
-      set (val) {
-        if (this.navbarType === 'static') return
-        this.$emit('updateNavbarColor', val)
-      }
-    },
-    navbarTypeLocal: {
-      get () { return this.navbarType },
-      set (val) { this.$emit('updateNavbar', val) }
-    },
-    layoutType: {
-      get () { return this.$store.state.mainLayoutType },
-      set (val) { this.$store.commit('UPDATE_MAIN_LAYOUT_TYPE', val) }
-    },
-    primaryColor: {
-      get () { return this.$store.state.themePrimaryColor },
-      set (val) { this.$store.commit('UPDATE_PRIMARY_COLOR', val) }
-    },
-    reduced_sidebar: {
-      get () { return this.$store.state.reduceButton },
-      set (val) { this.$store.commit('TOGGLE_REDUCE_BUTTON', val) }
-    },
-    routerTransitionLocal: {
-      get () { return this.routerTransition },
-      set (val) { this.$emit('updateRouterTransition', val) }
-    },
-    rtl: {
-      get () { return this.$vs.rtl },
-      set (val) { this.$vs.rtl = val }
-    },
-    themeMode: {
-      get () { return this.$store.state.theme },
-      set (val) { this.$store.dispatch('updateTheme', val) }
-    },
-    scrollbarTag () { return this.$store.state.is_touch_device ? 'div' : 'VuePerfectScrollbar' },
-    windowWidth () {
-      return this.$store.state.windowWidth
-    }
-  },
-  methods: {
-    updatePrimaryColor (color) {
-      this.primaryColor = color
-      this.$vs.theme({ primary: color })
+      popup_type: '',
+      popup_category: '',
+      popup_folder: '',
+      popup_template: '',
+      popup_label: '',
+      labels: ['foo', 'bar']
     }
   },
   components: {
     VuePerfectScrollbar
-  }
+  },
+  methods: {
+    addLabels () {
+      if (this.popup_label) {
+        this.labels.push(this.popup_label)
+        this.popup_label = ''
+      }
+    },
+    remove (item) {
+      this.labels.splice(this.labels.indexOf(item), 1)
+    }
+  },
 }
 
 </script>
