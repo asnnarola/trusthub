@@ -1,3 +1,3 @@
 <template>
-  <h1>Hello I am Identity</h1>
+  <div><h1>Identity</h1></div>
 </template>

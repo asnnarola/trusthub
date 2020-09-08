@@ -29,15 +29,15 @@
       v-model="active"
       class="items-no-padding"
     >
-    <vs-button
-      @click.stop="active=!active"
-      color="primary"
-      type="filled"
-      class="customizer-btn upload-btn closeupload-btn"
-    >
-      <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />
-      Upload
-    </vs-button>
+      <vs-button
+        @click.stop="active=!active"
+        color="primary"
+        type="filled"
+        class="customizer-btn upload-btn closeupload-btn"
+      >
+        <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />
+        Upload
+      </vs-button>
       <div class="h-full">
         <div class="customizer-header pt-4 pb-4 flex items-center justify-between px-6">
           <div>
@@ -49,93 +49,101 @@
           <feather-icon icon="XIcon" @click.stop="active = false" class="cursor-pointer"></feather-icon>
         </div>
         <vs-divider class="mb-5 mt-0" />
-
-        <div class="vx-row mb-3 ml-3 mr-3">
-          <div class="vx-col w-full">
-            <vs-input class="w-full inputbox-style" label="Type" v-model="popup_type" />
-          </div>
-        </div>
-
-        <div class="vx-row mb-3 ml-3 mr-3">
-          <div class="vx-col w-full">
-            <vs-input class="w-full inputbox-style" label="Category" v-model="popup_category" />
-          </div>
-        </div>
-
-        <div class="vx-row mb-3 ml-3 mr-3">
-          <div class="vx-col w-full">
-            <vs-input class="w-full inputbox-style" label="Folder" v-model="popup_folder" />
-          </div>
-        </div>
-
-        <div class="vx-row mb-3 ml-3 mr-3">
-          <div class="vx-col w-full">
-            <vs-input class="w-full inputbox-style" label="Template" v-model="popup_template" />
-          </div>
-        </div>
-
-        <div class="vx-row mb-3 ml-3 mr-3">
-          <div class="vx-col w-full d-flex justify-content-between align-items-center">
-            <vs-input
-              class="w-full inputbox-style input-btn-style"
-              label="Labels"
-              v-model="popup_label"
-            />
-            <vs-button
-              class="float-right btn-yellow mt-25px labeladd-btn ml-3 h-38 pd-0 w-100px"
-              :disabled="popup_label == ''"
-              @click="addLabels()"
-            >Add</vs-button>
-          </div>
-        </div>
-
-        <div class="vx-row ml-6 mr-6">
-          <div class="vx-col w-full pl-1 pr-1">
-            <div class="labeladd-block">
-              <vs-chip
-                @click="remove(label)"
-                v-for="(label, index) in labels"
-                :key="index"
-                closable
-              >{{ label }}</vs-chip>
+        <component
+          :is="scrollbarTag"
+          class="scroll-area--customizer pt-4 pb-6"
+          :settings="settings"
+          :key="$vs.rtl"
+        >
+          <div class="vx-row mb-3 ml-3 mr-3">
+            <div class="vx-col w-full">
+              <vs-input class="w-full inputbox-style" label="Type" v-model="popup_type" />
             </div>
           </div>
-        </div>
 
-        <div class="vx-row ml-3 mr-3">
-          <div class="vx-col w-full text-right">
-            <p class="star-wrapper mt-1">
-              <span class="mr-3">Star</span>
-              <i class="fas fa-star pl-2"></i>
-              <i class="fas fa-star pl-2"></i>
-              <i class="fas fa-star pl-2"></i>
-              <i class="fas fa-star pl-2"></i>
-              <i class="fas fa-star pl-2"></i>
-            </p>
-          </div>
-        </div>
-        <div class="vx-row ml-3 mr-3">
-          <!-- action="https://jsonplaceholder.typicode.com/posts/" -->
-          <vs-upload />
-        </div>
-        <div class="vx-row ml-3 mr-3 mb-6">
-          <div class="vx-col w-full">
-            <div
-              class="toggle-wrapper w-100 text-right d-flex justify-content-end align-items-center"
-            >
-              <span class="mr-3">Convert to .pdf</span>
-              <vs-switch color="dark" v-model="tglSwitch" />
+          <div class="vx-row mb-3 ml-3 mr-3">
+            <div class="vx-col w-full">
+              <vs-input class="w-full inputbox-style" label="Category" v-model="popup_category" />
             </div>
           </div>
-        </div>
-        <vs-divider class="mb-5 mt-0 pl-6 pr-6 pb-2 pt-3" />
 
-        <div class="vx-row mt-3 mb-6 pb-3">
-          <div class="vx-col w-full text-center">
-            <vs-button class="mb-2 btn-yellow mr-3 h-38 pd-0 w-100px">Save</vs-button>
-            <vs-button class="mb-2 btn-gray h-38 pd-0 w-100px fw-500">Canel</vs-button>
+          <div class="vx-row mb-3 ml-3 mr-3">
+            <div class="vx-col w-full">
+              <vs-input class="w-full inputbox-style" label="Folder" v-model="popup_folder" />
+            </div>
           </div>
-        </div>
+
+          <div class="vx-row mb-3 ml-3 mr-3">
+            <div class="vx-col w-full">
+              <vs-input class="w-full inputbox-style" label="Template" v-model="popup_template" />
+            </div>
+          </div>
+
+          <div class="vx-row mb-3 ml-3 mr-3">
+            <div class="vx-col w-full d-flex justify-content-between align-items-center">
+              <vs-input
+                class="w-full inputbox-style input-btn-style"
+                label="Labels"
+                v-model="popup_label"
+              />
+              <vs-button
+                class="float-right btn-yellow mt-25px labeladd-btn ml-3 h-38 pd-0 w-100px"
+                :disabled="popup_label == ''"
+                @click="addLabels()"
+              >Add</vs-button>
+            </div>
+          </div>
+
+          <div class="vx-row ml-6 mr-6">
+            <div class="vx-col w-full pl-1 pr-1">
+              <div class="labeladd-block">
+                <vs-chip
+                  @click="remove(label)"
+                  v-for="(label, index) in labels"
+                  :key="index"
+                  closable
+                >{{ label }}</vs-chip>
+              </div>
+            </div>
+          </div>
+
+          <div class="vx-row ml-3 mr-3">
+            <div class="vx-col w-full text-right">
+              <p class="star-wrapper mt-1 d-flex justify-content-end align-items-center flex-wrap">
+                <span class="mr-3">Stars</span>
+                <!-- <i class="fas fa-star pl-2"></i>
+                <i class="fas fa-star pl-2"></i>
+                <i class="fas fa-star pl-2"></i>
+                <i class="fas fa-star pl-2"></i>
+                <i class="fas fa-star pl-2"></i> -->
+                <star-rating :star-size="20" :read-only="true" :rounded-corners="true" :rating="5"></star-rating>
+              </p>
+            </div>
+          </div>
+
+          <div class="vx-row ml-3 mr-3">
+            <!-- action="https://jsonplaceholder.typicode.com/posts/" -->
+            <vs-upload />
+          </div>
+          <div class="vx-row ml-3 mr-3 mb-6">
+            <div class="vx-col w-full">
+              <div
+                class="toggle-wrapper w-100 text-right d-flex justify-content-end align-items-center"
+              >
+                <span class="mr-3">Convert to .pdf</span>
+                <vs-switch color="dark" v-model="tglSwitch" />
+              </div>
+            </div>
+          </div>
+          <vs-divider class="mb-5 mt-0 pl-6 pr-6 pb-2 pt-3" />
+
+          <div class="vx-row mt-3 mb-6 pb-3">
+            <div class="vx-col w-full text-center">
+              <vs-button class="mb-2 btn-yellow mr-3 h-38 pd-0 w-100px">Save</vs-button>
+              <vs-button class="mb-2 btn-gray h-38 pd-0 w-100px fw-500">Canel</vs-button>
+            </div>
+          </div>
+        </component>
       </div>
     </vs-sidebar>
   </div>
@@ -144,6 +152,7 @@
 
 <script>
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+import StarRating from 'vue-star-rating'
 export default {
   data () {
     return {
@@ -154,11 +163,23 @@ export default {
       popup_folder: '',
       popup_template: '',
       popup_label: '',
-      labels: ['foo', 'bar']
+      labels: ['foo', 'bar'],
+      settings: {
+        maxScrollbarLength: 250,
+        wheelSpeed: .100
+      },
     }
   },
   components: {
-    VuePerfectScrollbar
+    VuePerfectScrollbar,
+    StarRating
+  },
+  computed: {
+    rtl: {
+      get () { return this.$vs.rtl },
+      set (val) { this.$vs.rtl = val }
+    },
+    scrollbarTag () { return this.$store.state.is_touch_device ? 'div' : 'VuePerfectScrollbar' },
   },
   methods: {
     addLabels () {

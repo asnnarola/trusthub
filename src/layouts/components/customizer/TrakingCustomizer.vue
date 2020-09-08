@@ -38,89 +38,95 @@
           <feather-icon icon="XIcon" @click.stop="active = false" class="cursor-pointer"></feather-icon>
         </div>
         <vs-divider class="mb-0 mt-0" />
-
-        <div class="traking-wrapper">
-          <!-- <vs-checkbox color="warning" v-model="chkbox1"> -->
-          <div class="d-flex pb-10 position-relative traking-wrap">
-            <div class="checkbox-block">
-              <i class="fas fa-check"></i>
+        <component
+          :is="scrollbarTag"
+          class="scroll-area--customizer pt-4 pb-6"
+          :settings="settings"
+          :key="$vs.rtl"
+        >
+          <div class="traking-wrapper">
+            <!-- <vs-checkbox color="warning" v-model="chkbox1"> -->
+            <div class="d-flex pb-10 position-relative traking-wrap">
+              <div class="checkbox-block">
+                <i class="fas fa-check"></i>
+              </div>
+              <div class="trak-detail">
+                <h6 class="mb-1">
+                  <b>Income Document</b>
+                </h6>
+                <p class="mb-1 fw-500">Uploaded by Roberto Minoletti</p>
+                <p>
+                  <i>UTC {{CurrentDate}}</i>
+                </p>
+              </div>
             </div>
-            <div class="trak-detail">
-              <h6 class="mb-1">
-                <b>Income Document</b>
-              </h6>
-              <p class="mb-1 fw-500">Uploaded by Roberto Minoletti</p>
-              <p>
-                <i>UTC {{CurrentDate}}</i>
-              </p>
+            <!-- </vs-checkbox> -->
+            <!-- <vs-checkbox color="warning" v-model="chkbox2"> -->
+            <div class="d-flex pb-10 position-relative traking-wrap">
+              <div class="checkbox-block">
+                <i class="fas fa-check"></i>
+              </div>
+              <div class="trak-detail">
+                <h6 class="mb-1">
+                  <b>Flow Orchestrator</b>
+                </h6>
+                <p class="mb-1 fw-500">Sent to Sign by Reberto Minoletti</p>
+                <p>
+                  <i>UTC {{CurrentDate}}</i>
+                </p>
+              </div>
             </div>
+            <!-- </vs-checkbox> -->
+            <!-- <vs-checkbox color="warning" v-model="chkbox3"> -->
+            <div class="d-flex pb-10 position-relative traking-wrap">
+              <div class="checkbox-block">
+                <i class="fas fa-check"></i>
+              </div>
+              <div class="trak-detail">
+                <h6 class="mb-1">
+                  <b>Signature Process</b>
+                </h6>
+                <p class="mb-1 fw-500">Signed by Reberto Minoletti</p>
+                <p>
+                  <i>UTC {{CurrentDate}}</i>
+                </p>
+              </div>
+            </div>
+            <!-- </vs-checkbox> -->
+            <!-- <vs-checkbox color="warning" v-model="chkbox4"> -->
+            <div class="d-flex pb-10 position-relative traking-wrap">
+              <div class="checkbox-block">
+                <i class="fas fa-check"></i>
+              </div>
+              <div class="trak-detail">
+                <h6 class="mb-1">
+                  <b>Identification</b>
+                </h6>
+                <p class="mb-1 fw-500">Face Recognition by Reberto Minoletti</p>
+                <p>
+                  <i>UTC {{CurrentDate}}</i>
+                </p>
+              </div>
+            </div>
+            <!-- </vs-checkbox> -->
+            <!-- <vs-checkbox color="warning" v-model="chkbox5"> -->
+            <div class="d-flex pb-10 position-relative traking-wrap">
+              <div class="checkbox-block">
+                <i class="fas fa-check"></i>
+              </div>
+              <div class="trak-detail">
+                <h6 class="mb-1">
+                  <b>Document Management</b>
+                </h6>
+                <p class="mb-1 fw-500">Stored in OpenKM by Reberto Minoletti</p>
+                <p>
+                  <i>UTC {{CurrentDate}}</i>
+                </p>
+              </div>
+            </div>
+            <!-- </vs-checkbox> -->
           </div>
-          <!-- </vs-checkbox> -->
-          <!-- <vs-checkbox color="warning" v-model="chkbox2"> -->
-          <div class="d-flex pb-10 position-relative traking-wrap">
-            <div class="checkbox-block">
-              <i class="fas fa-check"></i>
-            </div>
-            <div class="trak-detail">
-              <h6 class="mb-1">
-                <b>Flow Orchestrator</b>
-              </h6>
-              <p class="mb-1 fw-500">Sent to Sign by Reberto Minoletti</p>
-              <p>
-                <i>UTC {{CurrentDate}}</i>
-              </p>
-            </div>
-          </div>
-          <!-- </vs-checkbox> -->
-          <!-- <vs-checkbox color="warning" v-model="chkbox3"> -->
-          <div class="d-flex pb-10 position-relative traking-wrap">
-            <div class="checkbox-block">
-              <i class="fas fa-check"></i>
-            </div>
-            <div class="trak-detail">
-              <h6 class="mb-1">
-                <b>Signature Process</b>
-              </h6>
-              <p class="mb-1 fw-500">Signed by Reberto Minoletti</p>
-              <p>
-                <i>UTC {{CurrentDate}}</i>
-              </p>
-            </div>
-          </div>
-          <!-- </vs-checkbox> -->
-          <!-- <vs-checkbox color="warning" v-model="chkbox4"> -->
-          <div class="d-flex pb-10 position-relative traking-wrap">
-            <div class="checkbox-block">
-              <i class="fas fa-check"></i>
-            </div>
-            <div class="trak-detail">
-              <h6 class="mb-1">
-                <b>Identification</b>
-              </h6>
-              <p class="mb-1 fw-500">Face Recognition by Reberto Minoletti</p>
-              <p>
-                <i>UTC {{CurrentDate}}</i>
-              </p>
-            </div>
-          </div>
-          <!-- </vs-checkbox> -->
-          <!-- <vs-checkbox color="warning" v-model="chkbox5"> -->
-          <div class="d-flex pb-10 position-relative traking-wrap">
-            <div class="checkbox-block">
-              <i class="fas fa-check"></i>
-            </div>
-            <div class="trak-detail">
-              <h6 class="mb-1">
-                <b>Document Management</b>
-              </h6>
-              <p class="mb-1 fw-500">Stored in OpenKM by Reberto Minoletti</p>
-              <p>
-                <i>UTC {{CurrentDate}}</i>
-              </p>
-            </div>
-          </div>
-          <!-- </vs-checkbox> -->
-        </div>
+        </component>
       </div>
     </vs-sidebar>
   </div>
@@ -139,12 +145,20 @@ export default {
       chkbox3: true,
       chkbox4: true,
       chkbox5: true,
-      CurrentDate: new Date().toISOString()
+      CurrentDate: new Date().toISOString(),
+      settings: {
+        maxScrollbarLength: 250,
+        wheelSpeed: .100
+      },
 
     }
   },
-  created () {
-    console.log('Date =>', this.CurrentDate);
+  computed: {
+    rtl: {
+      get () { return this.$vs.rtl },
+      set (val) { this.$vs.rtl = val }
+    },
+    scrollbarTag () { return this.$store.state.is_touch_device ? 'div' : 'VuePerfectScrollbar' },
   },
   components: {
     VuePerfectScrollbar

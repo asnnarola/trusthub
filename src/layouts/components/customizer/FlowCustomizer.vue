@@ -38,50 +38,68 @@
           <feather-icon icon="XIcon" @click.stop="active = false" class="cursor-pointer"></feather-icon>
         </div>
         <vs-divider class="mb-0 mt-0" />
-        <vs-collapse>
-          <vs-collapse-item
-            v-for="(user, index) in Users"
-            :key="index"
-            icon-pack="fas"
-            icon-arrow="fa-caret-down"
-          >
-            <div slot="header" class>{{user.name}}</div>
-            <div class="text-right mb-6 mt-6">
-              <p>
-                <i>Signature Order : {{user.signatureOrder}}</i>
-              </p>
-              <p>
-                <i>Mandatory signed before : {{user.mandatorySignedBefore.toString()}}</i>
-              </p>
-              <p>
-                <i>Signature Option : {{user.signatureOption.toString()}}</i>
-              </p>
-              <p>
-                <i>Reason : {{user.reason}}</i>
-              </p>
-              <p>
-                <i>Dead Date : {{user.deadDate}}</i>
-              </p>
-              <p>
-                <i>Notified : {{user.notified}}</i>
-              </p>
-              <p>
-                <i>Status : {{user.status}}</i>
-              </p>
-            </div>
-            <div class="justify-content-between d-sm-flex">
-            <vs-button color="primary" class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1" type="filled">Stress</vs-button>
-            <vs-button color="primary" class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1" type="filled">Replace</vs-button>
-            <vs-button color="primary" class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1" type="filled">Modify</vs-button>
-            <vs-button color="primary" class="btn-gray w-auto mt-2 mb-2 flow-gray-btn" type="filled">Remove</vs-button>
-            </div>
-
-            <!-- <vs-button color="primary" class="customizer-btn upload-btn">Stress</vs-button>
-            <vs-button color="primary" class="customizer-btn upload-btn">Replace</vs-button>
-            <vs-button color="primary" class="customizer-btn upload-btn">Modify</vs-button>
-            <vs-button color="primary" class="customizer-btn upload-btn">Remove</vs-button>-->
-          </vs-collapse-item>
-        </vs-collapse>
+        <component
+          :is="scrollbarTag"
+          class="scroll-area--customizer pt-4 pb-6"
+          :settings="settings"
+          :key="$vs.rtl"
+        >
+          <vs-collapse>
+            <vs-collapse-item
+              v-for="(user, index) in Users"
+              :key="index"
+              icon-pack="fas"
+              icon-arrow="fa-caret-down"
+            >
+              <div slot="header" class>{{user.name}}</div>
+              <div class="text-right mb-6 mt-6">
+                <p>
+                  <i>Signature Order : {{user.signatureOrder}}</i>
+                </p>
+                <p>
+                  <i>Mandatory signed before : {{user.mandatorySignedBefore.toString()}}</i>
+                </p>
+                <p>
+                  <i>Signature Option : {{user.signatureOption.toString()}}</i>
+                </p>
+                <p>
+                  <i>Reason : {{user.reason}}</i>
+                </p>
+                <p>
+                  <i>Dead Date : {{user.deadDate}}</i>
+                </p>
+                <p>
+                  <i>Notified : {{user.notified}}</i>
+                </p>
+                <p>
+                  <i>Status : {{user.status}}</i>
+                </p>
+              </div>
+              <div class="justify-content-between d-sm-flex">
+                <vs-button
+                  color="primary"
+                  class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1"
+                  type="filled"
+                >Stress</vs-button>
+                <vs-button
+                  color="primary"
+                  class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1"
+                  type="filled"
+                >Replace</vs-button>
+                <vs-button
+                  color="primary"
+                  class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1"
+                  type="filled"
+                >Modify</vs-button>
+                <vs-button
+                  color="primary"
+                  class="btn-gray w-auto mt-2 mb-2 flow-gray-btn"
+                  type="filled"
+                >Remove</vs-button>
+              </div>
+            </vs-collapse-item>
+          </vs-collapse>
+        </component>
       </div>
     </vs-sidebar>
   </div>
@@ -161,11 +179,23 @@ export default {
           notified: 'no',
           status: 'waiting'
         },
-      ]
+
+      ],
+      settings: {
+        maxScrollbarLength: 250,
+        wheelSpeed: .100
+      },
     }
   },
   components: {
     VuePerfectScrollbar
+  },
+  computed: {
+    rtl: {
+      get () { return this.$vs.rtl },
+      set (val) { this.$vs.rtl = val }
+    },
+    scrollbarTag () { return this.$store.state.is_touch_device ? 'div' : 'VuePerfectScrollbar' },
   },
   methods: {
     addLabels () {

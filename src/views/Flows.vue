@@ -1,3 +1,3 @@
 <template>
-  <h1>Hello I am Flow</h1>
+  <h1>Flow</h1>
 </template>

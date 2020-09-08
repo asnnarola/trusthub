@@ -65,6 +65,14 @@ const router = new Router({
           },
         },
         {
+          path: '/document/:id',
+          name: 'sub-document',
+          component: () => import('./views/Sub-Document/sub-document'),
+          meta: {
+            rule: 'editor'
+          },
+        },
+        {
           path: '/template',
           name: 'template',
           component: () => import('./views/Templates.vue'),

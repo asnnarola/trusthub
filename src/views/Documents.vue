@@ -10,62 +10,7 @@
             <vx-card class="box-shadow-none left-treeheight">
               <div class="p-4 NH-btn">
                 <vs-button color="gray" class="border-radius-0 w-100 mr-3 mb-3">New</vs-button>
-                <vs-button
-                  color="gray"
-                  class="mr-3 border-radius-0 w-100"
-                  @click="popupActive=true"
-                >Upload</vs-button>
-
-                <vs-popup
-                  class="holamundo"
-                  title="Lorem ipsum dolor sit amet"
-                  :active.sync="popupActive"
-                >
-                  <div class="vx-row mb-6">
-                    <div class="vx-col w-full">
-                      <vs-input class="w-full" label="Type" v-model="popup_type" />
-                    </div>
-                  </div>
-
-                  <div class="vx-row mb-6">
-                    <div class="vx-col w-full">
-                      <vs-input class="w-full" label="Category" v-model="popup_category" />
-                    </div>
-                  </div>
-
-                  <div class="vx-row mb-6">
-                    <div class="vx-col w-full">
-                      <vs-input class="w-full" label="Folder" v-model="popup_folder" />
-                    </div>
-                  </div>
-
-                  <div class="vx-row mb-6">
-                    <div class="vx-col w-full">
-                      <vs-input class="w-full" label="Template" v-model="popup_template" />
-                    </div>
-                  </div>
-
-                  <div class="vx-row mb-6">
-                    <div class="vx-col w-full">
-                      <vs-input class="w-full" label="Labels" v-model="popup_label" />
-                      <vs-button class="mr-3 mb-2">ADD</vs-button>
-                    </div>
-                  </div>
-
-                  <div class="vx-row">
-                    <div class="vx-col w-full">
-                      <vs-button class="mr-3 mb-2">Submit</vs-button>
-                      <vs-button color="warning" type="border" class="mb-2">Reset</vs-button>
-                    </div>
-                  </div>
-
-                  <div class="vx-row">
-                    <vs-upload
-                      action="https://jsonplaceholder.typicode.com/posts/"
-                      @on-success="successUpload"
-                    />
-                  </div>
-                </vs-popup>
+                <vs-button color="gray" class="mr-3 border-radius-0 w-100">Upload</vs-button>
               </div>
               <v-treeview
                 v-model="treeData"
@@ -149,6 +94,7 @@
                     <div
                       class="file-icon text-center d-flex flex-column justify-content-center align-items-center"
                       v-else
+                      @click="getFiles(subData)"
                     >
                       <i class="fas fa-file"></i>
                       <span>{{subData.text}}</span>
@@ -282,7 +228,7 @@
                   <vs-th>Owner</vs-th>
                   <vs-th>Size</vs-th>
                 </template>
-                <template slot-scope="{data}" class="bg-white shadow overflow-hidden sm:rounded-md">
+                <template class="bg-white shadow overflow-hidden sm:rounded-md">
                   <!-- <vs-tr :data="tr"> -->
                   <tr
                     class="list-tr"
@@ -310,7 +256,7 @@
                     <vs-td colspan="4"></vs-td>
                   </tr>
                   <!-- </vs-tr> -->
-                  <vue-context ref="menu1" class="foldersubmenu-main">
+                  <vue-context ref="menu1" :closeOnClick="false" class="foldersubmenu-main">
                     <li>
                       <i class="fas fa-download"></i>
                       <span>Download</span>
@@ -386,8 +332,9 @@
                     </li>
 
                     <li class="hoverfile-menu">
-                      <vs-dropdown class="cursor-pointer icon-menu-btn">
-                        <a class="flex items-center" href.prevent>
+                      <vs-dropdown class="cursor-pointer icon-menu-btn" vs-custom-content
+                  vs-trigger-click>
+                        <a class="flex items-center">
                           <i class="fas fa-ellipsis-v"></i>
                           More Options
                         </a>
@@ -475,7 +422,7 @@
                 <div class="vs-row border-none w-100">
                   <div class="vs-xs-12 vs-sm-12 vs-md-12">
                     <div class="doc-detail">
-                      <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+                      <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
                     </div>
                   </div>
                 </div>
@@ -521,7 +468,6 @@
 import VTreeview from 'v-treeview'
 import VueDocPreview from 'vue-doc-preview'
 import VueContext from 'vue-context';
-// import 'vue-context/dist/css/vue-context.css'
 import 'vue-context/src/sass/vue-context.scss';
 import subDocument from './Sub-Document/sub-document.vue'
 import filesList from './Document_Files.js'
@@ -531,13 +477,6 @@ import FlowCustomizer from '@/layouts/components/customizer/FlowCustomizer.vue'
 export default {
   data () {
     return {
-      popupActive: false,
-      popup_type: '',
-      popup_category: '',
-      popup_folder: '',
-      popup_template: '',
-      popup_label: '',
-      // subdataIndex: '-1',
       items: [
         'Cras justo odio',
         'Dapibus ac facilisis in',
@@ -678,9 +617,13 @@ export default {
     },
 
     getFiles (file) {
-      console.log('==>', file.type);
+      console.log('==>', file);
       if (file.type === 'Folder') {
         this.subFilesdata = file.children
+      }
+      if (file.type == 'File'){
+        console.log('==>', file.id);
+        this.$router.push('/document/' + file.id).catch(() => {})
       }
     },
     selected (node) {
