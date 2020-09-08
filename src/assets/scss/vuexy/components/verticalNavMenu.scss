@@ -74,6 +74,50 @@
     background: #fff !important;
     color: #888888 !important;
   }
+  &:focus,
+  &:active {
+    background-color: #f1c800 !important;
+    background: #f1c800 !important;
+    color: #fff !important;
+    border: 2px solid #f1c800 !important;
+  }
+  &.h-38{
+    height: 38px;
+  }
+  &.pd-0{
+    padding: 0px !important;
+  }
+  &.w-100px{
+    width: 100px !important;
+  }
+  &.fw-500{
+    font-weight: 500 !important;
+  }
+}
+
+.btn-yellow {
+  background: #f9c201 !important;
+  border-radius: 0px;
+  border: 2px solid #f9c201;
+  font-weight: 500;
+  font-size: 16px;
+  &:hover {
+    box-shadow: 0px 2px 10px 0px #00000033 !important;
+    color: #f9c201 !important;
+    background: #fff !important;
+  }
+  &.mt-25px {
+    margin-top: 25px;
+  }
+  &.h-38{
+    height: 38px !important;
+  }
+  &.pd-0{
+    padding: 0px !important;
+  }
+  &.w-100px{
+    width: 100px !important;
+  }
 }
 
 // swipe area/div
@@ -99,69 +143,67 @@
     position: fixed;
     .vs-sidebar--items {
       padding: 0;
-      .ps-container {
-        .vs-sidebar--item {
-          a {
-            position: relative;
+      .vs-sidebar--item {
+        a {
+          position: relative;
+          &:after {
+            content: "";
+            border-bottom: 1px solid #383838;
+            width: calc(100% - 10px);
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            right: 0;
+          }
+          &.menu-close-show {
+            img {
+              display: none;
+            }
+          }
+          &.router-link-exact-active,
+          &.menu-close-show {
             &:after {
-              content: "";
-              border-bottom: 1px solid #383838;
-              width: calc(100% - 10px);
-              position: absolute;
-              bottom: 0px;
-              left: 0;
-              right: 0;
-            }
-            &.menu-close-show {
-              img {
-                display: block;
-              }
-            }
-            &.router-link-exact-active,
-            &.menu-close-show {
-              &:after {
-                border-bottom: none;
-              }
+              border-bottom: none;
             }
           }
         }
-        ul.bt-menu-list {
-          li.vs-sidebar--item {
-            &:nth-child(1),
-            &:nth-child(2) {
-              a {
-                background: #707070;
-                margin-bottom: 6px;
-                margin-left: 8px;
-                margin-right: 8px;
-                display: flex;
-                justify-content: flex-end;
-                flex-wrap: wrap;
-                padding-right: 15px;
-                img {
-                  display: none;
-                }
-              }
-            }
-            &:nth-child(3) {
-              a {
-                margin-bottom: 2rem;
-                margin-left: 8px;
-                margin-right: 8px;
-                background: #383838;
-                span {
-                  text-transform: uppercase;
-                }
-              }
-            }
+      }
+      ul.bt-menu-list {
+        li.vs-sidebar--item {
+          &:nth-child(1),
+          &:nth-child(2) {
             a {
-              &:after {
-                border-bottom: none;
-                content: "";
+              background: #707070;
+              margin-bottom: 6px;
+              margin-left: 8px;
+              margin-right: 8px;
+              display: flex;
+              justify-content: flex-end;
+              flex-wrap: wrap;
+              padding-right: 15px;
+              img {
+                display: none;
               }
+            }
+          }
+          &:nth-child(3) {
+            a {
+              margin-bottom: 2rem;
+              margin-left: 8px;
+              margin-right: 8px;
+              background: #383838;
               span {
-                font-weight: 300;
+                text-transform: uppercase;
               }
+            }
+          }
+          a {
+            &:after {
+              border-bottom: none;
+              content: "";
+            }
+            span {
+              font-weight: 300;
             }
           }
         }
@@ -170,10 +212,10 @@
     &.vs-sidebar-reduce {
       max-width: $reduced-sidebar-width;
       .vs-sidebar--items {
-        .header-sidebar{
-          .vx-logo{
-            img{
-              width:50px !important;
+        .header-sidebar {
+          .vx-logo {
+            img {
+              width: 50px !important;
               transition: 0.2s;
               padding-top: 10px;
               padding-bottom: 10px;

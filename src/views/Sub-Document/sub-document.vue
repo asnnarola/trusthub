@@ -1,10 +1,12 @@
 <template>
-  <h1>helo {{slug}}</h1>
+  <h1>helo</h1>
 </template>
 <script>
 export default {
-  data(){
-    slug : this.$router.params.id
+  data() {
+    return {
+      id: this.$route.params.id
+    }
   },
 }
 </script>

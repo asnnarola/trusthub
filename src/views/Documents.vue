@@ -1,10 +1,13 @@
 <template>
   <div class="grid-demo__layout-container">
+    <the-customizer />
+     <!-- <traking-customizer/> -->
+    <!-- <flow-customizer/> -->
     <vs-row class="border-0 filemanage-wrapper">
-      <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-9">
+      <div class="vs-xs-12 vs-sm-12 vs-md-9 vs-lg-9">
         <vs-row class="h-100">
-          <vs-col class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-3 p-0">
-            <vx-card class="box-shadow-none">
+          <vs-col class="vs-xs-12 vs-sm-4 vs-md-4 vs-lg-3 p-0">
+            <vx-card class="box-shadow-none left-treeheight">
               <div class="p-4 NH-btn">
                 <vs-button color="gray" class="border-radius-0 w-100 mr-3 mb-3">New</vs-button>
                 <vs-button color="gray" class="mr-3 border-radius-0 w-100">Upload</vs-button>
@@ -27,7 +30,7 @@
               </div>
             </vx-card>
           </vs-col>
-          <vs-col class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-9 p-0 d-flex flex-column">
+          <vs-col class="vs-xs-12 vs-sm-8 vs-md-8 vs-lg-9 p-0 d-flex flex-column">
             <vx-card class="box-shadow-none serach-wrapper p-2">
               <vx-input-group class="mb-base serach-box">
                 <vs-input
@@ -39,7 +42,10 @@
                 />
                 <template slot="append">
                   <div class="append-text btn-addon">
-                    <vs-button color="gray" class="border-radius-0 addonsearch-btn">Search</vs-button>
+                    <vs-button color="gray" class="border-radius-0 addonsearch-btn"> Search
+                      <!-- <span class="d-sm-block d-none">Search</span>
+                      <span class="d-block d-sm-none"><i class="fas fa-search"></i></span> -->
+                      </vs-button>
                   </div>
                 </template>
               </vx-input-group>
@@ -64,39 +70,193 @@
                 </span>
               </div>
             </vx-card>
-            <div
-              v-if="subFilesdata.length && !onList && onGrid"
-              class="w-100 d-flex flex-wrap folder-main"
-            >
-              <div
-                class="folder-wrapper"
-                v-for="(subData,index) in subFilesdata"
-                :key="index"
-                @click="closeMenu(subFilesdata[subdataIndex])"
+
+            <div class="frc-wrapper">
+              <ul
+                class="demo w-100 d-flex flex-wrap folder-main"
+                v-if="subFilesdata.length && !onList && onGrid"
               >
-                <span
-                  class="cursor-pointer"
-                  @contextmenu="onRightClick($event, subFilesdata, index)"
+                <li
+                  class="folder-wrapper"
+                  v-for="(subData,index) in subFilesdata"
+                  :key="index"
+                  @contextmenu.prevent="$refs.menu.open"
                 >
-                  <div
-                    class="file-icon text-center d-flex flex-column justify-content-center align-items-center"
-                    v-if="subData.children.length > 0"
-                    @click="getFiles(subData)"
+                  <span class="cursor-pointer">
+                    <div
+                      class="file-icon text-center d-flex flex-column justify-content-center align-items-center"
+                      v-if="subData.children.length > 0"
+                      @click="getFiles(subData)"
+                    >
+                      <i class="fas fa-folder"></i>
+                      <span>{{subData.text}}</span>
+                    </div>
+                    <div
+                      class="file-icon text-center d-flex flex-column justify-content-center align-items-center"
+                      v-else
+                      @click="getFiles(subData)"
+                    >
+                      <i class="fas fa-file"></i>
+                      <span>{{subData.text}}</span>
+                    </div>
+                  </span>
+                </li>
+              </ul>
+              <vue-context ref="menu" class="foldersubmenu-main">
+                <li>
+                  <i class="fas fa-download"></i>
+                  <span>Download</span>
+                </li>
+                <li>
+                  <i class="far fa-eye"></i>
+                  <span>Preview</span>
+                </li>
+                <li class="hoverfile-menu">
+                  <vs-dropdown class="cursor-pointer">
+                    <a class="flex items-center" href.prevent>Open With</a>
+                    <i class="fas fa-angle-right"></i>
+                    <vs-dropdown-menu class="hoveropen-menu">
+                      <vs-dropdown-item>New Tab</vs-dropdown-item>
+                      <vs-dropdown-item>Media Info</vs-dropdown-item>
+                      <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
+                      <vs-dropdown-item>Google Docs Editor</vs-dropdown-item>
+                      <vs-dropdown-item>Google Docs Viewer</vs-dropdown-item>
+                      <vs-dropdown-item>Office</vs-dropdown-item>
+                      <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
+                      <vs-dropdown-item>Only Office</vs-dropdown-item>
+                      <vs-dropdown-item>Zoho Editor</vs-dropdown-item>
+                    </vs-dropdown-menu>
+                  </vs-dropdown>
+                </li>
+                <li class="hoverfile-menu">
+                  <vs-dropdown class="cursor-pointer icon-menu-btn">
+                    <a class="flex items-center" href.prevent>
+                      <i class="fas fa-share-alt"></i>
+                      Share
+                    </a>
+                    <i class="fas fa-angle-right"></i>
+                    <vs-dropdown-menu class="hoveropen-menu">
+                      <vs-dropdown-item>New Tab</vs-dropdown-item>
+                      <vs-dropdown-item>Media Info</vs-dropdown-item>
+                      <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
+                      <vs-dropdown-item>Google Docs Editor</vs-dropdown-item>
+                      <vs-dropdown-item>Google Docs Viewer</vs-dropdown-item>
+                      <vs-dropdown-item>Office</vs-dropdown-item>
+                      <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
+                      <vs-dropdown-item>Only Office</vs-dropdown-item>
+                      <vs-dropdown-item>Zoho Editor</vs-dropdown-item>
+                    </vs-dropdown-menu>
+                  </vs-dropdown>
+                </li>
+                <li>
+                  <i class="fas fa-comments"></i>
+                  <span>Comment</span>
+                </li>
+                <li class="hoverfile-menu">
+                  <vs-dropdown class="cursor-pointer icon-menu-btn">
+                    <a class="flex items-center" href.prevent>
+                      <i class="fas fa-tag"></i>
+                      Label
+                    </a>
+                    <i class="fas fa-angle-right"></i>
+                    <vs-dropdown-menu class="hoveropen-menu">
+                      <vs-dropdown-item>New Tab</vs-dropdown-item>
+                      <vs-dropdown-item>Media Info</vs-dropdown-item>
+                      <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
+                      <vs-dropdown-item>Google Docs Editor</vs-dropdown-item>
+                      <vs-dropdown-item>Google Docs Viewer</vs-dropdown-item>
+                      <vs-dropdown-item>Office</vs-dropdown-item>
+                      <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
+                      <vs-dropdown-item>Only Office</vs-dropdown-item>
+                      <vs-dropdown-item>Zoho Editor</vs-dropdown-item>
+                    </vs-dropdown-menu>
+                  </vs-dropdown>
+                </li>
+                <li>
+                  <i class="fas fa-star"></i>
+                  <span>Add star</span>
+                </li>
+
+                <li class="hoverfile-menu">
+                  <vs-dropdown class="cursor-pointer icon-menu-btn">
+                    <a class="flex items-center" href.prevent>
+                      <i class="fas fa-ellipsis-v"></i>
+                      More Options
+                    </a>
+                    <i class="fas fa-angle-right"></i>
+                    <vs-dropdown-menu class="hoveropen-menu">
+                      <vs-dropdown-item>New Tab</vs-dropdown-item>
+                      <vs-dropdown-item>Media Info</vs-dropdown-item>
+                      <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
+                      <vs-dropdown-item>Google Docs Editor</vs-dropdown-item>
+                      <vs-dropdown-item>Google Docs Viewer</vs-dropdown-item>
+                      <vs-dropdown-item>Office</vs-dropdown-item>
+                      <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
+                      <vs-dropdown-item>Only Office</vs-dropdown-item>
+                      <vs-dropdown-item>Zoho Editor</vs-dropdown-item>
+                    </vs-dropdown-menu>
+                  </vs-dropdown>
+                </li>
+                <li class="hoverfile-menu">
+                  <vs-dropdown class="cursor-pointer">
+                    <a class="flex items-center">Copy</a>
+                  </vs-dropdown>
+                </li>
+                <li class="hoverfile-menu">
+                  <vs-dropdown class="cursor-pointer">
+                    <a class="flex items-center">Rename</a>
+                  </vs-dropdown>
+                </li>
+
+                <li>
+                  <i class="fas fa-trash-alt"></i>
+                  <span>Remove</span>
+                </li>
+              </vue-context>
+            </div>
+            <div
+              v-if="subFilesdata.length && onList && !onGrid"
+              class="demo w-100 d-flex flex-wrap folder-main"
+            >
+              <!-- @click="closeMenu(subFilesdata[subdataIndex])" -->
+              <vs-table class="w-100 list-folder-grid" :data="subFilesdata">
+                <template slot="thead">
+                  <vs-th></vs-th>
+                  <vs-th>Name</vs-th>
+                  <vs-th>Stars</vs-th>
+                  <vs-th>Signed</vs-th>
+                  <vs-th>Owner</vs-th>
+                  <vs-th>Size</vs-th>
+                </template>
+                <template class="bg-white shadow overflow-hidden sm:rounded-md">
+                  <!-- <vs-tr :data="tr"> -->
+                  <tr
+                    class="list-tr"
+                    v-for="(tr,index) in subFilesdata"
+                    :key="index"
+                    @contextmenu.prevent="$refs.menu.open"
                   >
-                    <i class="fas fa-folder"></i>
-                    <span>{{subData.text}}</span>
-                  </div>
-                  <div
-                    class="file-icon text-center d-flex flex-column justify-content-center align-items-center"
-                    v-else
-                  >
-                    <!-- <img src="../assets/images/documents_icon/folder_img.png" /> -->
-                    <i class="fas fa-file"></i>
-                    <span>{{subData.text}}</span>
-                  </div>
-                </span>
-                <div class="rightclickmenu-open">
-                  <ul v-if="subData.isOpen === true">
+                    <vs-td>
+                      <span class="cursor-pointer" @click="getFiles(t)">
+                        <div class="file-icon text-center list-svg" v-if="tr.type === 'Folder'">
+                          <i class="fas fa-folder"></i>
+                        </div>
+                        <div class="file-icon text-center list-svg" v-else @click="getFiles(tr)">
+                          <i class="fas fa-file"></i>
+                        </div>
+                      </span>
+                    </vs-td>
+                    <vs-td :data="tr.text">
+                      <span class="cursor-pointer" @click="getFiles(tr)">
+                        <div class="file-icon text-dark">
+                          <span>{{tr.text}}</span>
+                        </div>
+                      </span>
+                    </vs-td>
+                    <vs-td colspan="4"></vs-td>
+                  </tr>
+                  <!-- </vs-tr> -->
+                  <vue-context ref="menu1" :closeOnClick="false" class="foldersubmenu-main">
                     <li>
                       <i class="fas fa-download"></i>
                       <span>Download</span>
@@ -109,7 +269,7 @@
                       <vs-dropdown class="cursor-pointer">
                         <a class="flex items-center" href.prevent>Open With</a>
                         <i class="fas fa-angle-right"></i>
-                        <vs-dropdown-menu>
+                        <vs-dropdown-menu class="hoveropen-menu">
                           <vs-dropdown-item>New Tab</vs-dropdown-item>
                           <vs-dropdown-item>Media Info</vs-dropdown-item>
                           <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
@@ -122,8 +282,6 @@
                         </vs-dropdown-menu>
                       </vs-dropdown>
                     </li>
-                  </ul>
-                  <ul v-if="subData.isOpen === true">
                     <li class="hoverfile-menu">
                       <vs-dropdown class="cursor-pointer icon-menu-btn">
                         <a class="flex items-center" href.prevent>
@@ -131,10 +289,16 @@
                           Share
                         </a>
                         <i class="fas fa-angle-right"></i>
-                        <vs-dropdown-menu>
-                          <vs-dropdown-item>Option 1</vs-dropdown-item>
-                          <vs-dropdown-item>Option 2</vs-dropdown-item>
-                          <vs-dropdown-item>Option 3</vs-dropdown-item>
+                        <vs-dropdown-menu class="hoveropen-menu">
+                          <vs-dropdown-item>New Tab</vs-dropdown-item>
+                          <vs-dropdown-item>Media Info</vs-dropdown-item>
+                          <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
+                          <vs-dropdown-item>Google Docs Editor</vs-dropdown-item>
+                          <vs-dropdown-item>Google Docs Viewer</vs-dropdown-item>
+                          <vs-dropdown-item>Office</vs-dropdown-item>
+                          <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
+                          <vs-dropdown-item>Only Office</vs-dropdown-item>
+                          <vs-dropdown-item>Zoho Editor</vs-dropdown-item>
                         </vs-dropdown-menu>
                       </vs-dropdown>
                     </li>
@@ -149,10 +313,16 @@
                           Label
                         </a>
                         <i class="fas fa-angle-right"></i>
-                        <vs-dropdown-menu>
-                          <vs-dropdown-item>Option 1</vs-dropdown-item>
-                          <vs-dropdown-item>Option 2</vs-dropdown-item>
-                          <vs-dropdown-item>Option 3</vs-dropdown-item>
+                        <vs-dropdown-menu class="hoveropen-menu">
+                          <vs-dropdown-item>New Tab</vs-dropdown-item>
+                          <vs-dropdown-item>Media Info</vs-dropdown-item>
+                          <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
+                          <vs-dropdown-item>Google Docs Editor</vs-dropdown-item>
+                          <vs-dropdown-item>Google Docs Viewer</vs-dropdown-item>
+                          <vs-dropdown-item>Office</vs-dropdown-item>
+                          <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
+                          <vs-dropdown-item>Only Office</vs-dropdown-item>
+                          <vs-dropdown-item>Zoho Editor</vs-dropdown-item>
                         </vs-dropdown-menu>
                       </vs-dropdown>
                     </li>
@@ -160,19 +330,25 @@
                       <i class="fas fa-star"></i>
                       <span>Add star</span>
                     </li>
-                  </ul>
-                  <ul v-if="subData.isOpen === true">
+
                     <li class="hoverfile-menu">
-                      <vs-dropdown class="cursor-pointer icon-menu-btn">
-                        <a class="flex items-center" href.prevent>
+                      <vs-dropdown class="cursor-pointer icon-menu-btn" vs-custom-content
+                  vs-trigger-click>
+                        <a class="flex items-center">
                           <i class="fas fa-ellipsis-v"></i>
                           More Options
                         </a>
                         <i class="fas fa-angle-right"></i>
-                        <vs-dropdown-menu>
-                          <vs-dropdown-item>Option 1</vs-dropdown-item>
-                          <vs-dropdown-item>Option 2</vs-dropdown-item>
-                          <vs-dropdown-item>Option 3</vs-dropdown-item>
+                        <vs-dropdown-menu class="hoveropen-menu">
+                          <vs-dropdown-item>New Tab</vs-dropdown-item>
+                          <vs-dropdown-item>Media Info</vs-dropdown-item>
+                          <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
+                          <vs-dropdown-item>Google Docs Editor</vs-dropdown-item>
+                          <vs-dropdown-item>Google Docs Viewer</vs-dropdown-item>
+                          <vs-dropdown-item>Office</vs-dropdown-item>
+                          <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
+                          <vs-dropdown-item>Only Office</vs-dropdown-item>
+                          <vs-dropdown-item>Zoho Editor</vs-dropdown-item>
                         </vs-dropdown-menu>
                       </vs-dropdown>
                     </li>
@@ -186,184 +362,41 @@
                         <a class="flex items-center">Rename</a>
                       </vs-dropdown>
                     </li>
-                  </ul>
-                  <ul v-if="subData.isOpen === true">
+
                     <li>
                       <i class="fas fa-trash-alt"></i>
                       <span>Remove</span>
                     </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div
-              v-if="subFilesdata.length && onList && !onGrid"
-              class="w-100 d-flex flex-wrap folder-main"
-              @click="closeMenu(subFilesdata[subdataIndex])"
-            >
-              <vs-table class="w-100 list-folder-grid" :data="subFilesdata">
-                <template slot="thead">
-                  <vs-th></vs-th>
-                  <vs-th>Name</vs-th>
-                  <vs-th>Stars</vs-th>
-                  <vs-th>Signed</vs-th>
-                  <vs-th>Owner</vs-th>
-                  <vs-th>Size</vs-th>
-                </template>
-                <template slot-scope="{data}">
-                  <vs-tr
-                    :data="tr"
-                    :key="indextr"
-                    v-for="(tr, indextr) in data"
-                    class="listgrid-tr"
-                  >
-                    <vs-td>
-                      <span class="cursor-pointer" @click="getFiles(t)">
-                        <div class="file-icon text-center list-svg" v-if="tr.type === 'Folder'">
-                          <i class="fas fa-folder"></i>
-                        </div>
-                        <div class="file-icon text-center list-svg" v-else @click="getFiles(tr)">
-                          <i class="fas fa-file"></i>
-                        </div>
-                      </span>
-                    </vs-td>
-                    <vs-td :data="tr.text">
-                      <span
-                        class="cursor-pointer"
-                        @contextmenu="onRightClick($event, data, indextr)"
-                        @click="getFiles(tr)"
-                      >
-                        <div class="file-icon">
-                          <span>{{tr.text}}</span>
-                        </div>
-                      </span>
-                    </vs-td>
-                    <vs-td colspan="4"></vs-td>
-                    <div class="rightclickmenulist-open">
-                      <ul v-if="tr.isOpen === true">
-                        <li>
-                          <i class="fas fa-download"></i>
-                          <span>Download</span>
-                        </li>
-                        <li>
-                          <i class="far fa-eye"></i>
-                          <span>Preview</span>
-                        </li>
-                        <li class="hoverfile-menu">
-                          <vs-dropdown class="cursor-pointer">
-                            <a class="flex items-center" href.prevent>Open With</a>
-                            <i class="fas fa-angle-right"></i>
-                            <vs-dropdown-menu>
-                              <vs-dropdown-item>New Tab</vs-dropdown-item>
-                              <vs-dropdown-item>Media Info</vs-dropdown-item>
-                              <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
-                              <vs-dropdown-item>Google Docs Editor</vs-dropdown-item>
-                              <vs-dropdown-item>Google Docs Viewer</vs-dropdown-item>
-                              <vs-dropdown-item>Office</vs-dropdown-item>
-                              <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
-                              <vs-dropdown-item>Only Office</vs-dropdown-item>
-                              <vs-dropdown-item>Zoho Editor</vs-dropdown-item>
-                            </vs-dropdown-menu>
-                          </vs-dropdown>
-                        </li>
-                      </ul>
-                      <ul v-if="tr.isOpen === true">
-                        <li class="hoverfile-menu">
-                          <vs-dropdown class="cursor-pointer icon-menu-btn">
-                            <a class="flex items-center" href.prevent>
-                              <i class="fas fa-share-alt"></i>
-                              Share
-                            </a>
-                            <i class="fas fa-angle-right"></i>
-                            <vs-dropdown-menu>
-                              <vs-dropdown-item>Option 1</vs-dropdown-item>
-                              <vs-dropdown-item>Option 2</vs-dropdown-item>
-                              <vs-dropdown-item>Option 3</vs-dropdown-item>
-                            </vs-dropdown-menu>
-                          </vs-dropdown>
-                        </li>
-                        <li>
-                          <i class="fas fa-comments"></i>
-                          <span>Comment</span>
-                        </li>
-                        <li class="hoverfile-menu">
-                          <vs-dropdown class="cursor-pointer icon-menu-btn">
-                            <a class="flex items-center" href.prevent>
-                              <i class="fas fa-tag"></i>
-                              Label
-                            </a>
-                            <i class="fas fa-angle-right"></i>
-                            <vs-dropdown-menu>
-                              <vs-dropdown-item>Option 1</vs-dropdown-item>
-                              <vs-dropdown-item>Option 2</vs-dropdown-item>
-                              <vs-dropdown-item>Option 3</vs-dropdown-item>
-                            </vs-dropdown-menu>
-                          </vs-dropdown>
-                        </li>
-                        <li>
-                          <i class="fas fa-star"></i>
-                          <span>Add star</span>
-                        </li>
-                      </ul>
-                      <ul v-if="tr.isOpen === true">
-                        <li class="hoverfile-menu">
-                          <vs-dropdown class="cursor-pointer icon-menu-btn">
-                            <a class="flex items-center" href.prevent>
-                              <i class="fas fa-ellipsis-v"></i>
-                              More Options
-                            </a>
-                            <i class="fas fa-angle-right"></i>
-                            <vs-dropdown-menu>
-                              <vs-dropdown-item>Option 1</vs-dropdown-item>
-                              <vs-dropdown-item>Option 2</vs-dropdown-item>
-                              <vs-dropdown-item>Option 3</vs-dropdown-item>
-                            </vs-dropdown-menu>
-                          </vs-dropdown>
-                        </li>
-                        <li class="hoverfile-menu">
-                          <vs-dropdown class="cursor-pointer">
-                            <a class="flex items-center">Copy</a>
-                          </vs-dropdown>
-                        </li>
-                        <li class="hoverfile-menu">
-                          <vs-dropdown class="cursor-pointer">
-                            <a class="flex items-center">Rename</a>
-                          </vs-dropdown>
-                        </li>
-                      </ul>
-                      <ul v-if="tr.isOpen === true">
-                        <li>
-                          <i class="fas fa-trash-alt"></i>
-                          <span>Remove</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </vs-tr>
+                  </vue-context>
                 </template>
               </vs-table>
             </div>
 
-            <vs-row class="border-none mt-auto mb-4">
-              <div class="col vs-sm-12 vs-md-12 vs-lg-5 pl-5">
+            <vs-row class="border-none mt-auto mb-4 pt-10">
+              <div class="col vs-sm-12 vs-md-12 vs-lg-5 pl-5 process-content">
                 <div class="process-txt d-flex justify-content-between flex-wrap">
-                  <span>Storage</span>
+                  <span class="text-dark fw-600">Storage</span>
                   <span>250 MB of 500 MB</span>
                 </div>
                 <div
-                  class="progressbar-block d-flex flex-wrap justify-content-end align-items-center"
+                  class="progressbar-block progressbar-doc d-flex flex-wrap justify-content-end align-items-center"
                 >
                   <vs-progress :height="12" :percent="80" color="warning" class="rounded-0"></vs-progress>
                 </div>
               </div>
               <div
-                class="col vs-sm-12 vs-md-12 vs-lg-7 pl-6 pr-6 d-flex flex-wrap justify-content-end"
+                class="col vs-sm-12 vs-md-12 vs-lg-7 pl-6 pr-6 d-flex flex-wrap justify-content-end LTC-btn"
               >
                 <vs-button class="btn-gray w-auto mb-4">Local</vs-button>
                 <vs-button class="btn-gray w-auto ml-2 mb-4">Trusthub</vs-button>
-                <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
-                  <vs-button class="btn-gray w-auto ml-2 mb-4">Cloud</vs-button>
+                <vs-dropdown
+                  vs-custom-content
+                  vs-trigger-click
+                  class="cursor-pointer w-auto vs-button ml-2 mb-4 btn-gray"
+                >
+                  Cloud
                   <vs-dropdown-menu class="cloud-wrapper">
-                    <h5 class="w-100 fw-500 ml-2 mb-2 text-white">Alternative Clouds Accounts</h5>
+                    <h5 class="w-100 fw-500 ml-3 mb-2 text-white">Alternative Clouds Accounts</h5>
                     <ul>
                       <li v-for="(item, index) in cloudModel" :key="index">
                         <router-link to="#">
@@ -381,32 +414,43 @@
           </vs-col>
         </vs-row>
       </div>
-      <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-3 pl-6">
-        <div class="row border-none">
-          <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
-            <div class="vs-row border-none">
-              <div class="vs-xs-12 vs-sm-12 vs-md-12">
-                <div class="doc-detail">
-                  <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+      <div class="vs-xs-12 vs-sm-12 vs-md-3 vs-lg-3 pl-6 docreport-filesmain">
+        <div class="row border-none d-sm-flex d-md-block w-100">
+          <div class="vs-xs-12 vs-sm-6 vs-md-12 vs-lg-12 pdfdoc-view">
+            <div class="row border-none w-100">
+              <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
+                <div class="vs-row border-none w-100">
+                  <div class="vs-xs-12 vs-sm-12 vs-md-12">
+                    <div class="doc-detail">
+                      <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
-            <div class="vs-row border-none">
-              <div class="vs-xs-12 vs-sm-12 vs-md-12">
-                <div class="doc-detail">
-                  <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+          <div class="vs-xs-12 vs-sm-6 vs-md-12 vs-lg-12 barcode-view">
+            <div class="row w-100">
+              <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
+                <div class="vs-row border-none w-100">
+                  <div class="vs-xs-12 vs-sm-12 vs-md-12">
+                    <div class="doc-detail">
+                      <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
-            <div class="vs-row border-none">
-              <div class="vs-xs-12 vs-sm-12 vs-md-12">
-                <div class="doc-detail d-flex justify-content-end p-4 pb-3">
-                  <div class="barcode-wrapper text-right">
-                    <img src="../assets/images/documents_icon/QR_code.png" class="img-fluid pl-3" />
+              <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
+                <div class="vs-row border-none w-100">
+                  <div class="vs-xs-12 vs-sm-12 vs-md-12">
+                    <div class="doc-detail d-flex justify-content-end p-4 pb-3">
+                      <div class="barcode-wrapper text-right">
+                        <img
+                          src="../assets/images/documents_icon/QR_code.png"
+                          class="img-fluid pl-3"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -418,20 +462,28 @@
     <!-- <VueDocPreview value="../assets/images/documents_icon/project.docx" type="office" /> -->
   </div>
 </template>
-  </div>
-</template>
+
 
 <script>
-import subDocument from './Sub-Document/sub-document.vue'
-import filesList from './Document_Files.js'
-import LoginJWTVue from './pages/login/LoginJWT.vue'
 import VTreeview from 'v-treeview'
 import VueDocPreview from 'vue-doc-preview'
-
+import VueContext from 'vue-context';
+import 'vue-context/src/sass/vue-context.scss';
+import subDocument from './Sub-Document/sub-document.vue'
+import filesList from './Document_Files.js'
+import TheCustomizer from '@/layouts/components/customizer/TheCustomizer.vue'
+import TrakingCustomizer from '@/layouts/components/customizer/TrakingCustomizer.vue'
+import FlowCustomizer from '@/layouts/components/customizer/FlowCustomizer.vue'
 export default {
   data () {
     return {
-      subdataIndex: '-1',
+      items: [
+        'Cras justo odio',
+        'Dapibus ac facilisis in',
+        'Morbi leo risus',
+        'Porta ac consectetur ac',
+        'Vestibulum at eros',
+      ],
       subFilesdata: [],
       hilightsData: [
         {
@@ -560,27 +612,18 @@ export default {
     }
   },
   methods: {
-    onRightClick: function (e, file, index) {
-      console.log('=>>', this.subdataIndex);
-      if (this.subdataIndex == '-1') {
-        this.subdataIndex = index
-        console.log(this.subdataIndex);
-      }
-      file[this.subdataIndex].isOpen = false
-      console.log(file[this.subdataIndex]);
-      e.preventDefault();
-      this.subdataIndex = index;
-      file[this.subdataIndex].isOpen = true
-    },
-    closeMenu (file) {
-      console.log('AB', file);
-      file.isOpen = false
+    successUpload () {
+      this.$vs.notify({ color: 'success', title: 'Upload Success', text: 'Lorem ipsum dolor sit amet, consectetur' })
     },
 
     getFiles (file) {
-      console.log('==>', file.type);
+      console.log('==>', file);
       if (file.type === 'Folder') {
         this.subFilesdata = file.children
+      }
+      if (file.type == 'File'){
+        console.log('==>', file.id);
+        this.$router.push('/document/' + file.id).catch(() => {})
       }
     },
     selected (node) {
@@ -605,7 +648,11 @@ export default {
   },
   components: {
     VTreeview,
-    VueDocPreview
+    VueContext,
+    VueDocPreview,
+    TheCustomizer,
+    FlowCustomizer,
+    TrakingCustomizer
   }
 }
 </script>
@@ -651,45 +698,4 @@ export default {
   }
 }
 // @import "@/assets/scss/vuexy/themes/_themeDark.scss
-
-// h1 {
-//   font-size: 3em;
-// }
-
-// .center {
-//   text-align: center;
-// }
-
-// #demo {
-//     width: 100%;
-//     height: 100%;
-// }
-
-// #right-click-menu{
-//     background: #FAFAFA;
-//     border: 1px solid #BDBDBD;
-//     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
-//     display: block;
-//     list-style: none;
-//     margin: 0;
-//     padding: 0;
-//     position: absolute;
-//     width: 250px;
-//     z-index: 999999;
-// }
-
-// #right-click-menu li {
-//     border-bottom: 1px solid #E0E0E0;
-//     margin: 0;
-//     padding: 5px 35px;
-// }
-
-// #right-click-menu li:last-child {
-//     border-bottom: none;
-// }
-
-// #right-click-menu li:hover {
-//     background: #1E88E5;
-//     color: #FAFAFA;
-// }
 </style>

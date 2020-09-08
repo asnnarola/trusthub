@@ -1,3 +1,5 @@
 <template>
-  <h1>Hello I am NotariZations</h1>
+<div>
+    <h1>NotariZations</h1>
+</div>
 </template>

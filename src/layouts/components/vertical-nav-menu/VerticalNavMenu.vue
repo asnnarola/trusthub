@@ -43,7 +43,7 @@
                 src="../../../assets/images/sidebar_icon/menu-open.png"
                 id="btnVNavMenuMinToggler"
                 class="mr-0 cursor-pointer"
-                @click="toggleReduce(!reduce)"
+                @click="toggleReduce(!reduce)" width="26px"
               />
               <!-- <feather-icon
                 id="btnVNavMenuMinToggler"
@@ -123,13 +123,13 @@
           <!-- <template v-if="showCloseButton">
               <img src="../../../assets/images/sidebar_icon/menu-close.png" alt="123" class="m-0 cursor-pointer" @click="$store.commit('TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE', false)" />
           </template>-->
-          <div class="vs-sidebar--item">
+          <!-- <div class="vs-sidebar--item">
             <div class="d-flex justify-content-end pr-2">
               <a class="border-0 menu-close-show">
                 <img src="../../../assets/images/sidebar_icon/menu-close.png" class="toggle-close-arrow"/>
               </a>
             </div>
-          </div>
+          </div> -->
           <ul class="bt-menu-list">
             <li v-for="data in bottom_data" :key="data.id" class="vs-sidebar--item">
               <div v-if="data.url">

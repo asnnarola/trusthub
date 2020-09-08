@@ -114,6 +114,9 @@ require('./assets/fontawesome/scss/fontawesome.scss')
 // Feather font icon
 require('./assets/css/iconfont.css')
 
+// vue-context
+import VueContext from 'vue-context'
+Vue.component("VueContext", VueContext)
 
 // Vue select css
 // Note: In latest version you have to add it separately

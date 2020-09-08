@@ -9,11 +9,12 @@
 
 <template>
   <div class="h-screen flex w-full bg-img vx-row no-gutter items-center justify-center login-wrapper" id="page-register">
-    <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4">
+    <help-customizer/>
+    <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 sm:m-0 m-4 login-subwrapper">
       <vx-card>
         <div slot="no-body" class="full-page-bg-color">
           <div class="vx-row no-gutter justify-center">
-            <div class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column">
+            <div class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column justify-content-between">
               <div class="login-logo">
                 <img src="@/assets/images/login_icon/logo.png" alt="login" class="img-fluid" />
               </div>
@@ -64,17 +65,14 @@
   </div>
 </template>
 
-
 <script>
 import RegisterJwt from './RegisterJWT.vue'
-import RegisterFirebase from './RegisterFirebase.vue'
-import RegisterAuth0 from './RegisterAuth0.vue'
-import Copyright from '../../../layouts/components/copyright.js'
+import copyRight from '../../../layouts/components/copyright.js'
+import HelpCustomizer from '../../../layouts/components/customizer/HelpCustomizer.vue'
 export default {
   components: {
     RegisterJwt,
-    RegisterFirebase,
-    RegisterAuth0
+    HelpCustomizer
   },
   data() {
     return {
