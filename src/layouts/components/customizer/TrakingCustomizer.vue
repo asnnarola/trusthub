@@ -140,11 +140,11 @@ export default {
   data () {
     return {
       active: false,
-      chkbox1: true,
-      chkbox2: true,
-      chkbox3: true,
-      chkbox4: true,
-      chkbox5: true,
+      // chkbox1: true,
+      // chkbox2: true,
+      // chkbox3: true,
+      // chkbox4: true,
+      // chkbox5: true,
       CurrentDate: new Date().toISOString(),
       settings: {
         maxScrollbarLength: 250,

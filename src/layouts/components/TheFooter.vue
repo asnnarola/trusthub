@@ -13,7 +13,7 @@
     <!-- <footer class="the-footer flex-wrap justify-between" :class="classes">
         <p class="text-white">{{copyrightText}} -->
           <div class="the-footer flex-wrap justify-between">
-            <p class="text-white">{{copyRightText}}&copy;</p>
+            <p class="text-white">{{copyRightText}}</p>
           </div>
         <!-- </p> -->
     <!-- </footer> -->

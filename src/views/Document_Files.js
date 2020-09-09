@@ -17,6 +17,7 @@ export default [
             id: '1.1.1',
             text: "Labels-1",
             type: "File",
+            extension:'pdf',
             count: 0,
             children: []
           }
@@ -40,6 +41,7 @@ export default [
                 id: '2.1.1',
                 text: "Accounting-1",
                 type: "File",
+                extension:'pdf',
                 count: 0,
                 children: []
               }
@@ -49,6 +51,7 @@ export default [
             id: '2.2',
             text: "Excel2013",
             type: "File",
+            extension:'pdf',
             count: 0,
             isOpen: false,
             children: []
@@ -66,6 +69,7 @@ export default [
             id: '3.1',
             text: "PDF-1",
             type: "File",
+            extension:'pdf',
             count: 0,
             children: []
           }
@@ -82,6 +86,7 @@ export default [
             id: '4.1',
             text: "User-1",
             type: "File",
+            extension:'pdf',
             count: 0,
             children: []
           }

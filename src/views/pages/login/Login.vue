@@ -176,7 +176,7 @@
         </div>
       </vx-card>
       <div class="cpy-txt">
-        <p class="text-right mt-2 text-white">{{copyRightText}}&copy;</p>
+        <p class="text-right mt-2 text-white">{{copyRightText}}</p>
       </div>
     </div>
   </div>
