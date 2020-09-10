@@ -7,7 +7,7 @@
       type="filled"
       class="customizer-btn upload-btn"
     >
-      <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />Identity
+      <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />Labels
     </vs-button>
 
     <!-- Customizer Content -->
@@ -25,14 +25,14 @@
         class="customizer-btn upload-btn closeupload-btn"
       >
         <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />
-        Identity
+        Labels
       </vs-button>
       <div class="h-full flow-wrapper">
-        <div class="customizer-header pt-0 pb-4 flex items-center justify-between px-6">
+        <div class="customizer-header pt-4 pb-4 flex items-center justify-between px-6">
           <div>
-            <h4 class="text-white">IDENTITY</h4>
+            <h4 class="text-white">LABELS</h4>
             <small class="text-white">
-              <i>Biometric Records</i>
+              <i>User Datas</i>
             </small>
           </div>
           <feather-icon icon="XIcon" @click.stop="active = false" class="cursor-pointer"></feather-icon>
@@ -44,25 +44,26 @@
           :settings="settings"
           :key="$vs.rtl"
         >
-          <div class="traking-wrapper p-0">
-            <div v-for="(item, index) in biometric_data" :key="index" class="identity-wrapper">
-              <router-link to="#" class="d-flex w-100 align-items-center identity-list">
-                <div class="identity-img mr-5">
-                  <img
-                    :src="require('@/assets/images/identity_icon/' + item.icon_url)"
-                    class="img-fluid iconhide-hover"
-                  />
-                  <img class="iconshow-hover img-fluid" :src="require('@/assets/images/header_icon/' + item.icon_url)" />
-                </div>
-                <div class="identity-label">
-                  <p>{{item.header}}</p>
-                  <h6>
-                    <small>
-                    <i>{{item.sub_header}}</i>
-                    </small>
-                  </h6>
-                </div>
-              </router-link>
+          <div class="traking-wrapper">
+            <div class="labels-wrappes">
+              <span class="text-white fw-500 mr-2">Name</span>
+              <vs-input class="border-0 w-100 labels-inputbox" v-model="name" />
+            </div>
+            <div class="labels-wrappes">
+              <span class="text-white fw-500 mr-2">Document Id</span>
+              <vs-input class="border-0 w-100 labels-inputbox" v-model="document" />
+            </div>
+            <div class="labels-wrappes">
+              <span class="text-white fw-500 mr-2">Passport</span>
+              <vs-input class="border-0 w-100 labels-inputbox" v-model="passport" />
+            </div>
+            <div class="labels-wrappes">
+              <span class="text-white fw-500 mr-2">Address</span>
+              <vs-input class="border-0 w-100 labels-inputbox" v-model="address" />
+            </div>
+            <div class="labels-wrappes">
+              <span class="text-white fw-500 mr-2">Telephone</span>
+              <vs-input class="border-0 w-100 labels-inputbox" v-model="telephone" />
             </div>
           </div>
         </component>
@@ -78,54 +79,15 @@ export default {
   data () {
     return {
       active: false,
+      name: '',
+      document: '',
+      passport: '',
+      address: '',
+      telephone: '',
       settings: {
         maxScrollbarLength: 250,
         wheelSpeed: .100
       },
-      biometric_data: [
-        {
-          header: 'DOCUMENT IDENTITY',
-          sub_header: 'Scanned Document Information',
-          icon_url: 'id.png'
-        },
-        {
-          header: 'DIGITAL CERTIFICATE',
-          sub_header: 'Hardware Stored Certificate',
-          icon_url: 'chip.png'
-        },
-        {
-          header: 'FACE RECOGNITION',
-          sub_header: 'Captured Face Recognition Details',
-          icon_url: 'face.png'
-        },
-        {
-          header: 'FINGERPRINT TEMPLATE',
-          sub_header: 'Captured Fingerprint Information',
-          icon_url: 'fingerprint.png'
-        },
-        {
-          header: 'PALM SCAN',
-          sub_header: 'Captured Palm Information',
-          icon_url: 'palm.png'
-        },
-        {
-          header: 'VOICE RECORD',
-          sub_header: 'Registered Voice Frequency',
-          icon_url: 'voice.png'
-        },
-
-        {
-          header: 'IRIS MAP',
-          sub_header: 'Captured Iris Map',
-          icon_url: 'eye.png'
-        },
-        {
-          header: 'SIGNATURE GRAPH',
-          sub_header: 'Graphometric Signature Information',
-          icon_url: 'signature.png'
-        },
-      ],
-
     }
   },
   computed: {

@@ -18,7 +18,6 @@ import 'material-icons/iconfont/material-icons.css' //Material Icons
 import 'vuesax/dist/vuesax.css' // Vuesax
 Vue.use(Vuesax)
 
-
 // axios
 import axios from './axios.js'
 Vue.prototype.$http = axios
@@ -40,6 +39,7 @@ import '@/firebase/firebaseConfig'
 // Auth0 Plugin
 import AuthPlugin from './plugins/auth'
 Vue.use(AuthPlugin)
+
 
 
 // ACL
@@ -69,6 +69,9 @@ import store from './store/store'
 // i18n
 import i18n from './i18n/i18n'
 
+// signature propsData
+// import SignaturePad from 'signature_pad'
+// Vue.use(SignaturePad)
 
 // Vuexy Admin Filters
 import './filters/filters'
@@ -131,5 +134,6 @@ new Vue({
   store,
   i18n,
   acl,
+  // SignaturePad,
   render: h => h(App)
 }).$mount('#app')

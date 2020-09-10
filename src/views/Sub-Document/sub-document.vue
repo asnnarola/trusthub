@@ -1,14 +1,18 @@
 <template>
   <div class="grid-demo__layout-container">
     <identity-customizer />
+    <!-- <label-customizer/> -->
     <vs-row class="border-0 mb-6 align-items-center">
       <vs-spacer />
       <div class="vs-col vs-sm-12 vs-md-12 vs-lg-4 bg-transparent border-0">1</div>
-      <div class="vs-col vs-sm-12 vs-md-12 vs-lg-8 d-flex flex-wrap justify-content-end bg-transparent border-0">
+      <div
+        class="vs-col vs-sm-12 vs-md-12 vs-lg-8 d-flex flex-wrap justify-content-end bg-transparent border-0"
+      >
         <vs-button
           color="primary"
           class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
           type="filled"
+          @click="Pad_Show = !Pad_Show"
         >Sign</vs-button>
         <vs-button
           color="primary"
@@ -56,8 +60,11 @@
       <div class="vs-xs-12 vs-sm-12 vs-md-9 vs-lg-9">
         <vs-row class="h-100">
           <vx-card class="box-shadow-none serach-wrapper p-2">
+            <span class="Signature_pad" v-if="Pad_Show">
+            </span>
             <span class="pdf">
-              <pdf src="../../assets/files/test.pdf"></pdf>
+              <pdf src="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"></pdf>
+              <!-- <pdf src="../../assets/files/test.pdf"></pdf> -->
               <!-- <vue-pdf-viewer height="500px" url="https://bitcoin.org/bitcoin.pdf"></vue-pdf-viewer> -->
             </span>
           </vx-card>
@@ -71,11 +78,14 @@
                 <div class="vs-row border-none w-100">
                   <div class="vs-xs-12 vs-sm-12 vs-md-12">
                     <div class="doc-detail process-seq-wrapper">
-                      <h5 class="mb-2"><b>Process Sequenes</b></h5>
-                      <h6 class="step-txt"><b>Step by Step Process</b></h6>
+                      <h6 class="mb-2">
+                        <b>Process Sequenes</b>
+                      </h6>
+                      <h6 class="step-txt">
+                        <b>Step by Step Process</b>
+                      </h6>
                       <div class="traking-wrapper">
-                        <!-- <vs-checkbox color="warning" v-model="chkbox1"> -->
-                        <div class="d-flex pb-6 position-relative traking-wrap">
+                        <div class="d-flex pb-6 position-relative traking-wrap active">
                           <div class="checkbox-block">
                             <i class="fas fa-check"></i>
                           </div>
@@ -89,9 +99,7 @@
                             </p>
                           </div>
                         </div>
-                        <!-- </vs-checkbox> -->
-                        <!-- <vs-checkbox color="warning" v-model="chkbox2"> -->
-                        <div class="d-flex pb-6 position-relative traking-wrap">
+                        <div class="d-flex pb-6 position-relative traking-wrap active">
                           <div class="checkbox-block">
                             <i class="fas fa-check"></i>
                           </div>
@@ -105,8 +113,6 @@
                             </p>
                           </div>
                         </div>
-                        <!-- </vs-checkbox> -->
-                        <!-- <vs-checkbox color="warning" v-model="chkbox3"> -->
                         <div class="d-flex pb-6 position-relative traking-wrap">
                           <div class="checkbox-block">
                             <i class="fas fa-check"></i>
@@ -121,11 +127,9 @@
                             </p>
                           </div>
                         </div>
-                        <!-- </vs-checkbox> -->
-                        <!-- <vs-checkbox color="warning" v-model="chkbox4"> -->
                         <div class="d-flex pb-6 position-relative traking-wrap">
                           <div class="checkbox-block">
-                            <i class="fas fa-check"></i>
+                            4
                           </div>
                           <div class="trak-detail">
                             <h6 class="mb-1">
@@ -137,11 +141,9 @@
                             </p>
                           </div>
                         </div>
-                        <!-- </vs-checkbox> -->
-                        <!-- <vs-checkbox color="warning" v-model="chkbox5"> -->
                         <div class="d-flex pb-4 position-relative traking-wrap">
                           <div class="checkbox-block">
-                            <i class="fas fa-check"></i>
+                            5
                           </div>
                           <div class="trak-detail">
                             <h6 class="mb-1">
@@ -153,7 +155,6 @@
                             </p>
                           </div>
                         </div>
-                        <!-- </vs-checkbox> -->
                       </div>
                     </div>
                   </div>
@@ -161,7 +162,7 @@
               </div>
             </div>
           </div>
-          <div class="vs-xs-12 vs-sm-6 vs-md-12 vs-lg-12 barcode-view">
+          <div class="vs-xs-12 vs-sm-6 vs-md-12 vs-lg-12 barcode-view signature-info">
             <div class="row w-100">
               <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
                 <div class="vs-row border-none w-100">
@@ -212,20 +213,38 @@
 </template>
 <script>
 import IdentityCustomizer from '../../layouts/components/customizer/IdentityCustomizer.vue'
+import LabelCustomizer from '../../layouts/components/customizer/LabelsCustomizer.vue'
 import pdf from 'vue-pdf'
+import filesList from '../Document_Files'
+// import SignaturePad from 'signature_pad'
+
 // import VuePDFViewer from "vue-instant-pdf-viewer";
+
+
 export default {
   data () {
     return {
+      Pad_Show: false,
       CurrentDate: new Date().toISOString(),
-      id: this.$route.params.id
+      id: this.$route.params.id,
+      options: {
+        penColor: "#c0f"
+      }
     }
   },
   components: {
     IdentityCustomizer,
+    LabelCustomizer,
     'pdf': pdf
     // "vue-pdf-viewer": VuePDFViewer,
-  }
+  },
+  methods: {
+    getFilePath () {
+      filesList.forEach(file => {
+        console.log('Files =>', file);
+      });
+    }
+  },
 }
 </script>
 
@@ -268,6 +287,14 @@ export default {
       }
     }
   }
+}
+#signature {
+  border: double 3px transparent;
+  border-radius: 5px;
+  background-image: linear-gradient(white, white),
+    radial-gradient(circle at top left, #4bc5e8, #9f6274);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
 }
 
 // @import "@/assets/scss/vuexy/themes/_themeDark.scss

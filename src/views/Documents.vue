@@ -1,7 +1,7 @@
 <template>
   <div class="grid-demo__layout-container">
-    <!-- <the-customizer /> -->
-     <traking-customizer/>
+    <the-customizer />
+     <!-- <traking-customizer/> -->
     <!-- <flow-customizer/> -->
     <vs-row class="border-0 filemanage-wrapper">
       <div class="vs-xs-12 vs-sm-12 vs-md-9 vs-lg-9">
@@ -422,20 +422,38 @@
                 <div class="vs-row border-none w-100">
                   <div class="vs-xs-12 vs-sm-12 vs-md-12">
                     <div class="doc-detail">
-                      <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+                      <pdf src="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"></pdf>
+                      <!-- <vue-pdf-viewer height="500px" url="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"></vue-pdf-viewer> -->
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="vs-xs-12 vs-sm-6 vs-md-12 vs-lg-12 barcode-view">
+          <div class="vs-xs-12 vs-sm-6 vs-md-12 vs-lg-12 barcode-view signature-info">
             <div class="row w-100">
               <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
                 <div class="vs-row border-none w-100">
                   <div class="vs-xs-12 vs-sm-12 vs-md-12">
-                    <div class="doc-detail">
-                      <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+                    <div class="doc-detail text-right mb-6 mt-6">
+                      <p>
+                        <i>Name: Portable Document Format</i>
+                      </p>
+                      <p>
+                        <i>Type: pdf/A</i>
+                      </p>
+                      <p>
+                        <i>Size:253Kb</i>
+                      </p>
+                      <p>
+                        <i>Creation Date: 20/07/2020 15:55:22</i>
+                      </p>
+                      <p>
+                        <i>Last Modification: 21/07/2020 18:14:59</i>
+                      </p>
+                      <p>
+                        <i>Owner: Reberto Minoletti</i>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -468,6 +486,8 @@
 import VTreeview from 'v-treeview'
 import VueDocPreview from 'vue-doc-preview'
 import VueContext from 'vue-context';
+import pdf from 'vue-pdf'
+import VuePDFViewer from "vue-instant-pdf-viewer";
 import 'vue-context/src/sass/vue-context.scss';
 import subDocument from './Sub-Document/sub-document.vue'
 import filesList from './Document_Files.js'
@@ -647,6 +667,8 @@ export default {
     }
   },
   components: {
+    pdf,
+    "vue-pdf-viewer": VuePDFViewer,
     VTreeview,
     VueContext,
     VueDocPreview,
