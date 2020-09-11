@@ -70,8 +70,13 @@ import store from './store/store'
 import i18n from './i18n/i18n'
 
 // signature propsData
-// import SignaturePad from 'signature_pad'
-// Vue.use(SignaturePad)
+import VueSignature from "vue-signature-pad";
+Vue.use(VueSignature);
+
+
+// Signature_Pad
+// import SignaturePad from './signaturePad.js'
+
 
 // Vuexy Admin Filters
 import './filters/filters'

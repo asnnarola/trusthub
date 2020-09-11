@@ -61,11 +61,62 @@
         <vs-row class="h-100">
           <vx-card class="box-shadow-none serach-wrapper p-2">
             <span class="Signature_pad" v-if="Pad_Show">
+              <div class="row">
+                <div class="col-12 mt-2">
+                  <!-- <div class="wrapper">
+                    <canvas id="signPad" class="signature-pad" width="400" height="200" />
+                  </div> -->
+                  <VueSignaturePad
+                    id="signature"
+                    width="100%"
+                    height="500px"
+                    ref="signaturePad"
+                    :options="options"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="row">
+                  <div class="col-3 mt-2">
+                    <button class="btn btn-outline-secondary" @click="undo">Undo</button>
+                  </div>
+                  <div class="col-3 mt-2">
+                    <button class="btn btn-outline-primary" @click="save">Save</button>
+                  </div>
+                  <div class="col-3 mt-2">
+                    <button class="btn btn-outline-primary" @click="change">Change</button>
+                  </div>
+                  <div class="col-3 mt-2">
+                    <button class="btn btn-outline-primary" @click="resume">Resume</button>
+                  </div>
+                </div>
+                <!-- <div class="col-3 mt-2">
+                  <button class="btn btn-outline-secondary" @click="saveAsPng">Save as PNG</button>
+                </div>
+                <div class="col-3 mt-2">
+                  <button class="btn btn-outline-primary" @click="saveAsJpeg">Save as JPEG</button>
+                </div>
+                <div class="col-3 mt-2">
+                  <button class="btn btn-outline-primary" @click="saveAsSvg">Sane as SVG</button>
+                </div>
+                <div class="col-3 mt-2">
+                  <button class="btn btn-outline-primary" @click="draw">Draw</button>
+                </div>
+                <div class="col-3 mt-2">
+                  <button class="btn btn-outline-primary" @click="erase">Erase</button>
+                </div>
+                <div class="col-3 mt-2">
+                  <button class="btn btn-outline-primary" @click="clearSignature">Clear</button>
+                </div>-->
+              </div>
             </span>
             <span class="pdf">
-              <pdf src="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"></pdf>
+              <!-- <pdf src="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"></pdf> -->
               <!-- <pdf src="../../assets/files/test.pdf"></pdf> -->
-              <!-- <vue-pdf-viewer height="500px" url="https://bitcoin.org/bitcoin.pdf"></vue-pdf-viewer> -->
+              <vue-pdf-viewer
+                height="700px"
+                url="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"
+              ></vue-pdf-viewer>
             </span>
           </vx-card>
         </vs-row>
@@ -128,9 +179,7 @@
                           </div>
                         </div>
                         <div class="d-flex pb-6 position-relative traking-wrap">
-                          <div class="checkbox-block">
-                            4
-                          </div>
+                          <div class="checkbox-block">4</div>
                           <div class="trak-detail">
                             <h6 class="mb-1">
                               <b>Identification</b>
@@ -142,9 +191,7 @@
                           </div>
                         </div>
                         <div class="d-flex pb-4 position-relative traking-wrap">
-                          <div class="checkbox-block">
-                            5
-                          </div>
+                          <div class="checkbox-block">5</div>
                           <div class="trak-detail">
                             <h6 class="mb-1">
                               <b>Document Management</b>
@@ -214,11 +261,10 @@
 <script>
 import IdentityCustomizer from '../../layouts/components/customizer/IdentityCustomizer.vue'
 import LabelCustomizer from '../../layouts/components/customizer/LabelsCustomizer.vue'
-import pdf from 'vue-pdf'
+// import pdf from 'vue-pdf'
 import filesList from '../Document_Files'
-// import SignaturePad from 'signature_pad'
-
-// import VuePDFViewer from "vue-instant-pdf-viewer";
+import VuePDFViewer from "vue-instant-pdf-viewer"
+import SignaturePad from 'signature_pad'
 
 
 export default {
@@ -229,20 +275,48 @@ export default {
       id: this.$route.params.id,
       options: {
         penColor: "#c0f"
-      }
+      },
+      canvas: document.getElementById('signPad')
     }
+  },
+  mounted () {
+    // const canvas = document.getElementById('signPad');
+    console.log(this.canvas);
+    var signaturePad = new SignaturePad(this.canvas, {
+      backgroundColor: 'rgb(255, 255, 255)'
+    });
   },
   components: {
     IdentityCustomizer,
     LabelCustomizer,
-    'pdf': pdf
-    // "vue-pdf-viewer": VuePDFViewer,
+    // 'pdf': pdf
+    "vue-pdf-viewer": VuePDFViewer,
   },
   methods: {
     getFilePath () {
       filesList.forEach(file => {
         console.log('Files =>', file);
       });
+    },
+    undo () {
+      this.$refs.signaturePad.undoSignature();
+    },
+    save () {
+      const { isEmpty, data } = this.$refs.signaturePad.saveSignature();
+
+      alert("Open DevTools see the save data.");
+      console.log(isEmpty);
+      console.log(data);
+    },
+    change () {
+      this.options = {
+        penColor: "#00f"
+      };
+    },
+    resume () {
+      this.options = {
+        penColor: "#c0f"
+      };
     }
   },
 }
