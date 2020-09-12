@@ -1217,6 +1217,46 @@
   position: sticky !important;
 }
 
+// Popup css start
+.Signature-popup{
+  .vs-popup{
+    // background: #ffffff4d;
+    max-width: 1100px;
+    width: 100%;
+    .vs-popup--header{
+      display: none;
+    }
+    .vs-popup--content{
+      .Signature_pad{
+        .wrapper{
+          canvas{
+            &.signature-pad{
+              height: 325px;
+            }
+          }
+        }
+        .green-divider{
+          .vs-divider-border{
+            border-top:1px solid #4ec12d !important;
+          }
+        }
+      }
+    }
+  }
+}
+.vs-button-primary.green-btn {
+  background: #4ec12d !important;
+  background-color: #4ec12d;
+  font-weight: 600;
+  box-shadow: none !important;
+  border: 2px solid #4ec12d;
+  border-radius: 2px;
+}
+.vs-button-primary.green-btn:hover {
+  background: #fff !important;
+  color: #4ec12d;
+}
+
 // Documnets page scss start
 .hoveropen-menu {
   z-index: 111111;

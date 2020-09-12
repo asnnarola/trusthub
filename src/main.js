@@ -69,10 +69,6 @@ import store from './store/store'
 // i18n
 import i18n from './i18n/i18n'
 
-// signature propsData
-import VueSignature from "vue-signature-pad";
-Vue.use(VueSignature);
-
 
 // Signature_Pad
 // import SignaturePad from './signaturePad.js'

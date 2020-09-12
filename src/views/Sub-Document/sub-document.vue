@@ -12,7 +12,7 @@
           color="primary"
           class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
           type="filled"
-          @click="Pad_Show = !Pad_Show"
+          @click="signpadShow()"
         >Sign</vs-button>
         <vs-button
           color="primary"
@@ -60,56 +60,42 @@
       <div class="vs-xs-12 vs-sm-12 vs-md-9 vs-lg-9">
         <vs-row class="h-100">
           <vx-card class="box-shadow-none serach-wrapper p-2">
-            <span class="Signature_pad" v-if="Pad_Show">
-              <div class="row">
-                <div class="col-12 mt-2">
-                  <!-- <div class="wrapper">
-                    <canvas id="signPad" class="signature-pad" width="400" height="200" />
-                  </div> -->
-                  <VueSignaturePad
-                    id="signature"
-                    width="100%"
-                    height="500px"
-                    ref="signaturePad"
-                    :options="options"
-                  />
-                </div>
-              </div>
-              <div class="row">
+            <vs-popup
+              class="Signature-popup"
+              classContent="popup-example"
+              title
+              :active.sync="Pad_Show"
+            >
+              <div class="Signature_pad pl-10 pr-10">
                 <div class="row">
-                  <div class="col-3 mt-2">
-                    <button class="btn btn-outline-secondary" @click="undo">Undo</button>
-                  </div>
-                  <div class="col-3 mt-2">
-                    <button class="btn btn-outline-primary" @click="save">Save</button>
-                  </div>
-                  <div class="col-3 mt-2">
-                    <button class="btn btn-outline-primary" @click="change">Change</button>
-                  </div>
-                  <div class="col-3 mt-2">
-                    <button class="btn btn-outline-primary" @click="resume">Resume</button>
+                  <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-12 mt-2">
+                    <div class="wrapper">
+                      <canvas id="signPad" ref="signPad" class="signature-pad w-100" />
+                    </div>
                   </div>
                 </div>
-                <!-- <div class="col-3 mt-2">
-                  <button class="btn btn-outline-secondary" @click="saveAsPng">Save as PNG</button>
-                </div>
-                <div class="col-3 mt-2">
-                  <button class="btn btn-outline-primary" @click="saveAsJpeg">Save as JPEG</button>
-                </div>
-                <div class="col-3 mt-2">
-                  <button class="btn btn-outline-primary" @click="saveAsSvg">Sane as SVG</button>
-                </div>
-                <div class="col-3 mt-2">
-                  <button class="btn btn-outline-primary" @click="draw">Draw</button>
-                </div>
-                <div class="col-3 mt-2">
-                  <button class="btn btn-outline-primary" @click="erase">Erase</button>
-                </div>
-                <div class="col-3 mt-2">
-                  <button class="btn btn-outline-primary" @click="clearSignature">Clear</button>
-                </div>-->
+                <vs-divider class="mb-5 mt-0 green-divider" />
+                <vs-row class="align-items-center mb-10">
+                  <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-7">
+                    <vs-button class="btn green-btn mr-2" @click="clearSignature">Clear</vs-button>
+                    <vs-button class="btn green-btn mr-2" @click="undoSignature">Undo</vs-button>
+                    <vs-button class="btn green-btn mr-2" @click="saveAsJpeg">Save</vs-button>
+                    <vs-button class="btn green-btn mr-2" @click="undoSignature">Advanced Options</vs-button>
+                  </div>
+                  <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-5 text-right">
+                      <p class="text-dark">
+                        <i>Name: Portable Document Format</i>
+                      </p>
+                      <p class="text-dark">
+                        <i>UTC {{CurrentDate}}</i>
+                      </p>
+                      <p class="text-dark">
+                        <i>Device Id: FDD76471-FCF9-4172-BAAF-D78924A4E62C</i>
+                      </p>
+                  </div>
+                </vs-row>
               </div>
-            </span>
+            </vs-popup>
             <span class="pdf">
               <!-- <pdf src="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"></pdf> -->
               <!-- <pdf src="../../assets/files/test.pdf"></pdf> -->
@@ -266,7 +252,6 @@ import filesList from '../Document_Files'
 import VuePDFViewer from "vue-instant-pdf-viewer"
 import SignaturePad from 'signature_pad'
 
-
 export default {
   data () {
     return {
@@ -276,15 +261,13 @@ export default {
       options: {
         penColor: "#c0f"
       },
-      canvas: document.getElementById('signPad')
+      signaturePad: SignaturePad
     }
   },
   mounted () {
-    // const canvas = document.getElementById('signPad');
-    console.log(this.canvas);
-    var signaturePad = new SignaturePad(this.canvas, {
-      backgroundColor: 'rgb(255, 255, 255)'
-    });
+    // var signaturePad = new SignaturePad(this.canvas, {
+    //   backgroundColor: 'rgb(255, 255, 255)'
+    // });
   },
   components: {
     IdentityCustomizer,
@@ -298,25 +281,47 @@ export default {
         console.log('Files =>', file);
       });
     },
-    undo () {
-      this.$refs.signaturePad.undoSignature();
+    async signpadShow () {
+      this.Pad_Show = true
+      const canvas = await document.getElementById('signPad')
+      console.log(this.$refs.signPad);
+      console.log(document.getElementById('signPad'));
+      this.signaturePad = new SignaturePad(this.$refs.signPad, {
+        backgroundColor: 'rgb(255, 255, 255)'
+      });
     },
-    save () {
-      const { isEmpty, data } = this.$refs.signaturePad.saveSignature();
-
-      alert("Open DevTools see the save data.");
-      console.log(isEmpty);
+    // saveAsPng () {
+    //   if (this.signaturePad.isEmpty()) {
+    //     return alert("Please provide a signature first.");
+    //   }
+    //   var data = this.signaturePad.toDataURL('image/png');
+    //   console.log(data);
+    // },
+    saveAsJpeg () {
+      if (this.signaturePad.isEmpty()) {
+        return alert("Please provide a signature first.");
+      }
+      var data = this.signaturePad.toDataURL('image/jpeg');
       console.log(data);
     },
-    change () {
-      this.options = {
-        penColor: "#00f"
-      };
+
+    // saveAsSvg () {
+    //   if (this.signaturePad.isEmpty()) {
+    //     return alert("Please provide a signature first.");
+    //   }
+    //   var data = this.signaturePad.toDataURL('image/svg+xml');
+    //   console.log(data);
+    //   // console.log(atob(data.split(',')[1]));
+    // },
+    undoSignature () {
+      var data = this.signaturePad.toData();
+      if (data) {
+        data.pop();
+        this.signaturePad.fromData(data);
+      }
     },
-    resume () {
-      this.options = {
-        penColor: "#c0f"
-      };
+    clearSignature () {
+      this.signaturePad.clear();
     }
   },
 }
