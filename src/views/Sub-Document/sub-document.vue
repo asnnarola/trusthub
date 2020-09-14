@@ -4,7 +4,12 @@
     <!-- <label-customizer/> -->
     <vs-row class="border-0 mb-6 align-items-center">
       <vs-spacer />
-      <div class="vs-col vs-sm-12 vs-md-12 vs-lg-4 bg-transparent border-0">1</div>
+      <div class="vs-col vs-sm-12 vs-md-12 vs-lg-4 bg-transparent border-0">
+        <div class="file-path d-flex align-items-center">
+          <img src="@/assets/images/documents_icon/pdf.png" width="45" class="img-fluid mr-3" />
+          <p> \ inbound \ Rental contract assurance.pdf</p>
+        </div>
+      </div>
       <div
         class="vs-col vs-sm-12 vs-md-12 vs-lg-8 d-flex flex-wrap justify-content-end bg-transparent border-0"
       >
@@ -66,11 +71,31 @@
               title
               :active.sync="Pad_Show"
             >
-              <div class="Signature_pad pl-10 pr-10">
-                <div class="row">
-                  <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-12 mt-2">
-                    <div class="wrapper">
-                      <canvas id="signPad" ref="signPad" class="signature-pad w-100" />
+              <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-12 mt-2">
+                <div class="Signature_pad pl-10 pr-10">
+                  <div class="row">
+                    <div class="wrapper position-relative">
+                      <div
+                        class="select-block d-flex justify-content-end position-absolute right-0 pt-6"
+                      >
+                        <div class="mr-10 selectlabel-check active">
+                          <h6 class="d-flex align-items-center">
+                            <i class="pr-3">DSV</i>
+                            <span>
+                              <i class="fas fa-check"></i>
+                            </span>
+                          </h6>
+                        </div>
+                        <div class="selectlabel-check">
+                          <h6 class="d-flex align-items-center">
+                            <i class="pr-3">SSV</i>
+                            <span>
+                              <i class="fas fa-check"></i>
+                            </span>
+                          </h6>
+                        </div>
+                      </div>
+                      <canvas id="signPad" ref="signPad" class="signature-pad w-100" style="background-color: transparent !important;"/>
                     </div>
                   </div>
                 </div>
@@ -83,22 +108,20 @@
                     <vs-button class="btn green-btn mr-2" @click="undoSignature">Advanced Options</vs-button>
                   </div>
                   <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-5 text-right">
-                      <p class="text-dark">
-                        <i>Name: Portable Document Format</i>
-                      </p>
-                      <p class="text-dark">
-                        <i>UTC {{CurrentDate}}</i>
-                      </p>
-                      <p class="text-dark">
-                        <i>Device Id: FDD76471-FCF9-4172-BAAF-D78924A4E62C</i>
-                      </p>
+                    <p class="text-dark">
+                      <i>Geolocalization: 40.689263-74.044505</i>
+                    </p>
+                    <p class="text-dark">
+                      <i>UTC {{CurrentDate}}</i>
+                    </p>
+                    <p class="text-dark">
+                      <i>Device Id: FDD76471-FCF9-4172-BAAF-D78924A4E62C</i>
+                    </p>
                   </div>
                 </vs-row>
               </div>
             </vs-popup>
             <span class="pdf">
-              <!-- <pdf src="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"></pdf> -->
-              <!-- <pdf src="../../assets/files/test.pdf"></pdf> -->
               <vue-pdf-viewer
                 height="700px"
                 url="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"
@@ -247,7 +270,6 @@
 <script>
 import IdentityCustomizer from '../../layouts/components/customizer/IdentityCustomizer.vue'
 import LabelCustomizer from '../../layouts/components/customizer/LabelsCustomizer.vue'
-// import pdf from 'vue-pdf'
 import filesList from '../Document_Files'
 import VuePDFViewer from "vue-instant-pdf-viewer"
 import SignaturePad from 'signature_pad'
@@ -272,7 +294,6 @@ export default {
   components: {
     IdentityCustomizer,
     LabelCustomizer,
-    // 'pdf': pdf
     "vue-pdf-viewer": VuePDFViewer,
   },
   methods: {
@@ -287,7 +308,7 @@ export default {
       console.log(this.$refs.signPad);
       console.log(document.getElementById('signPad'));
       this.signaturePad = new SignaturePad(this.$refs.signPad, {
-        backgroundColor: 'rgb(255, 255, 255)'
+        backgroundColor: 'transparent'
       });
     },
     // saveAsPng () {

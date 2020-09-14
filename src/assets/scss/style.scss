@@ -1218,27 +1218,53 @@
 }
 
 // Popup css start
-.Signature-popup{
-  .vs-popup{
-    // background: #ffffff4d;
+.Signature-popup {
+  .vs-popup {
+    background: #ffffff54 !important;
+    border-radius: 0px;
+    border: 1px solid #616161;
     max-width: 1100px;
     width: 100%;
-    .vs-popup--header{
+    .vs-popup--header {
       display: none;
     }
-    .vs-popup--content{
-      .Signature_pad{
-        .wrapper{
-          canvas{
-            &.signature-pad{
+    .vs-popup--content {
+      .Signature_pad {
+        .wrapper {
+          .select-block {
+            .selectlabel-check {
+              h6 {
+                span {
+                  color: #fff;
+                  width: 26px;
+                  height: 26px;
+                  background: #707070;
+                  border-radius: 50px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 16px;
+                }
+              }
+              &.active {
+                h6 {
+                  span {
+                    background: #51af39;
+                  }
+                }
+              }
+            }
+          }
+          canvas {
+            &.signature-pad {
               height: 325px;
             }
           }
         }
-        .green-divider{
-          .vs-divider-border{
-            border-top:1px solid #4ec12d !important;
-          }
+      }
+      .green-divider {
+        .vs-divider-border {
+          border-top: 1px solid #4ec12d !important;
         }
       }
     }
@@ -1617,7 +1643,7 @@
                         padding: 0px 25px;
                         background: #f9c201;
                         margin-bottom: 10px;
-                        span{
+                        span {
                           white-space: nowrap;
                         }
                         .labels-inputbox {
