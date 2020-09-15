@@ -1147,7 +1147,22 @@
   }
 }
 
+@media screen and (min-width:1200px){
+  .vs-xl-8 {
+    width: 66.66666666666667%!important;
+  }
+  .vs-xl-4 {
+    width: 33.33333333333333%!important;
+  }
+}
+
 @media screen and (min-width: 768px) and (max-width: 991px) {
+  .vs-md-8 {
+    width: 66.66666666666667%!important;
+  }
+  .vs-md-4 {
+    width: 33.33333333333333%!important;
+  }
   .vs-md-9 {
     width: 75% !important;
   }
@@ -1267,6 +1282,11 @@
           border-top: 1px solid #4ec12d !important;
         }
       }
+      .signdetail-block{
+        @media screen and (max-width:767px){
+          margin-top: 1.5rem;
+        }
+      }
     }
   }
 }
@@ -1277,13 +1297,21 @@
   box-shadow: none !important;
   border: 2px solid #4ec12d;
   border-radius: 2px;
+  @media screen and (max-width:767px){
+    padding: .6rem 1rem !important;
+    font-size: 13px;
+  }
 }
 .vs-button-primary.green-btn:hover {
   background: #fff !important;
   color: #4ec12d;
 }
 
+
 // Documnets page scss start
+.vs-input-primary.isFocus .vs-input--label, .vs-input-primary .vs-input--input:focus~.icon-inputx, .vs-input-primary .vs-input--input:focus~.vs-placeholder-label{
+  color: #4ec12d !important;
+}
 .hoveropen-menu {
   z-index: 111111;
   margin-left: 100px;
@@ -1627,6 +1655,10 @@
                             height: 50px;
                             display: flex;
                             align-items: center;
+                            @media screen and (max-width:767px){
+                              width: 40px;
+                              height: 40px;
+                            }
                           }
                           .identity-label {
                             p,
@@ -1695,10 +1727,36 @@
                 }
               }
               .subdoc-btn {
-                padding: 0.5rem 1rem;
+
+                padding: 0.5rem 0.95rem;
                 font-size: 14px;
+                @media screen and (min-width:1200px) and (max-width:1350px){
+                  padding: 0.6rem 0.7rem;
+                  font-size: 13px;
+                }
+                @media screen and (max-width:767px){
+                  padding: 0.6rem 0.65rem;
+                  font-size: 13px;
+                }
               }
               .vs-row {
+                .vx-card {
+                &.pdfviewer-wrapper{
+                  .vx-card__collapsible-content{
+                    height: 100%;
+                    .vx-card__body{
+                      padding: 0;
+                      height: 100%;
+                      .pdfview-content{
+                        height: 100%;
+                        .pdfobject-container{
+                          height: 99.5% !important;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
                 .vs-col {
                   .vx-card {
                     &.serach-wrapper {
@@ -2339,6 +2397,9 @@
                     }
                   }
                 }
+                .docsign-btn{
+                  margin-top:1rem;
+                }
               }
             }
           }
@@ -2464,7 +2525,15 @@
                     }
                     .barcode-view {
                       padding-left: 15px;
+                      .docsign-block{
+                        margin-top: 0 !important;
+                      }
                     }
+                  }
+                }
+                .file-path{
+                  img{
+                    width: 38px;
                   }
                 }
               }

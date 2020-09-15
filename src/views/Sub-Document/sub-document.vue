@@ -4,15 +4,14 @@
     <!-- <label-customizer/> -->
     <vs-row class="border-0 mb-6 align-items-center">
       <vs-spacer />
-      <div class="vs-col vs-sm-12 vs-md-12 vs-lg-4 bg-transparent border-0">
+      <div class="vs-col vs-sm-12 vs-md-12 vs-lg-12 vs-xl-4 bg-transparent border-0 p-0">
         <div class="file-path d-flex align-items-center">
           <img src="@/assets/images/documents_icon/pdf.png" width="45" class="img-fluid mr-3" />
           <p> \ inbound \ Rental contract assurance.pdf</p>
         </div>
       </div>
       <div
-        class="vs-col vs-sm-12 vs-md-12 vs-lg-8 d-flex flex-wrap justify-content-end bg-transparent border-0"
-      >
+        class="vs-col vs-sm-12 vs-md-12 vs-lg-12 vs-xl-8 d-flex flex-wrap justify-content-end bg-transparent border-0 pr-0 pt-0 pb-0 pl-2 docsign-btn">
         <vs-button
           color="primary"
           class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
@@ -62,9 +61,9 @@
       </div>
     </vs-row>
     <vs-row class="border-0 filemanage-wrapper">
-      <div class="vs-xs-12 vs-sm-12 vs-md-9 vs-lg-9">
-        <vs-row class="h-100">
-          <vx-card class="box-shadow-none serach-wrapper p-2">
+      <div class="vs-xs-12 vs-sm-12 vs-md-8 vs-lg-9">
+        <vs-row class="h-100 border-0">
+          <vx-card class="box-shadow-none serach-wrapper pdfviewer-wrapper">
             <vs-popup
               class="Signature-popup"
               classContent="popup-example"
@@ -102,12 +101,12 @@
                 <vs-divider class="mb-5 mt-0 green-divider" />
                 <vs-row class="align-items-center mb-10">
                   <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-7">
-                    <vs-button class="btn green-btn mr-2" @click="clearSignature">Clear</vs-button>
-                    <vs-button class="btn green-btn mr-2" @click="undoSignature">Undo</vs-button>
-                    <vs-button class="btn green-btn mr-2" @click="saveAsJpeg">Save</vs-button>
-                    <vs-button class="btn green-btn mr-2" @click="undoSignature">Advanced Options</vs-button>
+                    <vs-button class="btn green-btn mr-2 mb-2" @click="clearSignature">Clear</vs-button>
+                    <vs-button class="btn green-btn mr-2 mb-2" @click="undoSignature">Undo</vs-button>
+                    <vs-button class="btn green-btn mr-2 mb-2" @click="saveAsJpeg">Save</vs-button>
+                    <vs-button class="btn green-btn mr-2 mb-2" @click="undoSignature">Advanced Options</vs-button>
                   </div>
-                  <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-5 text-right">
+                  <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-5 text-right signdetail-block">
                     <p class="text-dark">
                       <i>Geolocalization: 40.689263-74.044505</i>
                     </p>
@@ -121,16 +120,15 @@
                 </vs-row>
               </div>
             </vs-popup>
-            <span class="pdf">
+            <div class="pdfview-content">
               <vue-pdf-viewer
-                height="700px"
                 url="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"
               ></vue-pdf-viewer>
-            </span>
+            </div>
           </vx-card>
         </vs-row>
       </div>
-      <div class="vs-xs-12 vs-sm-12 vs-md-3 vs-lg-3 pl-6 docreport-filesmain">
+      <div class="vs-xs-12 vs-sm-12 vs-md-4 vs-lg-3 pl-6 docreport-filesmain">
         <div class="row border-none d-sm-flex d-md-block w-100">
           <div class="vs-xs-12 vs-sm-6 vs-md-12 vs-lg-12 pdfdoc-view">
             <div class="row border-none w-100">
@@ -223,7 +221,7 @@
               <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
                 <div class="vs-row border-none w-100">
                   <div class="vs-xs-12 vs-sm-12 vs-md-12">
-                    <div class="doc-detail text-right mb-6 mt-6">
+                    <div class="doc-detail docsign-block text-right mb-6 mt-6">
                       <p>
                         <i>Name: Portable Document Format</i>
                       </p>
@@ -273,6 +271,13 @@ import LabelCustomizer from '../../layouts/components/customizer/LabelsCustomize
 import filesList from '../Document_Files'
 import VuePDFViewer from "vue-instant-pdf-viewer"
 import SignaturePad from 'signature_pad'
+
+import pdfjsLib  from 'pdfjs-dist/build/pdf.js'
+import workerSrc from 'pdfjs-dist/build/pdf.worker.js'
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc
+pdfUrl = 'https://gahp.net/wp-content/uploads/2017/09/sample.pdf'
+
 
 export default {
   data () {

@@ -28,7 +28,7 @@
         Identity
       </vs-button>
       <div class="h-full flow-wrapper">
-        <div class="customizer-header pt-0 pb-4 flex items-center justify-between px-6">
+        <div class="customizer-header pt-4 pb-4 flex items-center justify-between px-6">
           <div>
             <h4 class="text-white">IDENTITY</h4>
             <small class="text-white">
