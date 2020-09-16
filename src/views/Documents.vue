@@ -1,7 +1,7 @@
 <template>
   <div class="grid-demo__layout-container">
     <the-customizer />
-     <!-- <traking-customizer/> -->
+    <!-- <traking-customizer/> -->
     <!-- <flow-customizer/> -->
     <vs-row class="border-0 filemanage-wrapper">
       <div class="vs-xs-12 vs-sm-12 vs-md-9 vs-lg-9">
@@ -30,7 +30,7 @@
               </div>
             </vx-card>
           </vs-col>
-          <vs-col class="vs-xs-12 vs-sm-8 vs-md-8 vs-lg-9 p-0 d-flex flex-column">
+          <vs-col class="vs-xs-12 vs-sm-8 vs-md-8 vs-lg-9 p-0 d-flex flex-column" >
             <vx-card class="box-shadow-none serach-wrapper p-2">
               <vx-input-group class="mb-base serach-box">
                 <vs-input
@@ -42,10 +42,11 @@
                 />
                 <template slot="append">
                   <div class="append-text btn-addon">
-                    <vs-button color="gray" class="border-radius-0 addonsearch-btn"> Search
+                    <vs-button color="gray" class="border-radius-0 addonsearch-btn">
+                      Search
                       <!-- <span class="d-sm-block d-none">Search</span>
-                      <span class="d-block d-sm-none"><i class="fas fa-search"></i></span> -->
-                      </vs-button>
+                      <span class="d-block d-sm-none"><i class="fas fa-search"></i></span>-->
+                    </vs-button>
                   </div>
                 </template>
               </vx-input-group>
@@ -332,8 +333,11 @@
                     </li>
 
                     <li class="hoverfile-menu">
-                      <vs-dropdown class="cursor-pointer icon-menu-btn" vs-custom-content
-                  vs-trigger-click>
+                      <vs-dropdown
+                        class="cursor-pointer icon-menu-btn"
+                        vs-custom-content
+                        vs-trigger-click
+                      >
                         <a class="flex items-center">
                           <i class="fas fa-ellipsis-v"></i>
                           More Options
@@ -389,7 +393,26 @@
               >
                 <vs-button class="btn-gray w-auto mb-4">Local</vs-button>
                 <vs-button class="btn-gray w-auto ml-2 mb-4">Trusthub</vs-button>
-                <vs-dropdown
+                <div class="Cloudsmain-wrapper">
+                <vs-button
+                  class="btn-gray w-auto ml-2 mb-4"
+                  @click="cloudModel_show == true ? cloudModel_show = false : cloudModel_show = true"
+                >Cloud</vs-button>
+                <div :hidden="!cloudModel_show" class="cloud-wrapper">
+                    <h5 class="w-100 fw-500 ml-3 mb-2 text-white text-left">Alternative Clouds Accounts</h5>
+                    <ul>
+                      <li v-for="(item, index) in cloudModel" :key="index"  @click="cloudModel_show = false">
+                        <router-link to="#">
+                          <img
+                            class="img-fluid"
+                            :src="require('../assets/images/documents_icon/cloud_Modal_Icon/' + item.image )"
+                          />
+                        </router-link>
+                      </li>
+                    </ul>
+                </div>
+                </div>
+                <!-- <vs-dropdown
                   vs-custom-content
                   vs-trigger-click
                   class="cursor-pointer w-auto vs-button ml-2 mb-4 btn-gray"
@@ -408,7 +431,7 @@
                       </li>
                     </ul>
                   </vs-dropdown-menu>
-                </vs-dropdown>
+                </vs-dropdown> -->
               </div>
             </vs-row>
           </vs-col>
@@ -497,6 +520,7 @@ import FlowCustomizer from '@/layouts/components/customizer/FlowCustomizer.vue'
 export default {
   data () {
     return {
+      cloudModel_show: false,
       items: [
         'Cras justo odio',
         'Dapibus ac facilisis in',
@@ -641,9 +665,9 @@ export default {
       if (file.type === 'Folder') {
         this.subFilesdata = file.children
       }
-      if (file.type == 'File'){
+      if (file.type == 'File') {
         console.log('==>', file.id);
-        this.$router.push('/document/' + file.id).catch(() => {})
+        this.$router.push('/document/' + file.id).catch(() => { })
       }
     },
     selected (node) {

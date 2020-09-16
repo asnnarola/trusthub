@@ -1147,21 +1147,21 @@
   }
 }
 
-@media screen and (min-width:1200px){
+@media screen and (min-width: 1200px) {
   .vs-xl-8 {
-    width: 66.66666666666667%!important;
+    width: 66.66666666666667% !important;
   }
   .vs-xl-4 {
-    width: 33.33333333333333%!important;
+    width: 33.33333333333333% !important;
   }
 }
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .vs-md-8 {
-    width: 66.66666666666667%!important;
+    width: 66.66666666666667% !important;
   }
   .vs-md-4 {
-    width: 33.33333333333333%!important;
+    width: 33.33333333333333% !important;
   }
   .vs-md-9 {
     width: 75% !important;
@@ -1282,8 +1282,8 @@
           border-top: 1px solid #4ec12d !important;
         }
       }
-      .signdetail-block{
-        @media screen and (max-width:767px){
+      .signdetail-block {
+        @media screen and (max-width: 767px) {
           margin-top: 1.5rem;
         }
       }
@@ -1297,8 +1297,8 @@
   box-shadow: none !important;
   border: 2px solid #4ec12d;
   border-radius: 2px;
-  @media screen and (max-width:767px){
-    padding: .6rem 1rem !important;
+  @media screen and (max-width: 767px) {
+    padding: 0.6rem 1rem !important;
     font-size: 13px;
   }
 }
@@ -1307,9 +1307,10 @@
   color: #4ec12d;
 }
 
-
 // Documnets page scss start
-.vs-input-primary.isFocus .vs-input--label, .vs-input-primary .vs-input--input:focus~.icon-inputx, .vs-input-primary .vs-input--input:focus~.vs-placeholder-label{
+.vs-input-primary.isFocus .vs-input--label,
+.vs-input-primary .vs-input--input:focus ~ .icon-inputx,
+.vs-input-primary .vs-input--input:focus ~ .vs-placeholder-label {
   color: #4ec12d !important;
 }
 .hoveropen-menu {
@@ -1655,7 +1656,7 @@
                             height: 50px;
                             display: flex;
                             align-items: center;
-                            @media screen and (max-width:767px){
+                            @media screen and (max-width: 767px) {
                               width: 40px;
                               height: 40px;
                             }
@@ -1727,36 +1728,35 @@
                 }
               }
               .subdoc-btn {
-
                 padding: 0.5rem 0.95rem;
                 font-size: 14px;
-                @media screen and (min-width:1200px) and (max-width:1350px){
+                @media screen and (min-width: 1200px) and (max-width: 1350px) {
                   padding: 0.6rem 0.7rem;
                   font-size: 13px;
                 }
-                @media screen and (max-width:767px){
+                @media screen and (max-width: 767px) {
                   padding: 0.6rem 0.65rem;
                   font-size: 13px;
                 }
               }
               .vs-row {
                 .vx-card {
-                &.pdfviewer-wrapper{
-                  .vx-card__collapsible-content{
-                    height: 100%;
-                    .vx-card__body{
-                      padding: 0;
+                  &.pdfviewer-wrapper {
+                    .vx-card__collapsible-content {
                       height: 100%;
-                      .pdfview-content{
+                      .vx-card__body {
+                        padding: 0;
                         height: 100%;
-                        .pdfobject-container{
-                          height: 99.5% !important;
+                        .pdfview-content {
+                          height: 100%;
+                          .pdfobject-container {
+                            height: 99.5% !important;
+                          }
                         }
                       }
                     }
                   }
                 }
-              }
                 .vs-col {
                   .vx-card {
                     &.serach-wrapper {
@@ -2211,6 +2211,34 @@
                     }
                   }
                 }
+                .LTC-btn {
+                  .Cloudsmain-wrapper {
+                    position: relative;
+                    display: inline-block;
+                    z-index: 111;
+                    .cloud-wrapper {
+                      position: absolute;
+                      max-width: 615px;
+                      width: 600px;
+                      bottom: 75px;
+                      right: -35px;
+                      text-align: right;
+                      &:after {
+                        display: inline-block;
+                        margin-left: 0.255em;
+                        vertical-align: 0.255em;
+                        content: "";
+                        border-top: 1.5em solid #aeaeae;
+                        border-right: 1.5em solid transparent;
+                        border-bottom: 0;
+                        border-left: 1.5em solid transparent;
+                        position: absolute;
+                        bottom: -20px;
+                        right: 35px;
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -2397,8 +2425,8 @@
                     }
                   }
                 }
-                .docsign-btn{
-                  margin-top:1rem;
+                .docsign-btn {
+                  margin-top: 1rem;
                 }
               }
             }
@@ -2525,14 +2553,14 @@
                     }
                     .barcode-view {
                       padding-left: 15px;
-                      .docsign-block{
+                      .docsign-block {
                         margin-top: 0 !important;
                       }
                     }
                   }
                 }
-                .file-path{
-                  img{
+                .file-path {
+                  img {
                     width: 38px;
                   }
                 }

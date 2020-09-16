@@ -7,11 +7,12 @@
       <div class="vs-col vs-sm-12 vs-md-12 vs-lg-12 vs-xl-4 bg-transparent border-0 p-0">
         <div class="file-path d-flex align-items-center">
           <img src="@/assets/images/documents_icon/pdf.png" width="45" class="img-fluid mr-3" />
-          <p> \ inbound \ Rental contract assurance.pdf</p>
+          <p>\ inbound \ Rental contract assurance.pdf</p>
         </div>
       </div>
       <div
-        class="vs-col vs-sm-12 vs-md-12 vs-lg-12 vs-xl-8 d-flex flex-wrap justify-content-end bg-transparent border-0 pr-0 pt-0 pb-0 pl-2 docsign-btn">
+        class="vs-col vs-sm-12 vs-md-12 vs-lg-12 vs-xl-8 d-flex flex-wrap justify-content-end bg-transparent border-0 pr-0 pt-0 pb-0 pl-2 docsign-btn"
+      >
         <vs-button
           color="primary"
           class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
@@ -94,7 +95,12 @@
                           </h6>
                         </div>
                       </div>
-                      <canvas id="signPad" ref="signPad" class="signature-pad w-100" style="background-color: transparent !important;"/>
+                      <canvas
+                        id="signPad"
+                        ref="signPad"
+                        class="signature-pad w-100"
+                        style="background-color: transparent !important;"
+                      />
                     </div>
                   </div>
                 </div>
@@ -104,7 +110,10 @@
                     <vs-button class="btn green-btn mr-2 mb-2" @click="clearSignature">Clear</vs-button>
                     <vs-button class="btn green-btn mr-2 mb-2" @click="undoSignature">Undo</vs-button>
                     <vs-button class="btn green-btn mr-2 mb-2" @click="saveAsJpeg">Save</vs-button>
-                    <vs-button class="btn green-btn mr-2 mb-2" @click="undoSignature">Advanced Options</vs-button>
+                    <vs-button
+                      class="btn green-btn mr-2 mb-2"
+                      @click="undoSignature"
+                    >Advanced Options</vs-button>
                   </div>
                   <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-5 text-right signdetail-block">
                     <p class="text-dark">
@@ -121,9 +130,20 @@
               </div>
             </vs-popup>
             <div class="pdfview-content">
-              <vue-pdf-viewer
-                url="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"
-              ></vue-pdf-viewer>
+              <!-- <div>
+                <button @click="onPrevPage">Previous</button>
+                <button @click="onNextPage">Next</button>
+                &nbsp; &nbsp;
+                <span>
+                  Page:
+                  <span id="page_num"></span> /
+                  <span id="page_count" v-model=""></span>
+                </span>
+              </div> -->
+
+              <canvas id="the-canvas"></canvas>
+              <!-- <ca nvas id="the-canvas"></canvas> -->
+              <!-- <vue-pdf-viewer url="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"></vue-pdf-viewer> -->
             </div>
           </vx-card>
         </vs-row>
@@ -265,6 +285,10 @@
     </vs-row>
   </div>
 </template>
+
+
+
+
 <script>
 import IdentityCustomizer from '../../layouts/components/customizer/IdentityCustomizer.vue'
 import LabelCustomizer from '../../layouts/components/customizer/LabelsCustomizer.vue'
@@ -272,13 +296,10 @@ import filesList from '../Document_Files'
 import VuePDFViewer from "vue-instant-pdf-viewer"
 import SignaturePad from 'signature_pad'
 
-import pdfjsLib  from 'pdfjs-dist/build/pdf.js'
-import workerSrc from 'pdfjs-dist/build/pdf.worker.js'
-
-pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc
-pdfUrl = 'https://gahp.net/wp-content/uploads/2017/09/sample.pdf'
-
-
+var pdfjsLib = window['pdfjs-dist/build/pdf'];
+pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+// import pdfjsLib from 'pdfjs-dist/build/pdf'
+// import workerSrc from 'pdfjs-dist/build/pdf.worker'
 export default {
   data () {
     return {
@@ -288,13 +309,91 @@ export default {
       options: {
         penColor: "#c0f"
       },
-      signaturePad: SignaturePad
+      signaturePad: SignaturePad,
+      pdfUrl : 'https://gahp.net/wp-content/uploads/2017/09/sample.pdf',
+      // pdfDoc : null,
+      // pageNum : 1,
+      // pageRendering : false,
+      // pageNumPending : null,
+      // numofPage:0,
+      // scale : 0.8
     }
   },
   mounted () {
-    // var signaturePad = new SignaturePad(this.canvas, {
-    //   backgroundColor: 'rgb(255, 255, 255)'
+
+    // var canvas = document.getElementById('the-canvas'),
+    //   ctx = canvas.getContext('2d');
+    // function renderPage (num) {
+    //   this.pageRendering = true;
+
+    //   this.pdfDoc.getPage(num).then(function (page) {
+    //     var viewport = page.getViewport({ scale: this.scale });
+    //     canvas.height = viewport.height;
+    //     canvas.width = viewport.width;
+
+    //     var renderContext = {
+    //       canvasContext: ctx,
+    //       viewport: viewport
+    //     };
+    //     var renderTask = page.render(renderContext);
+
+    //     renderTask.promise.then(function () {
+    //       this.pageRendering = false;
+    //       if (this.pageNumPending !== null) {
+    //         // New page rendering is pending
+    //         renderPage(this.pageNumPending);
+    //         this.pageNumPending = null;
+    //       }
+    //     });
+    //   });
+
+    //   // Update page counters
+    //   document.getElementById('page_num').textContent = num;
+    // }
+
+    // // PDF
+    // var loadingTask = pdfjsLib.getDocument(this.pdfUrl);
+    // var loadingTask = pdfjsLib.getDocument(this.pdfUrl);
+
+    // loadingTask.promise.then(function (pdf) {
+      //   this.pdfDoc = pdf;
+    //   document.getElementById('page_count').textContent = this.pdfDoc.numPages;
+
+    //   // Initial/first page rendering
+    //   renderPage(this.pageNum);
     // });
+
+
+    var loadingTask = pdfjsLib.getDocument(this.pdfUrl);
+    loadingTask.promise.then(function (pdf) {
+      console.log('PDF loaded');
+      // Fetch the first page
+      var pageNumber = 1;
+      pdf.getPage(pageNumber).then(function (page) {
+        console.log('Page loaded');
+        var scale = 1.5;
+        var viewport = page.getViewport({ scale: scale });
+
+        // Prepare canvas using PDF page dimensions
+        var canvas = document.getElementById('the-canvas');
+        var context = canvas.getContext('2d');
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        // Render PDF page into canvas context
+        var renderContext = {
+          canvasContext: context,
+          viewport: viewport
+        };
+        var renderTask = page.render(renderContext);
+        renderTask.promise.then(function () {
+          console.log('Page rendered');
+        });
+      });
+    }, function (reason) {
+      // PDF loading error
+      console.error(reason);
+    });
   },
   components: {
     IdentityCustomizer,
@@ -348,7 +447,30 @@ export default {
     },
     clearSignature () {
       this.signaturePad.clear();
-    }
+    },
+
+    // PDF Preview Related:
+    // queueRenderPage (num) {
+    //   if (this.pageRendering) {
+    //     this.pageNumPending = num;
+    //   } else {
+    //     renderPage(num);
+    //   }
+    // },
+    // onNextPage () {
+    //   if (this.pageNum >= this.pdfDoc.numPages) {
+    //     return;
+    //   }
+    //   this.pageNum++;
+    //   this.queueRenderPage(this.pageNum);
+    // },
+    // onPrevPage () {
+    //   if (this.pageNum <= 1) {
+    //     return;
+    //   }
+    //   this.pageNum--;
+    //   this.queueRenderPage(this.pageNum);
+    // }
   },
 }
 </script>
