@@ -43,7 +43,8 @@
                 src="../../../assets/images/sidebar_icon/menu-open.png"
                 id="btnVNavMenuMinToggler"
                 class="mr-0 cursor-pointer"
-                @click="toggleReduce(!reduce)" width="26px"
+                @click="toggleReduce(!reduce)"
+                width="26px"
               />
               <!-- <feather-icon
                 id="btnVNavMenuMinToggler"
@@ -72,17 +73,16 @@
         >
           <template v-for="(item, index) in menuItemsUpdated">
             <!-- Group Header -->
-            <span
+            <!-- <span
               v-if="item.header && !verticalNavMenuItemsMin"
               class="navigation-header truncate"
               :key="`header-${index}`"
             >{
-              <!-- <img src="../../../assets/images/sidebar_icon/icon1.png" alt="123"> -->
               {{ $t(item.i18n) || item.header }}
-            </span>
+            </span>-->
             <!-- /Group Header -->
 
-            <template v-else-if="!item.header">
+            <template v-if="!item.header">
               <!-- Nav-Item -->
               <v-nav-menu-item
                 v-if="!item.submenu"
@@ -95,20 +95,22 @@
                 :isDisabled="item.isDisabled"
                 :slug="item.slug"
               >
-                <img :src="require('../../../assets/images/sidebar_icon/' + item.icon_url)" />
-                <span
-                  v-show="!verticalNavMenuItemsMin"
-                  class="truncate"
-                >{{ $t(item.i18n) || item.name }}</span>
-                <vs-chip
+                <div @click="openSubSidebar(item.name)">
+                  <img :src="require('../../../assets/images/sidebar_icon/' + item.icon_url)" />
+                  <span
+                    v-show="!verticalNavMenuItemsMin"
+                    class="truncate"
+                  >{{ $t(item.i18n) || item.name }}</span>
+                </div>
+                <!-- <vs-chip
                   class="ml-auto"
                   :color="item.tagColor"
                   v-if="item.tag && (isMouseEnter || !reduce)"
-                >{{ item.tag }}</vs-chip>
+                >{{ item.tag }}</vs-chip>-->
               </v-nav-menu-item>
 
               <!-- Nav-Group -->
-              <template v-else>
+              <!-- <template v-else>
                 <v-nav-menu-group
                   :key="`group-${index}`"
                   :openHover="openGroupHover"
@@ -116,20 +118,11 @@
                   :groupIndex="index"
                   :open="isGroupActive(item)"
                 />
-              </template>
+              </template>-->
               <!-- /Nav-Group -->
             </template>
           </template>
-          <!-- <template v-if="showCloseButton">
-              <img src="../../../assets/images/sidebar_icon/menu-close.png" alt="123" class="m-0 cursor-pointer" @click="$store.commit('TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE', false)" />
-          </template>-->
-          <!-- <div class="vs-sidebar--item">
-            <div class="d-flex justify-content-end pr-2">
-              <a class="border-0 menu-close-show">
-                <img src="../../../assets/images/sidebar_icon/menu-close.png" class="toggle-close-arrow"/>
-              </a>
-            </div>
-          </div> -->
+
           <ul class="bt-menu-list">
             <li v-for="data in bottom_data" :key="data.id" class="vs-sidebar--item">
               <div v-if="data.url">
@@ -146,9 +139,7 @@
               </div>
               <div v-else>
                 <a class="border-0">
-                  <span class="feather-icon select-none relative">
-                    <!---->
-                  </span>
+                  <span class="feather-icon select-none relative"></span>
                   <img :src="require('../../../assets/images/sidebar_icon/' +data.icon_url)" />
                   <span
                     v-show="!verticalNavMenuItemsMin"
@@ -162,7 +153,28 @@
         <!-- /Menu Items -->
       </div>
     </vs-sidebar>
-
+    <div class="v-nav-menu">
+      <vs-sidebar click-not-close position-left v-model="activeSubsidebar" class="items-no-padding">
+        <section class="scroll-area-v-nav-menu submenu-section pt-2 ps ps--active-y">
+          <div class="vs-sidebar--item" v-for="item in documentSubMenu" :key="item.title">
+            <!-- subactive-menu -->
+            <a href="/dashboard" class tabindex="-1" target="_self">
+              <span class="feather-icon select-none relative"></span>
+              <div class="submenu-listmain">
+                <div class="submenu-img">
+                  <!-- <img :src="require('../../../assets/images/sidebar_icon/' +item.icon_url)" /> -->
+                  <img src="../../../assets/images/sidebar_icon/gear.png" />
+                </div>
+                <div class="submenu-name">
+                  <span class="truncate pl-0 fw-500" style>{{item.title}}</span>
+                  <i class="truncate text-white" style>{{item.sub_title}}</i>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+      </vs-sidebar>
+    </div>
     <!-- Swipe Gesture -->
     <div
       v-if="!isVerticalNavMenuActive"
@@ -197,6 +209,50 @@ export default {
     title: { type: String }
   },
   data: () => ({
+    activeSubsidebar: false,
+    documentSubMenu: [{
+      id:1,
+      icon_url:'subM1',
+      title: 'Search',
+      sub_title: 'Find Specific Documents'
+    },
+    {
+      id:2,
+      icon_url:'subM2',
+      title: 'New',
+      sub_title: 'Create Documents'
+    },
+    {
+      id:3,
+      icon_url:'subM3',
+      title: 'Upload',
+      sub_title: 'Add Documents'
+    },
+    {
+      id:4,
+      icon_url:'subM4',
+      title: 'Signature',
+      sub_title: 'Apply Signature'
+    },
+    {
+      id:5,
+      icon_url:'subM5',
+      title: 'Cloud',
+      sub_title: 'Storage provide'
+    },
+    {
+      id:6,
+      icon_url:'subM6',
+      title: 'Setting',
+      sub_title: 'Users Restrictions'
+    },
+    {
+      id:7,
+      icon_url:'subM17',
+      title: 'Clients',
+      sub_title: 'Download Appliactions'
+    },
+    ],
     bottom_data: [{
       url: '/setting',
       name: 'Setting',
@@ -292,10 +348,10 @@ export default {
     windowWidth () { this.setVerticalNavMenuWidth() }
   },
   methods: {
-    getImagepath (image) {
-      const path = 'src/assets/images/sidebar_icon/' + image;
-      console.log('Image Path =>', path);
-      return path
+    openSubSidebar (item) {
+      if (item == 'Documents') {
+        this.activeSubsidebar == true ? this.activeSubsidebar = false : this.activeSubsidebar = true
+      }
     },
 
     onMenuSwipe (event) {
@@ -375,46 +431,6 @@ export default {
 
       // Remove Only Icon in Menu
       this.$store.commit('UPDATE_VERTICAL_NAV_MENU_ITEMS_MIN', false)
-
-
-      // if(this.layoutType === 'vertical' || (this.layoutType === 'horizontal' && this.windowWidth < 1200))
-      // if (this.windowWidth < 1200) {
-
-      //   // Close NavMenu
-      //   this.$store.commit('TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE', false)
-
-      //   // Reduce button
-      //   if (this.reduceButton) this.reduce = false
-
-      //   // Menu Action buttons
-      //   this.showCloseButton = true
-      //   this.clickNotClose   = false
-
-      //   // Update NavMenu Width
-      //   this.$store.dispatch('updateVerticalNavMenuWidth', 'no-nav-menu')
-
-      //   // Remove Only Icon in Menu
-      //   this.$store.commit('UPDATE_VERTICAL_NAV_MENU_ITEMS_MIN', false)
-
-      // } else {
-
-      //   // Set reduce
-      //   this.reduce = this.reduceButton ? true : false
-
-      //   // Open NavMenu
-      //   this.$store.commit('TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE', true)
-
-      //   // Set Menu Items Only Icon Mode
-      //   const verticalNavMenuItemsMin = (this.reduceButton && !this.isMouseEnter) ? true : false
-      //   this.$store.commit('UPDATE_VERTICAL_NAV_MENU_ITEMS_MIN', verticalNavMenuItemsMin)
-
-      //   // Menu Action buttons
-      //   this.clickNotClose   = true
-      //   this.showCloseButton = false
-
-      //   const verticalNavMenuWidth   = this.isVerticalNavMenuReduced ? "reduced" : "default"
-      //   this.$store.dispatch('updateVerticalNavMenuWidth', verticalNavMenuWidth)
-      // }
     },
     toggleReduce (val) {
       this.reduceButton = val

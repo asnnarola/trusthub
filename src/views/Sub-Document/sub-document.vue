@@ -130,17 +130,16 @@
               </div>
             </vs-popup>
             <div class="pdfview-content">
-              <!-- <div>
-                <button @click="onPrevPage">Previous</button>
-                <button @click="onNextPage">Next</button>
+              <div>
+                <button id="prev">Previous</button>
+                <button id="next">Next</button>
                 &nbsp; &nbsp;
                 <span>
                   Page:
                   <span id="page_num"></span> /
-                  <span id="page_count" v-model=""></span>
+                  <span id="page_count"></span>
                 </span>
-              </div> -->
-
+              </div>
               <canvas id="the-canvas"></canvas>
               <!-- <ca nvas id="the-canvas"></canvas> -->
               <!-- <vue-pdf-viewer url="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"></vue-pdf-viewer> -->
@@ -286,9 +285,6 @@
   </div>
 </template>
 
-
-
-
 <script>
 import IdentityCustomizer from '../../layouts/components/customizer/IdentityCustomizer.vue'
 import LabelCustomizer from '../../layouts/components/customizer/LabelsCustomizer.vue'
@@ -310,90 +306,130 @@ export default {
         penColor: "#c0f"
       },
       signaturePad: SignaturePad,
-      pdfUrl : 'https://gahp.net/wp-content/uploads/2017/09/sample.pdf',
-      // pdfDoc : null,
-      // pageNum : 1,
-      // pageRendering : false,
-      // pageNumPending : null,
-      // numofPage:0,
-      // scale : 0.8
+      pdfUrl: 'https://gahp.net/wp-content/uploads/2017/09/sample.pdf',
     }
   },
   mounted () {
+    var pdfDoc = null,
+      pageNum = 1,
+      pageRendering = false,
+      pageNumPending = null,
+      scale = 0.8,
+      canvas = document.getElementById('the-canvas'),
+      ctx = canvas.getContext('2d');
 
-    // var canvas = document.getElementById('the-canvas'),
-    //   ctx = canvas.getContext('2d');
-    // function renderPage (num) {
-    //   this.pageRendering = true;
-
-    //   this.pdfDoc.getPage(num).then(function (page) {
-    //     var viewport = page.getViewport({ scale: this.scale });
-    //     canvas.height = viewport.height;
-    //     canvas.width = viewport.width;
-
-    //     var renderContext = {
-    //       canvasContext: ctx,
-    //       viewport: viewport
-    //     };
-    //     var renderTask = page.render(renderContext);
-
-    //     renderTask.promise.then(function () {
-    //       this.pageRendering = false;
-    //       if (this.pageNumPending !== null) {
-    //         // New page rendering is pending
-    //         renderPage(this.pageNumPending);
-    //         this.pageNumPending = null;
-    //       }
-    //     });
-    //   });
-
-    //   // Update page counters
-    //   document.getElementById('page_num').textContent = num;
-    // }
-
-    // // PDF
-    // var loadingTask = pdfjsLib.getDocument(this.pdfUrl);
-    // var loadingTask = pdfjsLib.getDocument(this.pdfUrl);
-
-    // loadingTask.promise.then(function (pdf) {
-      //   this.pdfDoc = pdf;
-    //   document.getElementById('page_count').textContent = this.pdfDoc.numPages;
-
-    //   // Initial/first page rendering
-    //   renderPage(this.pageNum);
-    // });
-
-
-    var loadingTask = pdfjsLib.getDocument(this.pdfUrl);
-    loadingTask.promise.then(function (pdf) {
-      console.log('PDF loaded');
-      // Fetch the first page
-      var pageNumber = 1;
-      pdf.getPage(pageNumber).then(function (page) {
-        console.log('Page loaded');
-        var scale = 1.5;
+    /**
+     * Get page info from document, resize canvas accordingly, and render page.
+     * @param num Page number.
+     */
+    function renderPage (num) {
+      pageRendering = true;
+      // Using promise to fetch the page
+      pdfDoc.getPage(num).then(function (page) {
         var viewport = page.getViewport({ scale: scale });
-
-        // Prepare canvas using PDF page dimensions
-        var canvas = document.getElementById('the-canvas');
-        var context = canvas.getContext('2d');
         canvas.height = viewport.height;
         canvas.width = viewport.width;
 
         // Render PDF page into canvas context
         var renderContext = {
-          canvasContext: context,
+          canvasContext: ctx,
           viewport: viewport
         };
         var renderTask = page.render(renderContext);
+
+        // Wait for rendering to finish
         renderTask.promise.then(function () {
-          console.log('Page rendered');
+          pageRendering = false;
+          if (pageNumPending !== null) {
+            // New page rendering is pending
+            renderPage(pageNumPending);
+            pageNumPending = null;
+          }
         });
       });
-    }, function (reason) {
-      // PDF loading error
-      console.error(reason);
+
+      // Update page counters
+      document.getElementById('page_num').textContent = num;
+    }
+
+    /**
+     * If another page rendering in progress, waits until the rendering is
+     * finised. Otherwise, executes rendering immediately.
+     */
+    function queueRenderPage (num) {
+      if (pageRendering) {
+        pageNumPending = num;
+      } else {
+        renderPage(num);
+      }
+    }
+
+    /**
+     * Displays previous page.
+     */
+    function onPrevPage () {
+      if (pageNum <= 1) {
+        return;
+      }
+      pageNum--;
+      queueRenderPage(pageNum);
+    }
+    document.getElementById('prev').addEventListener('click', onPrevPage);
+
+    /**
+     * Displays next page.
+     */
+    function onNextPage () {
+      if (pageNum >= pdfDoc.numPages) {
+        return;
+      }
+      pageNum++;
+      queueRenderPage(pageNum);
+    }
+    document.getElementById('next').addEventListener('click', onNextPage);
+
+    /**
+     * Asynchronously downloads PDF.
+     */
+    pdfjsLib.getDocument(this.pdfUrl).promise.then(function (pdfDoc_) {
+      pdfDoc = pdfDoc_;
+      document.getElementById('page_count').textContent = pdfDoc.numPages;
+
+      // Initial/first page rendering
+      renderPage(pageNum);
     });
+
+
+    // var loadingTask = pdfjsLib.getDocument(this.pdfUrl);
+    // loadingTask.promise.then(function (pdf) {
+    //   console.log('PDF loaded');
+    //   // Fetch the first page
+    //   var pageNumber = 1;
+    //   pdf.getPage(pageNumber).then(function (page) {
+    //     console.log('Page loaded');
+    //     var scale = 1.5;
+    //     var viewport = page.getViewport({ scale: scale });
+
+    //     // Prepare canvas using PDF page dimensions
+    //     var canvas = document.getElementById('the-canvas');
+    //     var context = canvas.getContext('2d');
+    //     canvas.height = viewport.height;
+    //     canvas.width = viewport.width;
+
+    //     // Render PDF page into canvas context
+    //     var renderContext = {
+    //       canvasContext: context,
+    //       viewport: viewport
+    //     };
+    //     var renderTask = page.render(renderContext);
+    //     renderTask.promise.then(function () {
+    //       console.log('Page rendered');
+    //     });
+    //   });
+    // }, function (reason) {
+    //   // PDF loading error
+    //   console.error(reason);
+    // });
   },
   components: {
     IdentityCustomizer,
@@ -448,29 +484,6 @@ export default {
     clearSignature () {
       this.signaturePad.clear();
     },
-
-    // PDF Preview Related:
-    // queueRenderPage (num) {
-    //   if (this.pageRendering) {
-    //     this.pageNumPending = num;
-    //   } else {
-    //     renderPage(num);
-    //   }
-    // },
-    // onNextPage () {
-    //   if (this.pageNum >= this.pdfDoc.numPages) {
-    //     return;
-    //   }
-    //   this.pageNum++;
-    //   this.queueRenderPage(this.pageNum);
-    // },
-    // onPrevPage () {
-    //   if (this.pageNum <= 1) {
-    //     return;
-    //   }
-    //   this.pageNum--;
-    //   this.queueRenderPage(this.pageNum);
-    // }
   },
 }
 </script>
