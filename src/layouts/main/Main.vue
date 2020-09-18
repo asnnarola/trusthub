@@ -312,4 +312,7 @@ export default {
 
 </script>
 
-<sty
+
+<style lang="scss">
+@import "@/assets/scss/style.scss";
+</style>

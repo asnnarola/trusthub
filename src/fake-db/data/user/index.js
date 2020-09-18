@@ -13,6 +13,7 @@ const data = {
       password: 'adminadmin',
       photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
       email: 'admin@admin.com',
+      userRoll: 'admin',
       phoneNumber: null
     }
   ]
@@ -27,28 +28,18 @@ const jwtConfig = {
 
 mock.onPost('/api/auth/login').reply((request) => {
   const {email, password} = JSON.parse(request.data)
-
   let error = 'Something went wrong'
-
   const user = data.users.find(user => user.email === email && user.password === password)
-
   if (user) {
-
     try {
-
       const accessToken = jwt.sign({id: user.uid}, jwtConfig.secret, {expiresIn: jwtConfig.expireTime})
-
       const userData = Object.assign({}, user, {providerId: 'jwt'})
-
       delete userData.password
-
       const response = {
         userData,
         accessToken
       }
-
       return [200, response]
-
     } catch (e) {
       error = e
     }

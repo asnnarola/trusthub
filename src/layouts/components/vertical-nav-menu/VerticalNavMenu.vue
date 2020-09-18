@@ -24,21 +24,12 @@
       v-hammer:swipe="onMenuSwipe"
     >
       <div @mouseenter="mouseEnter" @mouseleave="mouseLeave">
-        <!-- Header -->
         <div class="header-sidebar flex items-end justify-between" slot="header">
-          <!-- Logo -->
           <router-link tag="div" class="vx-logo cursor-pointer flex items-center" to="/">
             <logo class="mr-4 fill-current text-primary" />
-            <!-- <span class="vx-logo-text text-primary" v-show="isMouseEnter || !reduce" v-if="title">{{ title }}</span> -->
           </router-link>
-          <!-- /Logo -->
-
-          <!-- Menu Buttons -->
           <div>
-            <!-- Close Button -->
-            <!-- Toggle Buttons -->
             <template v-if="!showCloseButton && !verticalNavMenuItemsMin">
-              <!-- <img src="../" alt="123"> -->
               <img
                 src="../../../assets/images/sidebar_icon/menu-open.png"
                 id="btnVNavMenuMinToggler"
@@ -46,22 +37,10 @@
                 @click="toggleReduce(!reduce)"
                 width="26px"
               />
-              <!-- <feather-icon
-                id="btnVNavMenuMinToggler"
-                class="mr-0 cursor-pointer"
-                :icon="reduce ? 'CircleIcon' : 'DiscIcon'"
-                svg-classes="stroke-current text-primary"
-              @click="toggleReduce(!reduce)" />-->
             </template>
           </div>
-          <!-- /Menu Toggle Buttons -->
         </div>
-        <!-- /Header -->
-
-        <!-- Header Shadow -->
         <div class="shadow-bottom" v-show="showShadowBottom" />
-
-        <!-- Menu Items -->
         <component
           :is="scrollbarTag"
           ref="verticalNavMenuPs"
@@ -72,18 +51,7 @@
           :key="$vs.rtl"
         >
           <template v-for="(item, index) in menuItemsUpdated">
-            <!-- Group Header -->
-            <!-- <span
-              v-if="item.header && !verticalNavMenuItemsMin"
-              class="navigation-header truncate"
-              :key="`header-${index}`"
-            >{
-              {{ $t(item.i18n) || item.header }}
-            </span>-->
-            <!-- /Group Header -->
-
             <template v-if="!item.header">
-              <!-- Nav-Item -->
               <v-nav-menu-item
                 v-if="!item.submenu"
                 :key="`item-${index}`"
@@ -102,24 +70,8 @@
                     class="truncate"
                   >{{ $t(item.i18n) || item.name }}</span>
                 </div>
-                <!-- <vs-chip
-                  class="ml-auto"
-                  :color="item.tagColor"
-                  v-if="item.tag && (isMouseEnter || !reduce)"
-                >{{ item.tag }}</vs-chip>-->
               </v-nav-menu-item>
 
-              <!-- Nav-Group -->
-              <!-- <template v-else>
-                <v-nav-menu-group
-                  :key="`group-${index}`"
-                  :openHover="openGroupHover"
-                  :group="item"
-                  :groupIndex="index"
-                  :open="isGroupActive(item)"
-                />
-              </template>-->
-              <!-- /Nav-Group -->
             </template>
           </template>
 
@@ -128,13 +80,14 @@
               <div v-if="data.url">
                 <router-link :to="data.url" class="border-0">
                   <span class="feather-icon select-none relative">
-                    <!---->
                   </span>
+                  <div @click="openSubSidebar(data.name)">
                   <img :src="require('../../../assets/images/sidebar_icon/' +data.icon_url)" />
                   <span
                     v-show="!verticalNavMenuItemsMin"
                     class="truncate"
                   >{{ $t(data.i18n) || data.name }}</span>
+                  </div>
                 </router-link>
               </div>
               <div v-else>
@@ -158,16 +111,35 @@
         <section class="scroll-area-v-nav-menu submenu-section pt-2 ps ps--active-y">
           <div class="vs-sidebar--item" v-for="item in documentSubMenu" :key="item.title">
             <!-- subactive-menu -->
-            <a href="/dashboard" class tabindex="-1" target="_self">
+            <a href="#" class tabindex="-1" target="_self">
               <span class="feather-icon select-none relative"></span>
               <div class="submenu-listmain">
                 <div class="submenu-img">
-                  <!-- <img :src="require('../../../assets/images/sidebar_icon/' +item.icon_url)" /> -->
-                  <img src="../../../assets/images/sidebar_icon/gear.png" />
+                  <img :src="require('../../../assets/images/sidebar_icon/' + item.icon_url )" />
                 </div>
                 <div class="submenu-name">
                   <span class="truncate pl-0 fw-500" style>{{item.title}}</span>
                   <i class="truncate text-white" style>{{item.sub_title}}</i>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+      </vs-sidebar>
+
+      <vs-sidebar click-not-close position-left v-model="activeBottomSubsidebar" class="items-no-padding">
+        <section class="scroll-area-v-nav-menu submenu-section pt-2 ps ps--active-y settingBottomSubMenu">
+          <div class="vs-sidebar--item" v-for="item in settingBottomSubMenu" :key="item.title">
+            <!-- subactive-menu -->
+            <a href="#" class tabindex="-1" target="_self">
+              <span class="feather-icon select-none relative"></span>
+              <div class="submenu-listmain">
+                <!-- <div class="submenu-img">
+                  <img :src="require('../../../assets/images/sidebar_icon/' + item.icon_url )" />
+                </div> -->
+                <div class="submenu-name">
+                  <span class="truncate pl-0 fw-500" style>{{item.title}}</span>
+                  <!-- <i class="truncate text-white" style>{{item.sub_title}}</i> -->
                 </div>
               </div>
             </a>
@@ -210,45 +182,96 @@ export default {
   },
   data: () => ({
     activeSubsidebar: false,
+    activeBottomSubsidebar: false,
+    settingBottomSubMenu:[
+      {
+      id:1,
+      icon_url:'subM1.png',
+      title: 'Search',
+      sub_title: 'Presets'
+    },
+    {
+      id:2,
+      icon_url:'subM1.png',
+      title: 'Certificators',
+      sub_title: 'Presets'
+    },
+    {
+      id:3,
+      icon_url:'subM1.png',
+      title: 'Operators',
+      sub_title: 'Presets'
+    },
+    {
+      id:4,
+      icon_url:'subM1.png',
+      title: 'Seats',
+      sub_title: 'Presets'
+    },
+    {
+      id:5,
+      icon_url:'subM1.png',
+      title: 'Devices',
+      sub_title: 'Presets'
+    },
+    {
+      id:6,
+      icon_url:'subM1.png',
+      title: 'Licences',
+      sub_title: 'Presets'
+    },
+    {
+      id:7,
+      icon_url:'subM1.png',
+      title: 'Wallet',
+      sub_title: 'Presets'
+    },
+    {
+      id:7,
+      icon_url:'subM1.png',
+      title: 'Limits',
+      sub_title: 'Presets'
+    },
+    ],
     documentSubMenu: [{
       id:1,
-      icon_url:'subM1',
+      icon_url:'subM1.png',
       title: 'Search',
       sub_title: 'Find Specific Documents'
     },
     {
       id:2,
-      icon_url:'subM2',
+      icon_url:'subM2.png',
       title: 'New',
       sub_title: 'Create Documents'
     },
     {
       id:3,
-      icon_url:'subM3',
+      icon_url:'subM3.png',
       title: 'Upload',
       sub_title: 'Add Documents'
     },
     {
       id:4,
-      icon_url:'subM4',
+      icon_url:'subM4.png',
       title: 'Signature',
       sub_title: 'Apply Signature'
     },
     {
       id:5,
-      icon_url:'subM5',
+      icon_url:'subM5.png',
       title: 'Cloud',
       sub_title: 'Storage provide'
     },
     {
       id:6,
-      icon_url:'subM6',
+      icon_url:'subM6.png',
       title: 'Setting',
       sub_title: 'Users Restrictions'
     },
     {
       id:7,
-      icon_url:'subM17',
+      icon_url:'subM7.png',
       title: 'Clients',
       sub_title: 'Download Appliactions'
     },
@@ -351,6 +374,9 @@ export default {
     openSubSidebar (item) {
       if (item == 'Documents') {
         this.activeSubsidebar == true ? this.activeSubsidebar = false : this.activeSubsidebar = true
+      }
+      if (item == 'Setting') {
+        this.activeBottomSubsidebar == true ? this.activeBottomSubsidebar = false : this.activeBottomSubsidebar = true
       }
     },
 

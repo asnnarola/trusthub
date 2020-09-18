@@ -115,15 +115,14 @@
                 <i class="fas fa-star pl-2"></i>
                 <i class="fas fa-star pl-2"></i>
                 <i class="fas fa-star pl-2"></i>
-                <i class="fas fa-star pl-2"></i> -->
+                <i class="fas fa-star pl-2"></i>-->
                 <star-rating :star-size="20" :read-only="true" :rounded-corners="true" :rating="5"></star-rating>
               </p>
             </div>
           </div>
 
           <div class="vx-row ml-3 mr-3">
-            <!-- action="https://jsonplaceholder.typicode.com/posts/" -->
-            <vs-upload />
+            <vs-upload action="http://localhost:3000/Documents" />
           </div>
           <div class="vx-row ml-3 mr-3 mb-6">
             <div class="vx-col w-full">
@@ -153,6 +152,8 @@
 <script>
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import StarRating from 'vue-star-rating'
+import path from 'path'
+import unoconv from 'awesome-unoconv'
 export default {
   data () {
     return {
@@ -190,6 +191,19 @@ export default {
     },
     remove (item) {
       this.labels.splice(this.labels.indexOf(item), 1)
+    },
+    convertFilse () {
+      const sourceFilePath = path.resolve('../../../assets/files/test.odp');
+      const outputFilePath = path.resolve('../../../assets/files/test123.pdf');
+
+      unoconv
+        .convert(sourceFilePath, outputFilePath)
+        .then(result => {
+          console.log('Result',result); // return outputFilePath
+        })
+        .catch(err => {
+          console.log('Error',err);
+        });
     }
   },
 }

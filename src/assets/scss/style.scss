@@ -1232,6 +1232,37 @@
   position: sticky !important;
 }
 
+// TopRight Notify css start
+.topright-notify {
+  .vs-dropdown--custom {
+    border-radius: 0px;
+    box-shadow: none !important;
+    border: 1px solid #dae1e7;
+    .notification-top {
+      background: #f9c201 !important;
+      background-color: #f9c201 !important;
+    }
+    .scroll-area--nofications-dropdown {
+      ul {
+        &.bordered-items {
+          li {
+            .items-start {
+            }
+          }
+        }
+      }
+    }
+    .checkout-footer {
+      background: #888888;
+      border-radius: 0px !important;
+    }
+  }
+  .vs-dropdown--menu--after {
+    background: #f9c201 !important;
+    background-color: #f9c201 !important;
+  }
+}
+
 // Popup css start
 .Signature-popup {
   .vs-popup {
@@ -1395,6 +1426,23 @@
 }
 .layout--main {
   #content-area {
+    .vx-navbar-wrapper {
+      .vs-navbar {
+        .vs-con-items {
+          .h-top-Right-icon {
+            .parent-dropdown {
+              .select-none {
+                .feather-icon-badge {
+                  top: -7px;
+                  right: 14px;
+                  color: #888888 !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
     .content-wrapper {
       .router-view {
         .router-content {
@@ -2272,10 +2320,10 @@
                   margin: auto;
                   border-bottom: 1px solid #828181;
                 }
-                &.subactive-menu{
+                &.subactive-menu {
                   background: #5b5b5b;
                   border-color: #dddddd !important;
-                  &:after{
+                  &:after {
                     border-bottom: none !important;
                   }
                 }
@@ -2290,10 +2338,30 @@
                   display: flex;
                   flex-direction: column;
                   padding-left: 10px;
-                  i{
-                    &.truncate{
+                  i {
+                    &.truncate {
                       font-size: 12px;
                     }
+                  }
+                }
+              }
+            }
+            &.settingBottomSubMenu{
+              justify-content: flex-end;
+              padding-bottom: 10%;
+              .vs-sidebar--item{
+                padding: 0px 10px;
+                a{
+                  padding:10px 0px;
+                  background: #707070;
+                  margin-bottom: 6px;
+                  border-left: 5px solid transparent;
+                  &.settingsub-active{
+                    border-color: #dddddd;
+                    background: #979797;
+                  }
+                  &:after{
+                    border-bottom: 0;
                   }
                 }
               }

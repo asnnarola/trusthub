@@ -55,7 +55,7 @@ export default {
       displayName: name,
       email,
       password: pwd
-    })
+    }).then(res => console.log('responce =>', res))
   },
   refreshToken () {
     return axios.post('/api/auth/refresh-token', {accessToken: localStorage.getItem('accessToKen')})

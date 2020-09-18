@@ -85,7 +85,6 @@ export default {
         this.$emit("gosetp", this.step);
       }, 3900);
       // this.$emit("startProgressBar",this.startProgressBar() )
-
     },
     checkLogin () {
       // If user is already logged in notify
@@ -107,7 +106,6 @@ export default {
       return true
     },
     loginJWT () {
-
       if (!this.checkLogin()) return
       // Loading
       this.$vs.loading()

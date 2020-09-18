@@ -35,7 +35,6 @@ export default {
 
     // If remember_me is enabled change firebase Persistence
     if (!payload.checkbox_remember_me) {
-
       // Change firebase Persistence
       firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
 
@@ -310,7 +309,6 @@ export default {
 
   // JWT
   loginJWT ({ commit }, payload) {
-
     return new Promise((resolve, reject) => {
       jwt.login(payload.userDetails.email, payload.userDetails.password)
         .then(response => {
@@ -338,6 +336,7 @@ export default {
         .catch(error => { reject(error) })
     })
   },
+
   registerUserJWT ({ commit }, payload) {
 
     const { displayName, email, password, confirmPassword } = payload.userDetails
@@ -363,6 +362,7 @@ export default {
         .catch(error => { reject(error) })
     })
   },
+
   fetchAccessToken () {
     return new Promise((resolve) => {
       jwt.refreshToken().then(response => { resolve(response) })
