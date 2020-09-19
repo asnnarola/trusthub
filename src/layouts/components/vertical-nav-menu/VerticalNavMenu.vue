@@ -187,7 +187,7 @@ export default {
       {
       id:1,
       icon_url:'subM1.png',
-      title: 'Search',
+      title: 'Presets',
       sub_title: 'Presets'
     },
     {
@@ -375,8 +375,12 @@ export default {
       if (item == 'Documents') {
         this.activeSubsidebar == true ? this.activeSubsidebar = false : this.activeSubsidebar = true
       }
-      if (item == 'Setting') {
+      else if (item == 'Setting') {
         this.activeBottomSubsidebar == true ? this.activeBottomSubsidebar = false : this.activeBottomSubsidebar = true
+      }
+      else {
+        this.activeBottomSubsidebar = false
+        this.activeSubsidebar = false
       }
     },
 

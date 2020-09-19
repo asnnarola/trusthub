@@ -1,0 +1,92 @@
+export default [
+  {
+    url: '/dashboard',
+    name: 'Dashboard',
+    icon_url: 'dashboard.png',
+    i18n: 'Dashboard',
+  },
+  {
+    url: '#',
+    name: 'Operators',
+    icon_url: 'dashboard.png',
+    i18n: 'Operators',
+  },
+  {
+    url: '#',
+    name: 'Seats',
+    icon_url: 'dashboard.png',
+    i18n: 'Seats',
+  },
+  {
+    url: '#',
+    name: 'Devices',
+    icon_url: 'dashboard.png',
+    i18n: 'Devices',
+  },
+  {
+    url: '#',
+    name: 'Licences',
+    icon_url: 'dashboard.png',
+    i18n: 'Licences',
+  },
+  {
+    url: '/document',
+    name: 'Documents',
+    icon_url: 'documents.png',
+    i18n: 'Documents',
+  },
+  {
+    url: '/template',
+    name: 'Templates',
+    icon_url: 'layers.png',
+    i18n: 'Templates',
+  },
+  {
+    url: '/flows',
+    name: 'Flows',
+    icon_url: 'flows.png',
+    i18n: 'Flows',
+  },
+  {
+    url: '#',
+    name: 'Enrollments',
+    icon_url: 'identity.png',
+    i18n: 'Enrollments',
+  },
+  {
+    url: '#',
+    name: 'Infos',
+    icon_url: 'plugins.png',
+    i18n: 'Infos',
+  },
+  {
+    url: '#',
+    name: 'Receipts',
+    icon_url: 'identity.png',
+    i18n: 'Receipts',
+  },
+  {
+    url: '/notarizations',
+    name: 'NotariZations',
+    icon_url: 'notarization.png',
+    i18n: 'NotariZations',
+  },
+  {
+    url: '/extra',
+    name: 'Wallets',
+    icon_url: 'plugins.png',
+    i18n: 'Wallets',
+  },
+  {
+    url: '/extra',
+    name: 'Extra',
+    icon_url: 'plugins.png',
+  i18n: 'Extra',
+  },
+  {
+    url: '#',
+    name: 'Limits',
+    icon_url: 'plugins.png',
+    i18n: 'Limits',
+  },
+]

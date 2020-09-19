@@ -1,9 +1,9 @@
 <template>
-  <div class="the-navbar__user-meta flex items-center" v-if="activeUserInfo.displayName">
+  <div class="the-navbar__user-meta flex items-center" v-if="activeUserInfo">
 
     <div class="text-right leading-tight hidden sm:block text-white">
       <p class="font-semibold">{{ activeUserInfo.displayName }}</p>
-      <small>Available</small>
+      <small>{{ activeUserInfo.userRole }}</small>
     </div>
 
     <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
@@ -76,6 +76,7 @@ export default {
   },
   computed: {
     activeUserInfo () {
+      console.log('User Info =>',this.$store.state.AppActiveUser);
       return this.$store.state.AppActiveUser
     }
   },

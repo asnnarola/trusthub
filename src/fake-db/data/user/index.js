@@ -9,13 +9,58 @@ const data = {
   users: [
     {
       uid: 34,
-      displayName: 'Howard Potts',
-      password: 'adminadmin',
+      displayName: 'Minoletti Reeberto',
+      password: 'Password',
       photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
       email: 'admin@admin.com',
-      userRoll: 'admin',
+      userRole: 'Administrator',
       phoneNumber: null
-    }
+    },
+    {
+      uid: 35,
+      displayName: 'Howard Potts',
+      password: 'Password',
+      photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
+      email: 'partner@partner.com',
+      userRole: 'partner',
+      phoneNumber: null
+    },
+    {
+      uid: 36,
+      displayName: 'Jhon Doe',
+      password: 'Password',
+      photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
+      email: 'company@company.com',
+      userRole: 'company',
+      phoneNumber: null
+    },
+    {
+      uid: 37,
+      displayName: 'Rossi Paolo',
+      password: 'Password',
+      photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
+      email: 'operator@operator.com',
+      userRole: 'operator',
+      phoneNumber: null
+    },
+    {
+      uid: 38,
+      displayName: 'Rossi Paolo',
+      password: 'Password',
+      photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
+      email: 'person@person.com',
+      userRole: 'person',
+      phoneNumber: null
+    },
+    {
+      uid: 39,
+      displayName: 'Rossi Paolo',
+      password: 'Password',
+      photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
+      email: 'guest@guest.com',
+      userRole: 'guest',
+      phoneNumber: null
+    },
   ]
 }
 

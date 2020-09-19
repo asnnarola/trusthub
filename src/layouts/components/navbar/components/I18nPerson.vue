@@ -8,7 +8,7 @@
       :key="item.id"
     >
       <!-- <img src="../../../../assets/images/header_icon/todo.png"> -->
-      <span class="cursor-pointer feather-icon select-none relative">
+      <span class="cursor-pointer feather-icon select-none relative" v-if="item.id === 1 || item.id === 4">
       <img :src="require('../../../../assets/images/header_icon/' + item.icon)" />
       <span class="bg-white feather-icon-badge bg-primary h-6 w-6 absolute rounded-full text-xs flex items-center justify-center">{{ item.menu.length }}</span>
       </span>

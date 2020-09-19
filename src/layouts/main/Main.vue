@@ -133,6 +133,12 @@
 import BackToTop           from 'vue-backtotop'
 import HNavMenu from '@/layouts/components/horizontal-nav-menu/HorizontalNavMenu.vue'
 import navMenuItems        from '@/layouts/components/vertical-nav-menu/navMenuItems.js'
+import adminNavMenuItem from '@/layouts/components/vertical-nav-menu/adminNavMenuItem.js'
+import companyNavMenuItem from '@/layouts/components/vertical-nav-menu/companyNavMenuItem.js'
+import operatorNavMenuitem from '@/layouts/components/vertical-nav-menu/operatorNavMenuitem.js'
+import personNavMenuItem from '@/layouts/components/vertical-nav-menu/personNavMenuItem.js'
+import partnerNavMenuItem from '@/layouts/components/vertical-nav-menu/partnerNavMenuItem.js'
+import guestNavMenuItem from '@/layouts/components/vertical-nav-menu/guestNavMenuItem.js'
 import TheCustomizer       from '@/layouts/components/customizer/TheCustomizer.vue'
 import TheNavbarHorizontal from '@/layouts/components/navbar/TheNavbarHorizontal.vue'
 import TheNavbarVertical   from '@/layouts/components/navbar/TheNavbarVertical.vue'
@@ -155,6 +161,7 @@ export default {
   },
   data () {
     return {
+      userRole: this.$store.state.AppActiveUser.userRole,
       disableCustomizer : themeConfig.disableCustomizer,
       disableThemeTour  : themeConfig.disableThemeTour,
       dynamicWatchers   : {},
@@ -278,6 +285,25 @@ export default {
     }
   },
   created () {
+    console.log('ROLLLLE =>>>',this.userRole);
+    if(this.userRole === 'Administrator'){
+      this.navMenuItems = adminNavMenuItem
+      console.log('Side Menu =>', this.navMenuItems);
+    } else if (this.userRole === 'guest'){
+      this.navMenuItems = guestNavMenuItem
+      console.log('Side Menu =>', this.navMenuItems);
+    } else if (this.userRole === 'company'){
+      this.navMenuItems = companyNavMenuItem
+      console.log('Side Menu =>', this.navMenuItems);
+    } else if (this.userRole === 'operator'){
+      this.navMenuItems = operatorNavMenuitem
+    } else if (this.userRole === 'person'){
+      this.navMenuItems = personNavMenuItem
+    } else if(this.userRole === 'partner'){
+      this.navMenuItems = partnerNavMenuItem
+    }
+
+
     const color = this.navbarColor === '#fff' && this.isThemeDark ? '#10163a' : this.navbarColor
     this.updateNavbarColor(color)
     this.setNavMenuVisibility(this.$store.state.mainLayoutType)

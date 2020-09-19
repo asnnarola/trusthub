@@ -23,7 +23,10 @@
 
         <vs-spacer />
 
-        <i18n />
+        <i18n v-if="this.$store.state.AppActiveUser.userRole === 'operator'"/>
+        <i18n-person v-if="this.$store.state.AppActiveUser.userRole === 'person' "/>
+
+
 
         <!--<search-bar />
 
@@ -42,9 +45,7 @@
 <script>
 import Bookmarks            from './components/Bookmarks.vue'
 import I18n                 from './components/I18n.vue'
-import SearchBar            from './components/SearchBar.vue'
-import CartDropDown         from './components/CartDropDown.vue'
-import NotificationDropDown from './components/NotificationDropDown.vue'
+import I18nPerson                from './components/I18nPerson'
 import ProfileDropDown      from './components/ProfileDropDown.vue'
 
 export default {
@@ -58,9 +59,7 @@ export default {
   components: {
     Bookmarks,
     I18n,
-    SearchBar,
-    CartDropDown,
-    NotificationDropDown,
+    I18nPerson,
     ProfileDropDown
   },
   computed: {
