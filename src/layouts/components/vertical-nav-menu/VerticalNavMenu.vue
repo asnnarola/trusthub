@@ -77,7 +77,7 @@
 
           <ul class="bt-menu-list">
             <li v-for="data in bottom_data" :key="data.id" class="vs-sidebar--item">
-              <div v-if="data.url">
+              <div v-if="data.url" >
                 <router-link :to="data.url" class="border-0">
                   <span class="feather-icon select-none relative">
                   </span>
@@ -276,11 +276,13 @@ export default {
       sub_title: 'Download Appliactions'
     },
     ],
-    bottom_data: [{
-      url: '/setting',
-      name: 'Setting',
+    bottom_data:[],
+    guestBottomData:[
+    {
+      url: '#',
+      name: 'Upgrade',
       icon_url: 'gear.png',
-      i18n: 'Setting',
+      i18n: 'Upgrade',
       isbottom: true
     },
     {
@@ -288,6 +290,130 @@ export default {
       name: 'Help',
       icon_url: 'help.png',
       i18n: 'Help',
+      isbottom: true,
+    },
+    {
+      name: 'Authenticated',
+      icon_url: 'check.png',
+      i18n: 'Authenticated',
+      isbottom: true
+    }
+    ],
+    personBottomData:[
+      {
+      url: '/setting',
+      name: 'Setting',
+      icon_url: 'gear.png',
+      i18n: 'Setting',
+      isbottom: true
+    },
+    {
+      url: '#',
+      name: 'Upgrade',
+      icon_url: 'gear.png',
+      i18n: 'Upgrade',
+      isbottom: true
+    },
+    {
+      url: '/help',
+      name: 'Help',
+      icon_url: 'help.png',
+      i18n: 'Help',
+      isbottom: true,
+    },
+    {
+      name: 'Authenticated',
+      icon_url: 'check.png',
+      i18n: 'Authenticated',
+      isbottom: true
+    }
+    ],
+    operatorBottomData:[
+    {
+      url: '/setting',
+      name: 'Setting',
+      icon_url: 'gear.png',
+      i18n: 'Setting',
+      isbottom: true
+    },
+    {
+      url: '#',
+      name: 'Knowledge Base',
+      icon_url: 'help.png',
+      i18n: 'Knowledge Base',
+      isbottom: true,
+    },
+    {
+      name: 'Authenticated',
+      icon_url: 'check.png',
+      i18n: 'Authenticated',
+      isbottom: true
+    }
+    ],
+    companyBottomData:[
+    {
+      url: '/setting',
+      name: 'Setting',
+      icon_url: 'gear.png',
+      i18n: 'Setting',
+      isbottom: true
+    },
+    {
+      url: '#',
+      name: 'Knowledge Base',
+      icon_url: 'help.png',
+      i18n: 'Knowledge Base',
+      isbottom: true,
+    },
+    {
+      url: '/help',
+      name: 'Help',
+      icon_url: 'help.png',
+      i18n: 'Help',
+      isbottom: true,
+    },
+    {
+      name: 'Authenticated',
+      icon_url: 'check.png',
+      i18n: 'Authenticated',
+      isbottom: true
+    }
+    ],
+    partnerBottomData:[
+    {
+      url: '/setting',
+      name: 'Setting',
+      icon_url: 'gear.png',
+      i18n: 'Setting',
+      isbottom: true
+    },
+    {
+      url: '#',
+      name: 'Knowledge Base',
+      icon_url: 'help.png',
+      i18n: 'Knowledge Base',
+      isbottom: true,
+    },
+    {
+      url: '/help',
+      name: 'Help',
+      icon_url: 'help.png',
+      i18n: 'Help',
+      isbottom: true,
+    },
+    {
+      name: 'Authenticated',
+      icon_url: 'check.png',
+      i18n: 'Authenticated',
+      isbottom: true
+    }
+    ],
+    adminBottomData:[
+      {
+      url: '/setting',
+      name: 'Setting',
+      icon_url: 'gear.png',
+      i18n: 'Setting',
       isbottom: true
     },
     {
@@ -295,7 +421,8 @@ export default {
       icon_url: 'check.png',
       i18n: 'Authenticated',
       isbottom: true
-    },],
+    }
+    ],
     clickNotClose: false, // disable close navMenu on outside click
     isMouseEnter: false,
     reduce: false, // determines if navMenu is reduce - component property
@@ -469,6 +596,19 @@ export default {
   },
   mounted () {
     this.setVerticalNavMenuWidth()
+    if(this.$store.state.AppActiveUser.userRole === 'guest') {
+      this.bottom_data = this.guestBottomData
+    } else if(this.$store.state.AppActiveUser.userRole === 'person') {
+      this.bottom_data = this.personBottomData
+    } else if(this.$store.state.AppActiveUser.userRole === 'operator') {
+      this.bottom_data = this.operatorBottomData
+    } else if(this.$store.state.AppActiveUser.userRole === 'company') {
+      this.bottom_data = this.companyBottomData
+    } else if(this.$store.state.AppActiveUser.userRole === 'partner') {
+      this.bottom_data = this.partnerBottomData
+    } else if(this.$store.state.AppActiveUser.userRole === 'Administrator') {
+      this.bottom_data = this.adminBottomData
+    }
   }
 }
 

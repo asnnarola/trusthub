@@ -33,7 +33,7 @@
 export default {
   data () {
     return {
-      id: 'admin@admin.com',
+      id: this.$store.state.AppActiveUser.email,
       ActivationCoad:'123456',
       step:{}
     }

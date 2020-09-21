@@ -12,7 +12,7 @@
     </ul>
     <ul class="vx-navbar__starred-pages">
       <draggable v-model="starredPagesLimited" :group="{name: 'pinList'}" class="flex cursor-move h-top-icon">
-        <li class="starred-page" v-for="img in header_Icon2" :key="img.icon_url">
+        <li class="starred-page" :class="img.id === 1 || img.id ===4 ? 'active' : ''" v-for="img in header_Icon2" :key="img.icon_url">
           <router-link to="#">
             <img :src="require('@/assets/images/header_icon/' + img.icon_url)">
           </router-link>
@@ -21,7 +21,7 @@
     </ul>
     <ul class="vx-navbar__starred-pages">
       <draggable v-model="starredPagesLimited" :group="{name: 'pinList'}" class="flex cursor-move h-top-icon">
-        <li class="starred-page" v-for="img in header_Icon3" :key="img.icon_url">
+        <li class="starred-page active" v-for="img in header_Icon3" :key="img.icon_url">
           <router-link to="#">
             <img :src="require('@/assets/images/header_icon/' + img.icon_url)">
           </router-link>
@@ -50,31 +50,39 @@ export default {
     return {
       headr_Icon1:[
         {
+          id:1,
           icon_url:'id.png'
         },
         {
+          id:2,
           icon_url:'chip.png'
         }
       ],
         header_Icon2:[
         {
+          id:1,
           icon_url:'face.png'
         },
         {
+          id:2,
           icon_url:'fingerprint.png'
         },
         {
+          id:3,
           icon_url:'palm.png'
         },
         {
+          id:4,
           icon_url:'voice.png'
         },
 
         {
+          id:5,
           icon_url:'eye.png'
         }],
         header_Icon3:[
         {
+          id:1,
           icon_url:'signature.png'
         },
       ],

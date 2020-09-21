@@ -11,16 +11,16 @@ export default [
     icon_url: 'documents.png',
     i18n: 'Documents',
   },
-  {
-    url: '/identity',
-    name: 'Identity',
-    icon_url: 'identity.png',
-    i18n: 'Identity',
-  },
-  {
-    url: '#',
-    name: 'Limits',
-    icon_url: 'plugins.png',
-    i18n: 'Limits',
-  },
+  // {
+  //   url: '/identity',
+  //   name: 'Identity',
+  //   icon_url: 'identity.png',
+  //   i18n: 'Identity',
+  // },
+  // {
+  //   url: '#',
+  //   name: 'Limits',
+  //   icon_url: 'plugins.png',
+  //   i18n: 'Limits',
+  // },
 ]

@@ -8,7 +8,7 @@
       :key="item.id"
     >
       <!-- <img src="../../../../assets/images/header_icon/todo.png"> -->
-      <span class="cursor-pointer feather-icon select-none relative" v-if="item.id === 1 || item.id === 4">
+      <span class="cursor-pointer feather-icon select-none relative">
       <img :src="require('../../../../assets/images/header_icon/' + item.icon)" />
       <span class="bg-white feather-icon-badge bg-primary h-6 w-6 absolute rounded-full text-xs flex items-center justify-center">{{ item.menu.length }}</span>
       </span>
@@ -117,96 +117,96 @@ export default {
             },
           ]
         },
-        {
-          id: 2,
-          icon: 'chat.png',
-          title: 'Chat',
-          menu: [
-            {
-              index: 0,
-              title: 'New Message',
-              msg: 'can we meet tomorrow?',
-              icon: 'MessageSquareIcon',
-              time: this.randomDate({ sec: 10 }),
-              category: 'primary'
-            }, {
-              index: 1,
-              title: 'New Message',
-              msg: 'Congreatulations For new Project.!!',
-              icon: 'MessageSquareIcon',
-              time: this.randomDate({ sec: 40 }),
-              category: 'danger'
-            }, {
-              index: 2,
-              title: 'New Message',
-              msg: 'Are your going to meet me tonight?',
-              icon: 'MessageSquareIcon',
-              time: this.randomDate({ min: 5 }),
-              category: 'success'
-            }, {
-              index: 3,
-              title: 'New Message',
-              msg: 'Hello Jhon',
-              icon: 'MessageSquareIcon',
-              time: this.randomDate({ min: 10 }),
-              category: 'warning'
-            }, {
-              index: 4,
-              title: 'New Message',
-              msg: 'Can we going for Diner tonight?',
-              icon: 'MessageSquareIcon',
-              time: this.randomDate({ min: 16 }),
-              category: 'dark'
-            },
-          ],
-        },
-        {
-          id: 3,
-          icon: 'mail.png',
-          title: 'Mail',
-          menu: [
-            {
-              index: 0,
-              title: 'New Mail From Peter',
-              msg: 'Cake sesame snaps cupcake',
-              icon: 'MailIcon',
-              time: this.randomDate({ sec: 54 }),
-              category: 'primary'
-            },
-            {
-              index: 1,
-              title: 'New Mail From Jhon',
-              msg: 'Cake sesame snaps cupcake',
-              icon: 'MailIcon',
-              time: this.randomDate({ min: 2 }),
-              category: 'success'
-            },
-            {
-              index: 2,
-              title: 'New Mail From Peter',
-              msg: 'Cake sesame snaps cupcake',
-              icon: 'MailIcon',
-              time: this.randomDate({ min: 4 }),
-              category: 'warning'
-            },
-            {
-              index: 3,
-              title: 'New Mail From Peter',
-              msg: 'Cake sesame snaps cupcake',
-              icon: 'MailIcon',
-              time: this.randomDate({ min: 6 }),
-              category: 'danger'
-            },
-            {
-              index: 4,
-              title: 'New Mail From Peter',
-              msg: 'Cake sesame snaps cupcake',
-              icon: 'MailIcon',
-              time: this.randomDate({ min: 10 }),
-              category: 'dark'
-            }
-          ]
-        },
+        // {
+        //   id: 2,
+        //   icon: 'chat.png',
+        //   title: 'Chat',
+        //   menu: [
+        //     {
+        //       index: 0,
+        //       title: 'New Message',
+        //       msg: 'can we meet tomorrow?',
+        //       icon: 'MessageSquareIcon',
+        //       time: this.randomDate({ sec: 10 }),
+        //       category: 'primary'
+        //     }, {
+        //       index: 1,
+        //       title: 'New Message',
+        //       msg: 'Congreatulations For new Project.!!',
+        //       icon: 'MessageSquareIcon',
+        //       time: this.randomDate({ sec: 40 }),
+        //       category: 'danger'
+        //     }, {
+        //       index: 2,
+        //       title: 'New Message',
+        //       msg: 'Are your going to meet me tonight?',
+        //       icon: 'MessageSquareIcon',
+        //       time: this.randomDate({ min: 5 }),
+        //       category: 'success'
+        //     }, {
+        //       index: 3,
+        //       title: 'New Message',
+        //       msg: 'Hello Jhon',
+        //       icon: 'MessageSquareIcon',
+        //       time: this.randomDate({ min: 10 }),
+        //       category: 'warning'
+        //     }, {
+        //       index: 4,
+        //       title: 'New Message',
+        //       msg: 'Can we going for Diner tonight?',
+        //       icon: 'MessageSquareIcon',
+        //       time: this.randomDate({ min: 16 }),
+        //       category: 'dark'
+        //     },
+        //   ],
+        // },
+        // {
+        //   id: 3,
+        //   icon: 'mail.png',
+        //   title: 'Mail',
+        //   menu: [
+        //     {
+        //       index: 0,
+        //       title: 'New Mail From Peter',
+        //       msg: 'Cake sesame snaps cupcake',
+        //       icon: 'MailIcon',
+        //       time: this.randomDate({ sec: 54 }),
+        //       category: 'primary'
+        //     },
+        //     {
+        //       index: 1,
+        //       title: 'New Mail From Jhon',
+        //       msg: 'Cake sesame snaps cupcake',
+        //       icon: 'MailIcon',
+        //       time: this.randomDate({ min: 2 }),
+        //       category: 'success'
+        //     },
+        //     {
+        //       index: 2,
+        //       title: 'New Mail From Peter',
+        //       msg: 'Cake sesame snaps cupcake',
+        //       icon: 'MailIcon',
+        //       time: this.randomDate({ min: 4 }),
+        //       category: 'warning'
+        //     },
+        //     {
+        //       index: 3,
+        //       title: 'New Mail From Peter',
+        //       msg: 'Cake sesame snaps cupcake',
+        //       icon: 'MailIcon',
+        //       time: this.randomDate({ min: 6 }),
+        //       category: 'danger'
+        //     },
+        //     {
+        //       index: 4,
+        //       title: 'New Mail From Peter',
+        //       msg: 'Cake sesame snaps cupcake',
+        //       icon: 'MailIcon',
+        //       time: this.randomDate({ min: 10 }),
+        //       category: 'dark'
+        //     }
+        //   ]
+        // },
         {
           id: 4,
           icon: 'calendar.png',

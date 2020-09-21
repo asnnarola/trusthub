@@ -122,23 +122,54 @@ body {
             &:nth-child(2) {
               border-right: 1px solid #fff;
             }
-            padding-right: 15px;
+            padding-right: 8px;
+            margin-top: 0.75rem;
+            margin-bottom: 0.75rem;
             .h-top-icon {
-              padding-left: 15px;
+              padding-left: 3px;
               li.starred-page {
-                padding-left: 7px;
-                padding-right: 7px;
+                padding-left: 5px;
+                padding-right: 5px;
                 display: flex;
                 align-items: center;
                 flex-wrap: wrap;
-                &:nth-child(1), &:nth-child(8){
-                  img{
+                position: relative;
+                margin-left: 7px;
+                transition: ease 0.25s;
+                &:hover {
+                  &:before {
+                    background: #ffffff99;
+                    height: calc(100% + 1.5rem);
+                    content: "";
+                    position: absolute;
+                    top: -0.75rem;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    cursor: pointer;
+                  }
+                }
+                &:nth-child(1),
+                &:nth-child(8) {
+                  img {
                     width: 35px;
                     height: 35px;
                   }
                 }
                 img {
                   width: 30px;
+                }
+                &.active {
+                  &:after {
+                    position: absolute;
+                    bottom: -0.75rem;
+                    background: #f9c201;
+                    height: 8px;
+                    width: 100%;
+                    content: "";
+                    margin: auto;
+                    left: 0;
+                  }
                 }
               }
             }

@@ -41,7 +41,37 @@ const data = {
       photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
       email: 'operator@operator.com',
       userRole: 'operator',
-      phoneNumber: null
+      phoneNumber: null,
+      subUsers: [
+        {
+          uid: 1,
+          displayName: 'Rossi Paolo',
+          password: 'Password',
+          photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
+          email: 'operator@operator.com',
+          userRole: 'signer',
+          phoneNumber: null
+        },
+        {
+          uid: 2,
+          displayName: 'Rossi Paolo',
+          password: 'Password',
+          photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
+          email: 'operator@operator.com',
+          userRole: 'signer',
+          phoneNumber: null
+        },
+        {
+          uid: 3,
+          displayName: 'Rossi Paolo',
+          password: 'Password',
+          photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
+          email: 'operator@operator.com',
+          userRole: 'witness',
+          phoneNumber: null
+        },
+
+      ]
     },
     {
       uid: 38,
