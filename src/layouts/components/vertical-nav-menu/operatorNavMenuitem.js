@@ -25,20 +25,20 @@ export default [
   },
   {
     url: '#',
-    name: 'Enrollments',
-    icon_url: 'identity.png',
-    i18n: 'Enrollments',
+    name: 'Customers',
+    icon_url: 'customer.png',
+    i18n: 'Customers',
   },
   {
     url: '#',
-    name: 'Infos',
-    icon_url: 'plugins.png',
-    i18n: 'Infos',
+    name: 'Notery',
+    icon_url: 'notarization.png',
+    i18n: 'Notery',
   },
   {
-    url: '/notarizations',
-    name: 'NotariZations',
-    icon_url: 'notarization.png',
-    i18n: 'NotariZations',
+    url: '/extra',
+    name: 'Extra',
+    icon_url: 'plugins.png',
+    i18n: 'Extra',
   }
 ]

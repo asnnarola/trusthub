@@ -107,7 +107,7 @@
       </div>
     </vs-sidebar>
     <div class="v-nav-menu">
-      <vs-sidebar click-not-close position-left v-model="activeSubsidebar" class="items-no-padding">
+      <vs-sidebar click-not-close position-left v-model="activeSubsidebar" class="items-no-padding" :class="reduce === true && isMouseEnter === false ? 'menu_close': ''">
         <section class="scroll-area-v-nav-menu submenu-section pt-2 ps ps--active-y">
           <div class="vs-sidebar--item" v-for="item in documentSubMenu" :key="item.title">
             <!-- subactive-menu -->
@@ -127,7 +127,7 @@
         </section>
       </vs-sidebar>
 
-      <vs-sidebar click-not-close position-left v-model="activeBottomSubsidebar" class="items-no-padding">
+      <vs-sidebar click-not-close position-left v-model="activeBottomSubsidebar" class="items-no-padding" :class="reduce === true && isMouseEnter === false ? 'menu_close': ''">
         <section class="scroll-area-v-nav-menu submenu-section pt-2 ps ps--active-y settingBottomSubMenu">
           <div class="vs-sidebar--item" v-for="item in settingBottomSubMenu" :key="item.title">
             <!-- subactive-menu -->
@@ -367,9 +367,9 @@ export default {
     },
     {
       url: '/help',
-      name: 'Help',
+      name: 'Help Desk',
       icon_url: 'help.png',
-      i18n: 'Help',
+      i18n: 'Help Desk',
       isbottom: true,
     },
     {
@@ -396,9 +396,9 @@ export default {
     },
     {
       url: '/help',
-      name: 'Help',
+      name: 'Help Desk',
       icon_url: 'help.png',
-      i18n: 'Help',
+      i18n: 'Help Desk',
       isbottom: true,
     },
     {
@@ -590,8 +590,12 @@ export default {
       this.$store.commit('UPDATE_VERTICAL_NAV_MENU_ITEMS_MIN', false)
     },
     toggleReduce (val) {
+      console.log('My Value =>', val);
       this.reduceButton = val
       this.setVerticalNavMenuWidth()
+    },
+    onOver(){
+      console.log('I am AB');
     }
   },
   mounted () {

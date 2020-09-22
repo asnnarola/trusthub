@@ -152,8 +152,6 @@
 <script>
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import StarRating from 'vue-star-rating'
-import path from 'path'
-import unoconv from 'awesome-unoconv'
 export default {
   data () {
     return {
@@ -192,25 +190,9 @@ export default {
     remove (item) {
       this.labels.splice(this.labels.indexOf(item), 1)
     },
-    convertFilse () {
-      const sourceFilePath = path.resolve('../../../assets/files/test.odp');
-      const outputFilePath = path.resolve('../../../assets/files/test123.pdf');
-
-      unoconv
-        .convert(sourceFilePath, outputFilePath)
-        .then(result => {
-          console.log('Result',result); // return outputFilePath
-        })
-        .catch(err => {
-          console.log('Error',err);
-        });
-    }
   },
 }
-
 </script>
-
-
 <style lang="scss">
 #theme-customizer {
   .vs-sidebar {

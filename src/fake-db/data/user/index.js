@@ -70,7 +70,6 @@ const data = {
           userRole: 'witness',
           phoneNumber: null
         },
-
       ]
     },
     {

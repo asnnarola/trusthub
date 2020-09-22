@@ -286,7 +286,7 @@ body {
                       &:nth-child(1),
                       &:nth-child(2) {
                         // border-right: 1px solid #fff;
-                        padding-right: 18px;
+                        padding-right: 10px;
                         &:after {
                           content: "";
                           position: absolute;
@@ -303,6 +303,20 @@ body {
                         align-items: center;
                         list-style: none;
                         transition: ease 0.25s;
+                        position: relative;
+                        &.active {
+                          &:after {
+                            position: absolute;
+                            bottom: 0rem;
+                            height: 8px;
+                            width: 93%;
+                            content: "";
+                            background: #f9c201;
+                            margin: auto;
+                            left: 0;
+                            right: 0;
+                          }
+                        }
                         &:hover {
                           background: #ffffff40;
                         }
