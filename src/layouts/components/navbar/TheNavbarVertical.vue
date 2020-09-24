@@ -19,21 +19,10 @@
         <!-- SM - OPEN SIDEBAR BUTTON -->
         <feather-icon class="sm:inline-flex xl:hidden cursor-pointer p-2" icon="MenuIcon" @click.stop="showSidebar" />
 
-        <bookmarks :navbarColor="navbarColor" v-if="windowWidth >= 992 && (this.$store.state.AppActiveUser.userRole === 'person' || this.$store.state.AppActiveUser.userRole === 'operator')" />
-
+        <bookmarks :navbarColor="navbarColor" v-if="windowWidth >= 992 && (this.$store.state.AppActiveUser.userRole === 'person' || this.$store.state.AppActiveUser.userRole === 'operator' || activeUser.userRole ==='person' || activeUser.userRole === 'operator')" />
         <vs-spacer />
-
-        <i18n v-if="this.$store.state.AppActiveUser.userRole === 'operator'"/>
-        <i18n-person v-if="this.$store.state.AppActiveUser.userRole === 'person' "/>
-
-
-
-        <!--<search-bar />
-
-        <cart-drop-down />-->
-
-        <!-- <notification-drop-down /> -->
-
+        <i18n v-if="this.$store.state.AppActiveUser.userRole === 'operator' || activeUser.userRole === 'operator'"/>
+        <i18n-person v-if="this.$store.state.AppActiveUser.userRole === 'person' || activeUser=== 'person' "/>
         <profile-drop-down />
 
       </vs-navbar>
@@ -54,6 +43,11 @@ export default {
     navbarColor: {
       type: String,
       default: '#fff'
+    }
+  },
+  data() {
+    return {
+      activeUser:JSON.parse(localStorage.getItem('userInfo'))
     }
   },
   components: {

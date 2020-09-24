@@ -284,26 +284,24 @@ export default {
       this.hideScrollToTop = val
     }
   },
-  created () {
-    console.log('ROLLLLE =>>>',this.userRole);
-    if(this.userRole === 'Administrator'){
+  mounted () {
+    const activeUser = JSON.parse(localStorage.getItem('userInfo'))
+    if(this.userRole === 'admin' || activeUser.userRole === 'admin'){
       this.navMenuItems = adminNavMenuItem
-      console.log('Side Menu =>', this.navMenuItems);
-    } else if (this.userRole === 'guest'){
+      // console.log('Side Menu =>', this.navMenuItems);
+    } else if (this.userRole === 'guest' || activeUser.userRole === 'guest'){
       this.navMenuItems = guestNavMenuItem
-      console.log('Side Menu =>', this.navMenuItems);
-    } else if (this.userRole === 'company'){
+      // console.log('Side Menu =>', this.navMenuItems);
+    } else if (this.userRole === 'company' || activeUser.userRole === 'company'){
       this.navMenuItems = companyNavMenuItem
-      console.log('Side Menu =>', this.navMenuItems);
-    } else if (this.userRole === 'operator'){
-      this.navMenuItems = operatorNavMenuitem
-    } else if (this.userRole === 'person'){
+      console.log('Side Menu =>', this.navMenuItems );
+    } else if (this.userRole === 'operator' || activeUser.userRole === 'operator'){
+      // this.navMenuItems = operatorNavMenuitem
+    } else if (this.userRole === 'person' || activeUser.userRole === 'person'){
       this.navMenuItems = personNavMenuItem
-    } else if(this.userRole === 'partner'){
+    } else if(this.userRole === 'partner' || activeUser.userRole === 'partner'){
       this.navMenuItems = partnerNavMenuItem
     }
-
-
     const color = this.navbarColor === '#fff' && this.isThemeDark ? '#10163a' : this.navbarColor
     this.updateNavbarColor(color)
     this.setNavMenuVisibility(this.$store.state.mainLayoutType)
@@ -317,18 +315,17 @@ export default {
         this.dynamicWatchers.windowWidth()
       }
     })
-
     this.dynamicWatchers.verticalNavMenuWidth = this.$watch('$store.state.verticalNavMenuWidth', () => {
       this.disableThemeTour = true
       this.dynamicWatchers.verticalNavMenuWidth()
     })
-
     this.dynamicWatchers.rtl = this.$watch('$vs.rtl', () => {
       this.disableThemeTour = true
       this.dynamicWatchers.rtl()
     })
   },
   beforeDestroy () {
+    console.log("Destroyed")
     Object.keys(this.dynamicWatchers).map(i => {
       this.dynamicWatchers[i]()
       delete this.dynamicWatchers[i]

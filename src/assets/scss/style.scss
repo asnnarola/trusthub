@@ -1452,6 +1452,8 @@
                   padding-left: 15px;
                   padding-right: 30px;
                   .swiper-slide{
+                    width: 145px !important;
+                    max-width:160px;
                     &.user_2{
                       width: 145px !important;
                       max-width:160px;
@@ -2340,7 +2342,7 @@
 .layout--main {
   .parentx {
     .vs-content-sidebar {
-      transition: all 1s;
+      transition: all 0s;
       .vs-sidebar--background {
         display: none !important;
       }

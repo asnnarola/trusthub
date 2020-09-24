@@ -1,6 +1,6 @@
 <template>
   <div class="the-navbar__user-meta flex items-center justify-content-end" v-if="activeUserInfo">
-    <div class="carousel-example w-100" v-if="activeUserInfo.userRole === 'operator'" >
+    <div class="carousel-example w-100" v-if="activeUserInfo.userRole === 'operator' || activeUser.userRole === 'operator'" >
       <swiper :class="subUserData.length < 2 ? 'swiper-nopad' : ''" :options="swiperOption" :dir="$vs.rtl ? 'rtl' : 'ltr'" :key="$vs.rtl">
         <swiper-slide :class="subUserData.length < 2 ? 'user_2' : ''">
           <div class="d-flex flex-wrap">
@@ -171,6 +171,7 @@ import 'firebase/auth'
 export default {
   data () {
     return {
+      activeUser:JSON.parse(localStorage.getItem('userInfo')),
       swiperOption: {
         navigation: {
           nextEl: '.swiper-button-next',
@@ -183,8 +184,8 @@ export default {
         //     clickable: true
         // },
         breakpoints: {
-          1200: {
-            slidesPerView: 3,
+          1450: {
+            slidesPerView: 2,
             spaceBetween: 40
           },
           1024: {

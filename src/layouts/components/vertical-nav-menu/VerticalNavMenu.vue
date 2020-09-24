@@ -24,8 +24,15 @@
       v-hammer:swipe="onMenuSwipe"
     >
       <div @mouseenter="mouseEnter" @mouseleave="mouseLeave">
-        <div class="header-sidebar flex items-end justify-between" slot="header">
-          <router-link tag="div" class="vx-logo cursor-pointer flex items-center" to="/">
+        <div
+          class="header-sidebar flex items-end justify-between"
+          slot="header"
+        >
+          <router-link
+            tag="div"
+            class="vx-logo cursor-pointer flex items-center"
+            to="/"
+          >
             <logo class="mr-4 fill-current text-primary" />
           </router-link>
           <div>
@@ -64,40 +71,54 @@
                 :slug="item.slug"
               >
                 <div @click="openSubSidebar(item.name)">
-                  <img :src="require('../../../assets/images/sidebar_icon/' + item.icon_url)" />
-                  <span
-                    v-show="!verticalNavMenuItemsMin"
-                    class="truncate"
-                  >{{ $t(item.i18n) || item.name }}</span>
+                  <img
+                    :src="
+                      require('../../../assets/images/sidebar_icon/' +
+                        item.icon_url)
+                    "
+                  />
+                  <span v-show="!verticalNavMenuItemsMin" class="truncate">{{
+                    $t(item.i18n) || item.name
+                  }}</span>
                 </div>
               </v-nav-menu-item>
-
             </template>
           </template>
 
           <ul class="bt-menu-list">
-            <li v-for="data in bottom_data" :key="data.id" class="vs-sidebar--item">
-              <div v-if="data.url" >
+            <li
+              v-for="data in bottom_data"
+              :key="data.id"
+              class="vs-sidebar--item"
+            >
+              <div v-if="data.url">
                 <router-link :to="data.url" class="border-0">
-                  <span class="feather-icon select-none relative">
-                  </span>
+                  <span class="feather-icon select-none relative"> </span>
                   <div @click="openSubSidebar(data.name)">
-                  <img :src="require('../../../assets/images/sidebar_icon/' +data.icon_url)" />
-                  <span
-                    v-show="!verticalNavMenuItemsMin"
-                    class="truncate"
-                  >{{ $t(data.i18n) || data.name }}</span>
+                    <img
+                      :src="
+                        require('../../../assets/images/sidebar_icon/' +
+                          data.icon_url)
+                      "
+                    />
+                    <span v-show="!verticalNavMenuItemsMin" class="truncate">{{
+                      $t(data.i18n) || data.name
+                    }}</span>
                   </div>
                 </router-link>
               </div>
               <div v-else>
                 <a class="border-0">
                   <span class="feather-icon select-none relative"></span>
-                  <img :src="require('../../../assets/images/sidebar_icon/' +data.icon_url)" />
-                  <span
-                    v-show="!verticalNavMenuItemsMin"
-                    class="truncate"
-                  >{{ $t(data.i18n) || data.name }}</span>
+                  <img
+                    :src="
+                      require('../../../assets/images/sidebar_icon/' +
+                        data.icon_url)
+                    "
+                  />
+                  <span v-show="!verticalNavMenuItemsMin" class="truncate">{{
+                    $t(data.i18n) || data.name
+                  }}</span>
                 </a>
               </div>
             </li>
@@ -107,19 +128,39 @@
       </div>
     </vs-sidebar>
     <div class="v-nav-menu">
-      <vs-sidebar click-not-close position-left v-model="activeSubsidebar" class="items-no-padding" :class="reduce === true && isMouseEnter === false ? 'menu_close': ''">
-        <section class="scroll-area-v-nav-menu submenu-section pt-2 ps ps--active-y">
-          <div class="vs-sidebar--item" v-for="item in documentSubMenu" :key="item.title">
+      <vs-sidebar
+        position-left
+        :click-not-close="clickNotClose"
+        :hiddenBackground="clickNotClose"
+        v-model="activeSubsidebar"
+        class="items-no-padding"
+        :class="reduce === true && isMouseEnter === false ? 'menu_close' : ''"
+      >
+        <section
+          class="scroll-area-v-nav-menu submenu-section pt-2 ps ps--active-y"
+        >
+          <div
+            class="vs-sidebar--item"
+            v-for="item in documentSubMenu"
+            :key="item.title"
+          >
             <!-- subactive-menu -->
             <a href="#" class tabindex="-1" target="_self">
               <span class="feather-icon select-none relative"></span>
               <div class="submenu-listmain">
                 <div class="submenu-img">
-                  <img :src="require('../../../assets/images/sidebar_icon/' + item.icon_url )" />
+                  <img
+                    :src="
+                      require('../../../assets/images/sidebar_icon/' +
+                        item.icon_url)
+                    "
+                  />
                 </div>
                 <div class="submenu-name">
-                  <span class="truncate pl-0 fw-500" style>{{item.title}}</span>
-                  <i class="truncate text-white" style>{{item.sub_title}}</i>
+                  <span class="truncate pl-0 fw-500" style>{{
+                    item.title
+                  }}</span>
+                  <i class="truncate text-white" style>{{ item.sub_title }}</i>
                 </div>
               </div>
             </a>
@@ -127,9 +168,22 @@
         </section>
       </vs-sidebar>
 
-      <vs-sidebar click-not-close position-left v-model="activeBottomSubsidebar" class="items-no-padding" :class="reduce === true && isMouseEnter === false ? 'menu_close': ''">
-        <section class="scroll-area-v-nav-menu submenu-section pt-2 ps ps--active-y settingBottomSubMenu">
-          <div class="vs-sidebar--item" v-for="item in settingBottomSubMenu" :key="item.title">
+      <vs-sidebar
+        :click-not-close="clickNotClose"
+        :hiddenBackground="clickNotClose"
+        position-left
+        v-model="activeBottomSubsidebar"
+        class="items-no-padding"
+        :class="reduce === true && isMouseEnter === false ? 'menu_close' : ''"
+      >
+        <section
+          class="scroll-area-v-nav-menu submenu-section pt-2 ps ps--active-y settingBottomSubMenu"
+        >
+          <div
+            class="vs-sidebar--item"
+            v-for="item in settingBottomSubMenu"
+            :key="item.title"
+          >
             <!-- subactive-menu -->
             <a href="#" class tabindex="-1" target="_self">
               <span class="feather-icon select-none relative"></span>
@@ -138,7 +192,9 @@
                   <img :src="require('../../../assets/images/sidebar_icon/' + item.icon_url )" />
                 </div> -->
                 <div class="submenu-name">
-                  <span class="truncate pl-0 fw-500" style>{{item.title}}</span>
+                  <span class="truncate pl-0 fw-500" style>{{
+                    item.title
+                  }}</span>
                   <!-- <i class="truncate text-white" style>{{item.sub_title}}</i> -->
                 </div>
               </div>
@@ -183,245 +239,245 @@ export default {
   data: () => ({
     activeSubsidebar: false,
     activeBottomSubsidebar: false,
-    settingBottomSubMenu:[
+    settingBottomSubMenu: [
       {
-      id:1,
-      icon_url:'subM1.png',
-      title: 'Presets',
-      sub_title: 'Presets'
-    },
-    {
-      id:2,
-      icon_url:'subM1.png',
-      title: 'Certificators',
-      sub_title: 'Presets'
-    },
-    {
-      id:3,
-      icon_url:'subM1.png',
-      title: 'Operators',
-      sub_title: 'Presets'
-    },
-    {
-      id:4,
-      icon_url:'subM1.png',
-      title: 'Seats',
-      sub_title: 'Presets'
-    },
-    {
-      id:5,
-      icon_url:'subM1.png',
-      title: 'Devices',
-      sub_title: 'Presets'
-    },
-    {
-      id:6,
-      icon_url:'subM1.png',
-      title: 'Licences',
-      sub_title: 'Presets'
-    },
-    {
-      id:7,
-      icon_url:'subM1.png',
-      title: 'Wallet',
-      sub_title: 'Presets'
-    },
-    {
-      id:7,
-      icon_url:'subM1.png',
-      title: 'Limits',
-      sub_title: 'Presets'
-    },
+        id: 1,
+        icon_url: 'subM1.png',
+        title: 'Presets',
+        sub_title: 'Presets'
+      },
+      {
+        id: 2,
+        icon_url: 'subM1.png',
+        title: 'Certificators',
+        sub_title: 'Presets'
+      },
+      {
+        id: 3,
+        icon_url: 'subM1.png',
+        title: 'Operators',
+        sub_title: 'Presets'
+      },
+      {
+        id: 4,
+        icon_url: 'subM1.png',
+        title: 'Seats',
+        sub_title: 'Presets'
+      },
+      {
+        id: 5,
+        icon_url: 'subM1.png',
+        title: 'Devices',
+        sub_title: 'Presets'
+      },
+      {
+        id: 6,
+        icon_url: 'subM1.png',
+        title: 'Licences',
+        sub_title: 'Presets'
+      },
+      {
+        id: 7,
+        icon_url: 'subM1.png',
+        title: 'Wallet',
+        sub_title: 'Presets'
+      },
+      {
+        id: 7,
+        icon_url: 'subM1.png',
+        title: 'Limits',
+        sub_title: 'Presets'
+      },
     ],
     documentSubMenu: [{
-      id:1,
-      icon_url:'subM1.png',
+      id: 1,
+      icon_url: 'subM1.png',
       title: 'Search',
       sub_title: 'Find Specific Documents'
     },
     {
-      id:2,
-      icon_url:'subM2.png',
+      id: 2,
+      icon_url: 'subM2.png',
       title: 'New',
       sub_title: 'Create Documents'
     },
     {
-      id:3,
-      icon_url:'subM3.png',
+      id: 3,
+      icon_url: 'subM3.png',
       title: 'Upload',
       sub_title: 'Add Documents'
     },
     {
-      id:4,
-      icon_url:'subM4.png',
+      id: 4,
+      icon_url: 'subM4.png',
       title: 'Signature',
       sub_title: 'Apply Signature'
     },
     {
-      id:5,
-      icon_url:'subM5.png',
+      id: 5,
+      icon_url: 'subM5.png',
       title: 'Cloud',
       sub_title: 'Storage provide'
     },
     {
-      id:6,
-      icon_url:'subM6.png',
+      id: 6,
+      icon_url: 'subM6.png',
       title: 'Setting',
       sub_title: 'Users Restrictions'
     },
     {
-      id:7,
-      icon_url:'subM7.png',
+      id: 7,
+      icon_url: 'subM7.png',
       title: 'Clients',
       sub_title: 'Download Appliactions'
     },
     ],
-    bottom_data:[],
-    guestBottomData:[
-    {
-      url: '#',
-      name: 'Upgrade',
-      icon_url: 'gear.png',
-      i18n: 'Upgrade',
-      isbottom: true
-    },
-    {
-      url: '/help',
-      name: 'Help',
-      icon_url: 'help.png',
-      i18n: 'Help',
-      isbottom: true,
-    },
-    {
-      name: 'Authenticated',
-      icon_url: 'check.png',
-      i18n: 'Authenticated',
-      isbottom: true
-    }
-    ],
-    personBottomData:[
+    bottom_data: [],
+    guestBottomData: [
       {
-      url: '/setting',
-      name: 'Setting',
-      icon_url: 'gear.png',
-      i18n: 'Setting',
-      isbottom: true
-    },
-    {
-      url: '#',
-      name: 'Upgrade',
-      icon_url: 'gear.png',
-      i18n: 'Upgrade',
-      isbottom: true
-    },
-    {
-      url: '/help',
-      name: 'Help',
-      icon_url: 'help.png',
-      i18n: 'Help',
-      isbottom: true,
-    },
-    {
-      name: 'Authenticated',
-      icon_url: 'check.png',
-      i18n: 'Authenticated',
-      isbottom: true
-    }
-    ],
-    operatorBottomData:[
-    {
-      url: '/setting',
-      name: 'Setting',
-      icon_url: 'gear.png',
-      i18n: 'Setting',
-      isbottom: true
-    },
-    {
-      url: '#',
-      name: 'Knowledge Base',
-      icon_url: 'help.png',
-      i18n: 'Knowledge Base',
-      isbottom: true,
-    },
-    {
-      name: 'Authenticated',
-      icon_url: 'check.png',
-      i18n: 'Authenticated',
-      isbottom: true
-    }
-    ],
-    companyBottomData:[
-    {
-      url: '/setting',
-      name: 'Setting',
-      icon_url: 'gear.png',
-      i18n: 'Setting',
-      isbottom: true
-    },
-    {
-      url: '#',
-      name: 'Knowledge Base',
-      icon_url: 'help.png',
-      i18n: 'Knowledge Base',
-      isbottom: true,
-    },
-    {
-      url: '/help',
-      name: 'Help Desk',
-      icon_url: 'help.png',
-      i18n: 'Help Desk',
-      isbottom: true,
-    },
-    {
-      name: 'Authenticated',
-      icon_url: 'check.png',
-      i18n: 'Authenticated',
-      isbottom: true
-    }
-    ],
-    partnerBottomData:[
-    {
-      url: '/setting',
-      name: 'Setting',
-      icon_url: 'gear.png',
-      i18n: 'Setting',
-      isbottom: true
-    },
-    {
-      url: '#',
-      name: 'Knowledge Base',
-      icon_url: 'help.png',
-      i18n: 'Knowledge Base',
-      isbottom: true,
-    },
-    {
-      url: '/help',
-      name: 'Help Desk',
-      icon_url: 'help.png',
-      i18n: 'Help Desk',
-      isbottom: true,
-    },
-    {
-      name: 'Authenticated',
-      icon_url: 'check.png',
-      i18n: 'Authenticated',
-      isbottom: true
-    }
-    ],
-    adminBottomData:[
+        url: '#',
+        name: 'Upgrade',
+        icon_url: 'gear.png',
+        i18n: 'Upgrade',
+        isbottom: true
+      },
       {
-      url: '/setting',
-      name: 'Setting',
-      icon_url: 'gear.png',
-      i18n: 'Setting',
-      isbottom: true
-    },
-    {
-      name: 'Authenticated',
-      icon_url: 'check.png',
-      i18n: 'Authenticated',
-      isbottom: true
-    }
+        url: '/help',
+        name: 'Help',
+        icon_url: 'help.png',
+        i18n: 'Help',
+        isbottom: true,
+      },
+      {
+        name: 'Authenticated',
+        icon_url: 'check.png',
+        i18n: 'Authenticated',
+        isbottom: true
+      }
+    ],
+    personBottomData: [
+      {
+        url: '/setting',
+        name: 'Setting',
+        icon_url: 'gear.png',
+        i18n: 'Setting',
+        isbottom: true
+      },
+      {
+        url: '#',
+        name: 'Upgrade',
+        icon_url: 'gear.png',
+        i18n: 'Upgrade',
+        isbottom: true
+      },
+      {
+        url: '/help',
+        name: 'Help',
+        icon_url: 'help.png',
+        i18n: 'Help',
+        isbottom: true,
+      },
+      {
+        name: 'Authenticated',
+        icon_url: 'check.png',
+        i18n: 'Authenticated',
+        isbottom: true
+      }
+    ],
+    operatorBottomData: [
+      {
+        url: '/setting',
+        name: 'Setting',
+        icon_url: 'gear.png',
+        i18n: 'Setting',
+        isbottom: true
+      },
+      {
+        url: '#',
+        name: 'Knowledge Base',
+        icon_url: 'help.png',
+        i18n: 'Knowledge Base',
+        isbottom: true,
+      },
+      {
+        name: 'Authenticated',
+        icon_url: 'check.png',
+        i18n: 'Authenticated',
+        isbottom: true
+      }
+    ],
+    companyBottomData: [
+      {
+        url: '/setting',
+        name: 'Setting',
+        icon_url: 'gear.png',
+        i18n: 'Setting',
+        isbottom: true
+      },
+      {
+        url: '#',
+        name: 'Knowledge Base',
+        icon_url: 'help.png',
+        i18n: 'Knowledge Base',
+        isbottom: true,
+      },
+      {
+        url: '/help',
+        name: 'Help Desk',
+        icon_url: 'help.png',
+        i18n: 'Help Desk',
+        isbottom: true,
+      },
+      {
+        name: 'Authenticated',
+        icon_url: 'check.png',
+        i18n: 'Authenticated',
+        isbottom: true
+      }
+    ],
+    partnerBottomData: [
+      {
+        url: '/setting',
+        name: 'Setting',
+        icon_url: 'gear.png',
+        i18n: 'Setting',
+        isbottom: true
+      },
+      {
+        url: '#',
+        name: 'Knowledge Base',
+        icon_url: 'help.png',
+        i18n: 'Knowledge Base',
+        isbottom: true,
+      },
+      {
+        url: '/help',
+        name: 'Help Desk',
+        icon_url: 'help.png',
+        i18n: 'Help Desk',
+        isbottom: true,
+      },
+      {
+        name: 'Authenticated',
+        icon_url: 'check.png',
+        i18n: 'Authenticated',
+        isbottom: true
+      }
+    ],
+    adminBottomData: [
+      {
+        url: '/setting',
+        name: 'Setting',
+        icon_url: 'gear.png',
+        i18n: 'Setting',
+        isbottom: true
+      },
+      {
+        name: 'Authenticated',
+        icon_url: 'check.png',
+        i18n: 'Authenticated',
+        isbottom: true
+      }
     ],
     clickNotClose: false, // disable close navMenu on outside click
     isMouseEnter: false,
@@ -551,7 +607,6 @@ export default {
 
       if (this.windowWidth > 1200) {
         if (this.layoutType === 'vertical') {
-
           // Set reduce
           this.reduce = !!this.reduceButton
 
@@ -563,8 +618,8 @@ export default {
           this.$store.commit('UPDATE_VERTICAL_NAV_MENU_ITEMS_MIN', verticalNavMenuItemsMin)
 
           // Menu Action buttons
-          this.clickNotClose = true
           this.showCloseButton = false
+          this.clickNotClose = true
 
           const verticalNavMenuWidth = this.isVerticalNavMenuReduced ? 'reduced' : 'default'
           this.$store.dispatch('updateVerticalNavMenuWidth', verticalNavMenuWidth)
@@ -594,23 +649,22 @@ export default {
       this.reduceButton = val
       this.setVerticalNavMenuWidth()
     },
-    onOver(){
-      console.log('I am AB');
-    }
   },
   mounted () {
+    const activeUser = JSON.parse(localStorage.getItem('userInfo'))
+    // console.log('Active User =>', activeUser.userRole);
     this.setVerticalNavMenuWidth()
-    if(this.$store.state.AppActiveUser.userRole === 'guest') {
+    if (this.$store.state.AppActiveUser.userRole === 'guest' || activeUser.userRole === 'guest') {
       this.bottom_data = this.guestBottomData
-    } else if(this.$store.state.AppActiveUser.userRole === 'person') {
+    } else if (this.$store.state.AppActiveUser.userRole === 'person' || activeUser.userRole === 'person') {
       this.bottom_data = this.personBottomData
-    } else if(this.$store.state.AppActiveUser.userRole === 'operator') {
+    } else if (this.$store.state.AppActiveUser.userRole === 'operator' || activeUser.userRole === 'operator') {
       this.bottom_data = this.operatorBottomData
-    } else if(this.$store.state.AppActiveUser.userRole === 'company') {
+    } else if (this.$store.state.AppActiveUser.userRole === 'company' || activeUser.userRole === 'company') {
       this.bottom_data = this.companyBottomData
-    } else if(this.$store.state.AppActiveUser.userRole === 'partner') {
+    } else if (this.$store.state.AppActiveUser.userRole === 'partner' || activeUser.userRole === 'partner') {
       this.bottom_data = this.partnerBottomData
-    } else if(this.$store.state.AppActiveUser.userRole === 'Administrator') {
+    } else if (this.$store.state.AppActiveUser.userRole === 'admin' || activeUser.userRole === 'admin') {
       this.bottom_data = this.adminBottomData
     }
   }

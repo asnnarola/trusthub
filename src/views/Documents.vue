@@ -445,8 +445,8 @@
                 <div class="vs-row border-none w-100">
                   <div class="vs-xs-12 vs-sm-12 vs-md-12">
                     <div class="doc-detail">
-                      <pdf src="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"></pdf>
-                      <!-- <vue-pdf-viewer height="500px" url="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"></vue-pdf-viewer> -->
+                      <!-- <pdf src="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"></pdf> -->
+                      <vue-pdf-viewer class="abd_1" width="100px" height="500px" url="http://www.africau.edu/images/default/sample.pdf"></vue-pdf-viewer>
                     </div>
                   </div>
                 </div>

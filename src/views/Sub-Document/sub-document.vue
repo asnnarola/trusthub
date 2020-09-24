@@ -130,7 +130,7 @@
               </div>
             </vs-popup>
             <div class="pdfview-content">
-              <div>
+              <!-- <div>
                 <button id="prev">Previous</button>
                 <button id="next">Next</button>
                 &nbsp; &nbsp;
@@ -140,7 +140,9 @@
                   <span id="page_count"></span>
                 </span>
               </div>
-              <canvas id="the-canvas"></canvas>
+              <canvas  id="the-canvas"></canvas> -->
+              <!-- <webViewer initialDoc="http://www.africau.edu/images/default/sample.pdf"/> -->
+              <WebViewer initialDoc="http://www.africau.edu/images/default/sample.pdf"/>
               <!-- <ca nvas id="the-canvas"></canvas> -->
               <!-- <vue-pdf-viewer url="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"></vue-pdf-viewer> -->
             </div>
@@ -291,11 +293,8 @@ import LabelCustomizer from '../../layouts/components/customizer/LabelsCustomize
 import filesList from '../Document_Files'
 import VuePDFViewer from "vue-instant-pdf-viewer"
 import SignaturePad from 'signature_pad'
+import WebViewer from './web-viewer.vue'
 
-var pdfjsLib = window['pdfjs-dist/build/pdf'];
-pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
-// import pdfjsLib from 'pdfjs-dist/build/pdf'
-// import workerSrc from 'pdfjs-dist/build/pdf.worker'
 export default {
   data () {
     return {
@@ -306,135 +305,14 @@ export default {
         penColor: "#c0f"
       },
       signaturePad: SignaturePad,
-      pdfUrl: 'https://gahp.net/wp-content/uploads/2017/09/sample.pdf',
+      pdfUrl: 'http://www.africau.edu/images/default/sample.pdf',
     }
-  },
-  mounted () {
-    var pdfDoc = null,
-      pageNum = 1,
-      pageRendering = false,
-      pageNumPending = null,
-      scale = 0.8,
-      canvas = document.getElementById('the-canvas'),
-      ctx = canvas.getContext('2d');
-
-    /**
-     * Get page info from document, resize canvas accordingly, and render page.
-     * @param num Page number.
-     */
-    function renderPage (num) {
-      pageRendering = true;
-      // Using promise to fetch the page
-      pdfDoc.getPage(num).then(function (page) {
-        var viewport = page.getViewport({ scale: scale });
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-
-        // Render PDF page into canvas context
-        var renderContext = {
-          canvasContext: ctx,
-          viewport: viewport
-        };
-        var renderTask = page.render(renderContext);
-
-        // Wait for rendering to finish
-        renderTask.promise.then(function () {
-          pageRendering = false;
-          if (pageNumPending !== null) {
-            // New page rendering is pending
-            renderPage(pageNumPending);
-            pageNumPending = null;
-          }
-        });
-      });
-
-      // Update page counters
-      document.getElementById('page_num').textContent = num;
-    }
-
-    /**
-     * If another page rendering in progress, waits until the rendering is
-     * finised. Otherwise, executes rendering immediately.
-     */
-    function queueRenderPage (num) {
-      if (pageRendering) {
-        pageNumPending = num;
-      } else {
-        renderPage(num);
-      }
-    }
-
-    /**
-     * Displays previous page.
-     */
-    function onPrevPage () {
-      if (pageNum <= 1) {
-        return;
-      }
-      pageNum--;
-      queueRenderPage(pageNum);
-    }
-    document.getElementById('prev').addEventListener('click', onPrevPage);
-
-    /**
-     * Displays next page.
-     */
-    function onNextPage () {
-      if (pageNum >= pdfDoc.numPages) {
-        return;
-      }
-      pageNum++;
-      queueRenderPage(pageNum);
-    }
-    document.getElementById('next').addEventListener('click', onNextPage);
-
-    /**
-     * Asynchronously downloads PDF.
-     */
-    pdfjsLib.getDocument(this.pdfUrl).promise.then(function (pdfDoc_) {
-      pdfDoc = pdfDoc_;
-      document.getElementById('page_count').textContent = pdfDoc.numPages;
-
-      // Initial/first page rendering
-      renderPage(pageNum);
-    });
-
-
-    // var loadingTask = pdfjsLib.getDocument(this.pdfUrl);
-    // loadingTask.promise.then(function (pdf) {
-    //   console.log('PDF loaded');
-    //   // Fetch the first page
-    //   var pageNumber = 1;
-    //   pdf.getPage(pageNumber).then(function (page) {
-    //     console.log('Page loaded');
-    //     var scale = 1.5;
-    //     var viewport = page.getViewport({ scale: scale });
-
-    //     // Prepare canvas using PDF page dimensions
-    //     var canvas = document.getElementById('the-canvas');
-    //     var context = canvas.getContext('2d');
-    //     canvas.height = viewport.height;
-    //     canvas.width = viewport.width;
-
-    //     // Render PDF page into canvas context
-    //     var renderContext = {
-    //       canvasContext: context,
-    //       viewport: viewport
-    //     };
-    //     var renderTask = page.render(renderContext);
-    //     renderTask.promise.then(function () {
-    //       console.log('Page rendered');
-    //     });
-    //   });
-    // }, function (reason) {
-    //   // PDF loading error
-    //   console.error(reason);
-    // });
   },
   components: {
     IdentityCustomizer,
     LabelCustomizer,
     "vue-pdf-viewer": VuePDFViewer,
+    WebViewer
   },
   methods: {
     getFilePath () {

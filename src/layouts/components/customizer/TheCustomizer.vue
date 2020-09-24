@@ -138,7 +138,7 @@
 
           <div class="vx-row mt-3 mb-6 pb-3">
             <div class="vx-col w-full text-center">
-              <vs-button class="mb-2 btn-yellow mr-3 h-38 pd-0 w-100px">Save</vs-button>
+              <vs-button class="mb-2 btn-yellow mr-3 h-38 pd-0 w-100px" @click="runOfficeToPDF()">Save</vs-button>
               <vs-button class="mb-2 btn-gray h-38 pd-0 w-100px fw-500">Canel</vs-button>
             </div>
           </div>
@@ -152,6 +152,9 @@
 <script>
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import StarRating from 'vue-star-rating'
+
+import PDFNet from '../../../../node_modules/@pdftron/webviewer/public/core/pdf/PDFNet.js'
+import CoreControls from '../../../../node_modules/@pdftron/webviewer/public/core/CoreControls.js'
 export default {
   data () {
     return {
@@ -190,6 +193,25 @@ export default {
     remove (item) {
       this.labels.splice(this.labels.indexOf(item), 1)
     },
+
+    convertOfficeToPDF (inputUrl, outputName, l) {
+      CoreControls.office2PDFBuffer(inputUrl, { l }).then(buffer => {
+        saveBufferAsPDFDoc(buffer, outputName);
+        console.log('Finished downloading ' + outputName);
+      });
+    },
+    runOfficeToPDF () {
+      const inputDir = '../assets/files/';
+      const docxFilename = 'demo.docx';
+      PDFNet.initialize()
+        .then(() => convertOfficeToPDF(inputDir + this.file, 'converted.pdf'))
+        .then(() => {
+          console.log('Test Complete!');
+        })
+        .catch(err => {
+          console.log('An error was encountered! :(', err);
+        });
+    }
   },
 }
 </script>

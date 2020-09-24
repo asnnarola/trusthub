@@ -84,6 +84,7 @@ export default {
         this.$emit("showProgressBar", this.showProgressBar);
         this.$emit("gosetp", this.step);
       }, 3900);
+      // this.$router.push('/dashboard').catch(() => { })
       // this.$emit("startProgressBar",this.startProgressBar() )
     },
     checkLogin () {
