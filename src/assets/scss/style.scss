@@ -1445,15 +1445,17 @@
           }
           .the-navbar__user-meta {
             // width: 100%;
-            max-width: 500px;
+            // max-width: 500px;
             .carousel-example {
               .swiper-container {
                 .swiper-wrapper {
                   padding-left: 15px;
                   padding-right: 30px;
                   .swiper-slide{
-                    width: 145px !important;
-                    max-width:160px;
+                    @media screen and (max-width:1450px){
+                      // width: 100%!important;
+                      // max-width:100%;
+                    }
                     &.user_2{
                       width: 145px !important;
                       max-width:160px;

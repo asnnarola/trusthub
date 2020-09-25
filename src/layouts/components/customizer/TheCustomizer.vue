@@ -153,7 +153,7 @@
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import StarRating from 'vue-star-rating'
 
-import PDFNet from '../../../../node_modules/@pdftron/webviewer/public/core/pdf/PDFNet.js'
+import {PDFNet} from '@pdftron/webviewer'
 import CoreControls from '../../../../node_modules/@pdftron/webviewer/public/core/CoreControls.js'
 export default {
   data () {
@@ -193,7 +193,6 @@ export default {
     remove (item) {
       this.labels.splice(this.labels.indexOf(item), 1)
     },
-
     convertOfficeToPDF (inputUrl, outputName, l) {
       CoreControls.office2PDFBuffer(inputUrl, { l }).then(buffer => {
         saveBufferAsPDFDoc(buffer, outputName);
@@ -204,13 +203,13 @@ export default {
       const inputDir = '../assets/files/';
       const docxFilename = 'demo.docx';
       PDFNet.initialize()
-        .then(() => convertOfficeToPDF(inputDir + this.file, 'converted.pdf'))
-        .then(() => {
-          console.log('Test Complete!');
-        })
-        .catch(err => {
-          console.log('An error was encountered! :(', err);
-        });
+      .then(() => convertOfficeToPDF(inputDir + this.file, 'converted.pdf'))
+      .then(() => {
+        console.log('Test Complete!');
+      })
+      .catch(err => {
+        console.log('An error was encountered! :(', err);
+      });
     }
   },
 }
