@@ -45,7 +45,7 @@ const data = {
       subUsers: [
         {
           uid: 1,
-          displayName: 'Rossi Paolo',
+          displayName: 'Jake Paolo',
           password: 'Password',
           photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
           email: 'operator@operator.com',
@@ -54,7 +54,7 @@ const data = {
         },
         {
           uid: 2,
-          displayName: 'Rossi Paolo',
+          displayName: 'Lee Paolo',
           password: 'Password',
           photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
           email: 'operator@operator.com',
@@ -63,7 +63,7 @@ const data = {
         },
         {
           uid: 3,
-          displayName: 'Rossi Paolo',
+          displayName: 'Hance Paolo',
           password: 'Password',
           photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
           email: 'operator@operator.com',

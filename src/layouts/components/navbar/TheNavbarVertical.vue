@@ -18,11 +18,14 @@
 
         <!-- SM - OPEN SIDEBAR BUTTON -->
         <feather-icon class="sm:inline-flex xl:hidden cursor-pointer p-2" icon="MenuIcon" @click.stop="showSidebar" />
-
+        <div class="d-flex align-items-center justify-content-between topnavbarall-icon">
         <bookmarks :navbarColor="navbarColor" v-if="windowWidth >= 992 && (this.$store.state.AppActiveUser.userRole === 'person' || this.$store.state.AppActiveUser.userRole === 'operator' || activeUser.userRole ==='person' || activeUser.userRole === 'operator')" />
+
         <vs-spacer />
+
         <i18n v-if="this.$store.state.AppActiveUser.userRole === 'operator' || activeUser.userRole === 'operator'"/>
         <i18n-person v-if="this.$store.state.AppActiveUser.userRole === 'person' || activeUser=== 'person' "/>
+        </div>
         <profile-drop-down />
 
       </vs-navbar>

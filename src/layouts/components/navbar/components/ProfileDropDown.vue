@@ -3,8 +3,8 @@
     <div class="carousel-example w-100" v-if="activeUserInfo.userRole === 'operator' || activeUser.userRole === 'operator'" >
       <swiper :class="subUserData.length < 2 ? 'swiper-nopad' : ''" :options="swiperOption" :dir="$vs.rtl ? 'rtl' : 'ltr'" :key="$vs.rtl">
         <swiper-slide :class="subUserData.length < 2 ? 'user_2' : ''">
-          <div class="d-flex flex-wrap">
-            <div class="text-right leading-tight hidden sm:block text-white">
+          <div class="d-flex flex-wrap slideuser-warpper justify-content-center pr-4 align-items-center">
+            <div class="text-right leading-tight hidden sm:block text-white slideuser-name">
               <p class="font-semibold">{{ activeUserInfo.displayName }}</p>
               <small class="text-transform-capitalize">{{ activeUserInfo.userRole }}</small>
             </div>
@@ -17,7 +17,7 @@
                   alt="user-img"
                   width="40"
                   height="40"
-                  class="rounded-full shadow-md cursor-pointer block"
+                  class="rounded-full shadow-md cursor-pointer block slideuser-img"
                 />
               </div>
 
@@ -59,8 +59,8 @@
         </swiper-slide>
 
         <swiper-slide v-for="data in subUserData" :key="data.uid" :class="subUserData.length < 2 ? 'user_2' : ''">
-          <div class="d-flex flex-wrap">
-            <div class="text-right leading-tight hidden sm:block text-white">
+          <div class="d-flex flex-wrap slideuser-warpper justify-content-center pr-4 align-items-center">
+            <div class="text-right leading-tight hidden sm:block text-white slideuser-name">
               <p class="font-semibold">{{ data.displayName }}</p>
               <small class="text-transform-capitalize">{{ data.userRole }}</small>
             </div>
@@ -104,8 +104,8 @@
       </swiper>
     </div>
     <div class="carousel-example" v-else>
-      <div class="d-flex flex-wrap">
-        <div class="text-right leading-tight hidden sm:block text-white">
+      <div class="d-flex flex-wrap slideuser-warpper justify-content-center pr-4 align-items-center">
+        <div class="text-right leading-tight hidden sm:block text-white slideuser-name">
           <p class="font-semibold">{{ activeUserInfo.displayName }}</p>
           <small class="text-transform-capitalize">{{ activeUserInfo.userRole }}</small>
         </div>
@@ -184,19 +184,19 @@ export default {
         //     clickable: true
         // },
         breakpoints: {
-          1450: {
+          1425: {
+            slidesPerView: 2,
+            spaceBetween: 2
+          },
+          1300: {
             slidesPerView: 1,
-            spaceBetween: 20
+            spaceBetween: 25
           },
-          1024: {
-            slidesPerView: 2,
-            spaceBetween: 40
+          991: {
+            slidesPerView: 1,
+            spaceBetween: 25
           },
-          768: {
-            slidesPerView: 2,
-            spaceBetween: 30
-          },
-          640: {
+          767: {
             slidesPerView: 1,
             spaceBetween: 20
           }
@@ -220,8 +220,8 @@ export default {
       } else {
         return []
       }
-
-    }
+    },
+    windowWidth () { return this.$store.state.windowWidth }
   },
   methods: {
     logout () {
@@ -243,7 +243,7 @@ export default {
       }
 
       // Change role on logout. Same value as initialRole of acj.js
-      this.$acl.change('admin')
+      // this.$acl.change('admin')
       localStorage.removeItem('userInfo')
 
       // This is just for demo Purpose. If user clicks on logout -> redirect

@@ -4,6 +4,9 @@
 .fw-500 {
   font-weight: 500 !important;
 }
+.hover\:bg-primary:hover {
+  background-color: #4ec12d !important;
+}
 .h-100 {
   height: 100%;
 }
@@ -1432,53 +1435,100 @@
     .vx-navbar-wrapper {
       .vs-navbar {
         .vs-con-items {
-          .h-top-Right-icon {
-            .parent-dropdown {
-              .select-none {
-                .feather-icon-badge {
-                  top: -7px;
-                  right: 14px;
-                  color: #888888 !important;
+          .topnavbarall-icon {
+            max-width: calc(var(--vh, 1vh) * 100px - 44px);
+            width: 100%;
+            .h-top-Right-icon {
+              .parent-dropdown {
+                .select-none {
+                  .feather-icon-badge {
+                    top: -7px;
+                    right: 14px;
+                    color: #888888 !important;
+                  }
                 }
               }
             }
           }
           .the-navbar__user-meta {
             // width: 100%;
-            // max-width: 500px;
+            max-width: 475px;
+            @media screen and (max-width: 1425px) {
+              max-width: 33%;
+            }
+            @media screen and (max-width: 1299px) {
+              max-width: 20%;
+            }
+            @media screen and (max-width: 991px) {
+              max-width: 25%;
+            }
+            @media screen and (max-width: 767px) {
+              max-width: 33%;
+            }
+            @media screen and (max-width: 575px) {
+              max-width: 100px;
+            }
             .carousel-example {
               .swiper-container {
+                padding-left: 7px;
                 .swiper-wrapper {
-                  padding-left: 15px;
-                  padding-right: 30px;
-                  .swiper-slide{
-                    @media screen and (max-width:1450px){
+                  @media screen and (min-width: 1500px) {
+                    padding-left: 5px;
+                    // padding-right: 30px;
+                  }
+                  .swiper-slide {
+                    @media screen and (max-width: 1450px) {
                       // width: 100%!important;
                       // max-width:100%;
                     }
-                    &.user_2{
-                      width: 145px !important;
-                      max-width:160px;
+                    &.user_2 {
+                      @media screen and (min-width: 1300px) {
+                        width: 160px !important;
+                        max-width: 160px;
+                      }
+                    }
+                    .slideuser-warpper {
+                      .slideuser-name {
+                        max-width: calc(100% - 53px);
+                        width: auto;
+                        p {
+                          max-height: 34px;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          display: -webkit-box;
+                          -webkit-box-orient: vertical;
+                          -webkit-line-clamp: 2;
+                        }
+                        small {
+                          max-height: 15px;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          display: -webkit-box;
+                          -webkit-box-orient: vertical;
+                          -webkit-line-clamp: 1;
+                        }
+                      }
                     }
                   }
                 }
-                .swiper-button-prev{
-                  left: -8px !important;
+                .swiper-button-prev {
+                  left: -9px !important;
                   background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 492 492' style='enable-background:new 0 0 492 492;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%23FFFFFF;%7D%0A%3C/style%3E%3Cg%3E%3Cg%3E%3Cpath class='st0' d='M382.7,226.8L163.7,7.9c-5.1-5.1-11.8-7.9-19-7.9s-14,2.8-19,7.9L109.5,24c-10.5,10.5-10.5,27.6,0,38.1 l183.9,183.9L109.3,430c-5.1,5.1-7.9,11.8-7.9,19c0,7.2,2.8,14,7.9,19l16.1,16.1c5.1,5.1,11.8,7.9,19,7.9s14-2.8,19-7.9L382.7,265 c5.1-5.1,7.9-11.9,7.8-19.1C390.5,238.7,387.8,231.9,382.7,226.8z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
                   transform: rotate(180deg);
                 }
-                .swiper-button-next{
-                  right: -5px !important;
+                .swiper-button-next {
+                  right: -9px !important;
                   background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 492 492' style='enable-background:new 0 0 492 492;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%23FFFFFF;%7D%0A%3C/style%3E%3Cg%3E%3Cg%3E%3Cpath class='st0' d='M382.7,226.8L163.7,7.9c-5.1-5.1-11.8-7.9-19-7.9s-14,2.8-19,7.9L109.5,24c-10.5,10.5-10.5,27.6,0,38.1 l183.9,183.9L109.3,430c-5.1,5.1-7.9,11.8-7.9,19c0,7.2,2.8,14,7.9,19l16.1,16.1c5.1,5.1,11.8,7.9,19,7.9s14-2.8,19-7.9L382.7,265 c5.1-5.1,7.9-11.9,7.8-19.1C390.5,238.7,387.8,231.9,382.7,226.8z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
                   // background-image: url('@/assets/images/slider/arrow-right.svg') !important;
                   // background-image: url('https://www.flaticon.com/svg/static/icons/svg/892/892528.svg') !important;
                 }
-                .swiper-button-next, .swiper-button-prev{
+                .swiper-button-next,
+                .swiper-button-prev {
                   background-size: 14px 44px !important;
                 }
-                &.swiper-nopad{
+                &.swiper-nopad {
                   .swiper-wrapper {
-                    padding-right:0px !important;
+                    padding-right: 0px !important;
                   }
                 }
               }
@@ -2413,8 +2463,8 @@
           }
         }
       }
-      &.menu_close{
-        .vs-sidebar-parent{
+      &.menu_close {
+        .vs-sidebar-parent {
           transform: translate(80px, 62px);
           transition: ease 0.25s;
         }
@@ -2727,6 +2777,11 @@
                       padding-right: 15px;
                     }
                     .barcode-view {
+                      &.signature-info{
+                        .doc-detail{
+                          margin-top: 0 !important;
+                        }
+                      }
                       padding-left: 15px;
                       .docsign-block {
                         margin-top: 0 !important;

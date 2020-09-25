@@ -154,7 +154,7 @@ import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import StarRating from 'vue-star-rating'
 
 import {PDFNet} from '@pdftron/webviewer'
-import CoreControls from '../../../../node_modules/@pdftron/webviewer/public/core/CoreControls.js'
+import {CoreControls} from '@pdftron/webviewer'
 export default {
   data () {
     return {

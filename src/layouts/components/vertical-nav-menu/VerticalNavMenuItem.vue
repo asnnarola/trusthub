@@ -9,8 +9,8 @@
 ========================================================================================== -->
 
 <template>
+    <!-- v-if="canSee" -->
   <div
-    v-if="canSee"
     class="vs-sidebar--item"
     :class="[
       {'vs-sidebar-item-active'            : activeLink},
@@ -53,10 +53,10 @@ export default {
     isDisabled  : { type: Boolean,                default: false            }
   },
   computed: {
-    canSee () {
-      this.$acl.check(this.$store.state.AppActiveUser.userRole)
-      return this.to ? this.$acl.check(this.$router.match(this.to).meta.rule) : true
-    },
+    // canSee () {
+    //   this.$acl.check(this.$store.state.AppActiveUser.userRole)
+    //   return this.to ? this.$acl.check(this.$router.match(this.to).meta.rule) : true
+    // },
     activeLink () {
       return !!((this.to === this.$route.path || this.$route.meta.parent === this.slug) && this.to)
     }
