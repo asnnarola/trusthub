@@ -103,8 +103,8 @@
         <div class="swiper-button-next" v-if="subUserData.length > 2" slot="button-next"></div>
       </swiper>
     </div>
-    <div class="carousel-example" v-else>
-      <div class="d-flex flex-wrap slideuser-warpper justify-content-center pr-4 align-items-center">
+    <div class="carousel-example w-100" v-else>
+      <div class="d-flex flex-wrap slideuser-warpper single-user justify-content-center pr-4 align-items-center">
         <div class="text-right leading-tight hidden sm:block text-white slideuser-name">
           <p class="font-semibold">{{ activeUserInfo.displayName }}</p>
           <small class="text-transform-capitalize">{{ activeUserInfo.userRole }}</small>

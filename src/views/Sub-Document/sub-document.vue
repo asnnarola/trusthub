@@ -141,10 +141,13 @@
                 </span>
               </div>
               <canvas  id="the-canvas"></canvas> -->
-              <!-- <webViewer initialDoc="http://www.africau.edu/images/default/sample.pdf"/> -->
-              <WebViewer initialDoc="http://www.africau.edu/images/default/sample.pdf"/>
-              <!-- <ca nvas id="the-canvas"></canvas> -->
+              <vue-pdf-viewer class="abd_1" width="100px" height="500px" url="http://www.africau.edu/images/default/sample.pdf"></vue-pdf-viewer>
+              <!-- <WebViewer initialDoc="http://www.africau.edu/images/default/sample.pdf"/> -->
+              <!-- <vue-pdf-reader url="http://www.africau.edu/images/default/sample.pdf">
+              </vue-pdf-reader> -->
+
               <!-- <vue-pdf-viewer url="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"></vue-pdf-viewer> -->
+
             </div>
           </vx-card>
         </vs-row>
@@ -295,6 +298,10 @@ import VuePDFViewer from "vue-instant-pdf-viewer"
 import SignaturePad from 'signature_pad'
 import WebViewer from './web-viewer.vue'
 
+
+var pdfjsLib = window['pdfjs-dist/build/pdf'];
+pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
 export default {
   data () {
     return {
@@ -307,6 +314,97 @@ export default {
       signaturePad: SignaturePad,
       pdfUrl: 'http://www.africau.edu/images/default/sample.pdf',
     }
+  },
+
+  mounted () {
+    var pdfDoc = null,
+      pageNum = 1,
+      pageRendering = false,
+      pageNumPending = null,
+      scale = 0.8,
+      canvas = document.getElementById('the-canvas'),
+      ctx = canvas.getContext('2d');
+
+    /**
+     * Get page info from document, resize canvas accordingly, and render page.
+     * @param num Page number.
+     */
+    function renderPage (num) {
+      pageRendering = true;
+      // Using promise to fetch the page
+      pdfDoc.getPage(num).then(function (page) {
+        var viewport = page.getViewport({ scale: scale });
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        // Render PDF page into canvas context
+        var renderContext = {
+          canvasContext: ctx,
+          viewport: viewport
+        };
+        var renderTask = page.render(renderContext);
+
+        // Wait for rendering to finish
+        renderTask.promise.then(function () {
+          pageRendering = false;
+          if (pageNumPending !== null) {
+            // New page rendering is pending
+            renderPage(pageNumPending);
+            pageNumPending = null;
+          }
+        });
+      });
+
+      // Update page counters
+      document.getElementById('page_num').textContent = num;
+    }
+
+    /**
+     * If another page rendering in progress, waits until the rendering is
+     * finised. Otherwise, executes rendering immediately.
+     */
+    function queueRenderPage (num) {
+      if (pageRendering) {
+        pageNumPending = num;
+      } else {
+        renderPage(num);
+      }
+    }
+
+    /**
+     * Displays previous page.
+     */
+    function onPrevPage () {
+      if (pageNum <= 1) {
+        return;
+      }
+      pageNum--;
+      queueRenderPage(pageNum);
+    }
+    document.getElementById('prev').addEventListener('click', onPrevPage);
+
+    /**
+     * Displays next page.
+     */
+    function onNextPage () {
+      if (pageNum >= pdfDoc.numPages) {
+        return;
+      }
+      pageNum++;
+      queueRenderPage(pageNum);
+    }
+    document.getElementById('next').addEventListener('click', onNextPage);
+
+    /**
+     * Asynchronously downloads PDF.
+     */
+    pdfjsLib.getDocument(this.pdfUrl).promise.then(function (pdfDoc_) {
+      pdfDoc = pdfDoc_;
+      document.getElementById('page_count').textContent = pdfDoc.numPages;
+
+      // Initial/first page rendering
+      renderPage(pageNum);
+    });
   },
   components: {
     IdentityCustomizer,
@@ -369,6 +467,7 @@ export default {
 <style lang="scss">
 @import "@/assets/scss/vuexy/pages/grid.scss";
 @import "@/assets/scss/style.scss";
+// @import '~vue-pdf-reader/dist/vue-pdf-reader.min.css';
 .content-area-reduced {
   .content-wrapper {
     min-height: calc(var(--vh, 1vh) * 100 - 3.5rem);

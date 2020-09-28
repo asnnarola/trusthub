@@ -1396,6 +1396,13 @@
       a {
         background: #fff !important;
       }
+      @media screen and (min-width:601px)  and (max-width:767px){
+        margin: 3px;
+        max-width: 70px;
+      }
+      @media screen and (max-width:600px){
+        max-width: 65px;
+      }
     }
   }
   .vs-dropdown--menu--after {
@@ -1529,6 +1536,31 @@
                 &.swiper-nopad {
                   .swiper-wrapper {
                     padding-right: 0px !important;
+                  }
+                }
+              }
+              .slideuser-warpper {
+                &.single-user {
+                  max-width: 250px;
+                  .slideuser-name {
+                    max-width: calc(100% - 53px);
+                    width: 190px;
+                    p {
+                      max-height: 34px;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                      display: -webkit-box;
+                      -webkit-box-orient: vertical;
+                      -webkit-line-clamp: 2;
+                    }
+                    small {
+                      max-height: 15px;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                      display: -webkit-box;
+                      -webkit-box-orient: vertical;
+                      -webkit-line-clamp: 1;
+                    }
                   }
                 }
               }
@@ -2363,8 +2395,18 @@
                       max-width: 615px;
                       width: 600px;
                       bottom: 75px;
-                      right: -35px;
+                      right: -75px;
                       text-align: right;
+                      @media screen and (min-width:601px)  and (max-width:767px){
+                        right: -45%;
+                        width: 545px;
+                        bottom: 63px;
+                        padding: 7px 4px 3px 4px;
+                      }
+                      @media screen and (max-width:600px){
+                        width: 325px;
+                        right: -42%;
+                      }
                       &:after {
                         display: inline-block;
                         margin-left: 0.255em;
@@ -2376,7 +2418,13 @@
                         border-left: 1.5em solid transparent;
                         position: absolute;
                         bottom: -20px;
-                        right: 35px;
+                        right: 75px;
+                        @media screen and (min-width:601px)  and (max-width:767px){
+                          right: 7%;
+                        }
+                        @media screen and (max-width:600px){
+                          right: 13%;
+                        }
                       }
                     }
                   }
@@ -2777,8 +2825,8 @@
                       padding-right: 15px;
                     }
                     .barcode-view {
-                      &.signature-info{
-                        .doc-detail{
+                      &.signature-info {
+                        .doc-detail {
                           margin-top: 0 !important;
                         }
                       }

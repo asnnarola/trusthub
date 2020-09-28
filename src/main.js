@@ -69,6 +69,11 @@ import store from './store/store'
 // i18n
 import i18n from './i18n/i18n'
 
+// VuePdfReader
+// import VuePdfReader from 'vue-pdf-reader';
+// Vue.use(VuePdfReader);
+
+
 
 // Signature_Pad
 // import SignaturePad from './signaturePad.js'
@@ -95,14 +100,14 @@ Vue.use(VeeValidate)
 
 
 // Google Maps
-import * as VueGoogleMaps from 'vue2-google-maps'
-Vue.use(VueGoogleMaps, {
-  load: {
-    // Add your API key here
-    key: 'YOUR_KEY',
-    libraries: 'places' // This is required if you use the Auto complete plug-in
-  }
-})
+// import * as VueGoogleMaps from 'vue2-google-maps'
+// Vue.use(VueGoogleMaps, {
+//   load: {
+//     // Add your API key here
+//     key: 'YOUR_KEY',
+//     libraries: 'places' // This is required if you use the Auto complete plug-in
+//   }
+// })
 
 // Vuejs - Vue wrapper for hammerjs
 import { VueHammer } from 'vue2-hammer'
