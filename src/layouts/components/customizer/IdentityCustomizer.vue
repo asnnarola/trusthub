@@ -47,14 +47,14 @@
           <div class="traking-wrapper p-0">
             <div v-for="(item, index) in biometric_data" :key="index" class="identity-wrapper">
               <router-link to="#" class="d-flex w-100 align-items-center identity-list">
-                <div class="identity-img mr-5">
+                <div class="identity-img mr-5" @click="onItemClick(item.id)">
                   <img
                     :src="require('@/assets/images/identity_icon/' + item.icon_url)"
                     class="img-fluid iconhide-hover"
                   />
                   <img class="iconshow-hover img-fluid" :src="require('@/assets/images/header_icon/' + item.icon_url)" />
                 </div>
-                <div class="identity-label">
+                <div class="identity-label" @click="onItemClick(item.id)">
                   <p>{{item.header}}</p>
                   <h6>
                     <small>
@@ -63,6 +63,10 @@
                   </h6>
                 </div>
               </router-link>
+              <div v-if="showID === item.id">
+                  <!-- <h1>Hello</h1> -->
+                  <img class="iconshow-hover img-fluid" :src="require('@/assets/images/header_icon/' + item.icon_url)" />
+              </div>
             </div>
           </div>
         </component>
@@ -74,6 +78,7 @@
 <script>
 import { format } from 'path';
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+import { log } from 'util';
 export default {
   data () {
     return {
@@ -84,47 +89,63 @@ export default {
       },
       biometric_data: [
         {
+          id:1,
           header: 'DOCUMENT IDENTITY',
           sub_header: 'Scanned Document Information',
           icon_url: 'id.png'
         },
         {
+          id:2,
           header: 'DIGITAL CERTIFICATE',
           sub_header: 'Hardware Stored Certificate',
           icon_url: 'chip.png'
         },
         {
+          id:3,
           header: 'FACE RECOGNITION',
           sub_header: 'Captured Face Recognition Details',
           icon_url: 'face.png'
         },
         {
+          id:4,
           header: 'FINGERPRINT TEMPLATE',
           sub_header: 'Captured Fingerprint Information',
           icon_url: 'fingerprint.png'
         },
         {
           header: 'PALM SCAN',
+          id:5,
           sub_header: 'Captured Palm Information',
           icon_url: 'palm.png'
         },
         {
+          id:6,
           header: 'VOICE RECORD',
           sub_header: 'Registered Voice Frequency',
           icon_url: 'voice.png'
         },
 
         {
+          id:7,
           header: 'IRIS MAP',
           sub_header: 'Captured Iris Map',
           icon_url: 'eye.png'
         },
         {
+          id:8,
           header: 'SIGNATURE GRAPH',
           sub_header: 'Graphometric Signature Information',
           icon_url: 'signature.png'
         },
       ],
+      showID:0
+    }
+  },
+  methods: {
+    onItemClick(id){
+      console.log('ID =====>>>>>>', id);
+      this.showID = id
+      console.log('showID =====>>>>>>', this.showID);
 
     }
   },

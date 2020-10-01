@@ -1,8 +1,8 @@
 <template>
   <div class="grid-demo__layout-container">
-    <the-customizer />
-    <!-- <traking-customizer/> -->
-    <!-- <flow-customizer/> -->
+    <!-- <the-customizer />
+    <traking-customizer/> -->
+    <flow-customizer/>
     <vs-row class="border-0 filemanage-wrapper">
       <div class="vs-xs-12 vs-sm-12 vs-md-9 vs-lg-9">
         <vs-row class="h-100">
