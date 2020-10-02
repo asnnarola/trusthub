@@ -2,15 +2,19 @@
   <div class="grid-demo__layout-container">
     <!-- <the-customizer />
     <traking-customizer/> -->
-    <flow-customizer/>
+    <flow-customizer />
     <vs-row class="border-0 filemanage-wrapper">
       <div class="vs-xs-12 vs-sm-12 vs-md-9 vs-lg-9">
         <vs-row class="h-100">
           <vs-col class="vs-xs-12 vs-sm-4 vs-md-4 vs-lg-3 p-0">
             <vx-card class="box-shadow-none left-treeheight">
               <div class="p-4 NH-btn">
-                <vs-button color="gray" class="border-radius-0 w-100 mr-3 mb-3">New</vs-button>
-                <vs-button color="gray" class="mr-3 border-radius-0 w-100">Upload</vs-button>
+                <vs-button color="gray" class="border-radius-0 w-100 mr-3 mb-3"
+                  >New</vs-button
+                >
+                <vs-button color="gray" class="mr-3 border-radius-0 w-100"
+                  >Upload</vs-button
+                >
               </div>
               <v-treeview
                 v-model="treeData"
@@ -23,14 +27,20 @@
               <!-- @contextSelected="contextSelected" -->
 
               <div class="p-2 submenu-document">
-                <div class="doc-submenu-list" v-for="data in hilightsData" :key="data.id">
+                <div
+                  class="doc-submenu-list"
+                  v-for="data in hilightsData"
+                  :key="data.id"
+                >
                   <i :class="data.icon"></i>
-                  <span>{{data.title}} ({{data.children.length}})</span>
+                  <span>{{ data.title }} ({{ data.children.length }})</span>
                 </div>
               </div>
             </vx-card>
           </vs-col>
-          <vs-col class="vs-xs-12 vs-sm-8 vs-md-8 vs-lg-9 p-0 d-flex flex-column" >
+          <vs-col
+            class="vs-xs-12 vs-sm-8 vs-md-8 vs-lg-9 p-0 d-flex flex-column"
+          >
             <vx-card class="box-shadow-none serach-wrapper p-2">
               <vx-input-group class="mb-base serach-box">
                 <vs-input
@@ -42,7 +52,10 @@
                 />
                 <template slot="append">
                   <div class="append-text btn-addon">
-                    <vs-button color="gray" class="border-radius-0 addonsearch-btn">
+                    <vs-button
+                      color="gray"
+                      class="border-radius-0 addonsearch-btn"
+                    >
                       Search
                       <!-- <span class="d-sm-block d-none">Search</span>
                       <span class="d-block d-sm-none"><i class="fas fa-search"></i></span>-->
@@ -56,7 +69,11 @@
                     class="mr-3 pr-2 p-2"
                     width="45px"
                     height="45px"
-                    :src="require('../assets/images/documents_icon/' + imageforList + '.png')"
+                    :src="
+                      require('../assets/images/documents_icon/' +
+                        imageforList +
+                        '.png')
+                    "
                     @click="onListView()"
                   />
                 </span>
@@ -65,7 +82,11 @@
                     class="p-2"
                     width="45px"
                     height="45px"
-                    :src="require('../assets/images/documents_icon/' + imageforGrid + '.png')"
+                    :src="
+                      require('../assets/images/documents_icon/' +
+                        imageforGrid +
+                        '.png')
+                    "
                     @click="onGridView()"
                   />
                 </span>
@@ -79,7 +100,7 @@
               >
                 <li
                   class="folder-wrapper"
-                  v-for="(subData,index) in subFilesdata"
+                  v-for="(subData, index) in subFilesdata"
                   :key="index"
                   @contextmenu.prevent="$refs.menu.open"
                 >
@@ -90,15 +111,32 @@
                       @click="getFiles(subData)"
                     >
                       <i class="fas fa-folder"></i>
-                      <span>{{subData.text}}</span>
+                      <span>{{ subData.text }}</span>
                     </div>
                     <div
                       class="file-icon text-center d-flex flex-column justify-content-center align-items-center"
                       v-else
                       @click="getFiles(subData)"
                     >
-                      <i class="fas fa-file"></i>
-                      <span>{{subData.text}}</span>
+                      <i
+                        v-if="subData.extension === 'pdf'"
+                        class="fas fa-file-pdf"
+                      ></i>
+                      <i
+                        v-else-if="subData.extension === 'excel'"
+                        class="fas fa-file-excel"
+                      ></i>
+                      <i
+                        v-else-if="subData.extension === 'docx'"
+                        class="fas fa-file-word"
+                      ></i>
+                      <i
+                        v-else-if="subData.extension === 'ppt'"
+                        class="fas fa-file-powerpoint"
+                      ></i>
+                      <i v-else class="fas fa-file"></i>
+
+                      <span>{{ subData.text }}</span>
                     </div>
                   </span>
                 </li>
@@ -233,31 +271,58 @@
                   <!-- <vs-tr :data="tr"> -->
                   <tr
                     class="list-tr"
-                    v-for="(tr,index) in subFilesdata"
+                    v-for="(tr, index) in subFilesdata"
                     :key="index"
                     @contextmenu.prevent="$refs.menu.open"
                   >
                     <vs-td>
                       <span class="cursor-pointer" @click="getFiles(t)">
-                        <div class="file-icon text-center list-svg" v-if="tr.type === 'Folder'">
+                        <div
+                          class="file-icon text-center list-svg"
+                          v-if="tr.type === 'Folder'"
+                        >
                           <i class="fas fa-folder"></i>
                         </div>
-                        <div class="file-icon text-center list-svg" v-else @click="getFiles(tr)">
-                          <i class="fas fa-file"></i>
+                        <div
+                          class="file-icon text-center list-svg"
+                          v-else
+                          @click="getFiles(tr)"
+                        >
+                          <i
+                            v-if="tr.extension === 'pdf'"
+                            class="fas fa-file-pdf"
+                          ></i>
+                          <i
+                            v-else-if="tr.extension === 'excel'"
+                            class="fas fa-file-excel"
+                          ></i>
+                          <i
+                            v-else-if="tr.extension === 'docx'"
+                            class="fas fa-file-word"
+                          ></i>
+                          <i
+                            v-else-if="tr.extension === 'ppt'"
+                            class="fas fa-file-powerpoint"
+                          ></i>
+                          <i v-else class="fas fa-file"></i>
                         </div>
                       </span>
                     </vs-td>
                     <vs-td :data="tr.text">
                       <span class="cursor-pointer" @click="getFiles(tr)">
                         <div class="file-icon text-dark">
-                          <span>{{tr.text}}</span>
+                          <span>{{ tr.text }}</span>
                         </div>
                       </span>
                     </vs-td>
                     <vs-td colspan="4"></vs-td>
                   </tr>
                   <!-- </vs-tr> -->
-                  <vue-context ref="menu1" :closeOnClick="false" class="foldersubmenu-main">
+                  <vue-context
+                    ref="menu1"
+                    :closeOnClick="false"
+                    class="foldersubmenu-main"
+                  >
                     <li>
                       <i class="fas fa-download"></i>
                       <span>Download</span>
@@ -274,8 +339,12 @@
                           <vs-dropdown-item>New Tab</vs-dropdown-item>
                           <vs-dropdown-item>Media Info</vs-dropdown-item>
                           <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
-                          <vs-dropdown-item>Google Docs Editor</vs-dropdown-item>
-                          <vs-dropdown-item>Google Docs Viewer</vs-dropdown-item>
+                          <vs-dropdown-item
+                            >Google Docs Editor</vs-dropdown-item
+                          >
+                          <vs-dropdown-item
+                            >Google Docs Viewer</vs-dropdown-item
+                          >
                           <vs-dropdown-item>Office</vs-dropdown-item>
                           <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
                           <vs-dropdown-item>Only Office</vs-dropdown-item>
@@ -294,8 +363,12 @@
                           <vs-dropdown-item>New Tab</vs-dropdown-item>
                           <vs-dropdown-item>Media Info</vs-dropdown-item>
                           <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
-                          <vs-dropdown-item>Google Docs Editor</vs-dropdown-item>
-                          <vs-dropdown-item>Google Docs Viewer</vs-dropdown-item>
+                          <vs-dropdown-item
+                            >Google Docs Editor</vs-dropdown-item
+                          >
+                          <vs-dropdown-item
+                            >Google Docs Viewer</vs-dropdown-item
+                          >
                           <vs-dropdown-item>Office</vs-dropdown-item>
                           <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
                           <vs-dropdown-item>Only Office</vs-dropdown-item>
@@ -318,8 +391,12 @@
                           <vs-dropdown-item>New Tab</vs-dropdown-item>
                           <vs-dropdown-item>Media Info</vs-dropdown-item>
                           <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
-                          <vs-dropdown-item>Google Docs Editor</vs-dropdown-item>
-                          <vs-dropdown-item>Google Docs Viewer</vs-dropdown-item>
+                          <vs-dropdown-item
+                            >Google Docs Editor</vs-dropdown-item
+                          >
+                          <vs-dropdown-item
+                            >Google Docs Viewer</vs-dropdown-item
+                          >
                           <vs-dropdown-item>Office</vs-dropdown-item>
                           <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
                           <vs-dropdown-item>Only Office</vs-dropdown-item>
@@ -347,8 +424,12 @@
                           <vs-dropdown-item>New Tab</vs-dropdown-item>
                           <vs-dropdown-item>Media Info</vs-dropdown-item>
                           <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
-                          <vs-dropdown-item>Google Docs Editor</vs-dropdown-item>
-                          <vs-dropdown-item>Google Docs Viewer</vs-dropdown-item>
+                          <vs-dropdown-item
+                            >Google Docs Editor</vs-dropdown-item
+                          >
+                          <vs-dropdown-item
+                            >Google Docs Viewer</vs-dropdown-item
+                          >
                           <vs-dropdown-item>Office</vs-dropdown-item>
                           <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
                           <vs-dropdown-item>Only Office</vs-dropdown-item>
@@ -378,39 +459,62 @@
 
             <vs-row class="border-none mt-auto mb-4 pt-10">
               <div class="col vs-sm-12 vs-md-12 vs-lg-5 pl-5 process-content">
-                <div class="process-txt d-flex justify-content-between flex-wrap">
+                <div
+                  class="process-txt d-flex justify-content-between flex-wrap"
+                >
                   <span class="text-dark fw-600">Storage</span>
                   <span>250 MB of 500 MB</span>
                 </div>
                 <div
                   class="progressbar-block progressbar-doc d-flex flex-wrap justify-content-end align-items-center"
                 >
-                  <vs-progress :height="12" :percent="80" color="warning" class="rounded-0"></vs-progress>
+                  <vs-progress
+                    :height="12"
+                    :percent="80"
+                    color="warning"
+                    class="rounded-0"
+                  ></vs-progress>
                 </div>
               </div>
               <div
                 class="col vs-sm-12 vs-md-12 vs-lg-7 pl-6 pr-6 d-flex flex-wrap justify-content-end LTC-btn"
               >
                 <vs-button class="btn-gray w-auto mb-4">Local</vs-button>
-                <vs-button class="btn-gray w-auto ml-2 mb-4">Trusthub</vs-button>
+                <vs-button class="btn-gray w-auto ml-2 mb-4"
+                  >Trusthub</vs-button
+                >
                 <div class="Cloudsmain-wrapper">
-                <vs-button
-                  class="btn-gray w-auto ml-2 mb-4"
-                  @click="cloudModel_show == true ? cloudModel_show = false : cloudModel_show = true"
-                >Cloud</vs-button>
-                <div :hidden="!cloudModel_show" class="cloud-wrapper">
-                    <h5 class="w-100 fw-500 ml-3 mb-2 text-white text-left">Alternative Clouds Accounts</h5>
+                  <vs-button
+                    class="btn-gray w-auto ml-2 mb-4"
+                    @click="
+                      cloudModel_show == true
+                        ? (cloudModel_show = false)
+                        : (cloudModel_show = true)
+                    "
+                    >Cloud</vs-button
+                  >
+                  <div :hidden="!cloudModel_show" class="cloud-wrapper">
+                    <h5 class="w-100 fw-500 ml-3 mb-2 text-white text-left">
+                      Alternative Clouds Accounts
+                    </h5>
                     <ul>
-                      <li v-for="(item, index) in cloudModel" :key="index"  @click="cloudModel_show = false">
+                      <li
+                        v-for="(item, index) in cloudModel"
+                        :key="index"
+                        @click="cloudModel_show = false"
+                      >
                         <router-link to="#">
                           <img
                             class="img-fluid"
-                            :src="require('../assets/images/documents_icon/cloud_Modal_Icon/' + item.image )"
+                            :src="
+                              require('../assets/images/documents_icon/cloud_Modal_Icon/' +
+                                item.image)
+                            "
                           />
                         </router-link>
                       </li>
                     </ul>
-                </div>
+                  </div>
                 </div>
                 <!-- <vs-dropdown
                   vs-custom-content
@@ -446,14 +550,21 @@
                   <div class="vs-xs-12 vs-sm-12 vs-md-12">
                     <div class="doc-detail">
                       <!-- <pdf src="https://gahp.net/wp-content/uploads/2017/09/sample.pdf"></pdf> -->
-                      <vue-pdf-viewer class="abd_1" width="100px" height="384px" url="http://www.africau.edu/images/default/sample.pdf"></vue-pdf-viewer>
+                      <vue-pdf-viewer
+                        class="abd_1"
+                        width="100px"
+                        height="384px"
+                        url="http://www.africau.edu/images/default/sample.pdf"
+                      ></vue-pdf-viewer>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="vs-xs-12 vs-sm-6 vs-md-12 vs-lg-12 barcode-view signature-info">
+          <div
+            class="vs-xs-12 vs-sm-6 vs-md-12 vs-lg-12 barcode-view signature-info"
+          >
             <div class="row w-100">
               <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
                 <div class="vs-row border-none w-100">

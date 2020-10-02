@@ -296,7 +296,7 @@ export default {
       this.navMenuItems = companyNavMenuItem
       console.log('Side Menu =>', this.navMenuItems );
     } else if (this.userRole === 'operator' || activeUser.userRole === 'operator'){
-      // this.navMenuItems = operatorNavMenuitem
+      this.navMenuItems = operatorNavMenuitem
     } else if (this.userRole === 'person' || activeUser.userRole === 'person'){
       this.navMenuItems = personNavMenuItem
     } else if(this.userRole === 'partner' || activeUser.userRole === 'partner'){

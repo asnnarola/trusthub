@@ -63,9 +63,32 @@
                   </h6>
                 </div>
               </router-link>
-              <div v-if="showID === item.id">
+              <div v-if="item.id === 4 && showID === 4" >
                   <!-- <h1>Hello</h1> -->
-                  <img class="iconshow-hover img-fluid" :src="require('@/assets/images/header_icon/' + item.icon_url)" />
+                  <swiper :options="swiperOption" :dir="$vs.rtl ? 'rtl' : 'ltr'" :key="$vs.rtl">
+                    <swiper-slide>
+                      <div class="d-flex justify-content-center pt-10 pb-10">
+                        <img class="iconshow-hover img-fluid" src='@/assets/images/header_icon/f1.png'  />
+                      </div>
+                    </swiper-slide>
+                    <swiper-slide>
+                      <div class="d-flex justify-content-center pt-10 pb-10">
+                        <img class="iconshow-hover img-fluid" src='@/assets/images/header_icon/f1.png'  />
+                      </div>
+                    </swiper-slide>
+                    <swiper-slide>
+                      <div class="d-flex justify-content-center pt-10 pb-10">
+                        <img class="iconshow-hover img-fluid" src='@/assets/images/header_icon/f1.png'  />
+                      </div>
+                    </swiper-slide>
+                    <swiper-slide>
+                      <div class="d-flex justify-content-center pt-10 pb-10">
+                        <img class="iconshow-hover img-fluid" src='@/assets/images/header_icon/f1.png'  />
+                      </div>
+                    </swiper-slide>
+                    <div class="swiper-button-prev" slot="button-prev"></div>
+                    <div class="swiper-button-next" slot="button-next"></div>
+                  </swiper>
               </div>
             </div>
           </div>
@@ -79,10 +102,24 @@
 import { format } from 'path';
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import { log } from 'util';
+
+import 'swiper/dist/css/swiper.min.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
+
 export default {
   data () {
     return {
       active: false,
+      swiperOption: {
+        pagination: {
+            el: '.swiper-pagination',
+            type: 'progressbar'
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+        }
+      },
       settings: {
         maxScrollbarLength: 250,
         wheelSpeed: .100
@@ -157,6 +194,8 @@ export default {
     scrollbarTag () { return this.$store.state.is_touch_device ? 'div' : 'VuePerfectScrollbar' },
   },
   components: {
+    swiper,
+    swiperSlide,
     VuePerfectScrollbar
   },
 

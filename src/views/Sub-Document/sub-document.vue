@@ -309,9 +309,6 @@ export default {
       Pad_Show: false,
       CurrentDate: new Date().toISOString(),
       id: this.$route.params.id,
-      options: {
-        penColor: "#c0f"
-      },
       signaturePad: SignaturePad,
       pdfUrl: 'http://www.africau.edu/images/default/sample.pdf',
     }
@@ -428,7 +425,17 @@ export default {
       this.signaturePad = new SignaturePad(this.$refs.signPad, {
         backgroundColor: 'transparent'
       });
+      window.onresize = this.resizeCanvas(canvas);
     },
+    resizeCanvas(canvas) {
+    // When zoomed out to less than 100%, for some very strange reason,
+    // some browsers report devicePixelRatio as less than 1
+    // and only part of the canvas is cleared then.
+    var ratio =  Math.max(window.devicePixelRatio || 1, 1);
+    canvas.width = canvas.offsetWidth * ratio;
+    canvas.height = canvas.offsetHeight * ratio;
+    canvas.getContext("2d").scale(ratio, ratio);
+  },
     // saveAsPng () {
     //   if (this.signaturePad.isEmpty()) {
     //     return alert("Please provide a signature first.");
