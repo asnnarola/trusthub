@@ -288,10 +288,8 @@ export default {
     const activeUser = JSON.parse(localStorage.getItem('userInfo'))
     if(this.userRole === 'admin' || activeUser.userRole === 'admin'){
       this.navMenuItems = adminNavMenuItem
-      // console.log('Side Menu =>', this.navMenuItems);
     } else if (this.userRole === 'guest' || activeUser.userRole === 'guest'){
       this.navMenuItems = guestNavMenuItem
-      // console.log('Side Menu =>', this.navMenuItems);
     } else if (this.userRole === 'company' || activeUser.userRole === 'company'){
       this.navMenuItems = companyNavMenuItem
       console.log('Side Menu =>', this.navMenuItems );

@@ -155,15 +155,52 @@
                     <a class="flex items-center" href.prevent>Open With</a>
                     <i class="fas fa-angle-right"></i>
                     <vs-dropdown-menu class="hoveropen-menu">
-                      <vs-dropdown-item>New Tab</vs-dropdown-item>
-                      <vs-dropdown-item>Media Info</vs-dropdown-item>
-                      <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
-                      <vs-dropdown-item>Google Docs Editor</vs-dropdown-item>
-                      <vs-dropdown-item>Google Docs Viewer</vs-dropdown-item>
+                      <vs-dropdown-item> <i class="fas fa-external-link-alt"></i> New Tab</vs-dropdown-item>
+                      <vs-dropdown-item> <i class="fas fa-info-circle"></i> Media Info</vs-dropdown-item>
+                      <!-- <vs-dropdown-item>Cloud Convert</vs-dropdown-item> -->
+                      <vs-dropdown-item><i class="fab fa-google-drive"></i> Google Docs Editor</vs-dropdown-item>
+                      <vs-dropdown-item><i class="fas fa-file-alt"></i> Google Docs Viewer</vs-dropdown-item>
                       <vs-dropdown-item>Office</vs-dropdown-item>
                       <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
-                      <vs-dropdown-item>Only Office</vs-dropdown-item>
-                      <vs-dropdown-item>Zoho Editor</vs-dropdown-item>
+                      <!-- <vs-dropdown-item>Only Office</vs-dropdown-item>
+                      <vs-dropdown-item>Zoho Editor</vs-dropdown-item> -->
+                    </vs-dropdown-menu>
+                  </vs-dropdown>
+                </li>
+                <li class="hoverfile-menu">
+                  <vs-dropdown class="cursor-pointer icon-menu-btn">
+
+                    <a class="flex items-center" href.prevent>
+                      <i class="fas fa-ellipsis-v"></i>
+                      Sign Options
+                    </a>
+                    <i class="fas fa-angle-right"></i>
+                    <vs-dropdown-menu class="hoveropen-menu">
+                      <vs-dropdown-item>Electronic Signature</vs-dropdown-item>
+                      <vs-dropdown-item>Draw Signature</vs-dropdown-item>
+                      <vs-dropdown-item>Graphometic Signature</vs-dropdown-item>
+                      <vs-dropdown-item>Biometrical Signature</vs-dropdown-item>
+                      <vs-dropdown-item>Electronic Seal</vs-dropdown-item>
+                      <vs-dropdown-item>Time Stamp</vs-dropdown-item>
+                    </vs-dropdown-menu>
+                  </vs-dropdown>
+                </li>
+
+                <li class="hoverfile-menu">
+                  <vs-dropdown class="cursor-pointer">
+                    <a class="flex items-center">Smart Contract</a>
+                  </vs-dropdown>
+                </li>
+                <li class="hoverfile-menu">
+                  <vs-dropdown class="cursor-pointer">
+                    <a class="flex items-center" href.prevent>Digest</a>
+                    <i class="fas fa-angle-right"></i>
+                    <vs-dropdown-menu class="hoveropen-menu">
+                      <vs-dropdown-item>Option 1</vs-dropdown-item>
+                      <vs-dropdown-item>Option 2</vs-dropdown-item>
+                      <vs-dropdown-item>Option 3</vs-dropdown-item>
+                      <vs-dropdown-item>Option 4</vs-dropdown-item>
+                      <vs-dropdown-item>Option 5</vs-dropdown-item>
                     </vs-dropdown-menu>
                   </vs-dropdown>
                 </li>
@@ -175,21 +212,15 @@
                     </a>
                     <i class="fas fa-angle-right"></i>
                     <vs-dropdown-menu class="hoveropen-menu">
-                      <vs-dropdown-item>New Tab</vs-dropdown-item>
-                      <vs-dropdown-item>Media Info</vs-dropdown-item>
-                      <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
-                      <vs-dropdown-item>Google Docs Editor</vs-dropdown-item>
-                      <vs-dropdown-item>Google Docs Viewer</vs-dropdown-item>
-                      <vs-dropdown-item>Office</vs-dropdown-item>
-                      <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
-                      <vs-dropdown-item>Only Office</vs-dropdown-item>
-                      <vs-dropdown-item>Zoho Editor</vs-dropdown-item>
+                      <vs-dropdown-item><i class="fas fa-link"></i> Web Link</vs-dropdown-item>
+                      <vs-dropdown-item><i class="fas fa-user-plus"></i> With Users</vs-dropdown-item>
+                      <vs-dropdown-item><i class="far fa-envelope"></i> Email</vs-dropdown-item>
                     </vs-dropdown-menu>
                   </vs-dropdown>
                 </li>
                 <li>
                   <i class="fas fa-comments"></i>
-                  <span>Comment</span>
+                  <span>Comment</span>``
                 </li>
                 <li class="hoverfile-menu">
                   <vs-dropdown class="cursor-pointer icon-menu-btn">
@@ -199,15 +230,15 @@
                     </a>
                     <i class="fas fa-angle-right"></i>
                     <vs-dropdown-menu class="hoveropen-menu">
-                      <vs-dropdown-item>New Tab</vs-dropdown-item>
-                      <vs-dropdown-item>Media Info</vs-dropdown-item>
-                      <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
-                      <vs-dropdown-item>Google Docs Editor</vs-dropdown-item>
-                      <vs-dropdown-item>Google Docs Viewer</vs-dropdown-item>
-                      <vs-dropdown-item>Office</vs-dropdown-item>
+                      <vs-dropdown-item>No Label</vs-dropdown-item>
+                      <vs-dropdown-item>Approved</vs-dropdown-item>
+                      <vs-dropdown-item>Pending</vs-dropdown-item>
+                      <vs-dropdown-item>Rejected</vs-dropdown-item>
+                      <vs-dropdown-item>Custom label</vs-dropdown-item>
+                      <!-- <vs-dropdown-item>Office</vs-dropdown-item>
                       <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
                       <vs-dropdown-item>Only Office</vs-dropdown-item>
-                      <vs-dropdown-item>Zoho Editor</vs-dropdown-item>
+                      <vs-dropdown-item>Zoho Editor</vs-dropdown-item> -->
                     </vs-dropdown-menu>
                   </vs-dropdown>
                 </li>
@@ -224,15 +255,11 @@
                     </a>
                     <i class="fas fa-angle-right"></i>
                     <vs-dropdown-menu class="hoveropen-menu">
-                      <vs-dropdown-item>New Tab</vs-dropdown-item>
-                      <vs-dropdown-item>Media Info</vs-dropdown-item>
-                      <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
-                      <vs-dropdown-item>Google Docs Editor</vs-dropdown-item>
-                      <vs-dropdown-item>Google Docs Viewer</vs-dropdown-item>
-                      <vs-dropdown-item>Office</vs-dropdown-item>
-                      <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
-                      <vs-dropdown-item>Only Office</vs-dropdown-item>
-                      <vs-dropdown-item>Zoho Editor</vs-dropdown-item>
+                      <vs-dropdown-item>Option 1</vs-dropdown-item>
+                      <vs-dropdown-item>Option 2</vs-dropdown-item>
+                      <vs-dropdown-item>Option 3</vs-dropdown-item>
+                      <vs-dropdown-item>Option 4</vs-dropdown-item>
+                      <vs-dropdown-item>Option 5</vs-dropdown-item>
                     </vs-dropdown-menu>
                   </vs-dropdown>
                 </li>

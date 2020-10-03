@@ -19,7 +19,8 @@ export default [
             type: "File",
             extension:'docx',
             count: 0,
-            children: []
+            children: [],
+            path:'http://www.africau.edu/images/default/sample.pdf'
           }
         ]
       },
@@ -43,7 +44,8 @@ export default [
                 type: "File",
                 extension:'ppt',
                 count: 0,
-                children: []
+                children: [],
+                path:'https://www.escaux.com/rsrc/EscauxCustomerDocs/DRD_T38Support_AdminGuide/T38_TEST_PAGES.pdf'
               }
             ]
           },
@@ -54,7 +56,8 @@ export default [
             extension:'excel',
             count: 0,
             isOpen: false,
-            children: []
+            children: [],
+            path:'https://app.printnode.com/testpdfs/multipage.pdf'
           }
         ]
       },
@@ -71,7 +74,8 @@ export default [
             type: "File",
             extension:'pdf',
             count: 0,
-            children: []
+            children: [],
+            path:'http://media.pragprog.com/titles/ktuk/excerpts.pdf'
           }
         ]
       },
@@ -88,7 +92,8 @@ export default [
             type: "File",
             extension:'txt',
             count: 0,
-            children: []
+            children: [],
+            path:'http://media.pragprog.com/titles/ktuk/excerpts.pdf'
           }
         ]
       },
