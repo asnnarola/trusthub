@@ -15,7 +15,7 @@
       @click.stop="active = !active"
       color="primary"
       type="filled"
-      class="customizer-btn upload-btn"
+      class="customizer-btn upload-btn uploadmodel-btn"
     >
       <img
         :src="require('../../../assets/images/sidebar_icon/menu-open.png')"
@@ -35,7 +35,7 @@
         @click.stop="active = !active"
         color="primary"
         type="filled"
-        class="customizer-btn upload-btn closeupload-btn"
+        class="customizer-btn upload-btn closeupload-btn uploadmodel-btn"
       >
         <img
           :src="require('../../../assets/images/sidebar_icon/menu-open.png')"

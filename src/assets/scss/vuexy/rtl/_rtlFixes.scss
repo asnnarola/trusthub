@@ -46,6 +46,9 @@
 
   .con-vs-dropdown--menu {
     transform: translateX(-100%);
+    .vs-dropdown--menu{
+      border-radius: 0px !important;
+    }
   }
 
   .vx-navbar-dropdown {

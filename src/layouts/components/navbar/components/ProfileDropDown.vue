@@ -25,13 +25,15 @@
                 <ul style="min-width: 9rem">
                   <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white">
                     <!-- @click="$router.push('/profile').catch(() => {})"> -->
-                    <feather-icon icon="UserIcon" svgClasses="w-4 h-4" />
+                    <!-- <feather-icon icon="UserIcon" svgClasses="w-4 h-4" /> -->
+                    <i class="fas fa-user"></i>
                     <span class="ml-2">Profile</span>
                   </li>
 
                   <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white">
                     <!-- @click="$router.push('/apps/email').catch(() => {})"> -->
-                    <feather-icon icon="settings" svgClasses="w-4 h-4" />
+                    <!-- <feather-icon icon="feather icon-settings" svgClasses="w-4 h-4" /> -->
+                    <i class="fas fa-cog"></i>
                     <span class="ml-2">Settings</span>
                   </li>
 
@@ -39,17 +41,19 @@
                     class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
                     @click="$router.push('/apps/todo').catch(() => {})"
                   >
-                    <feather-icon icon="CheckSquareIcon" svgClasses="w-4 h-4" />
+                    <!-- <feather-icon icon="CheckSquareIcon" svgClasses="w-4 h-4" /> -->
+                    <i class="fas fa-qrcode"></i>
                     <span class="ml-2">Sync</span>
                   </li>
 
-                  <!-- <vs-divider class="m-1" /> -->
+                  <vs-divider class="m-1" />
 
                   <li
                     class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
                     @click="logout"
                   >
-                    <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4" />
+                    <!-- <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4" /> -->
+                    <i class="fas fa-sign-out-alt"></i>
                     <span class="ml-2">Logout</span>
                   </li>
                 </ul>
@@ -81,17 +85,20 @@
                 <ul style="min-width: 9rem">
                   <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white">
                     <!-- @click="$router.push('/profile').catch(() => {})"> -->
-                    <feather-icon icon="UserIcon" svgClasses="w-4 h-4" />
+                    <!-- <feather-icon icon="UserIcon" svgClasses="w-4 h-4" /> -->
+                    <i class="fas fa-user"></i>
                     <span class="ml-2">Profile</span>
                   </li>
 
-                  <!-- <vs-divider class="m-1" /> -->
+                  <vs-divider class="m-1" />
+                  <!-- <vs-divider class="mb-0 mt-0" /> -->
 
                   <li
                     class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
                     @click="logout"
                   >
-                    <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4" />
+                    <!-- <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4" /> -->
+                    <i class="fas fa-sign-out-alt"></i>
                     <span class="ml-2">Logout</span>
                   </li>
                 </ul>
@@ -126,13 +133,15 @@
             <ul style="min-width: 9rem">
               <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white">
                 <!-- @click="$router.push('/profile').catch(() => {})"> -->
-                <feather-icon icon="UserIcon" svgClasses="w-4 h-4" />
+                <!-- <feather-icon icon="UserIcon" svgClasses="w-4 h-4" /> -->
+                <i class="fas fa-user"></i>
                 <span class="ml-2">Profile</span>
               </li>
 
               <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white">
                 <!-- @click="$router.push('/apps/email').catch(() => {})"> -->
-                <feather-icon icon="settings" svgClasses="w-4 h-4" />
+                <!-- <feather-icon icon="settings" svgClasses="w-4 h-4" /> -->
+                <i class="fas fa-cog"></i>
                 <span class="ml-2">Settings</span>
               </li>
 
@@ -140,17 +149,19 @@
                 class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
                 @click="$router.push('/apps/todo').catch(() => {})"
               >
-                <feather-icon icon="CheckSquareIcon" svgClasses="w-4 h-4" />
+                <!-- <feather-icon icon="CheckSquareIcon" svgClasses="w-4 h-4" /> -->
+                <i class="fas fa-qrcode"></i>
                 <span class="ml-2">Sync</span>
               </li>
 
-              <!-- <vs-divider class="m-1" /> -->
+              <vs-divider class="m-1" />
 
               <li
                 class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
                 @click="logout"
               >
-                <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4" />
+                <!-- <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4" /> -->
+                <i class="fas fa-sign-out-alt"></i>
                 <span class="ml-2">Logout</span>
               </li>
             </ul>

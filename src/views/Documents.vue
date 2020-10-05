@@ -1,8 +1,8 @@
 <template>
   <div class="grid-demo__layout-container">
-    <!-- <the-customizer />
-    <traking-customizer/> -->
     <flow-customizer />
+    <traking-customizer/>
+    <the-customizer />
     <vs-row class="border-0 filemanage-wrapper">
       <div class="vs-xs-12 vs-sm-12 vs-md-9 vs-lg-9">
         <vs-row class="h-100">
@@ -122,18 +122,38 @@
                         v-if="subData.extension === 'pdf'"
                         class="fas fa-file-pdf"
                       ></i>
+                      <!-- <img
+                           v-if="subData.extension === 'pdf'"
+                          src="../assets/images/documents_icon/pdf.png"
+                          class="img-fluid pl-3"
+                        /> -->
                       <i
                         v-else-if="subData.extension === 'excel'"
                         class="fas fa-file-excel"
                       ></i>
+                      <!-- <img
+                           v-else-if="subData.extension === 'excel'"
+                          src="../assets/images/file-icons/excel.png"
+                          class="img-fluid pl-3"
+                        /> -->
                       <i
                         v-else-if="subData.extension === 'docx'"
                         class="fas fa-file-word"
                       ></i>
+                      <!-- <img
+                           v-else-if="subData.extension === 'docx'"
+                          src="../assets/images/file-icons/docx.png"
+                          class="img-fluid pl-3"
+                        /> -->
                       <i
                         v-else-if="subData.extension === 'ppt'"
                         class="fas fa-file-powerpoint"
                       ></i>
+                      <!-- <img
+                           v-else-if="subData.extension === 'ppt'"
+                          src="../assets/images/file-icons/ppt.png"
+                          class="img-fluid pl-3"
+                        /> -->
                       <i v-else class="fas fa-file"></i>
 
                       <span>{{ subData.text }}</span>
@@ -319,18 +339,38 @@
                             v-if="tr.extension === 'pdf'"
                             class="fas fa-file-pdf"
                           ></i>
+                          <!-- <img
+                           v-if="tr.extension === 'pdf'"
+                          src="../assets/images/documents_icon/pdf.png"
+                          class="img-fluid pl-3"
+                        /> -->
                           <i
                             v-else-if="tr.extension === 'excel'"
                             class="fas fa-file-excel"
                           ></i>
+                          <!-- <img
+                           v-else-if="tr.extension === 'excel'"
+                          src="../assets/images/file-icons/excel.png"
+                          class="img-fluid pl-3"
+                        /> -->
                           <i
                             v-else-if="tr.extension === 'docx'"
                             class="fas fa-file-word"
                           ></i>
+                          <!-- <img
+                           v-else-if="tr.extension === 'docx'"
+                          src="../assets/images/file-icons/docx.png"
+                          class="img-fluid pl-3"
+                        /> -->
                           <i
                             v-else-if="tr.extension === 'ppt'"
                             class="fas fa-file-powerpoint"
                           ></i>
+                          <!-- <img
+                           v-else-if="tr.extension === 'ppt'"
+                          src="../assets/images/file-icons/ppt.png"
+                          class="img-fluid pl-3"
+                        /> -->
                           <i v-else class="fas fa-file"></i>
                         </div>
                       </span>
@@ -799,12 +839,11 @@ export default {
     },
 
     getFiles (file) {
-      console.log('==>', file);
       if (file.type === 'Folder') {
         this.subFilesdata = file.children
       }
       if (file.type == 'File') {
-        console.log('==>', file.id);
+        localStorage.setItem('activefilePath', file.path)
         this.$router.push('/document/' + file.id).catch(() => { })
       }
     },

@@ -5,7 +5,7 @@
       @click.stop="active=!active"
       color="primary"
       type="filled"
-      class="customizer-btn upload-btn"
+      class="customizer-btn upload-btn Trakmodel-btn"
     >
       <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />Traking
     </vs-button>
@@ -22,7 +22,7 @@
         @click.stop="active=!active"
         color="primary"
         type="filled"
-        class="customizer-btn upload-btn closeupload-btn"
+        class="customizer-btn upload-btn closeupload-btn Trakmodel-btn"
       >
         <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />
         Traking
