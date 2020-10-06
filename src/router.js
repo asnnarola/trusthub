@@ -133,52 +133,52 @@ const router = new Router({
         // =============================================================================
         // Application Routes
         // =============================================================================
-        // {
-        //   path: '/apps/todo',
-        //   redirect: '/apps/todo/all',
-        //   name: 'todo'
-        // },
-        // {
-        //   path: '/apps/todo/:filter',
-        //   component: () => import('./views/apps/todo/Todo.vue'),
-        //   meta: {
-        //     rule: 'editor',
-        //     parent: 'todo',
-        //     no_scroll: true
-        //   }
-        // },
-        // {
-        //   path: '/apps/chat',
-        //   name: 'chat',
-        //   component: () => import('./views/apps/chat/Chat.vue'),
-        //   meta: {
-        //     rule: 'editor',
-        //     no_scroll: true
-        //   }
-        // },
-        // {
-        //   path: '/apps/email',
-        //   redirect: '/apps/email/inbox',
-        //   name: 'email'
-        // },
-        // {
-        //   path: '/apps/email/:filter',
-        //   component: () => import('./views/apps/email/Email.vue'),
-        //   meta: {
-        //     rule: 'editor',
-        //     parent: 'email',
-        //     no_scroll: true
-        //   }
-        // },
-        // {
-        //   path: '/apps/calendar/vue-simple-calendar',
-        //   name: 'calendar-simple-calendar',
-        //   component: () => import('./views/apps/calendar/SimpleCalendar.vue'),
-        //   meta: {
-        //     rule: 'editor',
-        //     no_scroll: true
-        //   }
-        // },
+        {
+          path: '/apps/todo',
+          redirect: '/apps/todo/all',
+          name: 'todo'
+        },
+        {
+          path: '/apps/todo/:filter',
+          component: () => import('./views/apps/todo/Todo.vue'),
+          meta: {
+            rule: 'editor',
+            parent: 'todo',
+            no_scroll: true
+          }
+        },
+        {
+          path: '/apps/chat',
+          name: 'chat',
+          component: () => import('./views/apps/chat/Chat.vue'),
+          meta: {
+            rule: 'editor',
+            no_scroll: true
+          }
+        },
+        {
+          path: '/apps/email',
+          redirect: '/apps/email/inbox',
+          name: 'email'
+        },
+        {
+          path: '/apps/email/:filter',
+          component: () => import('./views/apps/email/Email.vue'),
+          meta: {
+            rule: 'editor',
+            parent: 'email',
+            no_scroll: true
+          }
+        },
+        {
+          path: '/apps/calendar/vue-simple-calendar',
+          name: 'calendar-simple-calendar',
+          component: () => import('./views/apps/calendar/SimpleCalendar.vue'),
+          meta: {
+            rule: 'editor',
+            no_scroll: true
+          }
+        },
         // {
         //   path: '/apps/eCommerce/shop',
         //   name: 'ecommerce-shop',

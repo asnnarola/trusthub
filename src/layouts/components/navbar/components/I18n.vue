@@ -52,7 +52,7 @@
         <div
           class="checkout-footer fixed bottom-0 rounded-b-lg text-primary w-full p-2 font-semibold text-center border border-b-0 border-l-0 border-r-0 border-solid d-theme-border-grey-light cursor-pointer"
         >
-          <span class="text-white fw-500">View All {{item.title}} Notifications</span>
+          <span class="text-white fw-500" @click="onTitleClick(item.title)">View All {{item.title}} Notifications</span>
         </div>
       </vs-dropdown-menu>
     </vs-dropdown>
@@ -265,6 +265,21 @@ export default {
     scrollbarTag () { return this.$store.getters.scrollbarTag }
   },
   methods: {
+    onTitleClick(title) {
+      console.log('Title =>', title);
+      if(title === 'Todo'){
+        this.$router.push('/apps/todo/all').catch(() => { })
+      }
+      if(title === 'Chat'){
+        this.$router.push('/apps/chat').catch(() => { })
+      }
+      if(title === 'Mail'){
+        this.$router.push('/apps/email/inbox').catch(() => { })
+      }
+      if(title === 'Calendar'){
+        this.$router.push('/apps/calendar/vue-simple-calendar').catch(() => { })
+      }
+    },
     elapsedTime (startTime) {
       const x = new Date(startTime)
       const now = new Date()

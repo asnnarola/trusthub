@@ -1,7 +1,7 @@
 <template>
   <div class="grid-demo__layout-container">
     <flow-customizer />
-    <traking-customizer/>
+    <traking-customizer />
     <the-customizer />
     <vs-row class="border-0 filemanage-wrapper">
       <div class="vs-xs-12 vs-sm-12 vs-md-9 vs-lg-9">
@@ -118,44 +118,31 @@
                       v-else
                       @click="getFiles(subData)"
                     >
-                      <i
-                        v-if="subData.extension === 'pdf'"
-                        class="fas fa-file-pdf"
-                      ></i>
-                      <!-- <img
-                           v-if="subData.extension === 'pdf'"
+                      <div
+                        class="file-type d-flex align-items-center justify-content-center"
+                      >
+                        <img
+                          v-if="subData.extension === 'pdf'"
                           src="../assets/images/documents_icon/pdf.png"
-                          class="img-fluid pl-3"
-                        /> -->
-                      <i
-                        v-else-if="subData.extension === 'excel'"
-                        class="fas fa-file-excel"
-                      ></i>
-                      <!-- <img
-                           v-else-if="subData.extension === 'excel'"
+                          class="img-fluid"
+                        />
+                        <img
+                          v-else-if="subData.extension === 'excel'"
                           src="../assets/images/file-icons/excel.png"
-                          class="img-fluid pl-3"
-                        /> -->
-                      <i
-                        v-else-if="subData.extension === 'docx'"
-                        class="fas fa-file-word"
-                      ></i>
-                      <!-- <img
-                           v-else-if="subData.extension === 'docx'"
+                          class="img-fluid"
+                        />
+                        <img
+                          v-else-if="subData.extension === 'docx'"
                           src="../assets/images/file-icons/docx.png"
-                          class="img-fluid pl-3"
-                        /> -->
-                      <i
-                        v-else-if="subData.extension === 'ppt'"
-                        class="fas fa-file-powerpoint"
-                      ></i>
-                      <!-- <img
-                           v-else-if="subData.extension === 'ppt'"
+                          class="img-fluid"
+                        />
+                        <img
+                          v-else-if="subData.extension === 'ppt'"
                           src="../assets/images/file-icons/ppt.png"
-                          class="img-fluid pl-3"
-                        /> -->
-                      <i v-else class="fas fa-file"></i>
-
+                          class="img-fluid"
+                        />
+                        <i v-else class="fas fa-file"></i>
+                      </div>
                       <span>{{ subData.text }}</span>
                     </div>
                   </span>
@@ -175,13 +162,55 @@
                     <a class="flex items-center" href.prevent>Open With</a>
                     <i class="fas fa-angle-right"></i>
                     <vs-dropdown-menu class="hoveropen-menu">
-                      <vs-dropdown-item> <i class="fas fa-external-link-alt"></i> New Tab</vs-dropdown-item>
-                      <vs-dropdown-item> <i class="fas fa-info-circle"></i> Media Info</vs-dropdown-item>
+                      <vs-dropdown-item
+                        ><div class="typesfile-icon mr-2">
+                          <i class="fas fa-external-link-alt"></i>
+                        </div>
+                        New Tab</vs-dropdown-item
+                      >
+                      <vs-dropdown-item
+                        ><div class="typesfile-icon mr-2">
+                          <i class="fas fa-info-circle"></i>
+                        </div>
+                        Info</vs-dropdown-item
+                      >
                       <!-- <vs-dropdown-item>Cloud Convert</vs-dropdown-item> -->
-                      <vs-dropdown-item><i class="fab fa-google-drive"></i> Google Docs Editor</vs-dropdown-item>
-                      <vs-dropdown-item><i class="fas fa-file-alt"></i> Google Docs Viewer</vs-dropdown-item>
-                      <vs-dropdown-item>Office</vs-dropdown-item>
-                      <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
+                      <vs-dropdown-item
+                        ><div class="typesfile-icon mr-2">
+                          <img
+                            src="../assets/images/file-icons/gd.png"
+                            class="img-fluid"
+                          />
+                        </div>
+                        Google Docs Editor</vs-dropdown-item
+                      >
+                      <vs-dropdown-item
+                        ><div class="typesfile-icon mr-2">
+                          <img
+                            src="../assets/images/file-icons/docs_document.png"
+                            class="img-fluid"
+                          />
+                        </div>
+                        Google Docs Viewer</vs-dropdown-item
+                      >
+                      <vs-dropdown-item
+                        ><div class="typesfile-icon mr-2">
+                          <img
+                            src="../assets/images/file-icons/Moffice.png"
+                            class="img-fluid"
+                          />
+                        </div>
+                        Office</vs-dropdown-item
+                      >
+                      <vs-dropdown-item
+                        ><div class="typesfile-icon mr-2">
+                          <img
+                            src="../assets/images/file-icons/Moffice.png"
+                            class="img-fluid"
+                          />
+                        </div>
+                        Office Web Viewer</vs-dropdown-item
+                      >
                       <!-- <vs-dropdown-item>Only Office</vs-dropdown-item>
                       <vs-dropdown-item>Zoho Editor</vs-dropdown-item> -->
                     </vs-dropdown-menu>
@@ -189,7 +218,6 @@
                 </li>
                 <li class="hoverfile-menu">
                   <vs-dropdown class="cursor-pointer icon-menu-btn">
-
                     <a class="flex items-center" href.prevent>
                       <i class="fas fa-ellipsis-v"></i>
                       Sign Options
@@ -232,9 +260,18 @@
                     </a>
                     <i class="fas fa-angle-right"></i>
                     <vs-dropdown-menu class="hoveropen-menu">
-                      <vs-dropdown-item><i class="fas fa-link"></i> Web Link</vs-dropdown-item>
-                      <vs-dropdown-item><i class="fas fa-user-plus"></i> With Users</vs-dropdown-item>
-                      <vs-dropdown-item><i class="far fa-envelope"></i> Email</vs-dropdown-item>
+                      <vs-dropdown-item
+                        ><i class="fas fa-link mr-2"></i> Web
+                        Link</vs-dropdown-item
+                      >
+                      <vs-dropdown-item
+                        ><i class="fas fa-user-plus mr-2"></i> With
+                        Users</vs-dropdown-item
+                      >
+                      <vs-dropdown-item
+                        ><i class="fas fa-envelope mr-2"></i>
+                        Email</vs-dropdown-item
+                      >
                     </vs-dropdown-menu>
                   </vs-dropdown>
                 </li>
@@ -335,43 +372,29 @@
                           v-else
                           @click="getFiles(tr)"
                         >
-                          <i
-                            v-if="tr.extension === 'pdf'"
-                            class="fas fa-file-pdf"
-                          ></i>
-                          <!-- <img
-                           v-if="tr.extension === 'pdf'"
-                          src="../assets/images/documents_icon/pdf.png"
-                          class="img-fluid pl-3"
-                        /> -->
-                          <i
-                            v-else-if="tr.extension === 'excel'"
-                            class="fas fa-file-excel"
-                          ></i>
-                          <!-- <img
-                           v-else-if="tr.extension === 'excel'"
-                          src="../assets/images/file-icons/excel.png"
-                          class="img-fluid pl-3"
-                        /> -->
-                          <i
-                            v-else-if="tr.extension === 'docx'"
-                            class="fas fa-file-word"
-                          ></i>
-                          <!-- <img
-                           v-else-if="tr.extension === 'docx'"
-                          src="../assets/images/file-icons/docx.png"
-                          class="img-fluid pl-3"
-                        /> -->
-                          <i
-                            v-else-if="tr.extension === 'ppt'"
-                            class="fas fa-file-powerpoint"
-                          ></i>
-                          <!-- <img
-                           v-else-if="tr.extension === 'ppt'"
-                          src="../assets/images/file-icons/ppt.png"
-                          class="img-fluid pl-3"
-                        /> -->
-                          <i v-else class="fas fa-file"></i>
+                          <div class="file-type">
+                            <img
+                              v-if="tr.extension === 'pdf'"
+                              src="../assets/images/documents_icon/pdf.png"
+                              class="img-fluid"
+                            />
+                            <img
+                              v-else-if="tr.extension === 'excel'"
+                              src="../assets/images/file-icons/excel.png"
+                              class="img-fluid"
+                            />
+                            <img
+                              v-else-if="tr.extension === 'docx'"
+                              src="../assets/images/file-icons/docx.png"
+                              class="img-fluid"
+                            />
+                            <img
+                              v-else-if="tr.extension === 'ppt'"
+                              src="../assets/images/file-icons/ppt.png"
+                              class="img-fluid"
+                            />
+                            <i v-else class="fas fa-file"></i>
+                          </div>
                         </div>
                       </span>
                     </vs-td>
@@ -385,7 +408,7 @@
                     <vs-td colspan="4"></vs-td>
                   </tr>
                   <!-- </vs-tr> -->
-                  <vue-context
+                  <!-- <vue-context
                     ref="menu1"
                     :closeOnClick="false"
                     class="foldersubmenu-main"
@@ -519,7 +542,7 @@
                       <i class="fas fa-trash-alt"></i>
                       <span>Remove</span>
                     </li>
-                  </vue-context>
+                  </vue-context> -->
                 </template>
               </vs-table>
             </div>
