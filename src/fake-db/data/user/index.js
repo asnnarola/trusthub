@@ -13,7 +13,7 @@ const data = {
       password: 'Password',
       photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
       email: 'admin@admin.com',
-      userRole: 'admin',
+      userRole: 'administrators',
       phoneNumber: null
     },
     {

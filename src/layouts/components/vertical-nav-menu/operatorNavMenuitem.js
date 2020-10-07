@@ -31,9 +31,9 @@ export default [
   },
   {
     url: '#',
-    name: 'Notery',
+    name: 'Notary',
     icon_url: 'notarization.png',
-    i18n: 'Notery',
+    i18n: 'Notary',
   },
   {
     url: '/extra',

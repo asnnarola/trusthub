@@ -23,10 +23,4 @@ export default [
     icon_url: 'plugins.png',
     i18n: 'Wallets',
   },
-  {
-    url: '#',
-    name: 'Limits',
-    icon_url: 'plugins.png',
-    i18n: 'Limits',
-  },
 ]

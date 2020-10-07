@@ -286,8 +286,9 @@ export default {
   },
   mounted () {
     const activeUser = JSON.parse(localStorage.getItem('userInfo'))
-    if(this.userRole === 'admin' || activeUser.userRole === 'admin'){
-      this.navMenuItems = adminNavMenuItem
+    if(this.userRole === 'administrators' || activeUser.userRole === 'administrators'){
+      // this.navMenuItems = adminNavMenuItem
+      this.navMenuItems = companyNavMenuItem
     } else if (this.userRole === 'guest' || activeUser.userRole === 'guest'){
       this.navMenuItems = guestNavMenuItem
     } else if (this.userRole === 'company' || activeUser.userRole === 'company'){

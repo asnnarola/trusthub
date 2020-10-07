@@ -180,7 +180,7 @@
                 >Save</vs-button
               >
               <vs-button class="mb-2 btn-gray h-38 pd-0 w-100px fw-500">Canel</vs-button>
-              <input type="file" @input="onInput($event)">
+              <!-- <input type="file" @input="onInput($event)"> -->
             </div>
           </div>
         </component>
@@ -230,9 +230,9 @@ export default {
     scrollbarTag () { return this.$store.state.is_touch_device ? 'div' : 'VuePerfectScrollbar' },
   },
   methods: {
-    onInput(e){
-      console.log('EE =>',e);
-    },
+    // onInput(e){
+    //   console.log('EE =>',e);
+    // },
     addLabels () {
       if (this.popup_label) {
         this.labels.push(this.popup_label)
@@ -242,14 +242,14 @@ export default {
     remove (item) {
       this.labels.splice(this.labels.indexOf(item), 1)
     },
-    onSave () {
-      console.log('File =>',this.filePath);
-      docxConverter(this.filePath, '../../../assets/files/output.pdf', function (err, result) {
-        if (err) {
-          console.log(err);
-        }
-        console.log('result' + result);
-      });
+    // onSave () {
+      // console.log('File =>',this.filePath);
+      // docxConverter(this.filePath, '../../../assets/files/output.pdf', function (err, result) {
+      //   if (err) {
+      //     console.log(err);
+      //   }
+      //   console.log('result' + result);
+      // });
       //   toPdf(wordBuffer).then(
       //     (pdfBuffer) => {
       //       fs.writeFileSync("./test.pdf", pdfBuffer)
@@ -257,7 +257,7 @@ export default {
       //       console.log(err)
       //     }
       //   )
-    }
+    // }
   },
 }
 </script>

@@ -185,7 +185,8 @@
             :key="item.title"
           >
             <!-- subactive-menu -->
-            <a href="#" class tabindex="-1" target="_self">
+            <!-- this.$store.state.AppActiveUser.userRole === 'company' && () -->
+            <a href="#" class tabindex="-1" target="_self" v-if="item.display === false">
               <span class="feather-icon select-none relative"></span>
               <div class="submenu-listmain">
                 <!-- <div class="submenu-img">
@@ -244,49 +245,57 @@ export default {
         id: 1,
         icon_url: 'subM1.png',
         title: 'Presets',
-        sub_title: 'Presets'
+        sub_title: 'Presets',
+        display: false
       },
       {
         id: 2,
         icon_url: 'subM1.png',
         title: 'Certificators',
-        sub_title: 'Presets'
+        sub_title: 'Presets',
+        display: false
       },
       {
         id: 3,
         icon_url: 'subM1.png',
         title: 'Operators',
-        sub_title: 'Presets'
+        sub_title: 'Presets',
+        display: false
       },
       {
         id: 4,
         icon_url: 'subM1.png',
         title: 'Seats',
-        sub_title: 'Presets'
+        sub_title: 'Presets',
+        display: false
       },
       {
         id: 5,
         icon_url: 'subM1.png',
         title: 'Devices',
-        sub_title: 'Presets'
+        sub_title: 'Presets',
+        display: false
       },
       {
         id: 6,
         icon_url: 'subM1.png',
         title: 'Licences',
-        sub_title: 'Presets'
+        sub_title: 'Presets',
+        display: false
       },
       {
         id: 7,
         icon_url: 'subM1.png',
         title: 'Wallet',
-        sub_title: 'Presets'
+        sub_title: 'Presets',
+        display: false
       },
       {
-        id: 7,
+        id: 8,
         icon_url: 'subM1.png',
         title: 'Limits',
-        sub_title: 'Presets'
+        sub_title: 'Presets',
+        display: false
       },
     ],
     documentSubMenu: [{
@@ -387,9 +396,9 @@ export default {
     operatorBottomData: [
       {
         url: '/setting',
-        name: 'Setting',
+        name: 'Setting & Limits',
         icon_url: 'gear.png',
-        i18n: 'Setting',
+        i18n: 'Setting & Limits',
         isbottom: true
       },
       {
@@ -438,9 +447,9 @@ export default {
     partnerBottomData: [
       {
         url: '/setting',
-        name: 'Setting',
+        name: 'Setting & Limits',
         icon_url: 'gear.png',
-        i18n: 'Setting',
+        i18n: 'Setting & Limits',
         isbottom: true
       },
       {
@@ -452,9 +461,9 @@ export default {
       },
       {
         url: '/help',
-        name: 'Help Desk',
+        name: 'Helpdesk',
         icon_url: 'help.png',
-        i18n: 'Help Desk',
+        i18n: 'Helpdesk',
         isbottom: true,
       },
       {
@@ -558,7 +567,7 @@ export default {
       if (item == 'Documents') {
         this.activeSubsidebar == true ? this.activeSubsidebar = false : this.activeSubsidebar = true
       }
-      else if (item == 'Setting') {
+      else if (item == 'Setting' || item =='Setting & Limits' ) {
         this.activeBottomSubsidebar == true ? this.activeBottomSubsidebar = false : this.activeBottomSubsidebar = true
       }
       else {
@@ -662,14 +671,18 @@ export default {
       this.bottom_data = this.operatorBottomData
     } else if (this.$store.state.AppActiveUser.userRole === 'company' || activeUser.userRole === 'company') {
       this.bottom_data = this.companyBottomData
+      this.settingBottomSubMenu.forEach(item => {
+        if (item.id === 1 || item.id === 2 || item.id === 8) {
+          item.display = true
+        }
+      });
     } else if (this.$store.state.AppActiveUser.userRole === 'partner' || activeUser.userRole === 'partner') {
       this.bottom_data = this.partnerBottomData
-    } else if (this.$store.state.AppActiveUser.userRole === 'admin' || activeUser.userRole === 'admin') {
+    } else if (this.$store.state.AppActiveUser.userRole === 'administrators' || activeUser.userRole === 'administrators') {
       this.bottom_data = this.adminBottomData
     }
   }
 }
-
 </script>
 
 
