@@ -57,11 +57,11 @@
           @scroll="psSectionScroll"
           :key="$vs.rtl"
         >
-          <template v-for="(item, index) in menuItemsUpdated">
+          <template v-for="(item, index) in menuItemsUpdated" >
             <template v-if="!item.header">
+            <div @click="openSubSidebar(item.name)" :key="`item-${index}`">
               <v-nav-menu-item
                 v-if="!item.submenu"
-                :key="`item-${index}`"
                 :index="index"
                 :to="item.slug !== 'external' ? item.url : null"
                 :href="item.slug === 'external' ? item.url : null"
@@ -70,7 +70,6 @@
                 :isDisabled="item.isDisabled"
                 :slug="item.slug"
               >
-                <div @click="openSubSidebar(item.name)">
                   <img
                     :src="
                       require('../../../assets/images/sidebar_icon/' +
@@ -80,8 +79,8 @@
                   <span v-show="!verticalNavMenuItemsMin" class="truncate">{{
                     $t(item.i18n) || item.name
                   }}</span>
-                </div>
               </v-nav-menu-item>
+                </div>
             </template>
           </template>
 
@@ -91,10 +90,10 @@
               :key="data.id"
               class="vs-sidebar--item"
             >
-              <div v-if="data.url">
+              <div v-if="data.url" @click="openSubSidebar(data.name)">
                 <router-link :to="data.url" class="border-0">
                   <span class="feather-icon select-none relative"> </span>
-                  <div @click="openSubSidebar(data.name)">
+                  <!-- <div > -->
                     <img
                       :src="
                         require('../../../assets/images/sidebar_icon/' +
@@ -104,7 +103,7 @@
                     <span v-show="!verticalNavMenuItemsMin" class="truncate">{{
                       $t(data.i18n) || data.name
                     }}</span>
-                  </div>
+                  <!-- </div> -->
                 </router-link>
               </div>
               <div v-else>
@@ -565,9 +564,11 @@ export default {
   methods: {
     openSubSidebar (item) {
       if (item == 'Documents') {
+        this.activeBottomSubsidebar = false
         this.activeSubsidebar == true ? this.activeSubsidebar = false : this.activeSubsidebar = true
       }
       else if (item == 'Setting' || item =='Setting & Limits' ) {
+        this.activeSubsidebar = false
         this.activeBottomSubsidebar == true ? this.activeBottomSubsidebar = false : this.activeBottomSubsidebar = true
       }
       else {
