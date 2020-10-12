@@ -9,8 +9,16 @@
 
 
 <template>
-  <div class="layout--main" :class="[layoutTypeClass, navbarClasses, footerClasses, {'no-scroll': isAppPage}]">
-
+  <div
+    class="layout--main"
+    :class="[
+      layoutTypeClass,
+      navbarClasses,
+      footerClasses,
+      { 'no-scroll': isAppPage },
+    ]"
+  >
+    <identity-customizer  :active ="active" :sho_button ="sho_button"/>
     <!-- <vx-tour :steps="steps" v-if="!disableThemeTour && (windowWidth >= 1200 && mainLayoutType === 'vertical' && verticalNavMenuWidth == 'default')" /> -->
 
     <!-- <the-customizer
@@ -25,99 +33,152 @@
       @updateNavbar           = "updateNavbar"
       @updateNavbarColor      = "updateNavbarColor"
       @updateRouterTransition = "updateRouterTransition" /> -->
-
     <v-nav-menu
-      :navMenuItems = "navMenuItems"
-      title         = "Vuexy"
-      parent        = ".layout--main" />
+      :navMenuItems="navMenuItems"
+      title="Vuexy"
+      parent=".layout--main"
+    />
 
-    <div id="content-area" :class="[contentAreaClass, {'show-overlay': bodyOverlay}]">
+    <div
+      id="content-area"
+      :class="[contentAreaClass, { 'show-overlay': bodyOverlay }]"
+    >
       <div id="content-overlay" />
 
-    <!-- Navbar -->
-    <template v-if="mainLayoutType === 'horizontal' && windowWidth >= 1200">
-      <the-navbar-horizontal
-        :navbarType= "navbarType"
-        :class="[
-          {'text-white' : isNavbarDark  && !isThemeDark},
-          {'text-base'  : !isNavbarDark && isThemeDark}
-        ]" />
+      <!-- Navbar -->
+      <template v-if="mainLayoutType === 'horizontal' && windowWidth >= 1200">
+        <the-navbar-horizontal
+          :navbarType="navbarType"
+          :class="[
+            { 'text-white': isNavbarDark && !isThemeDark },
+            { 'text-base': !isNavbarDark && isThemeDark },
+          ]"
+        />
 
-      <div style="height: 62px" v-if="navbarType === 'static'"></div>
+        <div style="height: 62px" v-if="navbarType === 'static'"></div>
 
-      <h-nav-menu
-        :class="[
-          {'text-white' : isNavbarDark  && !isThemeDark},
-          {'text-base'  : !isNavbarDark && isThemeDark}
-        ]"
-        :navMenuItems="navMenuItems" />
-    </template>
+        <h-nav-menu
+          :class="[
+            { 'text-white': isNavbarDark && !isThemeDark },
+            { 'text-base': !isNavbarDark && isThemeDark },
+          ]"
+          :navMenuItems="navMenuItems"
+        />
+      </template>
 
-    <template v-else>
-      <the-navbar-vertical
-        :navbarColor="navbarColor"
-        :class="[
-          {'text-white' : isNavbarDark  && !isThemeDark},
-          {'text-base'  : !isNavbarDark && isThemeDark}
-        ]" />
-    </template>
-    <!-- /Navbar -->
+      <template v-else>
+        <the-navbar-vertical
+          :navbarColor="navbarColor"
+          :test ="test"
+          :class="[
+            { 'text-white': isNavbarDark && !isThemeDark },
+            { 'text-base': !isNavbarDark && isThemeDark },
+          ]"
+        />
+      </template>
+      <!-- /Navbar -->
 
+      <!-- {{ docId }} helloooooooo -->
       <div class="content-wrapper">
-
         <div class="router-view">
           <div class="router-content">
-
             <transition :name="routerTransition">
-
-              <div v-if="$route.meta.breadcrumb || $route.meta.pageTitle" class="router-header flex flex-wrap items-center mb-6">
+              <div
+                v-if="$route.meta.breadcrumb || $route.meta.pageTitle"
+                class="router-header flex flex-wrap items-center mb-6"
+              >
                 <div
                   class="content-area__heading"
-                  :class="{'pr-4 border-0 md:border-r border-solid border-grey-light' : $route.meta.breadcrumb}">
+                  :class="{
+                    'pr-4 border-0 md:border-r border-solid border-grey-light':
+                      $route.meta.breadcrumb,
+                  }"
+                >
                   <h2 class="mb-1">{{ routeTitle }}</h2>
                 </div>
 
                 <!-- BREADCRUMB -->
-                <vx-breadcrumb class="ml-4 md:block hidden" v-if="$route.meta.breadcrumb" :route="$route" :isRTL="$vs.rtl" />
+                <vx-breadcrumb
+                  class="ml-4 md:block hidden"
+                  v-if="$route.meta.breadcrumb"
+                  :route="$route"
+                  :isRTL="$vs.rtl"
+                />
+
 
                 <!-- DROPDOWN -->
-                <vs-dropdown vs-trigger-click class="ml-auto md:block hidden cursor-pointer">
+                <vs-dropdown
+                  vs-trigger-click
+                  class="ml-auto md:block hidden cursor-pointer"
+                >
                   <vs-button radius icon="icon-settings" icon-pack="feather" />
 
                   <vs-dropdown-menu class="w-32">
                     <vs-dropdown-item>
-                      <div @click="$router.push('/profile').catch(() => {})" class="flex items-center">
-                        <feather-icon icon="UserIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
+                      <div
+                        @click="$router.push('/profile').catch(() => {})"
+                        class="flex items-center"
+                      >
+                        <feather-icon
+                          icon="UserIcon"
+                          class="inline-block mr-2"
+                          svgClasses="w-4 h-4"
+                        />
                         <span>Profile</span>
                       </div>
                     </vs-dropdown-item>
                     <vs-dropdown-item>
-                      <div @click="$router.push('/apps/todo').catch(() => {})" class="flex items-center">
-                        <feather-icon icon="CheckSquareIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
+                      <div
+                        @click="$router.push('/apps/todo').catch(() => {})"
+                        class="flex items-center"
+                      >
+                        <feather-icon
+                          icon="CheckSquareIcon"
+                          class="inline-block mr-2"
+                          svgClasses="w-4 h-4"
+                        />
                         <span>Tasks</span>
                       </div>
                     </vs-dropdown-item>
                     <vs-dropdown-item>
-                      <div @click="$router.push('/apps/email').catch(() => {})" class="flex items-center">
-                        <feather-icon icon="MailIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
+                      <div
+                        @click="$router.push('/apps/email').catch(() => {})"
+                        class="flex items-center"
+                      >
+                        <feather-icon
+                          icon="MailIcon"
+                          class="inline-block mr-2"
+                          svgClasses="w-4 h-4"
+                        />
                         <span>Inbox</span>
                       </div>
                     </vs-dropdown-item>
                   </vs-dropdown-menu>
-
                 </vs-dropdown>
-
               </div>
             </transition>
 
             <div class="content-area__content">
-
-              <back-to-top bottom="5%" :right="$vs.rtl ? 'calc(100% - 2.2rem - 38px)' : '30px'" visibleoffset="500" v-if="!hideScrollToTop">
-                <vs-button icon-pack="feather" icon="icon-arrow-up" class="shadow-lg btn-back-to-top" />
+              <back-to-top
+                bottom="5%"
+                :right="$vs.rtl ? 'calc(100% - 2.2rem - 38px)' : '30px'"
+                visibleoffset="500"
+                v-if="!hideScrollToTop"
+              >
+                <vs-button
+                  icon-pack="feather"
+                  icon="icon-arrow-up"
+                  class="shadow-lg btn-back-to-top"
+                />
               </back-to-top>
 
               <transition :name="routerTransition" mode="out-in">
-                <router-view @changeRouteTitle="changeRouteTitle" @setAppClasses="(classesStr) => $emit('setAppClasses', classesStr)" />
+                <router-view
+                  @changeRouteTitle="changeRouteTitle"
+                  @setAppClasses="
+                    (classesStr) => $emit('setAppClasses', classesStr)
+                  "/>
+
               </transition>
             </div>
           </div>
@@ -130,21 +191,32 @@
 
 
 <script>
-import BackToTop           from 'vue-backtotop'
+import BackToTop from 'vue-backtotop'
 import HNavMenu from '@/layouts/components/horizontal-nav-menu/HorizontalNavMenu.vue'
-import navMenuItems        from '@/layouts/components/vertical-nav-menu/navMenuItems.js'
+import navMenuItems from '@/layouts/components/vertical-nav-menu/navMenuItems.js'
 import adminNavMenuItem from '@/layouts/components/vertical-nav-menu/adminNavMenuItem.js'
 import companyNavMenuItem from '@/layouts/components/vertical-nav-menu/companyNavMenuItem.js'
 import operatorNavMenuitem from '@/layouts/components/vertical-nav-menu/operatorNavMenuitem.js'
 import personNavMenuItem from '@/layouts/components/vertical-nav-menu/personNavMenuItem.js'
 import partnerNavMenuItem from '@/layouts/components/vertical-nav-menu/partnerNavMenuItem.js'
 import guestNavMenuItem from '@/layouts/components/vertical-nav-menu/guestNavMenuItem.js'
-import TheCustomizer       from '@/layouts/components/customizer/TheCustomizer.vue'
+import TheCustomizer from '@/layouts/components/customizer/TheCustomizer.vue'
+import IdentityCustomizer from '@/layouts/components/customizer/IdentityCustomizer.vue'
 import TheNavbarHorizontal from '@/layouts/components/navbar/TheNavbarHorizontal.vue'
-import TheNavbarVertical   from '@/layouts/components/navbar/TheNavbarVertical.vue'
-import TheFooter           from '@/layouts/components/TheFooter.vue'
-import themeConfig         from '@/../themeConfig.js'
-import VNavMenu            from '@/layouts/components/vertical-nav-menu/VerticalNavMenu.vue'
+import TheNavbarVertical from '@/layouts/components/navbar/TheNavbarVertical.vue'
+import TheFooter from '@/layouts/components/TheFooter.vue'
+import themeConfig from '@/../themeConfig.js'
+import VNavMenu from '@/layouts/components/vertical-nav-menu/VerticalNavMenu.vue'
+
+
+import { format } from 'path';
+import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+import { log } from 'util';
+
+import 'swiper/dist/css/swiper.min.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
+
+
 
 const VxTour = () => import('@/components/VxTour.vue')
 
@@ -153,54 +225,128 @@ export default {
     BackToTop,
     HNavMenu,
     TheCustomizer,
+    IdentityCustomizer,
     TheFooter,
     TheNavbarHorizontal,
     TheNavbarVertical,
     VNavMenu,
-    VxTour
+    VxTour,
+    swiper,
+    swiperSlide,
+    VuePerfectScrollbar
   },
   data () {
     return {
+      sho_button: false,
+      active: false,
+      identityBarStatus: '',
+      swiperOption: {
+        pagination: {
+          el: '.swiper-pagination',
+          type: 'progressbar'
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        }
+      },
+      settings: {
+        maxScrollbarLength: 250,
+        wheelSpeed: .100
+      },
+      biometric_data: [
+        {
+          id: 1,
+          header: 'DOCUMENT IDENTITY',
+          sub_header: 'Scanned Document Information',
+          icon_url: 'id.png'
+        },
+        {
+          id: 2,
+          header: 'DIGITAL CERTIFICATE',
+          sub_header: 'Hardware Stored Certificate',
+          icon_url: 'chip.png'
+        },
+        {
+          id: 3,
+          header: 'FACE RECOGNITION',
+          sub_header: 'Captured Face Recognition Details',
+          icon_url: 'face.png'
+        },
+        {
+          id: 4,
+          header: 'FINGERPRINT TEMPLATE',
+          sub_header: 'Captured Fingerprint Information',
+          icon_url: 'fingerprint.png'
+        },
+        {
+          header: 'PALM SCAN',
+          id: 5,
+          sub_header: 'Captured Palm Information',
+          icon_url: 'palm.png'
+        },
+        {
+          id: 6,
+          header: 'VOICE RECORD',
+          sub_header: 'Registered Voice Frequency',
+          icon_url: 'voice.png'
+        },
+
+        {
+          id: 7,
+          header: 'IRIS MAP',
+          sub_header: 'Captured Iris Map',
+          icon_url: 'eye.png'
+        },
+        {
+          id: 8,
+          header: 'SIGNATURE GRAPH',
+          sub_header: 'Graphometric Signature Information',
+          icon_url: 'signature.png'
+        },
+      ],
+      showID: 0,
+
       userRole: this.$store.state.AppActiveUser.userRole,
-      disableCustomizer : themeConfig.disableCustomizer,
-      disableThemeTour  : themeConfig.disableThemeTour,
-      dynamicWatchers   : {},
-      footerType        : themeConfig.footerType  || 'static',
-      hideScrollToTop   : themeConfig.hideScrollToTop,
-      isNavbarDark      : false,
-      navbarColor       : themeConfig.navbarColor || '#fff',
-      navbarType        : themeConfig.navbarType  || 'floating',
+      disableCustomizer: themeConfig.disableCustomizer,
+      disableThemeTour: themeConfig.disableThemeTour,
+      dynamicWatchers: {},
+      footerType: themeConfig.footerType || 'static',
+      hideScrollToTop: themeConfig.hideScrollToTop,
+      isNavbarDark: false,
+      navbarColor: themeConfig.navbarColor || '#fff',
+      navbarType: themeConfig.navbarType || 'floating',
       navMenuItems,
-      routerTransition  : themeConfig.routerTransition || 'none',
-      routeTitle        : this.$route.meta.pageTitle,
+      routerTransition: themeConfig.routerTransition || 'none',
+      routeTitle: this.$route.meta.pageTitle,
       steps: [
         {
-          target  : '#btnVNavMenuMinToggler',
-          content : 'Toggle Collapse Sidebar.'
+          target: '#btnVNavMenuMinToggler',
+          content: 'Toggle Collapse Sidebar.'
         },
         {
-          target  : '.vx-navbar__starred-pages',
-          content : 'Create your own bookmarks. You can also re-arrange them using drag & drop.'
+          target: '.vx-navbar__starred-pages',
+          content: 'Create your own bookmarks. You can also re-arrange them using drag & drop.'
         },
         {
-          target  : '.i18n-locale',
-          content : 'You can change language from here.'
+          target: '.i18n-locale',
+          content: 'You can change language from here.'
         },
         {
-          target  : '.navbar-fuzzy-search',
-          content : 'Try fuzzy search to visit pages in flash.'
+          target: '.navbar-fuzzy-search',
+          content: 'Try fuzzy search to visit pages in flash.'
         },
         {
-          target  : '.customizer-btn',
-          content : 'Customize template based on your preference',
-          params  : {
+          target: '.customizer-btn',
+          content: 'Customize template based on your preference',
+          params: {
             placement: 'left'
           }
         },
         {
-          target  : '.vs-button.buy-now',
-          content : 'Buy this awesomeness at affordable price!',
-          params  : {
+          target: '.vs-button.buy-now',
+          content: 'Buy this awesomeness at affordable price!',
+          params: {
             placement: 'top'
           }
         }
@@ -221,10 +367,16 @@ export default {
     }
   },
   computed: {
+    rtl: {
+      get () { return this.$vs.rtl },
+      set (val) { this.$vs.rtl = val }
+    },
+    scrollbarTag () { return this.$store.state.is_touch_device ? 'div' : 'VuePerfectScrollbar' },
+
     bodyOverlay () { return this.$store.state.bodyOverlay },
     contentAreaClass () {
       if (this.mainLayoutType === 'vertical') {
-        if      (this.verticalNavMenuWidth === 'default') return 'content-area-reduced'
+        if (this.verticalNavMenuWidth === 'default') return 'content-area-reduced'
         else if (this.verticalNavMenuWidth === 'reduced') return 'content-area-lg'
         else return 'content-area-full'
       } else return 'content-area-full'
@@ -239,21 +391,28 @@ export default {
     isAppPage () {
       return this.$route.meta.no_scroll
     },
-    isThemeDark ()     { return this.$store.state.theme === 'dark' },
-    layoutTypeClass () { return `main-${this.mainLayoutType}`      },
-    mainLayoutType ()  { return this.$store.state.mainLayoutType   },
-    navbarClasses ()   {
+    isThemeDark () { return this.$store.state.theme === 'dark' },
+    layoutTypeClass () { return `main-${this.mainLayoutType}` },
+    mainLayoutType () { return this.$store.state.mainLayoutType },
+    navbarClasses () {
       return {
-        'navbar-hidden'   : this.navbarType === 'hidden',
-        'navbar-sticky'   : this.navbarType === 'sticky',
-        'navbar-static'   : this.navbarType === 'static',
-        'navbar-floating' : this.navbarType === 'floating'
+        'navbar-hidden': this.navbarType === 'hidden',
+        'navbar-sticky': this.navbarType === 'sticky',
+        'navbar-static': this.navbarType === 'static',
+        'navbar-floating': this.navbarType === 'floating'
       }
     },
     verticalNavMenuWidth () { return this.$store.state.verticalNavMenuWidth },
-    windowWidth ()          { return this.$store.state.windowWidth }
+    windowWidth () { return this.$store.state.windowWidth }
   },
   methods: {
+    test(status){
+      this.active = status
+      // console.log('Check Status =>>', status);
+    },
+    onItemClick (id) {
+      this.showID = id
+    },
     changeRouteTitle (title) {
       this.routeTitle = title
     },
@@ -285,20 +444,27 @@ export default {
     }
   },
   mounted () {
+    setInterval(() => {
+      if(this.$router.currentRoute.path == '/document/' + localStorage.getItem('docId')){
+        this.sho_button = true
+      }else if(this.$router.currentRoute.path != '/document/' + localStorage.getItem('docId')){
+        this.sho_button = false
+      }
+    }, 500);
     const activeUser = JSON.parse(localStorage.getItem('userInfo'))
-    if(this.userRole === 'administrators' || activeUser.userRole === 'administrators'){
+    if (this.userRole === 'administrators' || activeUser.userRole === 'administrators') {
       // this.navMenuItems = adminNavMenuItem
       this.navMenuItems = companyNavMenuItem
-    } else if (this.userRole === 'guest' || activeUser.userRole === 'guest'){
+    } else if (this.userRole === 'guest' || activeUser.userRole === 'guest') {
       this.navMenuItems = guestNavMenuItem
-    } else if (this.userRole === 'company' || activeUser.userRole === 'company'){
+    } else if (this.userRole === 'company' || activeUser.userRole === 'company') {
       this.navMenuItems = companyNavMenuItem
-      console.log('Side Menu =>', this.navMenuItems );
-    } else if (this.userRole === 'operator' || activeUser.userRole === 'operator'){
+      // console.log('Side Menu =>', this.navMenuItems);
+    } else if (this.userRole === 'operator' || activeUser.userRole === 'operator') {
       this.navMenuItems = operatorNavMenuitem
-    } else if (this.userRole === 'person' || activeUser.userRole === 'person'){
+    } else if (this.userRole === 'person' || activeUser.userRole === 'person') {
       this.navMenuItems = personNavMenuItem
-    } else if(this.userRole === 'partner' || activeUser.userRole === 'partner'){
+    } else if (this.userRole === 'partner' || activeUser.userRole === 'partner') {
       this.navMenuItems = partnerNavMenuItem
     }
     const color = this.navbarColor === '#fff' && this.isThemeDark ? '#10163a' : this.navbarColor
@@ -324,16 +490,14 @@ export default {
     })
   },
   beforeDestroy () {
-    console.log("Destroyed")
+    // console.log("Destroyed")
     Object.keys(this.dynamicWatchers).map(i => {
       this.dynamicWatchers[i]()
       delete this.dynamicWatchers[i]
     })
   }
 }
-
 </script>
-
 
 <style lang="scss">
 @import "@/assets/scss/style.scss";

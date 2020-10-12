@@ -13,6 +13,9 @@ body.overflow-hidden {
 .h-100 {
   height: 100%;
 }
+.h-min-auto{
+  min-height: auto !important;
+}
 .border-0 {
   border: 0px !important;
 }
@@ -1945,10 +1948,10 @@ body.overflow-hidden {
                 }
                 &.flowmodel-btn {
                   top: 10rem !important;
-                  transform: rotate(-90deg) translateY(45px) !important;
+                  transform: rotate(-90deg) translateY(46px) !important;
                 }
                 &.labelmodel-btn {
-                  transform: rotate(-90deg) translateY(50px) !important;
+                  transform: rotate(-90deg) translateY(51px) !important;
                 }
                 &.Trakmodel-btn,
                 &.labelmodel-btn {

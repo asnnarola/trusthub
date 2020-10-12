@@ -59,7 +59,7 @@ export default {
       return axios
       .get('/Users')
       .then(res => {
-        console.log('DATA =>', res.data)
+        // console.log('DATA =>', res.data)
         const Userlist = res.data;
         for (let i = 0; i < Userlist.length; i++) {
           const element = Userlist[i];

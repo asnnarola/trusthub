@@ -2,29 +2,68 @@
   <div class="navbar-bookmarks flex items-center">
     <!-- STARRED PAGES - FIRST 10 -->
     <ul class="vx-navbar__starred-pages">
-      <draggable v-model="starredPagesLimited" :group="{name: 'pinList'}" class="flex cursor-move h-top-icon">
+      <draggable
+        v-model="starredPagesLimited"
+        :group="{ name: 'pinList' }"
+        class="flex cursor-move h-top-icon"
+      >
         <li class="starred-page" v-for="img in headr_Icon1" :key="img.icon_url">
-          <router-link to="#">
-            <img :src="require('@/assets/images/header_icon/' + img.icon_url)">
-          </router-link>
+          <vs-button
+          class="h-top-link"
+            @click.stop="handelIdentityBar(img)"
+            type="filled"
+          >
+            <img
+              :src="require('@/assets/images/header_icon/' + img.icon_url)"
+            />
+          </vs-button>
         </li>
       </draggable>
     </ul>
     <ul class="vx-navbar__starred-pages">
-      <draggable v-model="starredPagesLimited" :group="{name: 'pinList'}" class="flex cursor-move h-top-icon">
-        <li class="starred-page" :class="img.id === 1 || img.id ===4 ? 'active' : ''" v-for="img in header_Icon2" :key="img.icon_url">
-          <router-link to="#">
-            <img :src="require('@/assets/images/header_icon/' + img.icon_url)">
-          </router-link>
+      <draggable
+        v-model="starredPagesLimited"
+        :group="{ name: 'pinList' }"
+        class="flex cursor-move h-top-icon"
+      >
+        <li
+          class="starred-page"
+          :class="img.data.length > 0 ? 'active' : ''"
+          v-for="img in header_Icon2"
+          :key="img.icon_url"
+        >
+          <vs-button
+            @click.stop="handelIdentityBar(img)"
+            class="h-top-link"
+            type="filled"
+          >
+            <img
+              :src="require('@/assets/images/header_icon/' + img.icon_url)"
+            />
+          </vs-button>
         </li>
       </draggable>
     </ul>
     <ul class="vx-navbar__starred-pages">
-      <draggable v-model="starredPagesLimited" :group="{name: 'pinList'}" class="flex cursor-move h-top-icon">
-        <li class="starred-page active" v-for="img in header_Icon3" :key="img.icon_url">
-          <router-link to="#">
-            <img :src="require('@/assets/images/header_icon/' + img.icon_url)">
-          </router-link>
+      <draggable
+        v-model="starredPagesLimited"
+        :group="{ name: 'pinList' }"
+        class="flex cursor-move h-top-icon"
+      >
+        <li
+          class="starred-page"
+          v-for="img in header_Icon3"
+          :key="img.icon_url"
+        >
+          <vs-button
+            @click.stop="handelIdentityBar(img)"
+            class="h-top-link"
+            type="filled"
+          >
+            <img
+              :src="require('@/assets/images/header_icon/' + img.icon_url)"
+            />
+          </vs-button>
         </li>
       </draggable>
     </ul>
@@ -32,7 +71,7 @@
 </template>
 
 <script>
-import draggable     from 'vuedraggable'
+import draggable from 'vuedraggable'
 import VxAutoSuggest from '@/components/vx-auto-suggest/VxAutoSuggest.vue'
 
 export default {
@@ -40,6 +79,9 @@ export default {
     navbarColor: {
       type: String,
       default: '#fff'
+    },
+    identityStatus: {
+      type: Function
     }
   },
   components: {
@@ -48,45 +90,56 @@ export default {
   },
   data () {
     return {
-      headr_Icon1:[
+      headr_Icon1: [
         {
-          id:1,
-          icon_url:'id.png'
+          id: 1,
+          icon_url: 'id.png',
+          data:[]
         },
         {
-          id:2,
-          icon_url:'chip.png'
+          id: 2,
+          icon_url: 'chip.png',
+          data:[]
         }
       ],
-        header_Icon2:[
+      header_Icon2: [
         {
-          id:1,
-          icon_url:'face.png'
+          id: 1,
+          icon_url: 'face.png',
+          data:[]
         },
         {
-          id:2,
-          icon_url:'fingerprint.png'
+          id: 2,
+          icon_url: 'fingerprint.png',
+          data:[{
+            id:1,
+            icon_url:'fingerprint,png'
+          }]
         },
         {
-          id:3,
-          icon_url:'palm.png'
+          id: 3,
+          icon_url: 'palm.png',
+          data:[]
         },
         {
-          id:4,
-          icon_url:'voice.png'
+          id: 4,
+          icon_url: 'voice.png',
+          data:[]
         },
-
         {
-          id:5,
-          icon_url:'eye.png'
+          id: 5,
+          icon_url: 'eye.png',
+          data:[]
         }],
-        header_Icon3:[
+      header_Icon3: [
         {
-          id:1,
-          icon_url:'signature.png'
+          id: 1,
+          icon_url: 'signature.png',
+          data:[]
         },
       ],
-      showBookmarkPagesDropdown : false
+      active: false,
+      showBookmarkPagesDropdown: false
     }
   },
   watch: {
@@ -122,6 +175,13 @@ export default {
     }
   },
   methods: {
+    handelIdentityBar(image){
+      if ( image.data.length > 0 && this.$store.state.AppActiveUser.userRole === 'person' ) {
+        this.active === true ? this.active = false: this.active = true
+        this.identityStatus(this.active)
+      }
+      // this.$emit("identityBarStatus", this.active);
+    },
     selected (obj) {
       this.$store.commit('TOGGLE_CONTENT_OVERLAY', false)
       this.showBookmarkPagesDropdown = false
@@ -157,7 +217,6 @@ export default {
       unbind (el) {
         document.removeEventListener('click', el.__vueClickOutside__)
         el.__vueClickOutside__ = null
-
       }
     }
   }

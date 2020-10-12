@@ -118,14 +118,14 @@
                     </li>
                   </ul>
                   <ul class="d-flex flex-wrap align-items-center position-relative">
-                    <li class="starred-page" :class="img.id === 1 || img.id ===4 ? 'active' : ''" v-for="img in Biometrical_Icon2" :key="img.icon_url">
+                    <li class="starred-page"  v-for="img in Biometrical_Icon2" :key="img.icon_url">
                       <router-link to="#">
                         <img :src="require('@/assets/images/header_icon/' + img.icon_url)" />
                       </router-link>
                     </li>
                   </ul>
                   <ul class="d-flex flex-wrap align-items-center position-relative">
-                    <li class="starred-page active" v-for="img in Biometrical_Icon3" :key="img.icon_url">
+                    <li class="starred-page " v-for="img in Biometrical_Icon3" :key="img.icon_url">
                       <router-link to="#">
                         <img :src="require('@/assets/images/header_icon/' + img.icon_url)" />
                       </router-link>
@@ -297,7 +297,6 @@ export default {
         this.ProgressBar1 = false
         this.percentage = 0
         this.ProgressBar2 = false
-        console.log('AB here');
         this.step = {
           step0: false,
           step1: false,
@@ -305,7 +304,6 @@ export default {
           step3: true,
         }
       }
-      console.log('Data =>', this.userId, this.ActivationCode);
     }
   },
 }

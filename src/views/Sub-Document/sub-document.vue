@@ -1,7 +1,7 @@
 <template>
   <div class="grid-demo__layout-container">
     <label-customizer/>
-    <identity-customizer />
+    <!-- <identity-customizer/> -->
     <vs-row class="border-0 mb-6 align-items-center">
       <vs-spacer />
       <div class="vs-col vs-sm-12 vs-md-12 vs-lg-12 vs-xl-4 bg-transparent border-0 p-0">
@@ -323,7 +323,7 @@ export default {
   methods: {
     getFilePath () {
       filesList.forEach(file => {
-        console.log('Files =>', file);
+        // console.log('Files =>', file);
       });
     },
     async signpadShow () {
@@ -378,6 +378,9 @@ export default {
     clearSignature () {
       this.signaturePad.clear();
     },
+  },
+  created() {
+    localStorage.setItem('docId', this.id)
   },
 }
 </script>

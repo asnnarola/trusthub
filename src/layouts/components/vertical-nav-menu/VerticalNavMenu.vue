@@ -527,7 +527,7 @@ export default {
           }
         }
       }
-      console.log('Clone =>', clone);
+      // console.log('Clone =>', clone);
 
       return clone
     },
@@ -655,7 +655,7 @@ export default {
       this.$store.commit('UPDATE_VERTICAL_NAV_MENU_ITEMS_MIN', false)
     },
     toggleReduce (val) {
-      console.log('My Value =>', val);
+      // console.log('My Value =>', val);
       this.reduceButton = val
       this.setVerticalNavMenuWidth()
     },

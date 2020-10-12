@@ -177,7 +177,7 @@ export default {
   methods: {
 
     onTitleClick(title) {
-      console.log('Title =>', title);
+      // console.log('Title =>', title);
       if(title === 'Todo'){
         this.$router.push('/apps/todo/all').catch(() => { })
       }

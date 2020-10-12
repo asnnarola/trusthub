@@ -227,7 +227,7 @@ export default {
     }
   },
   created() {
-    console.log('GROUP =>');
+    // console.log('GROUP =>');
   },
   mounted () {
     this.openItems = this.open

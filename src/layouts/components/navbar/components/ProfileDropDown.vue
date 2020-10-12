@@ -221,11 +221,11 @@ export default {
   },
   computed: {
     activeUserInfo () {
-      console.log('User Info =>', this.$store.state.AppActiveUser);
+      // console.log('User Info =>', this.$store.state.AppActiveUser);
       return this.$store.state.AppActiveUser
     },
     subUserData () {
-      console.log('Sub Data =>>', this.activeUserInfo.subUsers)
+      // console.log('Sub Data =>>', this.activeUserInfo.subUsers)
       if (this.activeUserInfo.userRole === 'operator') {
         return this.activeUserInfo.subUsers
       } else {

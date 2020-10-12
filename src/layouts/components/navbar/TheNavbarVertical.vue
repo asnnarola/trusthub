@@ -7,8 +7,6 @@
   Author: Pixinvent
   Author URL: http://www.themeforest.net/user/pixinvent
 ========================================================================================== -->
-
-
 <template>
   <div class="relative">
 
@@ -19,7 +17,9 @@
         <!-- SM - OPEN SIDEBAR BUTTON -->
         <feather-icon class="sm:inline-flex xl:hidden cursor-pointer p-2" icon="MenuIcon" @click.stop="showSidebar" />
         <div class="d-flex align-items-center justify-content-between topnavbarall-icon">
-        <bookmarks :navbarColor="navbarColor" v-if="windowWidth >= 992 && (this.$store.state.AppActiveUser.userRole === 'person' || this.$store.state.AppActiveUser.userRole === 'operator' || activeUser.userRole ==='person' || activeUser.userRole === 'operator')" />
+
+        <bookmarks :navbarColor="navbarColor" :identityStatus="identityStatus" @identityBarStatus="identityBarStatus = $event" v-if="windowWidth >= 992 && (this.$store.state.AppActiveUser.userRole === 'person' || this.$store.state.AppActiveUser.userRole === 'operator' || activeUser.userRole ==='person' || activeUser.userRole === 'operator')" />
+        {{identityBarStatus}}
 
         <vs-spacer />
 
@@ -27,7 +27,6 @@
         <i18n-person v-if="this.$store.state.AppActiveUser.userRole === 'person' || activeUser=== 'person' "/>
         </div>
         <profile-drop-down />
-
       </vs-navbar>
     </div>
   </div>
@@ -46,10 +45,15 @@ export default {
     navbarColor: {
       type: String,
       default: '#fff'
+    },
+    test:{
+      type: Function
     }
   },
   data() {
     return {
+      identityBarStatus:'',
+      idStatus:'',
       activeUser:JSON.parse(localStorage.getItem('userInfo'))
     }
   },
@@ -81,9 +85,24 @@ export default {
     }
   },
   methods: {
+    identityStatus(status){
+      // console.log('Status =<', status);
+      if(status == false || status == true){
+        this.idStatus = status
+        this.test(this.idStatus)
+      }
+      // this.$emit('test',status)
+      // this.test(status)
+      // return this.$emit("identityBar", this.identityBarStatus);
+    },
     showSidebar () {
       this.$store.commit('TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE', true)
     }
-  }
+  },
+  // mounted() {
+  //   setTimeout(() => {
+  //     this.identityStatus()
+  //   }, 300);
+  // },
 }
 </script>
