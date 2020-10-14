@@ -48,7 +48,7 @@ export default [
     i18n: 'Flows',
   },
   {
-    url: '#',
+    url: '/customers',
     name: 'Customers',
     icon_url: 'customer.png',
     i18n: 'Customers',
@@ -84,13 +84,13 @@ export default [
   //   i18n: 'Wallets',
   // },
   {
-    url: '/notarizations',
+    url: '/notary',
     name: 'Notary',
     icon_url: 'notarization.png',
     i18n: 'Notary',
   },
   {
-    url: '#',
+    url: '/notification',
     name: 'Notification',
     icon_url: 'plugins.png',
     i18n: 'Notification',

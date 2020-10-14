@@ -24,13 +24,13 @@ export default [
     i18n: 'Flows',
   },
   {
-    url: '#',
+    url: '/customers',
     name: 'Customers',
     icon_url: 'customer.png',
     i18n: 'Customers',
   },
   {
-    url: '#',
+    url: '/notary',
     name: 'Notary',
     icon_url: 'notarization.png',
     i18n: 'Notary',

@@ -30,7 +30,7 @@ export default [
     i18n: 'Identity',
   },
   {
-    url: '#',
+    url: '/receipts',
     name: 'Receipts',
     icon_url: 'identity.png',
     i18n: 'Receipts',
@@ -48,7 +48,7 @@ export default [
     i18n: 'Extra',
   },
   {
-    url: '#',
+    url: '/limits',
     name: 'Limits',
     icon_url: 'plugins.png',
     i18n: 'Limits',

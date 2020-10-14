@@ -12,7 +12,7 @@ const data = {
       displayName: 'Minoletti Reeberto',
       password: 'Password',
       photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
-      email: 'admin@admin.com',
+      email: 'administrator@administrator.com',
       userRole: 'administrators',
       phoneNumber: null
     },

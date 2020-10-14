@@ -6,19 +6,19 @@ export default [
     i18n: 'Dashboard',
   },
   {
-    url: '#',
+    url: '/companies',
     name: 'Companies',
     icon_url: 'dashboard.png',
     i18n: 'Companies',
   },
   {
-    url: '#',
+    url: '/licences',
     name: 'Licences',
     icon_url: 'dashboard.png',
     i18n: 'Licences',
   },
   {
-    url: '/extra',
+    url: '/wallets',
     name: 'Wallets',
     icon_url: 'plugins.png',
     i18n: 'Wallets',

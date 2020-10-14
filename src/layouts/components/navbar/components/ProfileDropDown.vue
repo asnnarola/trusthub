@@ -62,7 +62,7 @@
           </div>
         </swiper-slide>
 
-        <swiper-slide v-for="data in subUserData" :key="data.uid" :class="subUserData.length < 2 ? 'user_2' : ''">
+        <swiper-slide v-for="(data, index) in subUserData" :key="index" :class="subUserData.length < 2 ? 'user_2' : ''">
           <div class="d-flex flex-wrap slideuser-warpper justify-content-center pr-4 align-items-center">
             <div class="text-right leading-tight hidden sm:block text-white slideuser-name">
               <p class="font-semibold">{{ data.displayName }}</p>
@@ -95,7 +95,7 @@
 
                   <li
                     class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-                    @click="logout"
+                    @click="removeUser(index)"
                   >
                     <!-- <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4" /> -->
                     <i class="fas fa-sign-out-alt"></i>
@@ -235,6 +235,9 @@ export default {
     windowWidth () { return this.$store.state.windowWidth }
   },
   methods: {
+    removeUser(data){
+      this.activeUserInfo.subUsers.splice(data, 1)
+    },
     logout () {
       // if user is logged in via auth0
       if (this.$auth.profile) this.$auth.logOut()

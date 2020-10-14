@@ -343,7 +343,7 @@ export default {
     bottom_data: [],
     guestBottomData: [
       {
-        url: '#',
+        url: '/apps/eCommerce/shop',
         name: 'Upgrade',
         icon_url: 'gear.png',
         i18n: 'Upgrade',
@@ -366,13 +366,13 @@ export default {
     personBottomData: [
       {
         url: '/setting',
-        name: 'Setting',
+        name: 'Setting & Limits',
         icon_url: 'gear.png',
-        i18n: 'Setting',
+        i18n: 'Setting & Limits',
         isbottom: true
       },
       {
-        url: '#',
+        url: '/apps/eCommerce/shop',
         name: 'Upgrade',
         icon_url: 'gear.png',
         i18n: 'Upgrade',
@@ -401,7 +401,7 @@ export default {
         isbottom: true
       },
       {
-        url: '#',
+        url: '/konwledgebase',
         name: 'Knowledge Base',
         icon_url: 'help.png',
         i18n: 'Knowledge Base',
@@ -416,14 +416,21 @@ export default {
     ],
     companyBottomData: [
       {
-        url: '/setting',
-        name: 'Setting',
+        url: '/apps/eCommerce/shop',
+        name: 'Upgrade',
         icon_url: 'gear.png',
-        i18n: 'Setting',
+        i18n: 'Upgrade',
         isbottom: true
       },
       {
-        url: '#',
+        url: '/setting',
+        name: 'Setting & Limits',
+        icon_url: 'gear.png',
+        i18n: 'Setting & Limits',
+        isbottom: true
+      },
+      {
+        url: '/konwledgebase',
         name: 'Knowledge Base',
         icon_url: 'help.png',
         i18n: 'Knowledge Base',
@@ -452,7 +459,7 @@ export default {
         isbottom: true
       },
       {
-        url: '#',
+        url: '/konwledgebase',
         name: 'Knowledge Base',
         icon_url: 'help.png',
         i18n: 'Knowledge Base',
@@ -565,11 +572,19 @@ export default {
     openSubSidebar (item) {
       if (item == 'Documents') {
         this.activeBottomSubsidebar = false
-        this.activeSubsidebar == true ? this.activeSubsidebar = false : this.activeSubsidebar = true
+        if (this.$store.state.AppActiveUser.userRole === 'guest') {
+          this.activeSubsidebar = false
+        } else {
+          this.activeSubsidebar == true ? this.activeSubsidebar = false : this.activeSubsidebar = true
+        }
       }
       else if (item == 'Setting' || item =='Setting & Limits' ) {
         this.activeSubsidebar = false
-        this.activeBottomSubsidebar == true ? this.activeBottomSubsidebar = false : this.activeBottomSubsidebar = true
+        if(this.$store.state.AppActiveUser.userRole === 'operator'){
+          this.activeBottomSubsidebar = false
+        }else{
+          this.activeBottomSubsidebar == true ? this.activeBottomSubsidebar = false : this.activeBottomSubsidebar = true
+        }
       }
       else {
         this.activeBottomSubsidebar = false

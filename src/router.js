@@ -113,10 +113,81 @@ const router = new Router({
           }
         },
         {
-
+          path: '/receipts',
+          name: 'receipts',
+          component: () => import('./views/Receipts.vue'),
+          meta: {
+            rule: 'editor'
+          },
+        },
+        {
+          path: '/limits',
+          name: 'limits',
+          component: () => import('./views/Limits.vue'),
+          meta: {
+            rule: 'editor'
+          },
+        },
+        {
+          path: '/customers',
+          name: 'customers',
+          component: () => import('./views/Customers.vue'),
+          meta: {
+            rule: 'editor'
+          },
+        },
+        {
+          path: '/notary',
+          name: 'notary',
+          component: () => import('./views/Notary.vue'),
+          meta: {
+            rule: 'editor'
+          },
+        },
+        {
+          path: '/companies',
+          name: 'companies',
+          component: () => import('./views/Companies.vue'),
+          meta: {
+            rule: 'editor'
+          },
+        },
+        {
+          path: '/licences',
+          name: 'licences',
+          component: () => import('./views/Licences.vue'),
+          meta: {
+            rule: 'editor'
+          },
+        },
+        {
+          path: '/wallets',
+          name: 'wallets',
+          component: () => import('./views/Wallets.vue'),
+          meta: {
+            rule: 'editor'
+          },
+        },
+        {
+          path: '/notification',
+          name: 'notification',
+          component: () => import('./views/Notification.vue'),
+          meta: {
+            rule: 'editor'
+          },
+        },
+        {
           path: '/setting',
           name: 'setting',
           component: () => import('./views/settings.vue'),
+          meta: {
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/konwledgebase',
+          name: 'konwledgebase',
+          component: () => import('./views/KnowledgeBase.vue'),
           meta: {
             rule: 'editor'
           }
@@ -179,20 +250,20 @@ const router = new Router({
             no_scroll: true
           }
         },
-        // {
-        //   path: '/apps/eCommerce/shop',
-        //   name: 'ecommerce-shop',
-        //   component: () => import('./views/apps/eCommerce/ECommerceShop.vue'),
-        //   meta: {
-        //     breadcrumb: [
-        //       { title: 'Home', url: '/' },
-        //       { title: 'eCommerce'},
-        //       { title: 'Shop', active: true }
-        //     ],
-        //     pageTitle: 'Shop',
-        //     rule: 'editor'
-        //   }
-        // },
+        {
+          path: '/apps/eCommerce/shop',
+          name: 'ecommerce-shop',
+          component: () => import('./views/apps/eCommerce/ECommerceShop.vue'),
+          meta: {
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'eCommerce'},
+              { title: 'Shop', active: true }
+            ],
+            pageTitle: 'Shop',
+            rule: 'editor'
+          }
+        },
         // {
         //   path: '/apps/eCommerce/wish-list',
         //   name: 'ecommerce-wish-list',
