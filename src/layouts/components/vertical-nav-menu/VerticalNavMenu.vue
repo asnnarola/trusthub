@@ -345,7 +345,7 @@ export default {
       {
         url: '/apps/eCommerce/shop',
         name: 'Upgrade',
-        icon_url: 'gear.png',
+        icon_url: 'cart.png',
         i18n: 'Upgrade',
         isbottom: true
       },
@@ -374,7 +374,7 @@ export default {
       {
         url: '/apps/eCommerce/shop',
         name: 'Upgrade',
-        icon_url: 'gear.png',
+        icon_url: 'cart.png',
         i18n: 'Upgrade',
         isbottom: true
       },
@@ -418,7 +418,7 @@ export default {
       {
         url: '/apps/eCommerce/shop',
         name: 'Upgrade',
-        icon_url: 'gear.png',
+        icon_url: 'cart.png',
         i18n: 'Upgrade',
         isbottom: true
       },
