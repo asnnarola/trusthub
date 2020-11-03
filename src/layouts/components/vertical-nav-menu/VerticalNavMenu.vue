@@ -59,7 +59,7 @@
         >
           <template v-for="(item, index) in menuItemsUpdated" >
             <template v-if="!item.header">
-            <div @click="openSubSidebar(item.name)" :key="`item-${index}`">
+            <div @mouseenter="openSubSidebar(item.name)" :key="`item-${index}`">
               <v-nav-menu-item
                 v-if="!item.submenu"
                 :index="index"
@@ -90,7 +90,7 @@
               :key="data.id"
               class="vs-sidebar--item"
             >
-              <div v-if="data.url" @click="openSubSidebar(data.name)">
+              <div v-if="data.url" @mouseenter="openSubSidebar(data.name)">
                 <router-link :to="data.url" class="border-0">
                   <span class="feather-icon select-none relative"> </span>
                   <!-- <div > -->
@@ -137,6 +137,7 @@
       >
         <section
           class="scroll-area-v-nav-menu submenu-section pt-2 ps ps--active-y"
+          @mouseleave="closeSubSidebar()"
         >
           <div
             class="vs-sidebar--item"
@@ -177,6 +178,7 @@
       >
         <section
           class="scroll-area-v-nav-menu submenu-section pt-2 ps ps--active-y settingBottomSubMenu"
+          @mouseleave="closeSubSidebar()"
         >
           <div
             class="vs-sidebar--item"
@@ -592,6 +594,10 @@ export default {
       }
     },
 
+    closeSubSidebar(){
+      this.activeBottomSubsidebar = false
+        this.activeSubsidebar = false
+    },
     onMenuSwipe (event) {
       if (event.direction === 4 && this.$vs.rtl) {
 
