@@ -27,6 +27,7 @@
     "echarts": "^4.2.1",
     "express": "^4.17.1",
     "file-saver": "2.0.1",
+    "fingerprintjs": "^0.5.3",
     "firebase": "^7.21.1",
     "instantsearch.css": "^7.3.1",
     "json-server": "^0.16.1",
