@@ -42,6 +42,7 @@ const getUserInfo = () => {
     if (userInfo[key] === undefined && userInfoLocalStorage[key] !== null) userInfo[key] = userInfoLocalStorage[key]
   })
 
+  console.log('User Details =>', userInfo);
   return userInfo
 }
 

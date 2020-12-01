@@ -1485,7 +1485,7 @@ const router = new Router({
         },
         {
           // path: '/pages/reset-password',
-          path: '/reset-password',
+          path: '/reset-password/:key',
           name: 'page-reset-password',
           component: () => import('@/views/pages/ResetPassword.vue'),
           meta: {

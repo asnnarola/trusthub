@@ -31,7 +31,7 @@
           <router-link
             tag="div"
             class="vx-logo cursor-pointer flex items-center"
-            to="/"
+            to="/dashboard"
           >
             <logo class="mr-4 fill-current text-primary" />
           </router-link>

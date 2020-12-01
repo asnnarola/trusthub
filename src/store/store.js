@@ -23,6 +23,7 @@ Vue.use(Vuex)
 // import moduleChat from './chat/moduleChat.js'
 // import moduleEmail from './email/moduleEmail.js'
 import moduleAuth from './auth/moduleAuth.js'
+import moduleDocument from './documents/moduleDocument.js'
 import moduleECommerce from './eCommerce/moduleECommerce.js'
 
 
@@ -37,6 +38,7 @@ export default new Vuex.Store({
     // chat: moduleChat,
     // email: moduleEmail,
     auth: moduleAuth,
+    document: moduleDocument,
     eCommerce: moduleECommerce
   },
   strict: process.env.NODE_ENV !== 'production'

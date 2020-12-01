@@ -186,6 +186,12 @@ body {
                   max-width: 100%;
                   height: auto;
                 }
+                .attention-text {
+                  font-size: 13px;
+                }
+              }
+              .text-center {
+                text-align: center;
               }
               .appstore-wrapper {
                 @media screen and (max-width: 991px) {
@@ -194,12 +200,13 @@ body {
                 }
                 a {
                   max-width: 185px;
-                  margin-left: 15px;
+                  margin-left: 5px;
                   &:nth-child(1) {
                     margin-left: 0px;
                   }
                   img {
-                    height: 60px;
+                    height: 50px;
+                    background: #000;
                     @media screen and (max-width: 991px) {
                       height: 40px;
                     }
@@ -221,6 +228,37 @@ body {
                     }
                     .msg-wrapper-icon {
                       width: 36px;
+                    }
+                  }
+                  .password-inputcontrol {
+                    .password-input {
+                      max-width: calc(100% - 110px);
+                      width: 100%;
+                      position: relative;
+                      .vs-input--input{
+                        padding-right: 3rem !important;
+                      }
+                      i {
+                        &.hs-password {
+                          position: absolute;
+                          top: 0;
+                          right: 0;
+                          margin-top: 13px;
+                          margin-right: 13px;
+                          color: #bfbfbf;
+                          cursor: pointer;
+                        }
+                      }
+                    }
+                    .generate-btn {
+                      max-width: 100px;
+                      button {
+                        &.vs-button {
+                          max-width: 100px;
+                          padding-left: 0;
+                          padding-right: 0;
+                        }
+                      }
                     }
                   }
                   .border-lightgray {
@@ -266,6 +304,109 @@ body {
                       }
                     }
                     .LT-wrap {
+                      &.loginoption-btnwrapper {
+                        .vs-button-primary {
+                          border: 2px solid rgba(0, 0, 0, 0.12) !important;
+                          background: rgb(255, 255, 255) !important;
+                          color: #4ec12d !important;
+                          max-width: 116px;
+                          width: 100%;
+                          padding: 0.75rem 0;
+                          &.btn-more {
+                            max-width: 25px;
+                          }
+                          &:hover {
+                            border: 2px solid #4ec12d !important;
+                            background: #4ec12d !important;
+                            background-color: #4ec12d !important;
+                            color: #fff !important;
+                          }
+                        }
+                        .accessmng-modal {
+                          position: absolute;
+                          top: -14rem;
+                          max-width: calc(100% + 65px);
+                          width: calc(100% + 65px);
+                          z-index: 111;
+                          padding: 15px;
+                          ul {
+                            &.accessmng-block {
+                              display: flex;
+                              justify-content: space-between;
+                              flex-wrap: wrap;
+                              li {
+                                width: 100px;
+                                height: 100px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                border: none !important;
+                                margin: 0px !important;
+                              }
+                            }
+                          }
+                          &:after {
+                            display: inline-block;
+                            margin-left: 0.255em;
+                            vertical-align: 0.255em;
+                            content: "";
+                            border-top: 2.15em solid #aeaeae;
+                            border-right: 2.15em solid transparent;
+                            border-bottom: 0;
+                            border-left: 2.15em solid transparent;
+                            position: absolute;
+                            right: 3.25rem;
+                            bottom: -25px;
+                          }
+                        }
+                      }
+                    }
+                    .loginsocail-btn {
+                      &.vs-button-primary {
+                        &.vs-button-filled {
+                          padding: 0px !important;
+                          width: 38px;
+                          height: 38px;
+                          background-color: transparent !important;
+                          background: transparent !important;
+                          box-shadow: none;
+                          font-size: 40px;
+                          color: #000;
+                          display: inline-flex;
+                          justify-content: center;
+                          align-items: center;
+                          outline: none;
+                          transition: ease 0.15s;
+                          &:hover {
+                            color: #7c7c7c !important;
+                          }
+                        }
+                      }
+                    }
+                  }
+                  .checkbox-register {
+                    li {
+                      &.checkbox-reg-txt {
+                        font-size: 13.35px;
+                        font-weight: 500;
+                        color: #f9c201;
+                        margin-top: 0px;
+                        .checkbox-reginput {
+                          margin-right: 0;
+                          .vs-checkbox {
+                            border: 2px solid #f9c201 !important;
+                          }
+                          input {
+                            &.vs-checkbox--input {
+                              &:checked {
+                                & ~ .vs-checkbox {
+                                  background: #f9c201 !important;
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                   .sub-trial-txt {

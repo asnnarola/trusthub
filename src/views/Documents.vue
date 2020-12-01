@@ -9,20 +9,105 @@
           <vs-col class="vs-xs-12 vs-sm-4 vs-md-4 vs-lg-3 p-0">
             <vx-card class="box-shadow-none left-treeheight">
               <div class="p-4 NH-btn">
-                <vs-button color="gray" class="border-radius-0 w-100 mr-3 mb-3"
-                  >New</vs-button
+                <vs-button
+                  color="gray"
+                  class="border-radius-0 w-100 mr-3 mb-3"
+                  @click="folderpopupActive = true"
                 >
-                <vs-button color="gray" class="mr-3 border-radius-0 w-100"
-                  >Upload</vs-button
+                  New
+                </vs-button>
+                <vs-button
+                  color="gray"
+                  class="mr-3 border-radius-0 w-100"
+                  @click="uploadpopupActive = true"
                 >
+                  Upload
+                </vs-button>
               </div>
-              <v-treeview
-                v-model="treeData"
-                :treeTypes="treeTypes"
-                :openAll="openAll"
-                @selected="selected"
-                class="p-2 pb-0"
-              ></v-treeview>
+              <vs-popup
+                background-color="rgba(255,255,255,.6)"
+                class=""
+                title="Background"
+                :active.sync="folderpopupActive"
+              >
+                <h3>{{ isRename ? "Rename Folder" : "Create Folder" }}</h3>
+                <vs-input
+                  v-validate="'required'"
+                  data-vv-validate-on="blur"
+                  name="folderName"
+                  label-placeholder="Folder Name"
+                  v-model="folderName"
+                  class="w-full"
+                />
+                <span class="text-danger text-sm">{{
+                  errors.first("folderName")
+                }}</span>
+                <!-- <vs-input
+                  data-vv-validate-on="blur"
+                  v-validate="'required'"
+                  type="text"
+                  name="folderLocation"
+                  label-placeholder="Folder Location"
+                  v-model="folderLocation"
+                  class="w-full mt-6"
+                /> -->
+                <!-- <span class="text-danger text-sm">{{
+                  errors.first("folderLocation")
+                }}</span> -->
+
+                <div class="flex flex-wrap justify-between mt-5 mb-3 LT-wrap">
+                  <vs-button
+                    class="btn-green"
+                    :disabled="!validateForm"
+                    @click="createFolder()"
+                  >
+                    {{ isRename ? "Rename" : "Creat" }}
+                  </vs-button>
+                  <vs-button class="btn-green" @click="folderClear()">
+                    Cancle
+                  </vs-button>
+                </div>
+              </vs-popup>
+              <vs-popup
+                background-color="rgba(255,255,255,.6)"
+                class=""
+                title="Background"
+                :active.sync="uploadpopupActive"
+              >
+                <h3>Upload Files</h3>
+                <!-- <vs-upload
+                  multiple
+                  text="Upload Multiple"
+                  @input="alert('hii')"
+                /> -->
+                <input
+                  type="file"
+                  name="uploadFiles"
+                  multiple="multiple"
+                  @change="setFiles($event)"
+                />
+
+                <div class="flex flex-wrap justify-between mt-5 mb-3 LT-wrap">
+                  <vs-button class="btn-green" @click="uploadFiles()">
+                    Upload
+                    <!-- :disabled="!validateForm" -->
+                  </vs-button>
+                  <vs-button class="btn-green" @click="uploadClear()">
+                    Cancle
+                  </vs-button>
+                </div>
+              </vs-popup>
+
+              <div v-if="folderData && folderData.length">
+                <v-treeview
+                  v-model="folderData"
+                  :treeTypes="treeTypes"
+                  :openAll="openAll"
+                  @selected="selected"
+                  class="p-2 pb-0"
+                ></v-treeview>
+              </div>
+
               <!-- :contextItems="contextItems" -->
               <!-- @contextSelected="contextSelected" -->
 
@@ -103,11 +188,12 @@
                   v-for="(subData, index) in subFilesdata"
                   :key="index"
                   @contextmenu.prevent="$refs.menu.open"
+                  @mouseenter="onMouseenter(subData.id)"
                 >
                   <span class="cursor-pointer">
                     <div
                       class="file-icon text-center d-flex flex-column justify-content-center align-items-center"
-                      v-if="subData.children.length > 0"
+                      v-if="subData.type === 'Folder'"
                       @click="getFiles(subData)"
                     >
                       <i class="fas fa-folder"></i>
@@ -325,13 +411,13 @@
                     <a class="flex items-center">Copy</a>
                   </vs-dropdown>
                 </li>
-                <li class="hoverfile-menu">
+                <li @click="RenameDocument()">
                   <vs-dropdown class="cursor-pointer">
                     <a class="flex items-center">Rename</a>
                   </vs-dropdown>
                 </li>
 
-                <li>
+                <li @click="RemoveDocument()">
                   <i class="fas fa-trash-alt"></i>
                   <span>Remove</span>
                 </li>
@@ -713,14 +799,20 @@ import VueContext from 'vue-context';
 import pdf from 'vue-pdf'
 import VuePDFViewer from "vue-instant-pdf-viewer";
 import 'vue-context/src/sass/vue-context.scss';
-import subDocument from './Sub-Document/sub-document.vue'
-import filesList from './Document_Files.js'
+import filesdata from './Document_Files.js'
 import TheCustomizer from '@/layouts/components/customizer/TheCustomizer.vue'
 import TrakingCustomizer from '@/layouts/components/customizer/TrakingCustomizer.vue'
 import FlowCustomizer from '@/layouts/components/customizer/FlowCustomizer.vue'
+import _ from 'underscore'
+import axios from '../axios.js'
 export default {
-  data () {
+  data: function () {
     return {
+      folderpopupActive: false,
+      uploadpopupActive: false,
+      isRename: false,
+      folderName: '',
+      // folderLocation: '',
       cloudModel_show: false,
       items: [
         'Cras justo odio',
@@ -775,6 +867,7 @@ export default {
           max_depth: 4,
           valid_children: [
             "Folder",
+            "FOLDER",
             "File"
           ]
         },
@@ -784,12 +877,22 @@ export default {
           valid_children: ["Basic", "Top-up"]
         },
         {
+          type: "FOLDER",
+          icon: "fas fa-folder",
+          valid_children: ["Basic", "Top-up"]
+        },
+        {
           type: "File",
           icon: "fas fa-file",
           valid_children: ["Basic", "Top-up"]
         },
       ],
-      treeData: filesList,
+      folderData: [],
+      docList: [],
+      current_parentID: null,
+      current_location: '/',
+      selectedFileID: '',
+      files: [],
       // contextItems: [],
       selectedNode: null,
       cloudModel: [
@@ -856,21 +959,41 @@ export default {
       ]
     }
   },
+  //  async created() {
+  //     this.docList = this.$store.dispatch('document/getFiles')
+  //     console.log('AB Data =>', this.docList)
+  //   },
+  async mounted () {
+    await this.getDocuments()
+  },
+  computed: {
+    validateForm () {
+      return !this.errors.any() && this.folderName !== ''
+    }
+  },
   methods: {
     successUpload () {
       this.$vs.notify({ color: 'success', title: 'Upload Success', text: 'Lorem ipsum dolor sit amet, consectetur' })
     },
-
     getFiles (file) {
       if (file.type === 'Folder') {
         this.subFilesdata = file.children
+        this.current_parentID = file.id
+        this.current_location = file.location
       }
       if (file.type == 'File') {
         localStorage.setItem('activefilePath', file.path)
         this.$router.push('/document/' + file.id).catch(() => { })
       }
     },
+    onMouseenter (id) {
+      this.selectedFileID = id
+      console.log('Sub Data =>', this.selectedFileID);
+    },
+
     selected (node) {
+      this.current_parentID = node.model.id
+      this.current_location = node.model.location
       this.subFilesdata = node.model.children
     },
     onListView () {
@@ -888,6 +1011,113 @@ export default {
         this.onList = false;
         this.onGrid = true;
       }
+    },
+    getDocuments () {
+      //  setTimeout(() => {
+      //    this.folderData = this.$store.getters['document/Documents']
+      //  }, 1000);
+      const token = localStorage.getItem('accessToken')
+      axios.get('folders', {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      }).then(res => {
+        this.folderData = res.data
+        this.subFilesdata = res.data
+        current_parentI = null
+        current_location = '/'
+        selectedFileID = ''
+      })
+    },
+    createFolder () {
+      if (!this.validateForm) return
+      // Loading
+      if (this.isRename) {
+        this.$vs.loading()
+        const payload = {
+          folderDetails: {
+            newName: this.folderName,
+            id: this.selectedFileID,
+          }
+        }
+        this.$store.dispatch('document/renameFolder', payload)
+          .then(() => {
+            this.$vs.loading.close()
+            this.isRename = false
+            this.folderClear()
+            this.getDocuments()
+          })
+          .errors((err) => {
+            console.log('Error =>', err);
+          })
+      } else if (!this.isRename) {
+        this.$vs.loading()
+        const payload = {
+          folderDetails: {
+            name: this.folderName,
+            path: this.current_location,
+            parentId: this.current_parentID
+          }
+        }
+        this.$store.dispatch('document/createFolder', payload)
+          .then(() => {
+            this.$vs.loading.close()
+            this.folderClear()
+            this.getDocuments()
+          })
+          .errors((err) => {
+            console.log('Error =>', err);
+          })
+      }
+    },
+    folderClear () {
+      this.folderpopupActive = false
+      this.folderName = ''
+    },
+    setFiles (e) {
+      console.log('Event ', e.target.files);
+      e.target.files.forEach(file => {
+        this.files.push(file)
+      });
+      console.log('Event ', this.files);
+    },
+    uploadFiles () {
+      // this.$vs.loading()
+      const token = localStorage.getItem('accessToken')
+      const formData = new FormData();
+      formData.append('uploadLocation', this.current_location);
+      formData.append('parentId', this.current_parentID);
+      this.files.forEach(file => {
+        formData.append('files', file);
+      });
+      this.$store.dispatch('document/uploadFiles', formData)
+        .then(() => {
+          this.$vs.loading.close()
+          this.getDocuments()
+          this.uploadClear()
+        })
+        .catch((err) => {
+          console.log('Error =>', err)
+        })
+    },
+    uploadClear () {
+      this.uploadpopupActive = false
+      this.files = []
+    },
+    RemoveDocument () {
+      this.$vs.loading()
+      this.$store.dispatch('document/deleteFolder', this.selectedFileID)
+        .then(() => {
+          this.$vs.loading.close()
+          this.getDocuments()
+        })
+        .catch((err) => {
+          console.log('Error =>', err)
+        })
+    },
+    RenameDocument () {
+      this.folderpopupActive = true
+      this.isRename = true
     }
   },
   components: {

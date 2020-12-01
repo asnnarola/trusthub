@@ -180,7 +180,7 @@
                         class="select-block d-flex justify-content-end position-absolute right-0 pt-15"
                       >
                         <h6 class="d-flex align-items-center">
-                          <span class="pr-20 ">Scan Quality: Good</span>
+                          <span class="pr-20">Scan Quality: Good</span>
                         </h6>
                         <div class="mr-10 selectlabel-check active">
                           <h6 class="d-flex align-items-center">
@@ -202,24 +202,24 @@
                       <!-- FIngerPrint Copy -->
                       <!-- <div id="content-capture" style="display : none;"> -->
                       <div id="status"></div>
-                      <div id="imagediv"></div>
+                      <div id="imagediv" ref="imagediv"></div>
                       <div id="contentButtons">
                         <table width="70%" align="center">
                           <tr>
                             <td>
                               <!-- <input
                                 type="button"
-                                class="btn btn-primary"
+                                class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
                                 id="clearButton"
                                 value="Clear"
-                                onclick="Javascript:onClear()"
+                                onclick="onClearClick()"
                               /> -->
                               <vs-button
                                 color="primary"
                                 id="clearButton"
                                 class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
                                 type="filled"
-                                @click="onClear()"
+                                @click="onClearClick()"
                               >
                                 Clear
                               </vs-button>
@@ -230,8 +230,9 @@
                             >
                               <!-- <input
                                 type="button"
-                                class="btn btn-primary"
+                                class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
                                 id="save"
+                                onclick="onSaveClick()"
                                 value="Save"
                               /> -->
                               <vs-button
@@ -239,6 +240,7 @@
                                 id="save"
                                 class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
                                 type="filled"
+                                @click="onSaveClick()"
                               >
                                 Save
                               </vs-button>
@@ -246,17 +248,18 @@
                             <td>
                               <!-- <input
                                 type="button"
-                                class="btn btn-primary"
+                                class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
                                 id="start"
                                 value="Start"
-                                onclick="Javascript:onStart()"
+                                onclick="onStartClick()"
                               /> -->
                               <vs-button
                                 color="primary"
                                 id="start"
                                 class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
                                 type="filled"
-                                @click="onStart()"
+                                @click="onStartClick()"
+                                :disabled = "btnDisabled"
                               >
                                 Start
                               </vs-button>
@@ -264,17 +267,18 @@
                             <td>
                               <!-- <input
                                 type="button"
-                                class="btn btn-primary"
+                                class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
                                 id="stop"
                                 value="Stop"
-                                onclick="Javascript:onStop()"
+                                @click="onStopClick()"
                               /> -->
                               <vs-button
                                 color="primary"
                                 id="stop"
                                 class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
                                 type="filled"
-                                @click="onStop()"
+                                @click="onStopClick()"
+                                :disabled = "btnDisabled"
                               >
                                 Stop
                               </vs-button>
@@ -282,10 +286,10 @@
                             <td>
                               <!-- <input
                                 type="button"
-                                class="btn btn-primary"
+                                class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
                                 id="info"
                                 value="Info"
-                                onclick="Javascript:onGetInfo()"
+                                onclick="onGetInfoClick()"
                               /> -->
 
                               <vs-button
@@ -293,7 +297,7 @@
                                 id="info"
                                 class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
                                 type="filled"
-                                @click=onGetInfo()
+                                @click="onGetInfoClick()"
                               >
                                 Info
                               </vs-button>
@@ -387,22 +391,14 @@
                 </div>
                 <vs-divider class="mb-5 mt-0 green-divider" />
                 <vs-row class="align-items-center mb-10">
-                  <!-- <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-12">
-                    <vs-button class="btn green-btn mr-2 mb-2" @click="clearSignature">Clear</vs-button>
-                    <vs-button class="btn green-btn mr-2 mb-2" @click="undoSignature">Undo</vs-button>
-                    <vs-button class="btn green-btn mr-2 mb-2" @click="saveAsJpeg">Save</vs-button>
-                    <vs-button
-                      class="btn green-btn mr-2 mb-2"
-                      @click="undoSignature"
-                    >Advanced Options</vs-button>
-                  </div>-->
-
-                  <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-12 text-right signdetail-block">
+                  <div
+                    class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-12 text-right signdetail-block"
+                  >
                     <p class="text-dark">
                       <i>Geolocalization: 40.689263-74.044505</i>
                     </p>
                     <p class="text-dark">
-                      <i>UTC {{CurrentDate}}</i>
+                      <i>UTC {{ CurrentDate }}</i>
                     </p>
                     <p class="text-dark">
                       <i>Device Id: FDD76471-FCF9-4172-BAAF-D78924A4E62C</i>
@@ -443,7 +439,7 @@
                   <div class="vs-xs-12 vs-sm-12 vs-md-12">
                     <div class="doc-detail process-seq-wrapper">
                       <h6 class="mb-2">
-                        <b>Process Sequenes</b>
+                        <b>Process Sequence</b>
                       </h6>
                       <h6 class="step-txt">
                         <b>Step by Step Process</b>
@@ -589,220 +585,214 @@
 </template>
 
 <script>
-import IdentityCustomizer from '../../layouts/components/customizer/IdentityCustomizer.vue'
-import LabelCustomizer from '../../layouts/components/customizer/LabelsCustomizer.vue'
-import filesList from '../Document_Files'
-import VuePDFViewer from "vue-instant-pdf-viewer"
-import SignaturePad from 'signature_pad'
-import WebViewer from './web-viewer.vue'
-import VuePdfJs from 'vue-pdfjs-demo/src/App.vue'
-import Fingerprint from '../../../public/fingerprint.sdk.min.js'
 
-// var pdfjsLib = window['pdfjs-dist/build/pdf'];
-// pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+import $ from 'jquery'
+// var Fingerprint = require('../../../public/fingerprint.sdk.min.js')
+//console.log('This FingerPrint =>', Fingerprint);
+
+var FingerprintSdkTest = (function () {
+  function FingerprintSdkTest () {
+    var _instance = this;
+    console.log( 'This =>', this);
+    this.operationToRestart = null;
+    this.acquisitionStarted = false;
+    this.sdk = new Fingerprint.WebApi;
+    this.sdk.onDeviceConnected = function (e) {
+      // Detects if the deveice is connected for which acquisition started
+      showMessage("Scan your finger");
+    };
+    this.sdk.onDeviceDisconnected = function (e) {
+      // Detects if device gets disconnected - provides deviceUid of disconnected device
+      showMessage("Device disconnected");
+    };
+    this.sdk.onCommunicationFailed = function (e) {
+      // Detects if there is a failure in communicating with U.R.U web SDK
+      showMessage("Communinication Failed")
+    };
+    this.sdk.onSamplesAcquired = function (s) {
+      // Sample acquired event triggers this function
+      sampleAcquired(s);
+    };
+    this.sdk.onQualityReported = function (e) {
+      // Quality of sample aquired - Function triggered on every sample acquired
+      document.getElementById("qualityInputBox").value = Fingerprint.QualityCode[(e.quality)];
+    }
+
+  }
+
+  FingerprintSdkTest.prototype.startCapture = function () {
+    console.log('AB here testing');
+    if (this.acquisitionStarted) // Monitoring if already started capturing
+      return;
+    var _instance = this;
+    showMessage("");
+    this.operationToRestart = this.startCapture;
+    this.sdk.startAcquisition(currentFormat, myVal).then(function () {
+      _instance.acquisitionStarted = true;
+      //Disabling start once started
+      disableEnableStartStop();
+    }, function (error) {
+      showMessage(error.message);
+    });
+  };
+
+  FingerprintSdkTest.prototype.stopCapture = function () {
+    if (!this.acquisitionStarted) //Monitor if already stopped capturing
+      return;
+    var _instance = this;
+    showMessage("");
+    this.sdk.stopAcquisition().then(function () {
+      _instance.acquisitionStarted = false;
+
+      //Disabling stop once stoped
+      disableEnableStartStop();
+
+    }, function (error) {
+      showMessage(error.message);
+    });
+  };
+
+  FingerprintSdkTest.prototype.getInfo = function () {
+    var _instance = this;
+    console.log('AB test =>',this);
+    // return this.sdk.enumerateDevices();
+  };
+
+  FingerprintSdkTest.prototype.getDeviceInfoWithID = function (uid) {
+    var _instance = this;
+    return this.sdk.getDeviceInfo(uid);
+  };
 
 
+  return FingerprintSdkTest;
+})();
 
 var test = null;
-
 var state = document.getElementById('content-capture');
-
 var myVal = ""; // Drop down selected value of reader
 var disabled = true;
 var startEnroll = false;
-
 var currentFormat = Fingerprint.SampleFormat.PngImage;
 var deviceTechn = {
-               0: "Unknown",
-               1: "Optical",
-               2: "Capacitive",
-               3: "Thermal",
-               4: "Pressure"
-            }
+  0: "Unknown",
+  1: "Optical",
+  2: "Capacitive",
+  3: "Thermal",
+  4: "Pressure"
+}
 
 var deviceModality = {
-               0: "Unknown",
-               1: "Swipe",
-               2: "Area",
-               3: "AreaMultifinger"
-            }
+  0: "Unknown",
+  1: "Swipe",
+  2: "Area",
+  3: "AreaMultifinger"
+}
 
 var deviceUidType = {
-               0: "Persistent",
-               1: "Volatile"
-            }
-
-var FingerprintSdkTest = (function () {
-    function FingerprintSdkTest() {
-        var _instance = this;
-        this.operationToRestart = null;
-        this.acquisitionStarted = false;
-        this.sdk = new Fingerprint.WebApi;
-        this.sdk.onDeviceConnected = function (e) {
-            // Detects if the deveice is connected for which acquisition started
-            showMessage("Scan your finger");
-        };
-        this.sdk.onDeviceDisconnected = function (e) {
-            // Detects if device gets disconnected - provides deviceUid of disconnected device
-            showMessage("Device disconnected");
-        };
-        this.sdk.onCommunicationFailed = function (e) {
-            // Detects if there is a failure in communicating with U.R.U web SDK
-            showMessage("Communinication Failed")
-        };
-        this.sdk.onSamplesAcquired = function (s) {
-            // Sample acquired event triggers this function
-                sampleAcquired(s);
-        };
-        this.sdk.onQualityReported = function (e) {
-            // Quality of sample aquired - Function triggered on every sample acquired
-                document.getElementById("qualityInputBox").value = Fingerprint.QualityCode[(e.quality)];
-        }
-
-    }
-
-    FingerprintSdkTest.prototype.startCapture = function () {
-        if (this.acquisitionStarted) // Monitoring if already started capturing
-            return;
-        var _instance = this;
-        showMessage("");
-        this.operationToRestart = this.startCapture;
-        this.sdk.startAcquisition(currentFormat, myVal).then(function () {
-            _instance.acquisitionStarted = true;
-            //Disabling start once started
-            disableEnableStartStop();
-
-        }, function (error) {
-            showMessage(error.message);
-        });
-    };
-
-    FingerprintSdkTest.prototype.stopCapture = function () {
-        if (!this.acquisitionStarted) //Monitor if already stopped capturing
-            return;
-        var _instance = this;
-        showMessage("");
-        this.sdk.stopAcquisition().then(function () {
-            _instance.acquisitionStarted = false;
-
-            //Disabling stop once stoped
-            disableEnableStartStop();
-
-        }, function (error) {
-            showMessage(error.message);
-        });
-    };
-
-    FingerprintSdkTest.prototype.getInfo = function () {
-        var _instance = this;
-        return this.sdk.enumerateDevices();
-    };
-
-    FingerprintSdkTest.prototype.getDeviceInfoWithID = function (uid) {
-        var _instance = this;
-        return  this.sdk.getDeviceInfo(uid);
-    };
+  0: "Persistent",
+  1: "Volatile"
+}
 
 
-    return FingerprintSdkTest;
-})();
 
-function showMessage(message){
-    var _instance = this;
-    //var statusWindow = document.getElementById("status");
-    x = state.querySelectorAll("#status");
-    if(x.length != 0){
-        x[0].innerHTML = message;
-    }
+function showMessage (message) {
+  var _instance = this;
+  //var statusWindow = document.getElementById("status");
+  x = state.querySelectorAll("#status");
+  if (x.length != 0) {
+    x[0].innerHTML = message;
+  }
 }
 
 window.onload = function () {
-    localStorage.clear();
-    test = new FingerprintSdkTest();
-    readersDropDownPopulate(true); //To populate readers for drop down selection
-    disableEnable(); // Disabling enabling buttons - if reader not selected
-    enableDisableScanQualityDiv("content-reader"); // To enable disable scan quality div
-    disableEnableExport(true);
+  // localStorage.clear();
+  test = new FingerprintSdkTest();
+  // readersDropDownPopulate(true); //To populate readers for drop down selection
+  disableEnable(); // Disabling enabling buttons - if reader not selected
+  enableDisableScanQualityDiv("content-reader"); // To enable disable scan quality div
+  disableEnableExport(true);
 };
 
 
 function onStart() {
-    assignFormat();
-    if(currentFormat == ""){
-        alert("Please select a format.")
-    }else{
-        test.startCapture();
-
-    }
+  assignFormat();
+  console.log('currentFor',currentFormat);
+  if (currentFormat == "") {
+    alert("Please select a format.")
+  } else {
+    FingerprintSdkTest.prototype.startCapture();
+  }
 }
 
 function onStop() {
-    test.stopCapture();
+  // console.log("=$$");
+  test.stopCapture();
 }
 
 function onGetInfo() {
-    var allReaders = test.getInfo();
-    allReaders.then(function (sucessObj) {
-        populateReaders(sucessObj);
-    }, function (error){
-        showMessage(error.message);
-    });
+  var allReaders = FingerprintSdkTest.prototype.getInfo();
+  console.log('AB test =>', allReaders);
+  allReaders.then(function (sucessObj) {
+      populateReaders(sucessObj);
+  }, function (error){
+      showMessage(error.message);
+  });
 }
-function onDeviceInfo(id, element){
-    var myDeviceVal = test.getDeviceInfoWithID(id);
-    myDeviceVal.then(function (sucessObj) {
-            var deviceId = sucessObj.DeviceID;
-            var uidTyp = deviceUidType[sucessObj.eUidType];
-            var modality = deviceModality[sucessObj.eDeviceModality];
-            var deviceTech = deviceTechn[sucessObj.eDeviceTech];
-            //Another method to get Device technology directly from SDK
-            //Uncomment the below logging messages to see it working, Similarly for DeviceUidType and DeviceModality
-            //console.log(Fingerprint.DeviceTechnology[sucessObj.eDeviceTech]);
-            //console.log(Fingerprint.DeviceModality[sucessObj.eDeviceModality]);
-            //console.log(Fingerprint.DeviceUidType[sucessObj.eUidType]);
-            var retutnVal = //"Device Info -"
-                 "Id : " +  deviceId
-                +"<br> Uid Type : "+ uidTyp
-                +"<br> Device Tech : " +  deviceTech
-                +"<br> Device Modality : " +  modality;
 
-            document.getElementById(element).innerHTML = retutnVal;
+function onDeviceInfo (id, element) {
+  var myDeviceVal = test.getDeviceInfoWithID(id);
+  myDeviceVal.then(function (sucessObj) {
+    var deviceId = sucessObj.DeviceID;
+    var uidTyp = deviceUidType[sucessObj.eUidType];
+    var modality = deviceModality[sucessObj.eDeviceModality];
+    var deviceTech = deviceTechn[sucessObj.eDeviceTech];
+    //Another method to get Device technology directly from SDK
+    //Uncomment the below logging messages to see it working, Similarly for DeviceUidType and DeviceModality
+    //console.log(Fingerprint.DeviceTechnology[sucessObj.eDeviceTech]);
+    //console.log(Fingerprint.DeviceModality[sucessObj.eDeviceModality]);
+    //console.log(Fingerprint.DeviceUidType[sucessObj.eUidType]);
+    var retutnVal = //"Device Info -"
+      "Id : " + deviceId
+      + "<br> Uid Type : " + uidTyp
+      + "<br> Device Tech : " + deviceTech
+      + "<br> Device Modality : " + modality;
 
-        }, function (error){
-            showMessage(error.message);
-        });
+    document.getElementById(element).innerHTML = retutnVal;
+
+  }, function (error) {
+    showMessage(error.message);
+  });
 
 }
 function onClear() {
-         var vDiv = document.getElementById('imagediv');
-         vDiv.innerHTML = "";
-         localStorage.setItem("imageSrc", "");
-         localStorage.setItem("wsq", "");
-         localStorage.setItem("raw", "");
-         localStorage.setItem("intermediate", "");
+  var vDiv = document.getElementById('imagediv');
+  vDiv.innerHTML = "";
+  localStorage.setItem("imageSrc", "");
+  localStorage.setItem("wsq", "");
+  localStorage.setItem("raw", "");
+  localStorage.setItem("intermediate", "");
 
-         disableEnableExport(true);
+  disableEnableExport(true);
 }
 
-function toggle_visibility(ids) {
-    document.getElementById("qualityInputBox").value = "";
-    onStop();
-    enableDisableScanQualityDiv(ids[0]); // To enable disable scan quality div
-    for (var i=0;i<ids.length;i++) {
-       var e = document.getElementById(ids[i]);
-        if(i == 0){
-            e.style.display = 'block';
-            state = e;
-            disableEnable();
-        }
-       else{
-            e.style.display = 'none';
-       }
-   }
-}
+// function toggle_visibility (ids) {
+//   document.getElementById("qualityInputBox").value = "";
+//   onStop();
+//   enableDisableScanQualityDiv(ids[0]); // To enable disable scan quality div
+//   for (var i = 0; i < ids.length; i++) {
+//     var e = document.getElementById(ids[i]);
+//     if (i == 0) {
+//       e.style.display = 'block';
+//       state = e;
+//       disableEnable();
+//     }
+//     else {
+//       e.style.display = 'none';
+//     }
+//   }
+// }
 
-
-$("#save").on("click",function(){
+function onSave(){
     if(localStorage.getItem("imageSrc") == "" || localStorage.getItem("imageSrc") == null || document.getElementById('imagediv').innerHTML == ""){
         alert("Error -> Fingerprint not available");
     }else{
@@ -815,223 +805,156 @@ $("#save").on("click",function(){
             vDiv.appendChild(image);
 
             localStorage.setItem("imageSrc"+vDiv.children.length,localStorage.getItem("imageSrc"));
-        }else{
-            document.getElementById('imageGallery').innerHTML = "";
-            $("#save").click();
         }
-    }
-});
-
-function populateReaders(readersArray) {
-        var _deviceInfoTable = document.getElementById("deviceInfo");
-        _deviceInfoTable.innerHTML = "";
-        if(readersArray.length != 0){
-            _deviceInfoTable.innerHTML += "<h4>Available Readers</h4>"
-            for (i=0;i<readersArray.length;i++){
-                _deviceInfoTable.innerHTML +=
-                "<div id='dynamicInfoDivs' align='left'>"+
-                    "<div data-toggle='collapse' data-target='#"+readersArray[i]+"'>"+
-                        "<img src='images/info.png' alt='Info' height='20' width='20'> &nbsp; &nbsp;"+readersArray[i]+"</div>"+
-                        "<p class='collapse' id="+'"' + readersArray[i] + '"'+">"+onDeviceInfo(readersArray[i],readersArray[i])+"</p>"+
-                    "</div>";
-            }
-        }
-    };
-
-function sampleAcquired(s){
-            if(currentFormat == Fingerprint.SampleFormat.PngImage){
-            // If sample acquired format is PNG- perform following call on object recieved
-            // Get samples from the object - get 0th element of samples as base 64 encoded PNG image
-                localStorage.setItem("imageSrc", "");
-                var samples = JSON.parse(s.samples);
-                localStorage.setItem("imageSrc", "data:image/png;base64," + Fingerprint.b64UrlTo64(samples[0]));
-                if(state == document.getElementById("content-capture")){
-                    var vDiv = document.getElementById('imagediv');
-                    vDiv.innerHTML = "";
-                    var image = document.createElement("img");
-                    image.id = "image";
-                    image.src = localStorage.getItem("imageSrc");
-                    vDiv.appendChild(image);
-                }
-
-                disableEnableExport(false);
-            }
-
-            else if(currentFormat == Fingerprint.SampleFormat.Raw){
-                // If sample acquired format is RAW- perform following call on object recieved
-                // Get samples from the object - get 0th element of samples and then get Data from it.
-                // Returned data is Base 64 encoded, which needs to get decoded to UTF8,
-                // after decoding get Data key from it, it returns Base64 encoded raw image data
-                localStorage.setItem("raw", "");
-                var samples = JSON.parse(s.samples);
-                var sampleData = Fingerprint.b64UrlTo64(samples[0].Data);
-                var decodedData = JSON.parse(Fingerprint.b64UrlToUtf8(sampleData));
-                localStorage.setItem("raw", Fingerprint.b64UrlTo64(decodedData.Data));
-
-                var vDiv = document.getElementById('imagediv').innerHTML = '<div id="animateText" style="display:none">RAW Sample Acquired <br>'+Date()+'</div>';
-                setTimeout('delayAnimate("animateText","table-cell")',100);
-
-                disableEnableExport(false);
-            }
-
-            else if(currentFormat == Fingerprint.SampleFormat.Compressed){
-                // If sample acquired format is Compressed- perform following call on object recieved
-                // Get samples from the object - get 0th element of samples and then get Data from it.
-                // Returned data is Base 64 encoded, which needs to get decoded to UTF8,
-                // after decoding get Data key from it, it returns Base64 encoded wsq image
-                localStorage.setItem("wsq", "");
-                var samples = JSON.parse(s.samples);
-                var sampleData = Fingerprint.b64UrlTo64(samples[0].Data);
-                var decodedData = JSON.parse(Fingerprint.b64UrlToUtf8(sampleData));
-                localStorage.setItem("wsq","data:application/octet-stream;base64," + Fingerprint.b64UrlTo64(decodedData.Data));
-
-                var vDiv = document.getElementById('imagediv').innerHTML = '<div id="animateText" style="display:none">WSQ Sample Acquired <br>'+Date()+'</div>';
-                setTimeout('delayAnimate("animateText","table-cell")',100);
-
-                disableEnableExport(false);
-            }
-
-            else if(currentFormat == Fingerprint.SampleFormat.Intermediate){
-                // If sample acquired format is Intermediate- perform following call on object recieved
-                // Get samples from the object - get 0th element of samples and then get Data from it.
-                // It returns Base64 encoded feature set
-                localStorage.setItem("intermediate", "");
-                var samples = JSON.parse(s.samples);
-                var sampleData = Fingerprint.b64UrlTo64(samples[0].Data);
-                localStorage.setItem("intermediate", sampleData);
-
-                var vDiv = document.getElementById('imagediv').innerHTML = '<div id="animateText" style="display:none">Intermediate Sample Acquired <br>'+Date()+'</div>';
-                setTimeout('delayAnimate("animateText","table-cell")',100);
-
-                disableEnableExport(false);
-            }
-
-            else{
-                alert("Format Error");
-                //disableEnableExport(true);
-            }
-}
-
-function readersDropDownPopulate(checkForRedirecting){ // Check for redirecting is a boolean value which monitors to redirect to content tab or not
-    myVal = "";
-    var allReaders = test.getInfo();
-    allReaders.then(function (sucessObj) {
-        var readersDropDownElement = document.getElementById("readersDropDown");
-        readersDropDownElement.innerHTML ="";
-        //First ELement
-        var option = document.createElement("option");
-        option.selected = "selected";
-        option.value = "";
-        option.text = "Select Reader";
-        readersDropDownElement.add(option);
-        for (i=0;i<sucessObj.length;i++){
-            var option = document.createElement("option");
-            option.value = sucessObj[i];
-            option.text = sucessObj[i];
-            readersDropDownElement.add(option);
-        }
-
-    //Check if readers are available get count and  provide user information if no reader available,
-    //if only one reader available then select the reader by default and sennd user to capture tab
-    checkReaderCount(sucessObj,checkForRedirecting);
-
-    }, function (error){
-        showMessage(error.message);
-    });
-}
-
-function checkReaderCount(sucessObj,checkForRedirecting){
-   if(sucessObj.length == 0){
-    alert("No reader detected. Please insert a reader.");
-   }else if(sucessObj.length == 1){
-        document.getElementById("readersDropDown").selectedIndex = "1";
-        if(checkForRedirecting){
-            toggle_visibility(['content-capture','content-reader']);
-            enableDisableScanQualityDiv("content-capture"); // To enable disable scan quality div
-            setActive('Capture','Reader'); // Set active state to capture
-        }
-   }
-
-    selectChangeEvent(); // To make the reader selected
-}
-
-function selectChangeEvent(){
-    var readersDropDownElement = document.getElementById("readersDropDown");
-    myVal = readersDropDownElement.options[readersDropDownElement.selectedIndex].value;
-    disableEnable();
-    onClear();
-    document.getElementById('imageGallery').innerHTML = "";
-
-    //Make capabilities button disable if no user selected
-    if(myVal == ""){
-        $('#capabilities').prop('disabled', true);
-    }else{
-        $('#capabilities').prop('disabled', false);
+        // else{
+        //     document.getElementById('imageGallery').innerHTML = "";
+        //     $("#save").click();
+        // }
     }
 }
 
-function populatePopUpModal(){
-    var modelWindowElement = document.getElementById("ReaderInformationFromDropDown");
-    modelWindowElement.innerHTML = "";
-    if(myVal != ""){
-        onDeviceInfo(myVal,"ReaderInformationFromDropDown");
-    }else{
-        modelWindowElement.innerHTML = "Please select a reader";
+
+function populateReaders (readersArray) {
+  var _deviceInfoTable = document.getElementById("deviceInfo");
+  _deviceInfoTable.innerHTML = "";
+  if (readersArray.length != 0) {
+    _deviceInfoTable.innerHTML += "<h4>Available Readers</h4>"
+    for (i = 0; i < readersArray.length; i++) {
+      _deviceInfoTable.innerHTML +=
+        "<div id='dynamicInfoDivs' align='left'>" +
+        "<div data-toggle='collapse' data-target='#" + readersArray[i] + "'>" +
+        "<img src='images/info.png' alt='Info' height='20' width='20'> &nbsp; &nbsp;" + readersArray[i] + "</div>" +
+        "<p class='collapse' id=" + '"' + readersArray[i] + '"' + ">" + onDeviceInfo(readersArray[i], readersArray[i]) + "</p>" +
+        "</div>";
     }
+  }
+};
+
+function sampleAcquired (s) {
+  if (currentFormat == Fingerprint.SampleFormat.PngImage) {
+    // If sample acquired format is PNG- perform following call on object recieved
+    // Get samples from the object - get 0th element of samples as base 64 encoded PNG image
+    localStorage.setItem("imageSrc", "");
+    var samples = JSON.parse(s.samples);
+    localStorage.setItem("imageSrc", "data:image/png;base64," + Fingerprint.b64UrlTo64(samples[0]));
+    if (state == document.getElementById("content-capture")) {
+      var vDiv = document.getElementById('imagediv');
+      vDiv.innerHTML = "";
+      var image = document.createElement("img");
+      image.id = "image";
+      image.src = localStorage.getItem("imageSrc");
+      vDiv.appendChild(image);
+    }
+
+    disableEnableExport(false);
+  }
+
+  else if (currentFormat == Fingerprint.SampleFormat.Raw) {
+    // If sample acquired format is RAW- perform following call on object recieved
+    // Get samples from the object - get 0th element of samples and then get Data from it.
+    // Returned data is Base 64 encoded, which needs to get decoded to UTF8,
+    // after decoding get Data key from it, it returns Base64 encoded raw image data
+    localStorage.setItem("raw", "");
+    var samples = JSON.parse(s.samples);
+    var sampleData = Fingerprint.b64UrlTo64(samples[0].Data);
+    var decodedData = JSON.parse(Fingerprint.b64UrlToUtf8(sampleData));
+    localStorage.setItem("raw", Fingerprint.b64UrlTo64(decodedData.Data));
+
+    var vDiv = document.getElementById('imagediv').innerHTML = '<div id="animateText" style="display:none">RAW Sample Acquired <br>' + Date() + '</div>';
+    setTimeout('delayAnimate("animateText","table-cell")', 100);
+
+    disableEnableExport(false);
+  }
+
+  else if (currentFormat == Fingerprint.SampleFormat.Compressed) {
+    // If sample acquired format is Compressed- perform following call on object recieved
+    // Get samples from the object - get 0th element of samples and then get Data from it.
+    // Returned data is Base 64 encoded, which needs to get decoded to UTF8,
+    // after decoding get Data key from it, it returns Base64 encoded wsq image
+    localStorage.setItem("wsq", "");
+    var samples = JSON.parse(s.samples);
+    var sampleData = Fingerprint.b64UrlTo64(samples[0].Data);
+    var decodedData = JSON.parse(Fingerprint.b64UrlToUtf8(sampleData));
+    localStorage.setItem("wsq", "data:application/octet-stream;base64," + Fingerprint.b64UrlTo64(decodedData.Data));
+
+    var vDiv = document.getElementById('imagediv').innerHTML = '<div id="animateText" style="display:none">WSQ Sample Acquired <br>' + Date() + '</div>';
+    setTimeout('delayAnimate("animateText","table-cell")', 100);
+    disableEnableExport(false);
+  }
+
+  else if (currentFormat == Fingerprint.SampleFormat.Intermediate) {
+    // If sample acquired format is Intermediate- perform following call on object recieved
+    // Get samples from the object - get 0th element of samples and then get Data from it.
+    // It returns Base64 encoded feature set
+    localStorage.setItem("intermediate", "");
+    var samples = JSON.parse(s.samples);
+    var sampleData = Fingerprint.b64UrlTo64(samples[0].Data);
+    localStorage.setItem("intermediate", sampleData);
+    var vDiv = document.getElementById('imagediv').innerHTML = '<div id="animateText" style="display:none">Intermediate Sample Acquired <br>' + Date() + '</div>';
+    setTimeout('delayAnimate("animateText","table-cell")', 100);
+
+    disableEnableExport(false);
+  }
+
+  else {
+    alert("Format Error");
+    //disableEnableExport(true);
+  }
 }
 
 //Enable disable buttons
-function disableEnable(){
+function disableEnable () {
+  console.log('Value =>', myVal);
 
-    if(myVal != ""){
-        disabled = false;
-        $('#start').prop('disabled', false);
-        $('#stop').prop('disabled', false);
-        showMessage("");
-        disableEnableStartStop();
-    }else{
-        disabled = true;
-        $('#start').prop('disabled', true);
-        $('#stop').prop('disabled', true);
-        showMessage("Please select a reader");
-        onStop();
-    }
+  if (myVal != "") {
+    disabled = false;
+    $('#start').prop('disabled', false);
+    $('#stop').prop('disabled', false);
+    showMessage("");
+    disableEnableStartStop();
+  } else {
+    disabled = true;
+    $('#start').prop('disabled', true);
+    $('#stop').prop('disabled', true);
+    showMessage("Please select a reader");
+    onStop();
+  }
 }
 
 
 // Start-- Optional to make GUi user frindly
 //To make Start and stop buttons selection mutually exclusive
-$('body').click(function(){disableEnableStartStop();});
+// $('body').click(function(){disableEnableStartStop();});
 
-function disableEnableStartStop(){
-     if(!myVal == ""){
-        if(test.acquisitionStarted){
-            $('#start').prop('disabled', true);
-            $('#stop').prop('disabled', false);
-        }else{
-            $('#start').prop('disabled', false);
-            $('#stop').prop('disabled', true);
-        }
+function disableEnableStartStop () {
+  if (!myVal == "") {
+    if (test.acquisitionStarted) {
+      $('#start').prop('disabled', true);
+      $('#stop').prop('disabled', false);
+    } else {
+      $('#start').prop('disabled', false);
+      $('#stop').prop('disabled', true);
     }
+  }
 }
 
 // Stop-- Optional to make GUI user freindly
 
 
-function enableDisableScanQualityDiv(id){
-    if(id == "content-reader"){
-        document.getElementById('Scores').style.display = 'none';
-    }else{
-        document.getElementById('Scores').style.display = 'block';
-    }
+function enableDisableScanQualityDiv (id) {
+  if (id == "content-reader") {
+    document.getElementById('Scores').style.display = 'none';
+  } else {
+    document.getElementById('Scores').style.display = 'block';
+  }
 }
 
 
-function setActive(element1,element2){
-    document.getElementById(element2).className = "";
+function setActive (element1, element2) {
+  document.getElementById(element2).className = "";
 
-    // And make this active
-   document.getElementById(element1).className = "active";
+  // And make this active
+  document.getElementById(element1).className = "active";
 
 }
 
@@ -1039,85 +962,85 @@ function setActive(element1,element2){
 
 // For Download and formats starts
 
-function onImageDownload(){
-    if(currentFormat == Fingerprint.SampleFormat.PngImage){
-        if(localStorage.getItem("imageSrc") == "" || localStorage.getItem("imageSrc") == null || document.getElementById('imagediv').innerHTML == "" ){
-           alert("No image to download");
-        }else{
-            //alert(localStorage.getItem("imageSrc"));
-            downloadURI(localStorage.getItem("imageSrc"), "sampleImage.png", "image/png");
-        }
+function onImageDownload () {
+  if (currentFormat == Fingerprint.SampleFormat.PngImage) {
+    if (localStorage.getItem("imageSrc") == "" || localStorage.getItem("imageSrc") == null || document.getElementById('imagediv').innerHTML == "") {
+      alert("No image to download");
+    } else {
+      //alert(localStorage.getItem("imageSrc"));
+      downloadURI(localStorage.getItem("imageSrc"), "sampleImage.png", "image/png");
     }
+  }
 
-    else if(currentFormat == Fingerprint.SampleFormat.Compressed){
-         if(localStorage.getItem("wsq") == "" || localStorage.getItem("wsq") == null || document.getElementById('imagediv').innerHTML == "" ){
-           alert("WSQ data not available.");
-        }else{
-            downloadURI(localStorage.getItem("wsq"), "compressed.wsq","application/octet-stream");
-        }
+  else if (currentFormat == Fingerprint.SampleFormat.Compressed) {
+    if (localStorage.getItem("wsq") == "" || localStorage.getItem("wsq") == null || document.getElementById('imagediv').innerHTML == "") {
+      alert("WSQ data not available.");
+    } else {
+      downloadURI(localStorage.getItem("wsq"), "compressed.wsq", "application/octet-stream");
     }
+  }
 
-    else if(currentFormat == Fingerprint.SampleFormat.Raw){
-         if(localStorage.getItem("raw") == "" || localStorage.getItem("raw") == null || document.getElementById('imagediv').innerHTML == "" ){
-           alert("RAW data not available.");
-        }else{
+  else if (currentFormat == Fingerprint.SampleFormat.Raw) {
+    if (localStorage.getItem("raw") == "" || localStorage.getItem("raw") == null || document.getElementById('imagediv').innerHTML == "") {
+      alert("RAW data not available.");
+    } else {
 
-            downloadURI("data:application/octet-stream;base64,"+localStorage.getItem("raw"), "rawImage.raw", "application/octet-stream");
-        }
+      downloadURI("data:application/octet-stream;base64," + localStorage.getItem("raw"), "rawImage.raw", "application/octet-stream");
     }
+  }
 
-    else if(currentFormat == Fingerprint.SampleFormat.Intermediate){
-         if(localStorage.getItem("intermediate") == "" || localStorage.getItem("intermediate") == null || document.getElementById('imagediv').innerHTML == "" ){
-           alert("Intermediate data not available.");
-        }else{
+  else if (currentFormat == Fingerprint.SampleFormat.Intermediate) {
+    if (localStorage.getItem("intermediate") == "" || localStorage.getItem("intermediate") == null || document.getElementById('imagediv').innerHTML == "") {
+      alert("Intermediate data not available.");
+    } else {
 
-            downloadURI("data:application/octet-stream;base64,"+localStorage.getItem("intermediate"), "FeatureSet.bin", "application/octet-stream");
-        }
+      downloadURI("data:application/octet-stream;base64," + localStorage.getItem("intermediate"), "FeatureSet.bin", "application/octet-stream");
     }
+  }
 
-    else{
-        alert("Nothing to download.");
-    }
+  else {
+    alert("Nothing to download.");
+  }
 }
 
 
-function downloadURI(uri, name, dataURIType) {
-    if (IeVersionInfo() > 0){
+function downloadURI (uri, name, dataURIType) {
+  if (IeVersionInfo() > 0) {
     //alert("This is IE " + IeVersionInfo());
-    var blob = dataURItoBlob(uri,dataURIType);
+    var blob = dataURItoBlob(uri, dataURIType);
     window.navigator.msSaveOrOpenBlob(blob, name);
 
-    }else {
-        //alert("This is not IE.");
-        var save = document.createElement('a');
-        save.href = uri;
-        save.download = name;
-        var event = document.createEvent("MouseEvents");
-            event.initMouseEvent(
-                    "click", true, false, window, 0, 0, 0, 0, 0
-                    , false, false, false, false, 0, null
-            );
-        save.dispatchEvent(event);
-    }
+  } else {
+    //alert("This is not IE.");
+    var save = document.createElement('a');
+    save.href = uri;
+    save.download = name;
+    var event = document.createEvent("MouseEvents");
+    event.initMouseEvent(
+      "click", true, false, window, 0, 0, 0, 0, 0
+      , false, false, false, false, 0, null
+    );
+    save.dispatchEvent(event);
+  }
 }
 
-dataURItoBlob = function(dataURI, dataURIType) {
-    var binary = atob(dataURI.split(',')[1]);
-    var array = [];
-    for(var i = 0; i < binary.length; i++) {
-        array.push(binary.charCodeAt(i));
-    }
-    return new Blob([new Uint8Array(array)], {type: dataURIType});
-}
+// dataURItoBlob = function(dataURI, dataURIType) {
+//     var binary = atob(dataURI.split(',')[1]);
+//     var array = [];
+//     for(var i = 0; i < binary.length; i++) {
+//         array.push(binary.charCodeAt(i));
+//     }
+//     return new Blob([new Uint8Array(array)], {type: dataURIType});
+// }
 
 
-function IeVersionInfo() {
+function IeVersionInfo () {
   var sAgent = window.navigator.userAgent;
   var IEVersion = sAgent.indexOf("MSIE");
 
   // If IE, return version number.
   if (IEVersion > 0)
-    return parseInt(sAgent.substring(IEVersion+ 5, sAgent.indexOf(".", IEVersion)));
+    return parseInt(sAgent.substring(IEVersion + 5, sAgent.indexOf(".", IEVersion)));
 
   // If IE 11 then look for Updated user agent string.
   else if (!!navigator.userAgent.match(/Trident\/7\./))
@@ -1132,9 +1055,9 @@ function IeVersionInfo() {
 }
 
 
-$(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip();
-});
+// $(document).ready(function(){
+//   $('[data-toggle="tooltip"]').tooltip();
+// });
 
 // function checkOnly(stayChecked)
 // {
@@ -1165,56 +1088,70 @@ $(document).ready(function(){
 //   }
 // }
 
-function assignFormat(){
-    currentFormat = Fingerprint.SampleFormat.PngImage;
-    // with(document.myForm){
-    //     for(i = 0; i < elements.length; i++){
-    //         if(elements[i].checked == true){
-    //             if(elements[i].name == "Raw"){
-    //                 currentFormat = Fingerprint.SampleFormat.Raw;
-    //             }
-    //             if(elements[i].name == "Intermediate"){
-    //                 currentFormat = Fingerprint.SampleFormat.Intermediate;
-    //             }
-    //             if(elements[i].name == "Compressed"){
-    //                 currentFormat = Fingerprint.SampleFormat.Compressed;
-    //             }
-    //             if(elements[i].name == "PngImage"){
-    //                 currentFormat = Fingerprint.SampleFormat.PngImage;
-    //             }
-    //         }
-    //     }
-    // }
+function assignFormat () {
+  console.log('AB here Assign Formate');
+  currentFormat = Fingerprint.SampleFormat.PngImage;
+  // with(document.myForm){
+  //     for(i = 0; i < elements.length; i++){
+  //         if(elements[i].checked == true){
+  //             if(elements[i].name == "Raw"){
+  //                 currentFormat = Fingerprint.SampleFormat.Raw;
+  //             }
+  //             if(elements[i].name == "Intermediate"){
+  //                 currentFormat = Fingerprint.SampleFormat.Intermediate;
+  //             }
+  //             if(elements[i].name == "Compressed"){
+  //                 currentFormat = Fingerprint.SampleFormat.Compressed;
+  //             }
+  //             if(elements[i].name == "PngImage"){
+  //                 currentFormat = Fingerprint.SampleFormat.PngImage;
+  //             }
+  //         }
+  //     }
+  // }
 }
 
 
-function disableEnableExport(val){
-    if(val){
-        $('#saveImagePng').prop('disabled', true);
-    }else{
-        $('#saveImagePng').prop('disabled', false);
-    }
+function disableEnableExport (val) {
+  if (val) {
+    $('#saveImagePng').prop('disabled', true);
+  } else {
+    $('#saveImagePng').prop('disabled', false);
+  }
 }
 
 
-function disableEnableSaveThumbnails(val){
-    if(val){
-        $('#save').prop('disabled', true);
-    }else{
-        $('#save').prop('disabled', false);
-    }
+function disableEnableSaveThumbnails (val) {
+  if (val) {
+    $('#save').prop('disabled', true);
+  } else {
+    $('#save').prop('disabled', false);
+  }
 }
 
 
-function delayAnimate(id,visibility)
-{
-   document.getElementById(id).style.display = visibility;
+function delayAnimate (id, visibility) {
+  document.getElementById(id).style.display = visibility;
 }
 
 // For Download and formats ends
+
+import IdentityCustomizer from '../../layouts/components/customizer/IdentityCustomizer.vue'
+import LabelCustomizer from '../../layouts/components/customizer/LabelsCustomizer.vue'
+import filesList from '../Document_Files'
+import VuePDFViewer from "vue-instant-pdf-viewer"
+import SignaturePad from 'signature_pad'
+import WebViewer from './web-viewer.vue'
+import VuePdfJs from 'vue-pdfjs-demo/src/App.vue';
+
+
+// var pdfjsLib = window['pdfjs-dist/build/pdf'];
+// pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
 export default {
   data () {
     return {
+      btnDisabled: false,
       Pad_Show: false,
       fingerPrint_Pad: false,
       CurrentDate: new Date().toISOString(),
@@ -1235,47 +1172,6 @@ export default {
       filesList.forEach(file => {
         // console.log('Files =>', file);
       });
-    },
-
-    // checkOnly(stayChecked) {
-    //   disableEnableExport(true);
-    //   this.onClear();
-    //   this.onStop();
-    //   with(document.myForm){
-    //     for(i = 0; i < elements.length; i++) {
-    //       if(elements[i].checked == true && elements[i].name != stayChecked.name){
-    //         elements[i].checked = false;
-    //       }
-    //     }
-    //     //Enable disable save button
-    //     for(i = 0; i < elements.length; i++) {
-    //       if(elements[i].checked == true) {
-    //         if(elements[i].name =="PngImage"){
-    //           disableEnableSaveThumbnails(false);
-    //         }else{
-    //           disableEnableSaveThumbnails(true);
-    //         }
-    //       }
-    //     }
-    //   }
-    // },
-
-    onClear() {
-      var vDiv = document.getElementById('imagediv');
-      vDiv.innerHTML = "";
-      localStorage.setItem("imageSrc", "");
-      localStorage.setItem("wsq", "");
-      localStorage.setItem("raw", "");
-      localStorage.setItem("intermediate", "");
-      disableEnableExport(true);
-    },
-    onStart() {
-      assignFormat();
-      if(currentFormat == ""){
-          alert("Please select a format.")
-      }else{
-          test.startCapture();
-      }
     },
     async signpadShow () {
       this.Pad_Show = true
@@ -1333,8 +1229,37 @@ export default {
     clearSignature () {
       this.signaturePad.clear();
     },
+
+  onStopClick () {
+    onStop();
   },
+  onClearClick(){
+    const vDiv = this.$refs.imagediv
+    vDiv.innerHTML = "";
+    localStorage.setItem("imageSrc", "");
+    localStorage.setItem("wsq", "");
+    localStorage.setItem("raw", "");
+    localStorage.setItem("intermediate", "");
+    disableEnableExport(true);
+  },
+  onSaveClick(){
+    onSave()
+  },
+  onStartClick(){
+    onStart()
+  },
+  onGetInfoClick(){
+    onGetInfo()
+  }
+
+},
   created () {
+    // disableEnable();
+    setTimeout(() => {
+      FingerprintSdkTest();
+    }, 1000);
+    this.btnDisabled = disabled;
+    console.log('ID =>', this.id);
     localStorage.setItem('docId', this.id)
   },
 }
@@ -1345,99 +1270,98 @@ export default {
 @import "@/assets/scss/style.scss";
 // @import '~vue-pdf-reader/dist/vue-pdf-reader.min.css';
 #imagediv {
-	padding:0px;
-	width: 500px;
-	margin: 0 auto;
-	height: 500px;
-	overflow: hidden;
-    border: 1px solid rgba(51, 122, 183, 0.39);
-    display: table;
+  padding: 0px;
+  width: 500px;
+  margin: 0 auto;
+  height: 500px;
+  overflow: hidden;
+  border: 1px solid rgba(51, 122, 183, 0.39);
+  display: table;
 }
 
 #imagediv img {
-	width: 100%;
-	height: 500px;
+  width: 100%;
+  height: 500px;
 }
 
-#imagediv div{
-	text-align: center;
-	vertical-align: middle;
-	height: 500px;
-	background: #d3d3d3;
-	display: table-cell;
+#imagediv div {
+  text-align: center;
+  vertical-align: middle;
+  height: 500px;
+  background: #d3d3d3;
+  display: table-cell;
 }
-
 
 #image {
-	width: 100%;
+  width: 100%;
 }
 
 #imageGallery {
-	padding:0px;
-	margin: 0 auto;
-	width: 100%;
-	height: 100px;
-	overflow: hidden;
+  padding: 0px;
+  margin: 0 auto;
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
 }
 
-#imageGallery img{
-	float: left;
-	width:20%;
-	height: 100%
+#imageGallery img {
+  float: left;
+  width: 20%;
+  height: 100%;
 }
 
 #deviceInfo {
-	padding:5px;
-	margin: 0 auto;
-	width: 100%;
-	height: 100px;
-	text-align: center;
+  padding: 5px;
+  margin: 0 auto;
+  width: 100%;
+  height: 100px;
+  text-align: center;
 }
 
-#dynamicInfoDivs{
-	position: relative;
-	left: 30%;
+#dynamicInfoDivs {
+  position: relative;
+  left: 30%;
 }
 
 #Scores {
-	margin: 0 auto;
-	width: 500px;
-    text-align:center;
-    border: 2px solid black;
+  margin: 0 auto;
+  width: 500px;
+  text-align: center;
+  border: 2px solid black;
 }
 
 #status {
-    min-height: 22px;
-	text-align: center;
-	margin-bottom: 5px;
-	color: red;
+  min-height: 22px;
+  text-align: center;
+  margin-bottom: 5px;
+  color: red;
 }
 
-#contentButtons{
-	padding: 5px;
-  	text-align: center;
-  	margin-bottom: 5px;
+#contentButtons {
+  padding: 5px;
+  text-align: center;
+  margin-bottom: 5px;
 }
 
 #readerDivButtons {
-	padding: 5px;
-  	text-align: center;
-  	margin-bottom: 5px;
+  padding: 5px;
+  text-align: center;
+  margin-bottom: 5px;
 }
 
-#modalContent{
-	width: 350px;
-	margin: 0 auto;
-	padding : 5px;
-	text-align: left;
-	vertical-align: center;
+#modalContent {
+  width: 350px;
+  margin: 0 auto;
+  padding: 5px;
+  text-align: left;
+  vertical-align: center;
 }
 
-#saveAndFormats{
-	position:relative;
-	left:500px;
-	top:-750px;
-	width:135px;
+#saveAndFormats {
+  position: relative;
+  left: 500px;
+  top: -750px;
+  width: 135px;
 }
 
 // @import "@/assets/scss/vuexy/themes/_themeDark.scss

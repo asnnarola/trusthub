@@ -249,6 +249,7 @@ export default {
         })
       })
   },
+
   registerUser ({dispatch}, payload) {
 
     // create user using firebase
@@ -309,32 +310,65 @@ export default {
 
   // JWT
   loginJWT ({ commit }, payload) {
-    return new Promise((resolve, reject) => {
-      jwt.login(payload.userDetails.email, payload.userDetails.password)
-        .then(response => {
+    // return new Promise((resolve, reject) => {
+    //   jwt.login(payload.userDetails.email, payload.userDetails.password)
+    //     .then(response => {
+    //       console.log(response.data.userData);
+    //       // If there's user data in response
+    //       if (response.data.userData) {
+    //         // Navigate User to homepage
+    //         // router.push(router.currentRoute.query.to || '/dashboard')
 
+    //         // Set accessToken
+    //         localStorage.setItem('accessToken', response.data.accessToken)
+
+    //         // Update user details
+    //         commit('UPDATE_USER_INFO', response.data.userData, {root: true})
+
+    //         // Set bearer token in axios
+    //         commit('SET_BEARER', response.data.accessToken)
+
+    //         resolve(response)
+    //       } else {
+    //         console.log('I am here');
+    //         reject({message: 'Wrong Email or Password'})
+    //       }
+
+    //     })
+    //     .catch(error => {
+    //       console.log('I am here =>', error);
+    //       reject(error)
+    //     })
+    // })
+
+    return jwt.login(payload.userDetails.email, payload.userDetails.password)
+        .then(response => {
+          console.log('jwt.login response',response);
+          console.log(response);
           // If there's user data in response
           if (response.data.userData) {
             // Navigate User to homepage
             // router.push(router.currentRoute.query.to || '/dashboard')
-
             // Set accessToken
             localStorage.setItem('accessToken', response.data.accessToken)
-
             // Update user details
             commit('UPDATE_USER_INFO', response.data.userData, {root: true})
-
             // Set bearer token in axios
             commit('SET_BEARER', response.data.accessToken)
-
-            resolve(response)
           } else {
-            reject({message: 'Wrong Email or Password'})
+            console.log('I am here');
+            // reject({message: 'Wrong Email or Password'})
           }
-
         })
-        .catch(error => { reject(error) })
-    })
+        .catch(error => {
+          // router.push('/dashboard')
+          console.log('jwt.login error =>', error);
+          // console.log('I am here =>1', error.response.data.errorMsg);
+          // console.log('I am here =>2', error.response.data);
+          // console.log('I am here =>4', error.errorMsg);
+          return error
+          // reject(error)
+        })
   },
 
   registerUserJWT ({ commit }, payload) {
@@ -348,7 +382,7 @@ export default {
         reject({message: 'Password doesn\'t match. Please try again.'})
       }
 
-      jwt.registerUser(displayName, email, password)
+      jwt.registerUser(displayName, email, password, confirmPassword)
         .then(response => {
           // Redirect User
           router.push(router.currentRoute.query.to || '/login')
@@ -357,6 +391,45 @@ export default {
           localStorage.setItem('accessToken', response.data.accessToken)
           commit('UPDATE_USER_INFO', response.data.userData, {root: true})
 
+          resolve(response)
+        })
+        .catch(error => { reject(error) })
+    })
+  },
+  resetPassword ({ commit }, payload) {
+
+    const {password, confirmPassword, key } = payload.userDetails
+
+    return new Promise((resolve, reject) => {
+
+      // Check confirm password
+      if (password !== confirmPassword) {
+        reject({message: 'Password doesn\'t match. Please try again.'})
+      }
+
+      jwt.resetPassword(password, key)
+        .then(response => {
+          // Redirect User
+          router.push(router.currentRoute.query.to || '/login')
+
+          // Update data in localStorage
+          // localStorage.setItem('accessToken', response.data.accessToken)
+          // commit('UPDATE_USER_INFO', response.data.userData, {root: true})
+          resolve(response)
+        })
+        .catch(error => { reject(error) })
+    })
+  },
+  forgotPassword ({ commit }, payload) {
+    const {email } = payload.userDetails
+    return new Promise((resolve, reject) => {
+      jwt.forgotPassword(email)
+        .then(response => {
+          // Redirect User
+          router.push(router.currentRoute.query.to || '/login')
+          // Update data in localStorage
+          // localStorage.setItem('accessToken', response.data.accessToken)
+          // commit('UPDATE_USER_INFO', response.data.userData, {root: true})
           resolve(response)
         })
         .catch(error => { reject(error) })

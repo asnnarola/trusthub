@@ -452,6 +452,10 @@ export default {
       }
     }, 500);
     const activeUser = JSON.parse(localStorage.getItem('userInfo'))
+    console.log('Active User ==>', activeUser);
+    if (activeUser == null || activeUser == undefined) {
+      this.$router.push('/login').catch(() => { })
+    }
     if (this.userRole === 'administrators' || activeUser.userRole === 'administrators') {
       // this.navMenuItems = adminNavMenuItem
       this.navMenuItems = companyNavMenuItem

@@ -10,17 +10,32 @@ Author URL: http://www.themeforest.net/user/pixinvent
 
 <template>
   <div class="clearfix">
-    <vs-input
-      v-validate="'required|alpha_dash|min:3'"
-      data-vv-validate-on="blur"
-      label-placeholder="Name"
-      name="displayName"
-      placeholder="Name"
-      v-model="displayName"
-      class="w-full"
-    />
-    <span class="text-danger text-sm">{{ errors.first('displayName') }}</span>
-
+    <div class="vx-row mt-2">
+      <div class="vx-col sm:w-1/2 w-full mb-2">
+        <vs-input
+          v-validate="'required|alpha_dash|min:3'"
+          data-vv-validate-on="blur"
+          label-placeholder="First Name"
+          name="FirstName"
+          placeholder="First Name"
+          v-model="firstName"
+          class="w-full"
+        />
+        <span class="text-danger text-sm">{{ errors.first("FirstName") }}</span>
+      </div>
+      <div class="vx-col sm:w-1/2 w-full mb-2">
+        <vs-input
+          v-validate="'required|alpha_dash|min:3'"
+          data-vv-validate-on="blur"
+          label-placeholder="Last Name"
+          name="LastName"
+          placeholder="Last Name"
+          v-model="lastName"
+          class="w-full"
+        />
+        <span class="text-danger text-sm">{{ errors.first("LastName") }}</span>
+      </div>
+    </div>
     <vs-input
       v-validate="'required|email'"
       data-vv-validate-on="blur"
@@ -31,21 +46,28 @@ Author URL: http://www.themeforest.net/user/pixinvent
       v-model="email"
       class="w-full mt-6"
     />
-    <span class="text-danger text-sm">{{ errors.first('email') }}</span>
-
-    <vs-input
-      ref="password"
-      type="password"
-      data-vv-validate-on="blur"
-      v-validate="'required|min:6|max:10'"
-      name="password"
-      label-placeholder="Password"
-      placeholder="Password"
-      v-model="password"
-      class="w-full mt-6"
-    />
-    <span class="text-danger text-sm">{{ errors.first('password') }}</span>
-
+    <span class="text-danger text-sm">{{ errors.first("email") }}</span>
+    <div class="password-inputcontrol d-flex justify-between align-items-center mt-6">
+      <div class="password-input">
+        <vs-input
+          ref="password"
+          type="password"
+          data-vv-validate-on="blur"
+          v-validate="'required|min:6|max:10'"
+          name="password"
+          label-placeholder="Password"
+          placeholder="Password"
+          v-model="password"
+          class="w-full mt-0"
+        />
+        <i class="fas fa-eye-slash hs-password"></i>
+        <!-- <i class="fas fa-eye hs-password d-none"></i> -->
+      </div>
+      <div class="flex flex-wrap justify-between RF-content generate-btn">
+        <vs-button class="btn-gray">Generate </vs-button>
+      </div>
+    </div>
+    <span class="text-danger text-sm">{{ errors.first("password") }}</span>
     <vs-input
       type="password"
       v-validate="'min:6|max:10|confirmed:password'"
@@ -57,19 +79,42 @@ Author URL: http://www.themeforest.net/user/pixinvent
       v-model="confirm_password"
       class="w-full mt-6"
     />
-    <span class="text-danger text-sm">{{ errors.first('confirm_password') }}</span>
-
-    <vs-checkbox v-model="isTermsConditionAccepted" class="mt-6">I accept the terms & conditions.</vs-checkbox>
+    <span class="text-danger text-sm">{{
+      errors.first("confirm_password")
+    }}</span>
+    <div class="d-flex flex-wrap justify-between">
+      <vs-checkbox v-model="isTermsConditionAccepted" class="mt-1"
+        >I accept the terms & conditions.</vs-checkbox
+      >
+      <p class="sub-trial-txt mt-1 text-right mb-10">
+        <a href="#" class="fw-500"><u>Copy Password?</u></a>
+      </p>
+    </div>
     <!-- <vs-button  type="border" to="/login" class="mt-6 mb-10 btn-green">Login</vs-button> -->
+    <ul class="demo-alignment checkbox-register d-flex justify-content-between align-items-center flex-wrap">
+      <li class="d-flex flex-wrap mr-2 checkbox-reg-txt">
+        Basic<vs-checkbox class="checkbox-reginput" color="warning" v-model="basic" />
+      </li>
+      <li class="d-flex flex-wrap mr-2 checkbox-reg-txt">
+        Electron Signature<vs-checkbox class="checkbox-reginput" color="warning" v-model="electronSignatur" />
+      </li>
+      <li class="d-flex flex-wrap mr-2 checkbox-reg-txt">
+       Qualified Certificate <vs-checkbox class="checkbox-reginput" color="warning" v-model="qualifiedCertificate" />
+      </li>
+      <li class="d-flex flex-wrap mr-0 checkbox-reg-txt">
+       ABIS <vs-checkbox class="checkbox-reginput" color="warning" v-model="abis" />
+      </li>
+    </ul>
     <div class="text-right">
       <vs-button
         class="mt-6 btn-green w-225px"
         @click="registerUserJWt"
         :disabled="!validateForm"
-      >Subscribe</vs-button>
+        >Subscribe</vs-button
+      >
     </div>
     <div>
-      <p class="sub-trial-txt mt-5 text-right mb-10">
+      <p class="sub-trial-txt mt-3 text-right mb-10">
         <a class="f-size-14" href="/login">
           <u>Login To An Existing Account</u>
         </a>
@@ -82,16 +127,27 @@ Author URL: http://www.themeforest.net/user/pixinvent
 export default {
   data () {
     return {
-      displayName: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
       confirm_password: '',
+      basic: false,
+      electronSignatur: false,
+      qualifiedCertificate: false,
+      abis: false,
+      step: {},
+      //     step0: false,
+      //     step1: true,
+      //     step2: false,
+      //     step3: false,
+
       isTermsConditionAccepted: true
     }
   },
   computed: {
     validateForm () {
-      return !this.errors.any() && this.displayName !== '' && this.email !== '' && this.password !== '' && this.confirm_password !== '' && this.isTermsConditionAccepted === true
+      return !this.errors.any() && this.firstName !== '' && this.lastName !== '' && this.email !== '' && this.password !== '' && this.confirm_password !== '' && this.isTermsConditionAccepted === true
     }
   },
   methods: {
@@ -117,17 +173,23 @@ export default {
     registerUserJWt () {
       // If form is not validated or user is already login return
       if (!this.validateForm || !this.checkLogin()) return
-
-      const payload = {
-        userDetails: {
-          displayName: this.displayName,
-          email: this.email,
-          password: this.password,
-          confirmPassword: this.confirm_password
-        },
-        notify: this.$vs.notify
+      this.step = {
+        step1: false,
+        step2: true,
+        step3: false,
       }
-      this.$store.dispatch('auth/registerUserJWT', payload)
+      this.$emit("gosetp", this.step);
+
+      // const payload = {
+      //   userDetails: {
+      //     displayName: this.firstName + this.lastName,
+      //     email: this.email,
+      //     password: this.password,
+      //     confirmPassword: this.confirm_password
+      //   },
+      //   notify: this.$vs.notify
+      // }
+      // this.$store.dispatch('auth/registerUserJWT', payload)
     }
   }
 }

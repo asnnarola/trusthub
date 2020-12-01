@@ -3,6 +3,7 @@
     class="h-screen flex-column flex w-full bg-img vx-row no-gutter items-center justify-center login-wrapper"
     id="page-login"
   >
+  <help-customizer/>
     <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/4 sm:m-0 m-4">
       <vx-card>
         <div slot="no-body" class="full-page-bg-color">
@@ -10,6 +11,14 @@
             <div class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column justify-content-between">
               <div class="login-logo">
                 <img src="@/assets/images/login_icon/logo.png" alt="login" class="img-fluid" />
+                <p>ATTENTION</p>
+                <p>
+                  To access using Your Biometrical Identification,
+                  Some local devices Like fingerprint readers, webcams,
+                  signature tablets and more could be needed, so please wait
+                  until this page will be completely loded and be sure to have
+                  downloaded and correctly installed the corresponding drivers.
+                </p>
               </div>
 
               <div class="vs-row" >
@@ -18,6 +27,8 @@
                     <div class="loading-count">{{ percent }}%</div>
                     <div class="percentage" :style="{'width' : percentage + '%'}"></div>
                   </div>
+                  <div class="text-center" v-if="percent > 0 && percent < 99">Loading....</div>
+                  <div class="text-center" v-else-if="percent >= 100">Completed</div>
                 </div>
               </div>
 
@@ -25,12 +36,19 @@
                 <router-link to="/">
                   <img
                     src="@/assets/images/login_icon/Android-store.png"
-                    alt="login"
+                    alt="Android Store"
                     class="img-fluid"
                   />
                 </router-link>
                 <router-link to="/">
-                  <img src="@/assets/images/login_icon/App-store.png" alt="login" class="img-fluid" />
+                  <img src="@/assets/images/login_icon/App-store.png" alt="Apple Store" class="img-fluid" />
+                </router-link>
+                <router-link to="/">
+                  <img
+                    src="@/assets/images/login_icon/download-button.png"
+                    alt="Download"
+                    class="img-fluid"
+                  />
                 </router-link>
               </div>
             </div>
@@ -45,7 +63,7 @@
                     </div>
                     <div class="msg-wrapper-icon">
                       <img
-                        src="@/assets/images/sidebar_icon/message-gray.png"
+                        src="@/assets/images/sidebar_icon/help_new.png"
                         alt="login"
                         width="45"
                         class="img-fluid"
@@ -103,6 +121,11 @@
                   </div>
                   <div class="vs-row">
                     <div class="vs-sm-12">
+                    <router-link to="/login" class="mt-3"
+                        ><u class="fw-500 txt-dark-gray"
+                          >Return to Login Page</u
+                        ></router-link
+                      >
                       <vs-button class="btn-green mxw-250 float-right mb-5">Password Recovery</vs-button>
                     </div>
                   </div>
@@ -128,6 +151,7 @@
 
 <script>
 import copyRight from '../../layouts/components/copyright.js'
+import HelpCustomizer from '../../layouts/components/customizer/HelpCustomizer.vue'
 export default {
   data () {
     return {
@@ -166,6 +190,9 @@ export default {
       ],
       percentage: 0
     }
+  },
+  components:{
+    HelpCustomizer
   },
   computed: {
     percent() {
@@ -209,7 +236,7 @@ export default {
   width: 88%;
   margin-left: auto;
   margin-right: auto;
-  height: 25px;
+  height: 15px;
   overflow: hidden;
   background: #fff;
   background: #fff;
@@ -224,6 +251,8 @@ export default {
     position: relative;
     font-weight: 500;
     color: #6d6c6c;
+    font-size: 12px;
+    line-height: 15px;
   }
   .percentage {
     position: absolute;
@@ -241,7 +270,6 @@ export default {
     animation: animate-stripes 4s linear infinite;
   }
 }
-
 @keyframes animate-stripes {
   0% {
     background-position: 0 0;
