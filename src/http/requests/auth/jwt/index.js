@@ -122,6 +122,14 @@ export default {
       }
     })
   },
+  renameFile (newName, id) {
+    const token = localStorage.getItem('accessToken')
+    return axios.put('files/rename-file', { newName: newName, id: id}, {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    })
+  },
   deleteFolder (id) {
     const token = localStorage.getItem('accessToken')
     return axios.delete('folders/' + id, {
@@ -130,12 +138,51 @@ export default {
       }
     })
   },
+
+  deleteFile (id) {
+    const token = localStorage.getItem('accessToken')
+    // return axios.delete('files', {
+    //   headers: {
+    //     Authorization: 'Bearer ' + token
+    //   }
+    // })
+    return axios({
+      method: 'delete',
+      url: 'files',
+      headers: {Authorization: 'Bearer ' + token},
+      params:{ fileId: id}
+    })
+  },
+  downloadFile (id) {
+    const token = localStorage.getItem('accessToken')
+    return axios({
+      method: 'get',
+      url: 'files/download-file',
+      headers: {Authorization: 'Bearer ' + token},
+      params:{ fileId: id}
+    })
+    // return axios.get('files/download-file',params, header)
+  },
   uploadFile (formData) {
     const token = localStorage.getItem('accessToken')
-    return axios.delete('files/upload-file' , formData,  {
+    return axios.post('files/upload-file' , formData,  {
       headers: {
         Authorization: 'Bearer ' + token
       }
     })
-  }
+  },
+  // searchFiles (dataparam) {
+  //   const token = localStorage.getItem('accessToken')
+  //   return axios({
+  //     method: 'get',
+  //     url: 'folders/search/'+ dataparam.id',
+  //     headers: {Authorization: 'Bearer ' + token},
+  //     params:{ fileId: id}
+  //   })
+    // return axios.get('folders/search/'+ dataparam.id, {params: {name: dataparam.value}}, {
+    //   headers: {
+    //     Authorization: 'Bearer ' + token
+    //   }
+    // })
+  // }
 };

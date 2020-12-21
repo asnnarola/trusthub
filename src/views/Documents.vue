@@ -11,17 +11,18 @@
               <div class="p-4 NH-btn">
                 <vs-button
                   color="gray"
-                  class="border-radius-0 w-100 mr-3 mb-3"
+                  class="maxw-100 btn-gray border-radius-0 w-100 mr-3 mb-3"
                   @click="folderpopupActive = true"
                 >
-                  New
+                  {{ $t("New") }}
                 </vs-button>
                 <vs-button
                   color="gray"
-                  class="mr-3 border-radius-0 w-100"
+                  class="mr-3 maxw-100 btn-gray border-radius-0 w-100"
                   @click="uploadpopupActive = true"
+                  :disabled = "current_location == '/'"
                 >
-                  Upload
+                  {{ $t("Upload") }}
                 </vs-button>
               </div>
               <vs-popup
@@ -30,7 +31,7 @@
                 title="Background"
                 :active.sync="folderpopupActive"
               >
-                <h3>{{ isRename ? "Rename Folder" : "Create Folder" }}</h3>
+                <h3>{{ isRename ? "Rename" : "Create " }}</h3>
                 <vs-input
                   v-validate="'required'"
                   data-vv-validate-on="blur"
@@ -74,7 +75,7 @@
                 title="Background"
                 :active.sync="uploadpopupActive"
               >
-                <h3>Upload Files</h3>
+                <h3 class="mb-3">Upload Files</h3>
                 <!-- <vs-upload
                   multiple
                   text="Upload Multiple"
@@ -85,10 +86,11 @@
                   name="uploadFiles"
                   multiple="multiple"
                   @change="setFiles($event)"
+                  required
                 />
 
                 <div class="flex flex-wrap justify-between mt-5 mb-3 LT-wrap">
-                  <vs-button class="btn-green" @click="uploadFiles()">
+                  <vs-button class="btn-green" @click="uploadFiles()" :disabled="files.length < 1">
                     Upload
                     <!-- :disabled="!validateForm" -->
                   </vs-button>
@@ -118,7 +120,7 @@
                   :key="data.id"
                 >
                   <i :class="data.icon"></i>
-                  <span>{{ data.title }} ({{ data.children.length }})</span>
+                  <span>{{ $t(data.i18n) || data.title }} ({{ data.children.length }})</span>
                 </div>
               </div>
             </vx-card>
@@ -139,9 +141,10 @@
                   <div class="append-text btn-addon">
                     <vs-button
                       color="gray"
-                      class="border-radius-0 addonsearch-btn"
+                      class="border-radius-0 maxw-100 btn-gray addonsearch-btn"
+                      @click="onSearch()"
                     >
-                      Search
+                      {{ $t("Search") }}
                       <!-- <span class="d-sm-block d-none">Search</span>
                       <span class="d-block d-sm-none"><i class="fas fa-search"></i></span>-->
                     </vs-button>
@@ -188,17 +191,19 @@
                   v-for="(subData, index) in subFilesdata"
                   :key="index"
                   @contextmenu.prevent="$refs.menu.open"
-                  @mouseenter="onMouseenter(subData.id)"
+                  @mouseenter="onMouseenter(subData)"
                 >
                   <span class="cursor-pointer">
-                    <div
-                      class="file-icon text-center d-flex flex-column justify-content-center align-items-center"
-                      v-if="subData.type === 'Folder'"
-                      @click="getFiles(subData)"
-                    >
-                      <i class="fas fa-folder"></i>
-                      <span>{{ subData.text }}</span>
-                    </div>
+                    <vx-tooltip :text="subData.text" position="bottom">
+                      <div
+                        class="file-icon text-center d-flex flex-column justify-content-center align-items-center"
+                        v-if="subData.type === 'Folder'"
+                        @click="getFiles(subData)"
+                      >
+                        <i class="fas fa-folder"></i>
+                        <span>{{ subData.text }}</span>
+                      </div>
+
                     <div
                       class="file-icon text-center d-flex flex-column justify-content-center align-items-center"
                       v-else
@@ -231,11 +236,12 @@
                       </div>
                       <span>{{ subData.text }}</span>
                     </div>
+                    </vx-tooltip>
                   </span>
                 </li>
               </ul>
               <vue-context ref="menu" class="foldersubmenu-main">
-                <li>
+                <li @click="DownloadFile()" :disabled="selectedFile.type == 'Folder'">
                   <i class="fas fa-download"></i>
                   <span>Download</span>
                 </li>
@@ -444,6 +450,7 @@
                     v-for="(tr, index) in subFilesdata"
                     :key="index"
                     @contextmenu.prevent="$refs.menu.open"
+                    @mouseenter="onMouseenter(tr)"
                   >
                     <vs-td>
                       <span class="cursor-pointer" @click="getFiles(t)">
@@ -638,7 +645,7 @@
                 <div
                   class="process-txt d-flex justify-content-between flex-wrap"
                 >
-                  <span class="text-dark fw-600">Storage</span>
+                  <span class="text-dark fw-600">{{$t('Storage')}}</span>
                   <span>250 MB of 500 MB</span>
                 </div>
                 <div
@@ -655,9 +662,9 @@
               <div
                 class="col vs-sm-12 vs-md-12 vs-lg-7 pl-6 pr-6 d-flex flex-wrap justify-content-end LTC-btn"
               >
-                <vs-button class="btn-gray w-auto mb-4">Local</vs-button>
+                <vs-button class="btn-gray w-auto mb-4">{{ $t("Local") }}</vs-button>
                 <vs-button class="btn-gray w-auto ml-2 mb-4"
-                  >Trusthub</vs-button
+                  >{{$t("Trusthub")}}</vs-button
                 >
                 <div class="Cloudsmain-wrapper">
                   <vs-button
@@ -667,7 +674,7 @@
                         ? (cloudModel_show = false)
                         : (cloudModel_show = true)
                     "
-                    >Cloud</vs-button
+                    >{{$t("Cloud")}}</vs-button
                   >
                   <div :hidden="!cloudModel_show" class="cloud-wrapper">
                     <h5 class="w-100 fw-500 ml-3 mb-2 text-white text-left">
@@ -747,22 +754,22 @@
                   <div class="vs-xs-12 vs-sm-12 vs-md-12">
                     <div class="doc-detail text-right mb-6 mt-6">
                       <p>
-                        <i>Name: Portable Document Format</i>
+                        <i>{{$t('Name')}}: Portable Document Format</i>
                       </p>
                       <p>
-                        <i>Type: pdf/A</i>
+                        <i>{{$t('Type')}}: pdf/A</i>
                       </p>
                       <p>
-                        <i>Size:253Kb</i>
+                        <i>{{$t('Size')}}:253Kb</i>
                       </p>
                       <p>
-                        <i>Creation Date: 20/07/2020 15:55:22</i>
+                        <i>{{$t('CreationDate')}}: 20/07/2020 15:55:22</i>
                       </p>
                       <p>
-                        <i>Last Modification: 21/07/2020 18:14:59</i>
+                        <i>{{('LastModification')}}: 21/07/2020 18:14:59</i>
                       </p>
                       <p>
-                        <i>Owner: Reberto Minoletti</i>
+                        <i>{{$t('Owner')}}: Reberto Minoletti</i>
                       </p>
                     </div>
                   </div>
@@ -827,33 +834,39 @@ export default {
           id: 1,
           title: 'in',
           icon: "fas fa-sign-in-alt",
-          children: []
+          children: [],
+          i18n: 'in'
         },
         {
           id: 2,
           title: 'Out',
           icon: "fas fa-sign-out-alt",
-          children: []
+          children: [],
+          i18n: 'out'
         },
         {
           id: 3,
           title: 'Stared',
           icon: "fas fa-star",
-          children: []
+          children: [],
+          i18n: 'stared'
         },
         {
           id: 4,
           title: 'Shared Links',
           icon: "fas fa-share-alt",
-          children: []
+          children: [],
+          i18n: 'SharedLinks'
         },
         {
           id: 5,
           title: 'Trash',
           icon: "fas fa-trash-alt",
-          children: []
+          children: [],
+          i18n: 'Trash'
         },
       ],
+
       search: '',
       onGrid: true,
       imageforGrid: 'grid',
@@ -891,7 +904,7 @@ export default {
       docList: [],
       current_parentID: null,
       current_location: '/',
-      selectedFileID: '',
+      selectedFile: [],
       files: [],
       // contextItems: [],
       selectedNode: null,
@@ -964,17 +977,20 @@ export default {
   //     console.log('AB Data =>', this.docList)
   //   },
   async mounted () {
+    axios.get('http://ip-api.com/json').then(res =>{
+      console.log('res => ', res, this.$i18n.locale);
+    })
     await this.getDocuments()
   },
   computed: {
     validateForm () {
       return !this.errors.any() && this.folderName !== ''
+    },
+    isLoading(){
+      return this.$vs.loading({color: 'yellow'})
     }
   },
   methods: {
-    successUpload () {
-      this.$vs.notify({ color: 'success', title: 'Upload Success', text: 'Lorem ipsum dolor sit amet, consectetur' })
-    },
     getFiles (file) {
       if (file.type === 'Folder') {
         this.subFilesdata = file.children
@@ -982,15 +998,15 @@ export default {
         this.current_location = file.location
       }
       if (file.type == 'File') {
-        localStorage.setItem('activefilePath', file.path)
+        console.log('File=>',JSON.stringify(file));
+        localStorage.setItem('activefile', JSON.stringify(file))
         this.$router.push('/document/' + file.id).catch(() => { })
       }
     },
-    onMouseenter (id) {
-      this.selectedFileID = id
-      console.log('Sub Data =>', this.selectedFileID);
+    onMouseenter (data) {
+      console.log('Sub Data =>', data);
+      this.selectedFile = data
     },
-
     selected (node) {
       this.current_parentID = node.model.id
       this.current_location = node.model.location
@@ -1024,34 +1040,47 @@ export default {
       }).then(res => {
         this.folderData = res.data
         this.subFilesdata = res.data
-        current_parentI = null
-        current_location = '/'
-        selectedFileID = ''
+        this.current_parentID = null
+        this.current_location = '/'
+        this.selectedFile = []
       })
     },
     createFolder () {
       if (!this.validateForm) return
       // Loading
       if (this.isRename) {
-        this.$vs.loading()
+        this.isLoading
         const payload = {
           folderDetails: {
             newName: this.folderName,
-            id: this.selectedFileID,
+            id: this.selectedFile.id,
           }
         }
-        this.$store.dispatch('document/renameFolder', payload)
-          .then(() => {
-            this.$vs.loading.close()
-            this.isRename = false
-            this.folderClear()
-            this.getDocuments()
-          })
-          .errors((err) => {
-            console.log('Error =>', err);
-          })
+        if(this.selectedFile.type == 'File'){
+          this.$store.dispatch('document/renameFile', payload)
+            .then(() => {
+              this.$vs.loading.close()
+              this.isRename = false
+              this.folderClear()
+              this.getDocuments()
+            })
+            .errors((err) => {
+              console.log('Error =>', err);
+            })
+        } else if(this.selectedFile.type == 'Folder'){
+          this.$store.dispatch('document/renameFolder', payload)
+            .then(() => {
+              this.$vs.loading.close()
+              this.isRename = false
+              this.folderClear()
+              this.getDocuments()
+            })
+            .errors((err) => {
+              console.log('Error =>', err);
+            })
+        }
       } else if (!this.isRename) {
-        this.$vs.loading()
+        this.isLoading
         const payload = {
           folderDetails: {
             name: this.folderName,
@@ -1082,8 +1111,7 @@ export default {
       console.log('Event ', this.files);
     },
     uploadFiles () {
-      // this.$vs.loading()
-      const token = localStorage.getItem('accessToken')
+      // this.isLoading
       const formData = new FormData();
       formData.append('uploadLocation', this.current_location);
       formData.append('parentId', this.current_parentID);
@@ -1105,20 +1133,79 @@ export default {
       this.files = []
     },
     RemoveDocument () {
-      this.$vs.loading()
-      this.$store.dispatch('document/deleteFolder', this.selectedFileID)
-        .then(() => {
+      if(this.selectedFile.type == 'Folder'){
+        this.isLoading
+        this.$store.dispatch('document/deleteFolder', this.selectedFile.id)
+          .then(() => {
+            this.$vs.loading.close()
+            this.getDocuments()
+          })
+          .catch((err) => {
+            console.log('Error =>', err)
+          })
+      } else if (this.selectedFile.type == 'File') {
+        this.isLoading
+        this.$store.dispatch('document/deleteFile', this.selectedFile.id)
+          .then(() => {
+            this.$vs.loading.close()
+            this.getDocuments()
+          })
+          .catch((err) => {
+            console.log('Error =>', err)
+          })
+      }
+    },
+    DownloadFile(){
+      console.log(this.selectedFile)
+      this.isLoading
+      const token = localStorage.getItem('accessToken')
+        // this.$store.dispatch('document/downloadFile', this.selectedFile.id)
+        axios({
+          method: 'get',
+          url: 'files/download-file',
+          headers: {Authorization: 'Bearer ' + token},
+          params:{ fileId: this.selectedFile.id},
+          responseType: 'arraybuffer',
+        })
+        .then((res) => {
+          console.log('res =>', res);
+          let blob = new Blob([res.data], { type: 'application/pdf' })
+          let link = document.createElement('a')
+          link.href = window.URL.createObjectURL(blob)
           this.$vs.loading.close()
-          this.getDocuments()
+          // this.getDocuments()
         })
         .catch((err) => {
           console.log('Error =>', err)
-        })
+        }
+      )
     },
     RenameDocument () {
-      this.folderpopupActive = true
-      this.isRename = true
-    }
+        this.folderpopupActive = true
+        this.isRename = true
+        this.folderName = this.selectedFile.text
+    },
+    onSearch(){
+      // this.isLoading
+     const dataparam={
+       id: this.current_parentID,
+        value: this.search
+      }
+      const token = localStorage.getItem('accessToken')
+      return axios({
+      method: 'get',
+      url: 'folders/search/',
+      headers: {Authorization: 'Bearer ' + token},
+      params: {name: this.search, parentId: this.current_parentID}
+    })
+      // axios.get('folders/search', params,header)
+      .then(res => {
+      // this.isLoading.close(
+      // console.log('respo =>', res);
+      this.subFilesdata = res.data
+      // console.log('respo =>', this.subFilesdata);
+    })
+    },
   },
   components: {
     pdf,

@@ -3,7 +3,7 @@
     class="h-screen flex-column flex w-full bg-img vx-row no-gutter items-center justify-center login-wrapper"
     id="page-login"
   >
-  <help-customizer/>
+      <help-customizer :active ="active"/>
     <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/4 sm:m-0 m-4">
       <vx-card>
         <div slot="no-body" class="full-page-bg-color">
@@ -11,13 +11,9 @@
             <div class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column justify-content-between">
               <div class="login-logo">
                 <img src="@/assets/images/login_icon/logo.png" alt="login" class="img-fluid" />
-                <p>ATTENTION</p>
-                <p>
-                  To access using Your Biometrical Identification,
-                  Some local devices Like fingerprint readers, webcams,
-                  signature tablets and more could be needed, so please wait
-                  until this page will be completely loded and be sure to have
-                  downloaded and correctly installed the corresponding drivers.
+                <p>{{$t('ATTENTION')}}</p>
+                <p class="f-13">
+                  {{$t('SignatureAttentionStep1')}}
                 </p>
               </div>
 
@@ -58,8 +54,8 @@
                 <div class="form-wrap mb-10">
                   <div class="vx-card__title mb-4 d-flex justify-content-between">
                     <div class="wrapper-heading">
-                      <h4 class="mb-4">Signature Password Recovery</h4>
-                      <p>Welcome to the signature password recovery procedure.</p>
+                      <h4 class="mb-4">{{$t('SignaturePasswordRecovery')}}</h4>
+                      <p>{{$t('ForgotSignaturePasswordNote')}}</p>
                     </div>
                     <div class="msg-wrapper-icon">
                       <img
@@ -67,6 +63,7 @@
                         alt="login"
                         width="45"
                         class="img-fluid"
+                        @click="openHelp"
                       />
                     </div>
                   </div>
@@ -74,19 +71,19 @@
                   <div class="tab-wrapper-form">
                     <vs-input
                       type="email"
-                      label-placeholder="User Id"
+                      :label-placeholder="UserId"
                       v-model="userId"
                       class="w-full mb-8"
                     />
                     <vs-input
                       type="text"
-                      label-placeholder="PUK Code"
+                      :label-placeholder="PUKCode"
                       v-model="pukCode"
                       class="w-full mb-8"
                     />
                   </div>
                   <div class="txt-or text-center mb-4 mt-4">
-                    <span>AND</span>
+                    <span class="txt-gray">{{$t('AND')}}</span>
                     <div class="separte-border"></div>
                   </div>
                   <div class="bottom-menu-icon mt-0 mb-2">
@@ -115,24 +112,24 @@
                   <div class="vs-row">
                     <div class="vs-sm-12">
                       <div class="txt-wraper mt-3 mb-2">
-                        <p>Note: Additional identification procedure based on Id card, previously stored certificates biometrical parameters, graphometic signature or live operator could be required.</p>
+                        <p>{{$t('SignaturePasswordNote')}}</p>
                       </div>
                     </div>
                   </div>
                   <div class="vs-row">
-                    <div class="vs-sm-12">
-                    <router-link to="/login" class="mt-3"
-                        ><u class="fw-500 txt-dark-gray"
-                          >Return to Login Page</u
-                        ></router-link
-                      >
-                      <vs-button class="btn-green mxw-250 float-right mb-5">Password Recovery</vs-button>
+                    <div class="vs-sm-12 mt-3 mb-5">
+                    <router-link to="/login" class="mt-3">
+                    <u class="fw-500 txt-dark-gray">
+                      {{$t('ReturnLoginPage')}}
+                    </u>
+                    </router-link>
+                      <vs-button class="btn-green mxw-250 float-right mb-5">{{$t('PasswordRecovery')}}</vs-button>
                     </div>
                   </div>
                   <div class="vs-row" >
                     <div class="vs-sm-12">
                       <div class="mt-5">
-                        <h6>Warning: Recovery procedure can be performed only if you have exclusive control of codes and complete access to the required tools</h6>
+                        <h6>{{$t('SignaturePasswordWarning')}}</h6>
                     </div>
                   </div>
                   </div>
@@ -142,7 +139,7 @@
           </div>
         </div>
       </vx-card>
-      <div class="cpy-txt">
+      <div class="cpy-txt position-relative">
         <p class="text-right mt-2 text-white">{{copyRightText}}</p>
       </div>
     </div>
@@ -158,6 +155,9 @@ export default {
       copyRightText: copyRight[0].title,
       userId: '',
       pukCode: '',
+      UserId: this.$t('UserId'),
+      PUKCode: this.$t('PUKCode'),
+      active: false,
       Biometrical_Icon1: [
         {
           icon_url: 'id.png'
@@ -199,7 +199,16 @@ export default {
       return this.percentage.toFixed();
     }
   },
+  methods: {
+    openHelp(){
+      this.active == true ? this.active = false : this.active = true
+    }
+  },
   created() {
+    setInterval(() => {
+      this.UserId =  this.$t('UserId')
+      this.PUKCode = this.$t('PUKCode')
+    }, 1);
     var intval = setInterval(() => {
       if(this.percentage < 100)
         this.percentage += .1;

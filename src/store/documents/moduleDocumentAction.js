@@ -32,6 +32,14 @@ export default {
         })
         .catch(error => { console.log('Error =>', error); })
   },
+  renameFile ({ commit }, payload) {
+    const { newName, id } = payload.folderDetails
+    return jwt.renameFile(newName, id)
+      .then(response => {
+        console.log('response =>',response);
+      })
+      .catch(error => { console.log('Error =>', error); })
+  },
   deleteFolder ({ commit }, id) {
     return jwt.deleteFolder(id)
     .then(response => {
@@ -39,8 +47,30 @@ export default {
     })
     .catch(error => { console.log('Error =>', error); })
   },
+  deleteFile ({ commit }, id) {
+    return jwt.deleteFile(id)
+    .then(response => {
+      console.log('response =>',response);
+    })
+    .catch(error => { console.log('Error =>', error); })
+  },
+  downloadFile ({ commit }, id) {
+    return jwt.downloadFile(id)
+    .then(response => {
+      console.log('response =>',response);
+    })
+    .catch(error => { console.log('Error =>', error); })
+  },
   uploadFiles ({ commit }, formData) {
     return jwt.uploadFile(formData)
+    .then(response => {
+      console.log('response =>',response);
+    })
+    .catch(error => { console.log('Error =>', error); })
+  },
+  searchFiles ({ commit }, dataparam) {
+    console.log('Data =>', dataparam);
+    return jwt.searchFiles(dataparam)
     .then(response => {
       console.log('response =>',response);
     })

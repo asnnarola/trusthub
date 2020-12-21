@@ -208,51 +208,51 @@ export default {
       biometric_data: [
         {
           id: 1,
-          header: 'DOCUMENT IDENTITY',
-          sub_header: 'Scanned Document Information',
+          header: this.$t('DOCUMENTIDENTITY'),
+          sub_header: this.$t('ScannedDocumentInformation'),
           icon_url: 'id.png'
         },
         {
           id: 2,
-          header: 'DIGITAL CERTIFICATE',
-          sub_header: 'Hardware Stored Certificate',
+          header: this.$t('DIGITALCERTIFICATE'),
+          sub_header: this.$t('HardwareStoredCertificate'),
           icon_url: 'chip.png'
         },
         {
           id: 3,
-          header: 'FACE RECOGNITION',
-          sub_header: 'Captured Face Recognition Details',
+          header: this.$t('FACERECOGNITION'),
+          sub_header: this.$t('CapturedFaceRecognitionDetails'),
           icon_url: 'face.png'
         },
         {
           id: 4,
-          header: 'FINGERPRINT TEMPLATE',
-          sub_header: 'Captured Fingerprint Information',
+          header: this.$t('FINGERPRINTTEMPLATE'),
+          sub_header: this.$t('CapturedFingerprintInformation'),
           icon_url: 'fingerprint.png'
         },
         {
-          header: 'PALM SCAN',
           id: 5,
-          sub_header: 'Captured Palm Information',
+          header: this.$t('PALMSCAN'),
+          sub_header: this.$t('CapturedPalmInformation'),
           icon_url: 'palm.png'
         },
         {
           id: 6,
-          header: 'VOICE RECORD',
-          sub_header: 'Registered Voice Frequency',
+          header: this.$t('VOICERECORD'),
+          sub_header: this.$t('RegisteredVoiceFrequency'),
           icon_url: 'voice.png'
         },
 
         {
           id: 7,
-          header: 'IRIS MAP',
-          sub_header: 'Captured Iris Map',
+          header: this.$t('IRISMAP'),
+          sub_header: this.$t('CapturedIrisMap'),
           icon_url: 'eye.png'
         },
         {
           id: 8,
-          header: 'SIGNATURE GRAPH',
-          sub_header: 'Graphometric Signature Information',
+          header: this.$t('SIGNATUREGRAPH'),
+          sub_header: this.$t('GraphometricSignatureInformation'),
           icon_url: 'signature.png'
         },
       ],

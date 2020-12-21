@@ -7,7 +7,7 @@
       type="filled"
       class="customizer-btn upload-btn flowmodel-btn"
     >
-      <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />Flow
+      <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />{{ $t('Flow')}}
     </vs-button>
 
     <!-- Customizer Content -->
@@ -25,14 +25,14 @@
         class="customizer-btn upload-btn closeupload-btn flowmodel-btn"
       >
         <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />
-        Flow
+        {{ $t('Flow')}}
       </vs-button>
       <div class="h-full flow-wrapper">
         <div class="customizer-header pt-4 pb-4 flex items-center justify-between px-6">
           <div>
-            <h4 class="text-white">FLOW</h4>
+            <h4 class="text-white">{{$t('Flow')}}</h4>
             <small class="text-white">
-              <i>Signature Flow</i>
+              <i>{{$t('Signature')}} {{$t('Flow')}}</i>
             </small>
           </div>
           <feather-icon icon="XIcon" @click.stop="active = false" class="cursor-pointer"></feather-icon>
@@ -54,25 +54,25 @@
               <div slot="header" class>{{user.name}}</div>
               <div class="text-right mb-6 mt-6">
                 <p>
-                  <i>Signature Order : {{user.signatureOrder}}</i>
+                  <i>{{$t('SignatureOrder')}} : {{user.signatureOrder}}</i>
                 </p>
                 <p>
-                  <i>Mandatory signed before : {{user.mandatorySignedBefore.toString()}}</i>
+                  <i>{{$t('Mandatorysignedbefore')}} : {{user.mandatorySignedBefore.toString()}}</i>
                 </p>
                 <p>
-                  <i>Signature Option : {{user.signatureOption.toString()}}</i>
+                  <i>{{$t('SignatureOption')}} : {{user.signatureOption.toString()}}</i>
                 </p>
                 <p>
-                  <i>Reason : {{user.reason}}</i>
+                  <i>{{$t('Reason')}} : {{user.reason}}</i>
                 </p>
                 <p>
-                  <i>Dead Date : {{user.deadDate}}</i>
+                  <i>{{$t('DeadDate')}} : {{user.deadDate}}</i>
                 </p>
                 <p>
-                  <i>Notified : {{user.notified}}</i>
+                  <i>{{$t('Notified')}} : {{user.notified}}</i>
                 </p>
                 <p>
-                  <i>Status : {{user.status}}</i>
+                  <i>{{$t('Status')}} : {{user.status}}</i>
                 </p>
               </div>
               <div class="justify-content-between d-sm-flex">
@@ -80,22 +80,22 @@
                   color="primary"
                   class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1"
                   type="filled"
-                >Stress</vs-button>
+                >{{$t('Stress')}}</vs-button>
                 <vs-button
                   color="primary"
                   class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1"
                   type="filled"
-                >Replace</vs-button>
+                >{{$t('Replace')}}</vs-button>
                 <vs-button
                   color="primary"
                   class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1"
                   type="filled"
-                >Modify</vs-button>
+                >{{$t('Modify')}}</vs-button>
                 <vs-button
                   color="primary"
                   class="btn-gray w-auto mt-2 mb-2 flow-gray-btn"
                   type="filled"
-                >Remove</vs-button>
+                >{{$t('Remove')}}</vs-button>
               </div>
             </vs-collapse-item>
           </vs-collapse>

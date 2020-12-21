@@ -4,13 +4,16 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.png" />
     <link rel="stylesheet" type="text/css" href="<%= BASE_URL %>loader.css" />
-    <title>Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template</title>
+    <title>Trusthub | Trusted Identity & Signature Platform</title>
     <!-- By AB -->
     <script src=" <%= BASE_URL %>pdfobject.min.js"></script>
     <script src=" <%= BASE_URL %>fingerprint.sdk.min.js"></script>
     <script src=" <%= BASE_URL %>websdk.client.bundle.min.js"></script>
+    <!-- Recaptcha -->
+    <script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer>
+    </script>
 
     <!-- <script
       src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"
@@ -46,9 +49,6 @@
       >
     </noscript>
     <div id="loading-bg">
-      <div class="loading-logo">
-        <img src="<%= BASE_URL %>logo.png" alt="Logo" />
-      </div>
       <div class="loading">
         <div class="effect-1 effects"></div>
         <div class="effect-2 effects"></div>

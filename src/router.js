@@ -1467,6 +1467,24 @@ const router = new Router({
           }
         },
         {
+          // path: '/pages/register',
+          path: '/electron-signature-register',
+          name: 'electron-signature-register',
+          component: () => import('@/views/pages/register/RegisterElectronSignature/Electronsignature.vue'),
+          meta: {
+            rule: 'editor'
+          }
+        },
+        {
+          // path: '/pages/register',
+          path: '/signature-activation',
+          name: 'signature-activation',
+          component: () => import('@/views/pages/SignatureActivation/SignatureActivation.vue'),
+          meta: {
+            rule: 'editor'
+          }
+        },
+        {
           // path: '/pages/forgot-password',
           path: '/forgot-password',
           name: 'page-forgot-password',

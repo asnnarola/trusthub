@@ -1,8 +1,14 @@
 body.overflow-hidden {
   overflow-y: auto !important;
 }
+a {
+  cursor: pointer !important;
+}
 .w-100 {
   width: 100%;
+}
+.maxw-100 {
+  max-width: 100% !important;
 }
 .fw-500 {
   font-weight: 500 !important;
@@ -13,7 +19,7 @@ body.overflow-hidden {
 .h-100 {
   height: 100%;
 }
-.h-min-auto{
+.h-min-auto {
   min-height: auto !important;
 }
 .border-0 {
@@ -1320,10 +1326,72 @@ body.overflow-hidden {
               }
             }
           }
+          .signpad-block {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 325px;
+            margin-top: 70px;
+            .signpad-arrow1 {
+              top: 0;
+              left: 0;
+              transform: rotate(45deg);
+              z-index: 11;
+            }
+            .signpad-arrow2 {
+              top: 0;
+              right: 0;
+              transform: rotate(135deg);
+              z-index: 11;
+            }
+            .signpad-arrow3 {
+              bottom: 0;
+              left: 0;
+              transform: rotate(-45deg);
+              z-index: 11;
+            }
+            .signpad-arrow4 {
+              bottom: 0;
+              right: 0;
+              transform: rotate(-135deg);
+              z-index: 11;
+            }
+            .signpad-arrow1, .signpad-arrow2, .signpad-arrow3, .signpad-arrow4{
+                  img{
+                    &.active{
+                      filter: invert(40%) sepia(75%) saturate(1000%) hue-rotate(375deg) brightness(120%) contrast(100%);
+                    }
+                  }
+            }
+          }
           canvas {
             &.signature-pad {
               height: 325px;
+              position: relative;
+              z-index: 1;
             }
+          }
+          .dash-line {
+            position: relative;
+            height: 1px;
+            top: -3.25rem;
+            &:before {
+              position: absolute;
+              left: 15px;
+              right: 0;
+              width: 70%;
+              height: 1px;
+              font-size: 60px;
+              color: #363636;
+              bottom: 0;
+              line-height: 0;
+              margin: auto;
+              content: '-----------------------------------------';
+              letter-spacing: 8px;
+          }
           }
         }
       }
@@ -1678,6 +1746,7 @@ body.overflow-hidden {
                   .star-wrapper {
                     span {
                       font-weight: 600;
+                      line-height: 0;
                     }
                     i {
                       color: #f9c201;
@@ -1685,6 +1754,8 @@ body.overflow-hidden {
                   }
                   .customizer-header {
                     background: #383838;
+                    padding-top: 8.5px !important;
+                    padding-bottom: 8.5px !important;
                     span {
                       color: #ffff;
                     }
@@ -1975,7 +2046,7 @@ body.overflow-hidden {
                 }
               }
               .upload-btn {
-                transform: rotate(-90deg) translateY(59px);
+                transform: rotate(-90deg) translateY(50px);
                 padding: 7px 20px 7px 30px;
                 border-radius: 0px;
                 text-transform: uppercase;
@@ -1991,24 +2062,24 @@ body.overflow-hidden {
                   }
                   .vs-button-text {
                     img {
-                      transform: rotate(-90deg) translateX(-3px)
+                      transform: rotate(-90deg) translateX(-2px)
                         translateY(-15px);
                     }
                   }
                 }
                 .vs-button-text {
-                  text-transform: uppercase;
+                  // text-transform: uppercase;
                   img {
-                    transform: rotate(90deg) translateX(3px) translateY(15px);
-                    width: 20px;
+                    transform: rotate(90deg) translateX(2px) translateY(15px);
+                    width: 10px;
                   }
                 }
                 &.flowmodel-btn {
                   top: 10rem !important;
-                  transform: rotate(-90deg) translateY(46px) !important;
+                  transform: rotate(-90deg) translateY(38px) !important;
                 }
                 &.labelmodel-btn {
-                  transform: rotate(-90deg) translateY(51px) !important;
+                  transform: rotate(-90deg) translateY(43px) !important;
                 }
                 &.Trakmodel-btn,
                 &.labelmodel-btn {
@@ -2347,6 +2418,11 @@ body.overflow-hidden {
                           }
                           span {
                             font-weight: 500;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 2;
                           }
                         }
                       }

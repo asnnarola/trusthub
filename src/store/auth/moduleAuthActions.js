@@ -355,19 +355,11 @@ export default {
             commit('UPDATE_USER_INFO', response.data.userData, {root: true})
             // Set bearer token in axios
             commit('SET_BEARER', response.data.accessToken)
-          } else {
-            console.log('I am here');
-            // reject({message: 'Wrong Email or Password'})
           }
         })
         .catch(error => {
-          // router.push('/dashboard')
           console.log('jwt.login error =>', error);
-          // console.log('I am here =>1', error.response.data.errorMsg);
-          // console.log('I am here =>2', error.response.data);
-          // console.log('I am here =>4', error.errorMsg);
           return error
-          // reject(error)
         })
   },
 

@@ -7,7 +7,7 @@
       type="filled"
       class="customizer-btn upload-btn Trakmodel-btn"
     >
-      <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />Traking
+      <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />{{ $t('Traking')}}
     </vs-button>
 
     <!-- Customizer Content -->
@@ -25,14 +25,14 @@
         class="customizer-btn upload-btn closeupload-btn Trakmodel-btn"
       >
         <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />
-        Traking
+        {{ $t('Traking')}}
       </vs-button>
       <div class="h-full flow-wrapper">
         <div class="customizer-header pt-4 pb-4 flex items-center justify-between px-6">
           <div>
-            <h4 class="text-white">TRAKING</h4>
+            <h4 class="text-white">{{ $t('Traking')}}</h4>
             <small class="text-white">
-              <i>Document Management</i>
+              <i>{{$t('DocumentManagement')}}</i>
             </small>
           </div>
           <feather-icon icon="XIcon" @click.stop="active = false" class="cursor-pointer"></feather-icon>
@@ -52,9 +52,9 @@
               </div>
               <div class="trak-detail">
                 <h6 class="mb-1">
-                  <b>Income Document</b>
+                  <b>{{$t('IncomeDocument')}}</b>
                 </h6>
-                <p class="mb-1 fw-500">Uploaded by Roberto Minoletti</p>
+                <p class="mb-1 fw-500">{{$t('UploadedBy')}} Roberto Minoletti</p>
                 <p>
                   <i>UTC {{CurrentDate}}</i>
                 </p>
@@ -68,9 +68,9 @@
               </div>
               <div class="trak-detail">
                 <h6 class="mb-1">
-                  <b>Flow Orchestrator</b>
+                  <b>{{$t('FlowOrchestrator')}}</b>
                 </h6>
-                <p class="mb-1 fw-500">Sent to Sign by Reberto Minoletti</p>
+                <p class="mb-1 fw-500">{{$t('SentToSignBy')}} Reberto Minoletti</p>
                 <p>
                   <i>UTC {{CurrentDate}}</i>
                 </p>
@@ -84,9 +84,9 @@
               </div>
               <div class="trak-detail">
                 <h6 class="mb-1">
-                  <b>Signature Process</b>
+                  <b>{{$t('SignatureProcess')}}</b>
                 </h6>
-                <p class="mb-1 fw-500">Signed by Reberto Minoletti</p>
+                <p class="mb-1 fw-500">{{$t('SignedBy')}} Reberto Minoletti</p>
                 <p>
                   <i>UTC {{CurrentDate}}</i>
                 </p>
@@ -100,9 +100,9 @@
               </div>
               <div class="trak-detail">
                 <h6 class="mb-1">
-                  <b>Identification</b>
+                  <b>{{$t('Identification')}}</b>
                 </h6>
-                <p class="mb-1 fw-500">Face Recognition by Reberto Minoletti</p>
+                <p class="mb-1 fw-500">{{('FaceRecognitionBy')}} Reberto Minoletti</p>
                 <p>
                   <i>UTC {{CurrentDate}}</i>
                 </p>
@@ -116,9 +116,9 @@
               </div>
               <div class="trak-detail">
                 <h6 class="mb-1">
-                  <b>Document Management</b>
+                  <b>{{$t('DocumentManagement')}}</b>
                 </h6>
-                <p class="mb-1 fw-500">Stored in OpenKM by Reberto Minoletti</p>
+                <p class="mb-1 fw-500">{{$t('StoredInOpenKMBy')}} Reberto Minoletti</p>
                 <p>
                   <i>UTC {{CurrentDate}}</i>
                 </p>

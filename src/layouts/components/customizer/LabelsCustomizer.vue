@@ -7,7 +7,7 @@
       type="filled"
       class="customizer-btn upload-btn labelmodel-btn"
     >
-      <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />Labels
+      <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />{{$t('Labels')}}
     </vs-button>
 
     <!-- Customizer Content -->
@@ -25,14 +25,14 @@
         class="customizer-btn upload-btn closeupload-btn labelmodel-btn"
       >
         <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />
-        Labels
+        {{$t('Labels')}}
       </vs-button>
       <div class="h-full flow-wrapper">
         <div class="customizer-header pt-4 pb-4 flex items-center justify-between px-6">
           <div>
-            <h4 class="text-white">LABELS</h4>
+            <h4 class="text-white">{{$t('Labels')}}</h4>
             <small class="text-white">
-              <i>User Datas</i>
+              <i>{{$t('UserDatas')}}</i>
             </small>
           </div>
           <feather-icon icon="XIcon" @click.stop="active = false" class="cursor-pointer"></feather-icon>
@@ -46,23 +46,23 @@
         >
           <div class="traking-wrapper">
             <div class="labels-wrappes">
-              <span class="text-white fw-500 mr-2">Name</span>
+              <span class="text-white fw-500 mr-2">{{$t('Name')}}</span>
               <vs-input class="border-0 w-100 labels-inputbox" v-model="name" />
             </div>
             <div class="labels-wrappes">
-              <span class="text-white fw-500 mr-2">Document Id</span>
+              <span class="text-white fw-500 mr-2">{{$t('DocumentId')}}</span>
               <vs-input class="border-0 w-100 labels-inputbox" v-model="document" />
             </div>
             <div class="labels-wrappes">
-              <span class="text-white fw-500 mr-2">Passport</span>
+              <span class="text-white fw-500 mr-2">{{$t('Passport')}}</span>
               <vs-input class="border-0 w-100 labels-inputbox" v-model="passport" />
             </div>
             <div class="labels-wrappes">
-              <span class="text-white fw-500 mr-2">Address</span>
+              <span class="text-white fw-500 mr-2">{{$t('Address')}}</span>
               <vs-input class="border-0 w-100 labels-inputbox" v-model="address" />
             </div>
             <div class="labels-wrappes">
-              <span class="text-white fw-500 mr-2">Telephone</span>
+              <span class="text-white fw-500 mr-2">{{$t('Telephone')}}</span>
               <vs-input class="border-0 w-100 labels-inputbox" v-model="telephone" />
             </div>
           </div>

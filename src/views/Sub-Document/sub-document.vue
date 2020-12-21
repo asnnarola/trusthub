@@ -13,7 +13,7 @@
             width="45"
             class="img-fluid mr-3"
           />
-          <p>\ inbound \ Rental contract assurance.pdf</p>
+          <p>{{activeFile.path}}</p>
         </div>
       </div>
       <div
@@ -24,63 +24,69 @@
           class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
           type="filled"
           @click="signpadShow()"
-          >Sign</vs-button
+          >{{$t('Sign')}}</vs-button
         >
         <vs-button
           color="primary"
           class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
           type="filled"
           @click="fingerPrintShow()"
-          >Fingerprint</vs-button
+          >{{$t('Fingerprint')}}</vs-button
         >
         <vs-button
           color="primary"
           class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
           type="filled"
-          >Seal</vs-button
+          >{{$t('Seal')}}</vs-button
         >
         <vs-button
           color="primary"
           class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
           type="filled"
-          >Graph</vs-button
+          >{{$t('Graph')}}</vs-button
         >
         <vs-button
           color="primary"
           class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
           type="filled"
-          >Draw</vs-button
         >
+          {{$t('Draw')}}
+        </vs-button>
         <vs-button
           color="primary"
           class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
           type="filled"
-          >Bio</vs-button
         >
+          {{$t('Bio')}}
+        </vs-button>
         <vs-button
           color="primary"
           class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
           type="filled"
-          >Encrypt</vs-button
         >
+          {{$t('Encrypt')}}
+        </vs-button>
         <vs-button
           color="primary"
           class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
           type="filled"
-          >Protect</vs-button
         >
+          {{$t('Protect')}}
+        </vs-button>
         <vs-button
           color="primary"
           class="btn-gray w-auto mt-2 mb-2 flow-gray-btn mr-1 fw-500 subdoc-btn"
           type="filled"
-          >Notary</vs-button
         >
+          {{$t('Notary')}}
+        </vs-button>
         <vs-button
           color="primary"
           class="btn-gray w-auto mt-2 mb-2 flow-gray-btn fw-500 subdoc-btn"
           type="filled"
-          >Verify</vs-button
         >
+          {{$t('Verify')}}
+        </vs-button>
       </div>
     </vs-row>
     <vs-row class="border-0 filemanage-wrapper">
@@ -97,9 +103,7 @@
                 <div class="Signature_pad pl-10 pr-10">
                   <div class="row">
                     <div class="wrapper position-relative">
-                      <div
-                        class="select-block d-flex justify-content-end position-absolute right-0 pt-6"
-                      >
+                      <div class="select-block d-flex justify-content-end position-absolute right-0 pt-6">
                         <div class="mr-10 selectlabel-check active">
                           <h6 class="d-flex align-items-center">
                             <i class="pr-3">DSV</i>
@@ -132,22 +136,22 @@
                     <vs-button
                       class="btn green-btn mr-2 mb-2"
                       @click="clearSignature"
-                      >Clear</vs-button
+                      >{{$t('Clear')}}</vs-button
                     >
                     <vs-button
                       class="btn green-btn mr-2 mb-2"
                       @click="undoSignature"
-                      >Undo</vs-button
+                      >{{$t('Undo')}}</vs-button
                     >
                     <vs-button
                       class="btn green-btn mr-2 mb-2"
                       @click="saveAsJpeg"
-                      >Save</vs-button
+                      >{{$t('Save')}}</vs-button
                     >
                     <vs-button
                       class="btn green-btn mr-2 mb-2"
                       @click="undoSignature"
-                      >Advanced Options</vs-button
+                      >{{$t ('AdvancedOptions')}}</vs-button
                     >
                   </div>
                   <div
@@ -160,7 +164,7 @@
                       <i>UTC {{ CurrentDate }}</i>
                     </p>
                     <p class="text-dark">
-                      <i>Device Id: FDD76471-FCF9-4172-BAAF-D78924A4E62C</i>
+                      <i>{{$t('DeviceId')}}: FDD76471-FCF9-4172-BAAF-D78924A4E62C</i>
                     </p>
                   </div>
                 </vs-row>
@@ -408,19 +412,11 @@
               </div>
             </vs-popup>
             <div class="pdfview-content">
-              <!-- <div>
-                <button id="prev">Previous</button>
-                <button id="next">Next</button>
-                &nbsp; &nbsp;
-                <span>
-                  Page:
-                  <span id="page_num"></span> /
-                  <span id="page_count"></span>
-                </span>
-              </div>
-              <canvas  id="the-canvas"></canvas> -->
               <!-- <vue-pdf-viewer class="abd_1" width="100px" height="500px" url="http://www.africau.edu/images/default/sample.pdf"></vue-pdf-viewer> -->
-              <VuePdfJs class="gray" :url="pdfUrl" />
+              <VuePdfJs class="gray" :url="FileUrl" v-if="pdfShow" />
+              <img :src="FileUrl" height="750px" width="942px" v-if="imageShow" />
+              <!-- <object :data="FileUrl" width="500" height="500" >Not supported</object> -->
+              <!-- <iframe :src="FileUrl" height="500px" width="500px" ></iframe> -->
               <!-- <WebViewer initialDoc="http://www.africau.edu/images/default/sample.pdf"/> -->
               <!-- <vue-pdf-reader url="http://www.africau.edu/images/default/sample.pdf">
               </vue-pdf-reader> -->
@@ -439,10 +435,10 @@
                   <div class="vs-xs-12 vs-sm-12 vs-md-12">
                     <div class="doc-detail process-seq-wrapper">
                       <h6 class="mb-2">
-                        <b>Process Sequence</b>
+                        <b>{{$t('ProcessSequence')}}</b>
                       </h6>
                       <h6 class="step-txt">
-                        <b>Step by Step Process</b>
+                        <b>{{$t('StepbyStepProcess')}}</b>
                       </h6>
                       <div class="traking-wrapper">
                         <div
@@ -453,10 +449,10 @@
                           </div>
                           <div class="trak-detail">
                             <h6 class="mb-1">
-                              <b>Income Document</b>
+                              <b>{{$t('IncomeDocument')}}</b>
                             </h6>
                             <p class="mb-1 fw-600">
-                              Uploaded by Roberto Minoletti
+                              {{$t('UploadedBy')}} Roberto Minoletti
                             </p>
                             <p>
                               <i>UTC {{ CurrentDate }}</i>
@@ -471,10 +467,10 @@
                           </div>
                           <div class="trak-detail">
                             <h6 class="mb-1">
-                              <b>Flow Orchestrator</b>
+                              <b>{{$t('FlowOrchestrator')}}</b>
                             </h6>
                             <p class="mb-1 fw-500">
-                              Sent to Sign by Reberto Minoletti
+                              {{$t('SentToSignBy')}} by Reberto Minoletti
                             </p>
                             <p>
                               <i>UTC {{ CurrentDate }}</i>
@@ -487,10 +483,10 @@
                           </div>
                           <div class="trak-detail">
                             <h6 class="mb-1">
-                              <b>Signature Process</b>
+                              <b>{{$t('SigntureProcess')}}</b>
                             </h6>
                             <p class="mb-1 fw-500">
-                              Signed by Reberto Minoletti
+                              {{$t('SignedBy')}} Reberto Minoletti
                             </p>
                             <p>
                               <i>UTC {{ CurrentDate }}</i>
@@ -501,10 +497,10 @@
                           <div class="checkbox-block">4</div>
                           <div class="trak-detail">
                             <h6 class="mb-1">
-                              <b>Identification</b>
+                              <b>{{$t('Identification')}}</b>
                             </h6>
                             <p class="mb-1 fw-500">
-                              Face Recognition by Reberto Minoletti
+                              {{$t('FaceRecognitionBy')}} by Reberto Minoletti
                             </p>
                             <p>
                               <i>UTC {{ CurrentDate }}</i>
@@ -515,10 +511,10 @@
                           <div class="checkbox-block">5</div>
                           <div class="trak-detail">
                             <h6 class="mb-1">
-                              <b>Document Management</b>
+                              <b>{{$t('DocumentManagement')}}</b>
                             </h6>
                             <p class="mb-1 fw-500">
-                              Stored in OpenKM by Reberto Minoletti
+                              {{$t('StoredInOpenKMBy')}} Reberto Minoletti
                             </p>
                             <p>
                               <i>UTC {{ CurrentDate }}</i>
@@ -532,31 +528,29 @@
               </div>
             </div>
           </div>
-          <div
-            class="vs-xs-12 vs-sm-6 vs-md-12 vs-lg-12 barcode-view signature-info"
-          >
+          <div class="vs-xs-12 vs-sm-6 vs-md-12 vs-lg-12 barcode-view signature-info">
             <div class="row w-100">
               <div class="vs-xs-12 vs-sm-12 vs-md-12 mb-4">
                 <div class="vs-row border-none w-100">
                   <div class="vs-xs-12 vs-sm-12 vs-md-12">
                     <div class="doc-detail docsign-block text-right mb-6 mt-6">
                       <p>
-                        <i>Name: Portable Document Format</i>
+                        <i>{{$t('Name')}}: Portable Document Format</i>
                       </p>
                       <p>
-                        <i>Type: pdf/A</i>
+                        <i>{{$t('Type')}}: pdf/A</i>
                       </p>
                       <p>
-                        <i>Size:253Kb</i>
+                        <i>{{$t('Size')}}:253Kb</i>
                       </p>
                       <p>
-                        <i>Creation Date: 20/07/2020 15:55:22</i>
+                        <i>{{$t('CreationDate')}}: 20/07/2020 15:55:22</i>
                       </p>
                       <p>
-                        <i>Last Modification: 21/07/2020 18:14:59</i>
+                        <i>{{$t('LastModification')}}: 21/07/2020 18:14:59</i>
                       </p>
                       <p>
-                        <i>Owner: Reberto Minoletti</i>
+                        <i>{{$t('Owner')}}: Reberto Minoletti</i>
                       </p>
                     </div>
                   </div>
@@ -1157,7 +1151,14 @@ export default {
       CurrentDate: new Date().toISOString(),
       id: this.$route.params.id,
       signaturePad: SignaturePad,
-      pdfUrl: localStorage.getItem('activefilePath'),
+      BaseUrl: 'http://beta.trusthub.cloud:8080',
+      // BaseUrl: 'http://192.168.1.243:8081',
+      activeFile : JSON.parse(localStorage.getItem('activefile')),
+      FileUrl: '',
+      imageShow: false,
+      pdfShow: false,
+      textShow: false,
+      xmlShow: false
     }
   },
   components: {
@@ -1254,6 +1255,24 @@ export default {
 
 },
   created () {
+    this.FileUrl = this.BaseUrl +  this.activeFile.path
+    console.log('URL', this.FileUrl);
+    if(this.activeFile.extension == 'png' ||this.activeFile.extension == 'jpeg' || this.activeFile.extension == 'jpg'){
+      this.imageShow = true
+      this.pdfShow = false
+      this.textShow = false
+      this.xmlShow = false
+    } else if (this.activeFile.extension == 'PDF' || this.activeFile.extension == 'pdf'){
+      this.imageShow = false
+      this.pdfShow = true
+      this.textShow = false
+      this.xmlShow = false
+    } else if (this.activeFile.extension == 'txt'){
+      this.textShow = true
+      this.imageShow = false
+      this.xmlShow = false
+      this.pdfShow = false
+    }
     // disableEnable();
     setTimeout(() => {
       FingerprintSdkTest();

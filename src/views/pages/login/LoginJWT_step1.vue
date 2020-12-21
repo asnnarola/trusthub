@@ -8,7 +8,7 @@
         icon-no-border
         icon="icon icon-user"
         icon-pack="feather"
-        label-placeholder="Id"
+        :label-placeholder="Id_Label"
         v-model="id"
         class="w-full"
         @input="getId()"/>
@@ -21,7 +21,7 @@
         icon-no-border
         icon="icon icon-lock"
         icon-pack="feather"
-        label-placeholder="Activation Code"
+        :label-placeholder="ActivationCode_Label"
         v-model="ActivationCoad"
         class="w-full mt-6"
         @input="getactivationcode()"/>
@@ -34,7 +34,9 @@ export default {
   data () {
     return {
       id: this.$store.state.AppActiveUser.email,
-      ActivationCoad:'123456',
+      ActivationCoad:'',
+      Id_Label: this.$t('Id'),
+      ActivationCode_Label: this.$t('ActivationCode'),
       step:{}
     }
   },
@@ -46,6 +48,10 @@ export default {
   created() {
     this.$emit("getActivatiobCode", this.ActivationCoad);
     this.$emit("getId", this.id);
+    setInterval(() => {
+    this.Id_Label =  this.$t('Id')
+    this.ActivationCode_Label =  this.$t('ActivationCode')
+  }, 1);
   },
   methods: {
     getId(){

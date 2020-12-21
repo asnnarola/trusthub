@@ -13,10 +13,10 @@
     class="h-screen flex-column flex w-full bg-img vx-row no-gutter items-center justify-center login-wrapper"
     id="page-login"
   >
-    <help-customizer/>
+    <help-customizer :active ="active"/>
     <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4">
       <vx-card>
-        <div slot="no-body" class="full-page-bg-color">
+        <div slot="no-body" class="full-page-bg-color recover-wrapper">
           <div class="vx-row no-gutter justify-center">
             <div class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column">
               <div class="login-logo">
@@ -39,10 +39,9 @@
                     class="vx-card__title mb-4 d-flex justify-content-between"
                   >
                     <div class="wrapper-heading">
-                      <h4 class="mb-4">Recover your password</h4>
+                      <h4 class="mb-4">{{$t('RecoverYourPassword')}}</h4>
                       <p>
-                        Please enter your email address and we'll send you
-                        instructions on how to reset your password.
+                        {{$t('ForgotPasswordNote')}}
                       </p>
                     </div>
                     <div class="msg-wrapper-icon">
@@ -51,6 +50,7 @@
                         alt="login"
                         width="45"
                         class="img-fluid"
+                        @click="openHelp"
                       />
                     </div>
                   </div>
@@ -61,8 +61,8 @@
                       data-vv-validate-on="blur"
                       name="email"
                       type="email"
-                      label-placeholder="Email"
-                      placeholder="Email"
+                      :label-placeholder="Email"
+                      :placeholder="Email"
                       v-model="email"
                       class="w-full mt-6"
                     />
@@ -71,17 +71,15 @@
                     }}</span>
 
                     <div class="flex flex-wrap justify-between mt-5 LT-wrap">
-                      <router-link to="/login" class="mb-3"
-                        ><u class="fw-500 txt-dark-gray"
-                          >Return to Login Page</u
-                        ></router-link
-                      >
+                      <router-link to="/login" class="mb-3">
+                        <u class="fw-500 txt-dark-gray">{{$t('ReturnLoginPage')}}</u>
+                      </router-link>
                       <!-- <vs-button type="border" to="/login" class="btn-green">Back To Login</vs-button> -->
                       <vs-button
                         class="btn-green"
                         :disabled="validateEmail"
                         @click="forgotPassword"
-                        >Password Recovery</vs-button
+                        >{{$t('PasswordRecovery')}}</vs-button
                       >
                     </div>
                   </div>
@@ -91,7 +89,7 @@
           </div>
         </div>
       </vx-card>
-      <div class="cpy-txt">
+      <div class="cpy-txt position-relative">
         <p class="text-right mt-2 text-white">
           {{ copyRightText }}
         </p>
@@ -107,7 +105,9 @@ export default {
   data () {
     return {
       copyRightText: copyRight[0].title,
-      email: ''
+      email: '',
+      Email:this.$t('Email'),
+      active: false
     }
   },
   components:{
@@ -115,10 +115,11 @@ export default {
   },
   computed: {
     validateEmail () {
-      return !this.errors.any() && this.email !== ''
+      return !this.errors.any() && this.email == ''
     }
   },
   methods: {
+
     forgotPassword () {
       console.log('validEmail', this.validateEmail);
       if (!this.validateEmail) return
@@ -143,7 +144,15 @@ export default {
             color: 'danger'
           })
         })
+    },
+    openHelp(){
+      this.active == true ? this.active = false : this.active = true
     }
+  },
+  created() {
+    setInterval(() => {
+      this.Email = this.$t('Email')
+    }, 1);
   },
 }
 </script>

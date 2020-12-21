@@ -7,7 +7,7 @@
       icon-no-border
       icon="icon icon-user"
       icon-pack="feather"
-      label-placeholder="Email"
+      :label-placeholder="Email_Label"
       v-model="email"
       class="w-full"
     />
@@ -21,35 +21,39 @@
       icon-no-border
       icon="icon icon-lock"
       icon-pack="feather"
-      label-placeholder="Password"
+      :label-placeholder="Password_Label"
       v-model="password"
       class="w-full mt-6"
     />
     <span class="text-danger text-sm">{{ errors.first("password") }}</span>
 
+    <div class="form-group row mt-6">
+      <vue-recaptcha @verify="onVerify" sitekey="6LczcvwZAAAAADaEiDNCSCRjShHTr6oFSnTeJ6jJ">
+      </vue-recaptcha>
+    </div>
     <div class="flex flex-wrap justify-between my-5 RF-content">
       <vs-checkbox v-model="checkbox_remember_me" class="mb-3 fw-500"
-        >Remember Me</vs-checkbox
+        >{{$t('RememberME')}}</vs-checkbox
       >
       <!-- <router-link to="/pages/forgot-password">Forgot Password?</router-link> -->
       <div class="text-right">
         <a class="fw-500" href="/forgot-password">
-          <u>Forgot Password</u>
+          <u>{{$t('ForgotPassword')}}</u>
         </a>
         <br />
         <a class="fw-500" href="/forgot-password-signature">
-          <u>Forgot Signature Password</u>
+          <u>{{$t('ForgotSignaturePassword')}}</u>
         </a>
       </div>
     </div>
       <div class="mb-2">
-        <p>Select Your Login Option</p>
+        <p>{{$t ('SelectLogin')}}</p>
       </div>
     <div class="flex flex-wrap justify-between mb-3 LT-wrap loginoption-btnwrapper position-relative">
       <!-- <vs-button class="btn-green" :disabled="!validateForm" @click="loginJWT">Login</vs-button> -->
-      <vs-button class="btn-green" :disabled="!validateForm" @click="loginJWT()"
-        >Trusthub</vs-button
-      >
+      <vs-button class="btn-green" :disabled="!validateForm" @click="loginJWT()">
+        Trusthub
+      </vs-button>
       <vs-button class="btn-green">PKI</vs-button>
       <vs-button class="btn-green">ABIS</vs-button>
       <vs-button class="btn-green">IAM</vs-button>
@@ -66,14 +70,13 @@
 
       <!-- Mdel -->
       <div :hidden="!loginModel_show" class="cloud-wrapper accessmng-modal">
-        <h6 class="text-white mb-4"><b>Alternative Access Management</b></h6>
+        <h6 class="text-white mb-4"><b>{{$t('AlternativeAccess')}}</b></h6>
         <ul class="accessmng-block">
           <li
             v-for="(item, index) in loginModel"
             :key="index"
             @click="loginModel_show = false"
           >
-            {{item.label}}
           </li>
         </ul>
       </div>
@@ -84,22 +87,43 @@
     <div class="text-right">
       <p class="sub-trial-txt mt-2 pb-4">
         <a class="f-size-14 fw-500" href="/register">
-          <u>Subscribe Free Trial Account</u>
+          <u>{{$t('FreeTrial')}}</u>
         </a>
       </p>
-      <vs-button class="loginsocail-btn"><i class="fab fa-facebook-square"></i></vs-button>
-      <vs-button class="loginsocail-btn"><i class="fab fa-twitter-square"></i></vs-button>
-      <vs-button class="loginsocail-btn"><i class="fab fa-linkedin"></i></vs-button>
+      <vs-button class="loginsocail-btn" @click="AuthProvider('facebook')">
+        <img class="black-icon"  src="@/assets/images/login_icon/fb-icon.png">
+        <img class="gray-icon" src="@/assets/images/login_icon/fb-icon-gray.png">
+      </vs-button>
+      <vs-button class="loginsocail-btn" @click="AuthProvider('twitter')">
+        <img class="black-icon" src="@/assets/images/login_icon/tw-icon.png">
+        <img class="gray-icon" src="@/assets/images/login_icon/tw-icon-gray.png">
+      </vs-button>
+      <vs-button class="loginsocail-btn" @click="AuthProvider('linkedin')">
+        <img class="black-icon" src="@/assets/images/login_icon/in-icon.png">
+        <img class="gray-icon" src="@/assets/images/login_icon/in-icon-gray.png">
+      </vs-button>
     </div>
+<!--
+    <facebook-login class="button"
+      appId="444282176963354"
+      @login="onLogin"
+      @logout="onLogout"
+      @sdk-loaded="sdkLoaded">
+    </facebook-login> -->
   </div>
 </template>
 
 <script>
+import VueRecaptcha from 'vue-recaptcha';
+import facebookLogin from 'facebook-login-vuejs';
 export default {
   data () {
     return {
       email: '',
       password: '',
+      Email_Label: this.$t('Email'),
+      Password_Label: this.$t('Password'),
+      robot: false,
       checkbox_remember_me: false,
       showProgressBar: false,
       step: {},
@@ -123,9 +147,22 @@ export default {
       ]
     }
   },
+  created() {
+    setInterval(() => {
+      this.Email_Label =  this.$t('Email')
+      this.Password_Label = this.$t('Password')
+    }, 1);
+  },
+  components: {
+    'vue-recaptcha': VueRecaptcha,
+    facebookLogin
+  },
   computed: {
     validateForm () {
-      return !this.errors.any() && this.email !== '' && this.password !== ''
+      return !this.errors.any() && this.email !== '' && this.password !== '' && this.robot !== false
+    },
+    isLoading(){
+      return this.$vs.loading({color: 'yellow'})
     }
   },
   methods: {
@@ -164,9 +201,12 @@ export default {
       return true
     },
     loginJWT () {
+      console.log('Robot =>', this.robot);
       if (!this.checkLogin()) return
+      if (!this.robot) return
+
       // Loading
-      this.$vs.loading()
+      this.isLoading
       const payload = {
         checkbox_remember_me: this.checkbox_remember_me,
         userDetails: {
@@ -204,17 +244,53 @@ export default {
           })
         })
     },
-
     registerUser () {
       if (!this.checkLogin()) return
       this.$router.push('/register').catch(() => { })
-    }
+    },
+    onVerify (response) {
+      if (response) this.robot = true;
+    },
+    getUserData () {
+      this.FB.api('/me', 'GET', { fields: 'id,name,email' },
+        userInformation => {
+          console.warn('Get Data From FaceBook', userInformation)
+          this.personalID = userInformation.id
+          this.email = userInformation.email
+          this.name = userInformation.name
+        }
+      )
+    },
+    sdkLoaded (payload) {
+      this.isConnected = payload.isConnected
+      this.FB = payload.FB
+      if (this.isConnected) this.getUserData()
+    },
+    // SocialLogin
+      AuthProvider(provider) {
+        var self = this
+        this.$auth.authenticate(provider).then(response =>{
+          // self.SocialLogin(provider,response)
+          console.log(response);
+        }).catch(err => {
+          console.log({err:err})
+        })
+
+      },
+
+      SocialLogin(provider,response){
+          this.$http.post('/sociallogin/'+provider,response).then(response => {
+              console.log(response.data)
+          }).catch(err => {
+              console.log({err:err})
+          })
+      },
   }
+
+
 }
 </script>
 
 <style lang="scss">
 @import "@/assets/scss/style.scss";
-</style>>
-
 </style>

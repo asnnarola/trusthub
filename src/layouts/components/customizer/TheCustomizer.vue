@@ -20,7 +20,7 @@
       <img
         :src="require('../../../assets/images/sidebar_icon/menu-open.png')"
       />
-      Upload
+      {{ $t("Upload") }}
     </vs-button>
 
     <!-- Customizer Content -->
@@ -40,16 +40,16 @@
         <img
           :src="require('../../../assets/images/sidebar_icon/menu-open.png')"
         />
-        Upload
+        {{ $t("Upload") }}
       </vs-button>
       <div class="h-full">
         <div
           class="customizer-header pt-4 pb-4 flex items-center justify-between px-6"
         >
           <div>
-            <h4 class="text-white">UPLOAD</h4>
+            <h4 class="text-white">{{ $t("Upload") }}</h4>
             <small class="text-white">
-              <i>Advance Upload</i>
+              <i>{{ $t("Advance") }} {{ $t("Upload") }}</i>
             </small>
           </div>
           <feather-icon
@@ -69,7 +69,7 @@
             <div class="vx-col w-full">
               <vs-input
                 class="w-full inputbox-style"
-                label="Type"
+                :label="Type"
                 v-model="popup_type"
               />
             </div>
@@ -79,7 +79,7 @@
             <div class="vx-col w-full">
               <vs-input
                 class="w-full inputbox-style"
-                label="Category"
+                :label="Category"
                 v-model="popup_category"
               />
             </div>
@@ -89,7 +89,7 @@
             <div class="vx-col w-full">
               <vs-input
                 class="w-full inputbox-style"
-                label="Folder"
+                :label="Folder"
                 v-model="popup_folder"
               />
             </div>
@@ -99,7 +99,7 @@
             <div class="vx-col w-full">
               <vs-input
                 class="w-full inputbox-style"
-                label="Template"
+                :label="Template"
                 v-model="popup_template"
               />
             </div>
@@ -111,7 +111,7 @@
             >
               <vs-input
                 class="w-full inputbox-style input-btn-style"
-                label="Labels"
+                :label="Labels"
                 v-model="popup_label"
               />
               <vs-button
@@ -131,7 +131,8 @@
                   v-for="(label, index) in labels"
                   :key="index"
                   closable
-                  >{{ label }}</vs-chip>
+                  >{{ label }}</vs-chip
+                >
               </div>
             </div>
           </div>
@@ -141,7 +142,7 @@
               <p
                 class="star-wrapper mt-1 d-flex justify-content-end align-items-center flex-wrap"
               >
-                <span class="mr-3">Stars</span>
+                <span class="mr-3">{{$t('Stars')}}</span>
                 <!-- <i class="fas fa-star pl-2"></i>
                 <i class="fas fa-star pl-2"></i>
                 <i class="fas fa-star pl-2"></i>
@@ -158,14 +159,17 @@
           </div>
 
           <div class="vx-row ml-3 mr-3">
-            <vs-upload action="http://localhost:3000/Documents" v-model="filePath" />
+            <vs-upload
+              action="http://localhost:3000/Documents"
+              v-model="filePath"
+            />
           </div>
           <div class="vx-row ml-3 mr-3 mb-6">
             <div class="vx-col w-full">
               <div
                 class="toggle-wrapper w-100 text-right d-flex justify-content-end align-items-center"
               >
-                <span class="mr-3">Convert to .pdf</span>
+                <span class="mr-3">{{$t('ConverttoPdf')}}</span>
                 <vs-switch color="dark" v-model="tglSwitch" />
               </div>
             </div>
@@ -177,9 +181,11 @@
               <vs-button
                 class="mb-2 btn-yellow mr-3 h-38 pd-0 w-100px"
                 @click="onSave()"
-                >Save</vs-button
+                >{{$t('Save')}}</vs-button
               >
-              <vs-button class="mb-2 btn-gray h-38 pd-0 w-100px fw-500">Canel</vs-button>
+              <vs-button class="mb-2 btn-gray h-38 pd-0 w-100px fw-500"
+                >{{$t('Canel')}}</vs-button
+              >
               <!-- <input type="file" @input="onInput($event)"> -->
             </div>
           </div>
@@ -203,7 +209,7 @@ var docxConverter = require('docx-pdf');
 export default {
   data () {
     return {
-      filePath:'',
+      filePath: '',
       tglSwitch: true,
       active: false,
       popup_type: '',
@@ -216,6 +222,11 @@ export default {
         maxScrollbarLength: 250,
         wheelSpeed: .100
       },
+      Type: this.$t('Type'),
+      Category: this.$t('Category'),
+      Folder: this.$t('Folder'),
+      Template: this.$t('Template'),
+      Labels: this.$t('Labels'),
     }
   },
   components: {
@@ -243,20 +254,20 @@ export default {
       this.labels.splice(this.labels.indexOf(item), 1)
     },
     // onSave () {
-      // console.log('File =>',this.filePath);
-      // docxConverter(this.filePath, '../../../assets/files/output.pdf', function (err, result) {
-      //   if (err) {
-      //     console.log(err);
-      //   }
-      //   console.log('result' + result);
-      // });
-      //   toPdf(wordBuffer).then(
-      //     (pdfBuffer) => {
-      //       fs.writeFileSync("./test.pdf", pdfBuffer)
-      //     }, (err) => {
-      //       console.log(err)
-      //     }
-      //   )
+    // console.log('File =>',this.filePath);
+    // docxConverter(this.filePath, '../../../assets/files/output.pdf', function (err, result) {
+    //   if (err) {
+    //     console.log(err);
+    //   }
+    //   console.log('result' + result);
+    // });
+    //   toPdf(wordBuffer).then(
+    //     (pdfBuffer) => {
+    //       fs.writeFileSync("./test.pdf", pdfBuffer)
+    //     }, (err) => {
+    //       console.log(err)
+    //     }
+    //   )
     // }
   },
 }

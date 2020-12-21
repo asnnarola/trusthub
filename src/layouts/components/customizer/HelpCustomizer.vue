@@ -7,7 +7,7 @@
       type="filled"
       class="customizer-btn upload-btn"
     >
-      <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />HELP
+      <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />{{$t('Help')}}
     </vs-button>
 
     <!-- Customizer Content -->
@@ -25,14 +25,14 @@
         class="customizer-btn upload-btn closehelp-btn"
       >
         <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" />
-        HELP
+        {{$t('Help')}}
       </vs-button>
       <div class="h-full flow-wrapper">
         <div class="customizer-header pt-4 pb-4 flex items-center justify-between px-6">
           <div>
-            <h4 class="text-white">HELP</h4>
+            <h4 class="text-white">{{$t('Help')}}</h4>
             <small class="text-white">
-              <i>Operation Manual</i>
+              <i>{{$t('OperationManual')}}</i>
             </small>
           </div>
           <feather-icon icon="XIcon" @click.stop="active = false" class="cursor-pointer"></feather-icon>
@@ -45,9 +45,9 @@
           :key="$vs.rtl"
         >
         <div>
-          <h6>Title</h6>
+          <h6>{{$t('Title')}}</h6>
           <small>
-            Text of Description
+            {{$t('TextofDescription')}}
           </small>
         </div>
         </component>
@@ -62,12 +62,17 @@ import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 export default {
   data() {
     return {
-      active:false,
+      // active:false,
       settings: {
         maxScrollbarLength: 250,
         wheelSpeed: .100
       },
     }
+  },
+  props: {
+    active: {
+      type: Boolean
+    },
   },
   computed: {
     rtl: {

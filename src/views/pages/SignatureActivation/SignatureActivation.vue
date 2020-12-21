@@ -1,19 +1,9 @@
-<!-- =========================================================================================
-    File Name: Login.vue
-    Description: Login Page
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-      Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
-
 <template>
   <div
     class="h-screen flex-column flex w-full bg-img vx-row no-gutter items-center justify-center login-wrapper"
     id="page-login"
   >
-    <help-customizer :active="active" />
+    <help-customizer :active ="active"/>
     <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 sm:m-0 m-4 login-subwrapper">
       <vx-card>
         <div slot="no-body" class="full-page-bg-color">
@@ -29,13 +19,20 @@
                 />
 
                 <p class="attention-title">{{$t("ATTENTION")}}</p>
-                <p class="attention-text">{{$t("AttentionLoginTest")}}
+                <p class="attention-text" v-if="step.step1 == true">
+                  {{$t('SignatureAttentionStep1')}}
+                </p>
+                <p class="attention-text" v-if="step.step2 == true">
+                  {{$t('SignatureAttentionStep2')}}
+                </p>
+                <p class="attention-text" v-if="step.step3 == true">
+                  {{$t('SignatureAttentionStep3')}}
                 </p>
                 <!-- <p>Selecting Different registration Options Will Produce different registration procedure with different users permissions inside of the platform</p>
                 <p> Anyway you will be able to upgrade at any time merging properties.</p> -->
               </div>
               <!-- ProgressBar -->
-              <div class="vs-row" v-if="ProgressBar1 === true">
+              <div class="vs-row" v-if="ProgressBar2 === true">
                 <div class="vs-sm-12 vs-md-12 vs-lg-12">
                   <div class="loading-bar">
                     <div class="loading-count">{{ percent }}%</div>
@@ -44,17 +41,11 @@
                       :style="{ width: percentage + '%' }"
                     ></div>
                   </div>
-                  <div class="text-center" v-if="percent > 0 && percent < 99">
-                    Loading....
-                  </div>
-                  <div class="text-center" v-else-if="percent >= 100">
-                    Completed
-                  </div>
+                  <div class="text-center" v-if="percent > 0 && percent < 99">{{$t('Loading')}}</div>
+                  <div class="text-center" v-else-if="percent >= 100">{{$t('Completed')}}</div>
                 </div>
               </div>
-              <div
-                class="appstore-wrapper d-flex mb-5 mr-10 justify-content-end"
-              >
+              <div class="appstore-wrapper d-flex mb-5 mr-10 justify-content-end">
                 <router-link to="/">
                   <img
                     src="@/assets/images/login_icon/Android-store.png"
@@ -89,11 +80,20 @@
                   <div
                     class="vx-card__title mb-4 d-flex justify-content-between"
                   >
-                    <div class="wrapper-heading">
-                      <h4 class="mb-4">{{ $t("Login") }}</h4>
+                    <div class="wrapper-heading" >
+                      <h4 class="mb-4">{{$t('Activation')}}</h4>
                       <p class="fw-500">
-                        {{ $t("Loginheader")}}
+                        {{$t('certificateActivation')}}
                       </p>
+                      <span class="fw-500 txt-gray" v-if="step.step1 == true">
+                        {{$t('step1of3')}}
+                      </span>
+                      <span class="fw-500 txt-gray" v-if="step.step2 == true">
+                        {{$t('step2of3')}}
+                      </span>
+                      <span class="fw-500 txt-gray" v-if="step.step3 == true">
+                        {{$t('step3of3')}}
+                      </span>
                     </div>
                     <div class="msg-wrapper-icon">
                       <img
@@ -106,100 +106,31 @@
                     </div>
                   </div>
                   <hr class="border-lightgray" />
-                  <login-jwt
-                    @showProgressBar="ProgressBar1 = $event"
-                  ></login-jwt>
+                  <login-step1
+                    @getId="userId = $event"
+                    @getActivatiobCode="ActivationCode = $event"
+                    v-if="step.step1 == true"
+                  ></login-step1>
 
+                  <login-step2
+                    v-if="step.step2 == true"
+                    @getPassword="password = $event"
+                    @getConfirmPassword="confirm_Password = $event"
+                  ></login-step2>
+
+                  <login-step3 v-if="step.step3 == true"></login-step3>
                 </div>
-                <div class="txt-or text-center mb-2">
-                  <span>OR</span>
+                <div
+                  class="txt-or text-center mt-4 mb-4"
+                  v-if="step.step1 === true"
+                >
+                  <span>{{$t('AND')}}</span>
                   <div class="separte-border"></div>
                 </div>
-                <vs-popup
-                  class="Signature-popup"
-                  classContent="popup-example"
-                  title
-                  :active.sync="Pad_Show"
+                <div
+                  class="bottom-menu-icon mt-0 mb-2 position-relative"
+                  v-if="step.step1 === true"
                 >
-                  <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-12 mt-2">
-                    <div class="Signature_pad pl-5 pr-5">
-                      <div class="row">
-                        <div class="wrapper position-relative">
-                          <div
-                            class="select-block d-flex justify-content-between pt-6"
-                          >
-                            <div class="content-left">
-                              <h6 class="text-white mb-1 f-15">
-                                <b>Graphometric Login</b>
-                              </h6>
-                              <p class="text-white f-13">
-                                Use your register graphics signature
-                              </p>
-                            </div>
-                            <div class="content-right">
-                              <h5 class="txt-dark-gray"><b>00:04:59</b></h5>
-                            </div>
-                          </div>
-                          <div class="signpad-block">
-                            <div class="signpad-arrow1 position-absolute">
-                              <img width="25px" height="25px" src="@/assets/images/login_icon/arrow-green.png" class="img-fluid" />
-                            </div>
-                            <div class="signpad-arrow2 position-absolute">
-                              <img width="25px" height="25px" src="@/assets/images/login_icon/arrow-green.png" class="img-fluid active" />
-                            </div>
-                            <div class="signpad-arrow3 position-absolute">
-                              <img width="25px" height="25px" src="@/assets/images/login_icon/arrow-green.png" class="img-fluid" />
-                            </div>
-                            <div class="signpad-arrow4 position-absolute">
-                              <img width="25px" height="25px" src="@/assets/images/login_icon/arrow-green.png" class="img-fluid" />
-                            </div>
-                          </div>
-                          <canvas
-                            id="signPad"
-                            ref="signPad"
-                            class="signature-pad w-100"
-                            style="background-color: transparent !important"
-                          />
-                          <div class="dash-line"></div>
-                          <p class="text-center mb-1 fw-500">Make your signature</p>
-                        </div>
-                      </div>
-                    </div>
-                    <vs-divider class="mb-5 mt-0 green-divider pl-5 pr-5" />
-                    <vs-row class="align-items-center pl-5 pr-5">
-                      <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-7">
-                        <vs-button
-                          class="btn green-btn mr-2 mb-2"
-                          @click="clearSignature"
-                          >Clear</vs-button
-                        >
-                        <vs-button
-                          class="btn green-btn mr-2 mb-2"
-                          @click="undoSignature"
-                          >Undo</vs-button
-                        >
-                        <vs-button class="btn green-btn mr-2 mb-2">
-                          Login
-                        </vs-button>
-                        <!-- @click="undoSignature" -->
-                      </div>
-                      <div
-                        class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-5 text-right signdetail-block"
-                      >
-                        <p class="text-white f-13">
-                          <i>Geolocalization: 40.689263-74.044505</i>
-                        </p>
-                        <p class="text-white f-13">
-                          <i>UTC {{ CurrentDate }}</i>
-                        </p>
-                        <p class="text-white f-13">
-                          <i>Device Id: FDD76471-FCF9-4172-BAAF-D78924A4E62C</i>
-                        </p>
-                      </div>
-                    </vs-row>
-                  </div>
-                </vs-popup>
-                <div class="bottom-menu-icon mt-0 mb-2 position-relative">
                   <ul
                     class="d-flex flex-wrap align-items-center position-relative"
                   >
@@ -243,7 +174,6 @@
                       class="starred-page"
                       v-for="img in Biometrical_Icon3"
                       :key="img.icon_url"
-                      @click="onBiometricalclick(img.lable)"
                     >
                       <router-link to="#">
                         <img
@@ -255,6 +185,53 @@
                       </router-link>
                     </li>
                   </ul>
+                </div>
+                <div class="vs-row">
+                  <div class="vs-sm-12">
+                    <div class="txt-wraper mt-2 mb-1" v-if="step.step1 == true">
+                      <p>
+                        {{$t('SignatureNotestep1')}}
+                      </p>
+                    </div>
+                    <div class="txt-wraper mt-2 mb-2" v-if="step.step2 == true">
+                      <p>
+                        {{$t('SignatureNotestep2')}}
+                      </p>
+                    </div>
+                    <div class="txt-wraper mt-2 mb-2" v-if="step.step3 == true">
+                      <p>
+                        {{$t('SignatureNotestep3')}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="vs-row">
+                  <div class="vs-sm-12">
+                    <vs-button
+                      class="btn-green mxw-130 float-right"
+                      @click="gotoNext()"
+                      v-if="step.step1 == true || this.step.step2 == true"
+                      :disabled="
+                        (step.step1 === true &&
+                          (userId == '' || ActivationCode == '')) ||
+                        (step.step2 == true &&
+                          (password == '' || confirm_Password == ''))
+                      "
+                      >{{$t('Next')}}</vs-button
+                    >
+                  </div>
+                </div>
+                <div class="vs-row" :hidden="step.step0 == true">
+                  <div class="vs-sm-12">
+                    <div class="mt-4 mb-5">
+                      <h6 v-if="step.step1 === true">
+                        {{$t('SignatureWarningstep1')}}
+                      </h6>
+                      <h6 v-if="step.step2 === true">
+                        {{$t('SignatureWarningstep2')}}
+                      </h6>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -269,17 +246,22 @@
 </template>
 
 <script>
-import LoginJwt from './LoginJWT.vue';
+import LoginStep1 from '../login/LoginJWT_step1.vue'
+import LoginStep2 from '../login/LoginJWT_step2'
+import LoginStep3 from '../login/LoginJWT_step3.vue'
 import HelpCustomizer from '../../../layouts/components/customizer/HelpCustomizer.vue'
 import copyRight from '../../../layouts/components/copyright.js';
-import SignaturePad from 'signature_pad'
 
 export default {
   data () {
     return {
       copyRightText: copyRight[0].title,
-      ProgressBar1: false,
-      active: false,
+      ProgressBar2: false,
+      step: {
+        step1: true,
+        step2: false,
+        step3: false,
+      },
       userId: '',
       ActivationCode: '',
       password: '',
@@ -288,82 +270,53 @@ export default {
       Biometrical_Icon1: [
         {
           id: 1,
-          icon_url: 'id.png',
-          lable: 'id'
+          icon_url: 'id.png'
         },
         {
           id: 2,
-          icon_url: 'chip.png',
-          lable: 'chip'
+          icon_url: 'chip.png'
         }
       ],
       Biometrical_Icon2: [
         {
           id: 1,
-          icon_url: 'face.png',
-          lable: 'face'
+          icon_url: 'face.png'
         },
         {
           id: 2,
-          icon_url: 'fingerprint.png',
-          lable: 'finger print'
+          icon_url: 'fingerprint.png'
         },
         {
           id: 3,
-          icon_url: 'palm.png',
-          lable: 'palm'
+          icon_url: 'palm.png'
         },
         {
           id: 4,
-          icon_url: 'voice.png',
-          lable: "voice"
+          icon_url: 'voice.png'
         },
         {
           id: 5,
-          icon_url: 'eye.png',
-          lable: 'eye'
+          icon_url: 'eye.png'
         }
       ],
       Biometrical_Icon3: [
         {
           id: 1,
-          icon_url: 'signature.png',
-          lable: 'signature'
+          icon_url: 'signature.png'
         },
       ],
-      location: null,
-      gettingLocation: false,
-      errorStr: null,
-      // Signature
-      Pad_Show: false,
-      CurrentDate: new Date().toISOString(),
-      signaturePad: SignaturePad,
-
+      active: false
     }
-
   },
   components: {
-    LoginJwt,
+    LoginStep1,
+    LoginStep2,
+    LoginStep3,
     HelpCustomizer
   },
   created () {
-    if (!("geolocation" in navigator)) {
-      this.errorStr = 'Geolocation is not available.';
-      return;
-    }
-
-    this.gettingLocation = true;
-    // get position
-    navigator.geolocation.getCurrentPosition(pos => {
-      this.gettingLocation = false;
-      this.location = pos;
-    }, err => {
-      this.gettingLocation = false;
-      this.errorStr = err.message;
-    })
-
     setInterval(() => {
-      if (this.ProgressBar1 === true) {
+      if (this.ProgressBar2 === true) {
         var intval = setInterval(() => {
           if (this.percentage < 100)
             this.percentage += .1;
@@ -379,43 +332,30 @@ export default {
     },
   },
   methods: {
-    openHelp () {
-      this.active == true ? this.active = false : this.active = true
-    },
-    // Signature Pad
-    async signpadShow () {
-      this.Pad_Show = true
-      const canvas = await document.getElementById('signPad')
-      console.log(this.$refs.signPad);
-      console.log(document.getElementById('signPad'));
-      this.signaturePad = new SignaturePad(this.$refs.signPad, {
-        backgroundColor: 'transparent'
-      });
-      console.log(this.signaturePad.toData().length)
-      window.onresize = this.resizeCanvas(canvas);
-    },
-    resizeCanvas (canvas) {
-      var ratio = Math.max(window.devicePixelRatio || 1, 1);
-      canvas.width = canvas.offsetWidth * ratio;
-      canvas.height = canvas.offsetHeight * ratio;
-      canvas.getContext("2d").scale(ratio, ratio);
-    },
-    undoSignature () {
-      var data = this.signaturePad.toData();
-      console.log(data.length);
-      if (data) {
-        data.pop();
-        this.signaturePad.fromData(data);
+    gotoNext () {
+      if (this.step.step1 == true) {
+        this.percentage = 0
+        this.ProgressBar2 = true
+        setTimeout(() => {
+          this.step = {
+            step1: false,
+            step2: true,
+            step3: false,
+          }
+          this.ProgressBar2 = false
+        }, 3900);
+      } else if (this.step.step2 == true) {
+        this.percentage = 0
+        this.ProgressBar2 = false
+        this.step = {
+          step1: false,
+          step2: false,
+          step3: true,
+        }
       }
     },
-    clearSignature () {
-      var data = this.signaturePad.toData();
-      console.log(data.length);
-      this.signaturePad.clear();
-    },
-    onBiometricalclick (lable) {
-      console.log(lable);
-      this.signpadShow()
+    openHelp(){
+      this.active == true ? this.active = false : this.active = true
     }
   },
 }

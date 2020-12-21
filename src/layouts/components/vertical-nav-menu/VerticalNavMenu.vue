@@ -35,7 +35,7 @@
           >
             <logo class="mr-4 fill-current text-primary" />
           </router-link>
-          <div>
+          <!-- <div>
             <template v-if="!showCloseButton && !verticalNavMenuItemsMin">
               <img
                 src="../../../assets/images/sidebar_icon/menu-open.png"
@@ -45,13 +45,13 @@
                 width="26px"
               />
             </template>
-          </div>
+          </div> -->
         </div>
         <div class="shadow-bottom" v-show="showShadowBottom" />
         <component
           :is="scrollbarTag"
           ref="verticalNavMenuPs"
-          class="scroll-area-v-nav-menu pt-2"
+          class="scroll-area-v-nav-menu"
           :settings="settings"
           @ps-scroll-y="psSectionScroll"
           @scroll="psSectionScroll"
@@ -370,7 +370,7 @@ export default {
         url: '/setting',
         name: 'Setting & Limits',
         icon_url: 'gear.png',
-        i18n: 'Setting & Limits',
+        i18n: 'SettingLimits',
         isbottom: true
       },
       {
@@ -399,7 +399,7 @@ export default {
         url: '/setting',
         name: 'Setting & Limits',
         icon_url: 'gear.png',
-        i18n: 'Setting & Limits',
+        i18n: 'SettingLimits',
         isbottom: true
       },
       {
@@ -428,7 +428,7 @@ export default {
         url: '/setting',
         name: 'Setting & Limits',
         icon_url: 'gear.png',
-        i18n: 'Setting & Limits',
+        i18n: 'SettingLimits',
         isbottom: true
       },
       {
@@ -457,7 +457,7 @@ export default {
         url: '/setting',
         name: 'Setting & Limits',
         icon_url: 'gear.png',
-        i18n: 'Setting & Limits',
+        i18n: 'SettingLimits',
         isbottom: true
       },
       {

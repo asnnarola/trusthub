@@ -39,7 +39,9 @@
         </small>
       </p>
     </div>
-    <p class="fw-500 txt-dark-gray f-13">{{$t('SignatureStep3Note')}}</p>
+    <p class="fw-500 txt-dark-gray f-13">
+      {{$t('ElectronStep5Text')}}
+    </p>
     <vs-input
       data-vv-validate-on="blur"
       v-validate="'required'"
@@ -52,12 +54,21 @@
       v-model="pin"
       class="w-full"
     />
-
+  <div class="vs-row">
     <vs-button
       class="btn-green mxw-130 float-right mt-6"
       @click="gotodashboard()"
       :disabled="!pin"
-    >{{$t('Activate')}}</vs-button>
+      >Activate</vs-button
+    >
+    </div>
+  <div class="vs-row">
+    <p class="pt-4 txt-dark-gray pb-4">
+      Note : Be sure to have full access to the email account you declared
+      during account creation. You will receive all resuming information and
+      codes to revoke, suspend or renew your certificate in that inbox
+    </p>
+  </div>
   </div>
 </template>
 
@@ -66,7 +77,7 @@ export default {
   data () {
     return {
       pin: '',
-      PINCode: this.$t('PINCode')
+      PINCode:this.$t('PINCode')
     }
   },
   created() {

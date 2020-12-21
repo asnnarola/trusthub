@@ -73,7 +73,24 @@ import i18n from './i18n/i18n'
 // import VuePdfReader from 'vue-pdf-reader';
 // Vue.use(VuePdfReader);
 
-
+// social login
+import VueSocialauth from 'vue-social-auth'
+Vue.use(VueSocialauth, {
+  providers: {
+    facebook: {
+      clientId: '444282176963354',
+      redirectUri: 'http://localhost:8080/login'
+    },
+    linkedin: {
+      clientId: '788lt5uymeqzvd',
+      redirectUri: 'http://localhost:8080/login'
+    },
+    twitter: {
+      clientId: 'm2sJm77Y8sy7riBYhtvhTIstf',
+      redirectUri: 'http://localhost:8080/login'
+    }
+  }
+})
 
 // Signature_Pad
 // import SignaturePad from './signaturePad.js'

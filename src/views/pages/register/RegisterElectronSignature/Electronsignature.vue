@@ -12,8 +12,8 @@
     class="h-screen flex w-full bg-img vx-row no-gutter items-center justify-center login-wrapper"
     id="page-register"
   >
-    <help-customizer :active ="active"/>
     <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 sm:m-0 m-4 login-subwrapper">
+    <help-customizer :active ="active"/>
       <vx-card>
         <div slot="no-body" class="full-page-bg-color">
           <div class="vx-row no-gutter justify-center">
@@ -28,13 +28,22 @@
                 />
                 <p class="attention-title">{{$t("ATTENTION")}}</p>
                 <p class="attention-text" v-if="step.step1 == true">
-                  {{$t ("AttentionRegisterStep1")}}
+                  {{$t('AttentionElectronStep1')}}
                 </p>
                 <p class="attention-text" v-if="step.step2 == true">
-                  {{$t ("AttentionRegisterStep2")}}
+                  {{$t('AttentionElectronStep2')}}
+                </p>
+                <p class="attention-text" v-if="step.step2 == true">
+                  {{$t('AttentionElectronStep2_2')}}
                 </p>
                 <p class="attention-text" v-if="step.step3 == true">
-                  {{$t ("AttentionRegisterStep3")}}
+                  {{$t('AttentionElectronStep3')}}
+                </p>
+                <p class="attention-text" v-if="step.step4 == true">
+                  {{$t('AttentionElectronStep4')}}
+                </p>
+                <p class="attention-text" v-if="step.step5 == true">
+                  {{$t('AttentionElectronStep5')}}
                 </p>
               </div>
               <div
@@ -75,18 +84,31 @@
                     class="vx-card__title mb-4 d-flex justify-content-between"
                   >
                     <div class="wrapper-heading">
-                      <h4 class="mb-4">{{step.step1 == true ? $t('CreateAccount') : $t('AccountCreated')}}</h4>
-                      <p v-if="step.step1 == true">{{$t ('Registerheader1')}}</p>
-                      <p v-if="step.step2 == true">{{$t ('Registerheader2')}}</p>
-                      <p v-if="step.step3 == true">{{$t ('Registerheader3')}}</p>
+                      <h4 class="mb-4" v-if="step.step1 == true || step.step2 == true">
+                        {{$t('CreateAccount')}}
+                      </h4>
+                      <h4 class="mb-4" v-if="step.step3 == true">{{$t('AccountCreated')}}</h4>
+                      <h4 class="mb-4" v-if="step.step4 == true || step.step5 == true">
+                        {{$t('Activation')}}
+                      </h4>
+                      <p v-if="step.step1 == true">{{$t('Electronheader1')}}</p>
+                      <p v-if="step.step2 == true">{{$t('Electronheader2')}}</p>
+                      <p v-if="step.step3 == true">{{$t('Electronheader3')}}</p>
+                      <p v-if="step.step4 == true || step.step5 == true">{{$t('Electronheader4')}}</p>
                       <span class="fw-500 txt-gray" v-if="step.step1 == true">
-                        {{ $t('step1of3')}}
+                        {{$t('step1of5')}}
                       </span>
                       <span class="fw-500 txt-gray" v-if="step.step2 == true">
-                        {{ $t('step2of3')}}
+                        {{$t('step2of5')}}
                       </span>
                       <span class="fw-500 txt-gray" v-if="step.step3 == true">
-                        {{ $t('step3of3')}}
+                        {{$t('step3of5')}}
+                      </span>
+                      <span class="fw-500 txt-gray" v-if="step.step4 == true">
+                        {{$t('step4of5')}}
+                      </span>
+                      <span class="fw-500 txt-gray" v-if="step.step5 == true">
+                        {{$t('step5of5')}}
                       </span>
                     </div>
                     <div class="msg-wrapper-icon">
@@ -100,18 +122,26 @@
                     </div>
                   </div>
                   <hr class="border-lightgray" />
-                  <register-jwt
+                  <Electronsignaturestep1
                     v-if="step.step1 == true"
                     @gosetp="step = $event"
-                  ></register-jwt>
-                  <register-jwt2
+                  ></Electronsignaturestep1>
+                  <Electronsignaturestep2
                     v-if="step.step2 == true"
                     @gosetp="step = $event"
-                  ></register-jwt2>
-                  <register-jwt3
+                  ></Electronsignaturestep2>
+                  <Electronsignaturestep3
                     v-if="step.step3 == true"
                     @gosetp="step = $event"
-                  ></register-jwt3>
+                  ></Electronsignaturestep3>
+                  <Electronsignaturestep4
+                    v-if="step.step4 == true"
+                    @gosetp="step = $event"
+                  ></Electronsignaturestep4>
+                  <Electronsignaturestep5
+                    v-if="step.step5 == true"
+                    @gosetp="step = $event"
+                  ></Electronsignaturestep5>
                 </div>
               </div>
             </div>
@@ -128,16 +158,21 @@
 </template>
 
 <script>
-import RegisterJwt from './RegisterJWT.vue'
-import RegisterJwt2 from './RegisterJWT2.vue'
-import RegisterJwt3 from './RegisterJWT3.vue'
-import copyRight from '../../../layouts/components/copyright.js'
-import HelpCustomizer from '../../../layouts/components/customizer/HelpCustomizer.vue'
+import Electronsignaturestep1 from './Electronsignaturestep-1'
+import Electronsignaturestep2 from './Electronsignaturestep-2'
+import Electronsignaturestep3 from './Electronsignaturestep-3'
+import Electronsignaturestep4 from './Electronsignaturestep-4'
+import Electronsignaturestep5 from './Electronsignaturestep-5'
+
+import copyRight from '../../../../layouts/components/copyright.js'
+import HelpCustomizer from '../../../../layouts/components/customizer/HelpCustomizer.vue'
 export default {
   components: {
-    RegisterJwt,
-    RegisterJwt2,
-    RegisterJwt3,
+    Electronsignaturestep1,
+    Electronsignaturestep2,
+    Electronsignaturestep3,
+    Electronsignaturestep4,
+    Electronsignaturestep5,
     HelpCustomizer
   },
   data () {
@@ -147,17 +182,16 @@ export default {
         step1: true,
         step2: false,
         step3: false,
+        step4: false,
+        step5: false,
       },
-      active: false,
+      active : false
     }
   },
   methods:{
     openHelp(){
       this.active == true ? this.active = false : this.active = true
     }
-  },
-  created() {
-    this.$i18n.locale = localStorage.getItem('currentLanguage')
   },
 }
 </script>
