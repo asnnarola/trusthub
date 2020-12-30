@@ -9,7 +9,7 @@ Author URL: http://www.themeforest.net/user/pixinvent
 
 
 <template>
-  <div class="clearfix">
+  <div class="clearfix tab-wrapper-form">
     <div class="vx-row mt-2">
       <div class="vx-col sm:w-1/2 w-full mb-2">
         <vs-input
@@ -55,7 +55,7 @@ Author URL: http://www.themeforest.net/user/pixinvent
           ref="password"
           :type="passwordType"
           data-vv-validate-on="blur"
-          v-validate="'required|min:7|max: 25'"
+          v-validate="'required|min:8|max: 24|verify_password'"
           name="password"
           :label-placeholder="Password"
           :placeholder="Password"
@@ -71,7 +71,7 @@ Author URL: http://www.themeforest.net/user/pixinvent
       </div>
       <div class="flex flex-wrap justify-between RF-content generate-btn">
         <vs-button class="btn-gray" @click="generatePassword">
-          {{$t('Generate')}}
+          {{ $t("Generate") }}
         </vs-button>
       </div>
     </div>
@@ -90,16 +90,13 @@ Author URL: http://www.themeforest.net/user/pixinvent
     <span class="text-danger text-sm">{{
       errors.first("confirm_password")
     }}</span>
-    <div class="d-flex flex-wrap justify-between">
-      <vs-checkbox v-model="isTermsConditionAccepted" class="mt-1">
-        {{$t('AcceptTermsConditions')}}
+    <div class="d-flex flex-wrap justify-between mt-2">
+      <vs-checkbox v-model="isTermsConditionAccepted" class="mt-1 mb-2 ml-0">
+        {{ $t("AcceptTermsConditions") }}
       </vs-checkbox>
       <p class="sub-trial-txt mt-1 text-right mb-10">
-        <a
-          class="fw-500"
-          v-clipboard:copy="password"
-        >
-          <u>{{$t('CopyPassword?')}}</u>
+        <a class="fw-500" v-clipboard:copy="password">
+          <u>{{ $t("CopyPassword?") }}</u>
         </a>
       </p>
     </div>
@@ -107,27 +104,34 @@ Author URL: http://www.themeforest.net/user/pixinvent
     <ul
       class="demo-alignment checkbox-register d-flex justify-content-between align-items-center flex-wrap"
     >
-      <li class="d-flex flex-wrap mr-2 checkbox-reg-txt" v-for="account in differentAccount" :key="account.id">
-        {{account.label}}<vs-checkbox
+      <li
+        class="d-flex flex-wrap mr-2 checkbox-reg-txt"
+        v-for="account in differentAccount"
+        :key="account.id"
+      >
+        {{ account.label
+        }}<vs-checkbox
           class="checkbox-reginput"
           color="warning"
           v-model="account.vlue"
-          :checked = "account.value == true"
+          :checked="account.value == true"
           @change="onChecked($event, account.id)"
-          :disabled = "account.id  == 4"
+          :disabled="account.id == 4"
         />
       </li>
     </ul>
     <div class="text-right">
-      <vs-button class="mt-6 btn-green w-180px" @click="registerUserJWt"
-        >{{$t('Subscribe')}}</vs-button
+      <vs-button
+        class="mt-6 btn-green w-180px"
+        @click="registerUserJWt"
+        :disabled="!validateForm"
+        >{{ $t("Subscribe") }}</vs-button
       >
-      <!-- :disabled="!validateForm" -->
     </div>
     <div>
       <p class="sub-trial-txt mt-3 text-right mb-10">
         <a class="f-size-14" href="/login">
-          <u>{{$t('LoginToExisting')}}</u>
+          <u>{{ $t("LoginToExisting") }}</u>
         </a>
       </p>
     </div>
@@ -135,6 +139,8 @@ Author URL: http://www.themeforest.net/user/pixinvent
 </template>
 
 <script>
+import axios from '../../../axios.js'
+
 export default {
   data () {
     return {
@@ -143,12 +149,19 @@ export default {
       email: '',
       password: '',
       confirm_password: '',
+      language: "",
+      country: "",
+      countryIsoCode: "",
+      currency: "",
+      countryIsoCode: "",
+      provider: "",
+
       passwordType: 'password',
-      FirstName : this.$t('FirstName'),
-      LastName : this.$t('LastName'),
-      Email : this.$t('Email'),
-      Password : this.$t('Password'),
-      ConfirmPassword : this.$t('ConfirmPassword'),
+      FirstName: this.$t('FirstName'),
+      LastName: this.$t('LastName'),
+      Email: this.$t('Email'),
+      Password: this.$t('Password'),
+      ConfirmPassword: this.$t('ConfirmPassword'),
       // basic: false,
       // electronSignatur: false,
       // qualifiedCertificate: false,
@@ -177,8 +190,7 @@ export default {
           value: "!?#@$%&",
         },
       ],
-      gLength: 12,
-      differentAccount:[
+      differentAccount: [
         {
           id: 1,
           label: 'Basics',
@@ -229,42 +241,98 @@ export default {
     },
     generatePassword () {
       // console.log('Data =>', this.characters);
-      let result = "";
+      let result1 = "";
+      let result2 = "";
       let charactersVal = "";
+
+      // Storang Password Logic
+      for (var j = 0; j < this.characters.length; j++) {
+        charactersVal = this.characters[j].value;
+        for (var i = 0; i < 2; i++) {
+          result1 += charactersVal.charAt(Math.floor(Math.random() * charactersVal.length));
+        }
+      }
+
+      // Set Remaining charactors Randomly
       for (var j = 0; j < this.characters.length; j++) {
         charactersVal += this.characters[j].value;
       }
-      for (var i = 0; i < this.gLength; i++) {
-        result += charactersVal.charAt(Math.floor(Math.random() * charactersVal.length));
+      for (var i = 0; i < 4; i++) {
+        result2 += charactersVal.charAt(Math.floor(Math.random() * charactersVal.length));
       }
-      this.password = result;
+      this.password = result1 + result2;
     },
     registerUserJWt () {
       // If form is not validated or user is already login return
       // if (!this.validateForm || !this.checkLogin()) return
-      this.step = {
-        step1: false,
-        step2: true,
-        step3: false,
+      console.log('User Country Details =>', this.$store.state.selectedLanguage)
+      const payload = {
+        userDetails: {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.email,
+          password: this.password,
+          provider: "local",
+          confirmPassword: this.confirm_password,
+          country: {
+            country: this.$store.state.userCountryDetails.country_name,
+            countryIsoCode: this.$store.state.userCountryDetails.country_code
+          },
+          currency: {
+            currency: this.$store.state.userCountryDetails.currency.name,
+            currencyIsoCode: this.$store.state.userCountryDetails.currency.code
+          },
+          language: localStorage.getItem('selectedLanguage')
+        },
+        notify: this.$vs.notify
       }
-      this.$emit("gosetp", this.step);
-
-      // const payload = {
-      //   userDetails: {
-      //     displayName: this.firstName + this.lastName,
-      //     email: this.email,
-      //     password: this.password,
-      //     confirmPassword: this.confirm_password
-      //   },
-      //   notify: this.$vs.notify
-      // }
-      // this.$store.dispatch('auth/registerUserJWT', payload)
+      console.log('Data =>', payload.userDetails);
+      axios
+        .post("auth/register", payload.userDetails)
+        .then(res => {
+          console.log(res);
+          if (res.status == 200) {
+            this.step = {
+              step1: false,
+              step2: true,
+              step3: false,
+            }
+            this.$emit("gosetp", this.step);
+            this.$store.state.RegisterUser = res.data.userData
+            localStorage.setItem('registerUserid',res.data.userData.uid)
+            this.$vs.notify({
+              title: 'Sucess',
+              text: 'Registration SucessFuly Check your Email for Account Activation',
+              iconPack: 'feather',
+              icon: 'icon-mail',
+              color: 'success'
+            })
+          } else {
+            this.$vs.notify({
+              title: 'Error',
+              text: 'Registration Failed ..!!',
+              iconPack: 'feather',
+              icon: 'icon-alert-circle',
+              color: 'danger'
+            })
+          }
+        }).catch(error => {
+          this.$vs.loading.close()
+          this.$vs.notify({
+            title: 'Error',
+            text: 'Something is wrong'+ error.message,
+            iconPack: 'feather',
+            icon: 'icon-alert-circle',
+            color: 'danger'
+          })
+        })
+      // this.$store.dispatch('auth/registerUserJWT', payload.userDetails)
     },
-    onChecked(e, id){
+    onChecked (e, id) {
       console.log('==>', e.target.checked, id);
-      if(e.target.checked == true && id == 1){
+      if (e.target.checked == true && id == 1) {
         this.differentAccount = [
-         {
+          {
             id: 1,
             label: 'Basics',
             value: true
@@ -285,9 +353,9 @@ export default {
             value: false
           }
         ]
-      } else if(e.target.checked == true && id == 2){
+      } else if (e.target.checked == true && id == 2) {
         this.differentAccount = [
-         {
+          {
             id: 1,
             label: 'Basics',
             value: false
@@ -309,9 +377,9 @@ export default {
           }
         ]
         this.$router.push('/electron-signature-register').catch(() => { })
-      } else if(e.target.checked == true && id == 3){
+      } else if (e.target.checked == true && id == 3) {
         this.differentAccount = [
-         {
+          {
             id: 1,
             label: 'Basics',
             value: false
@@ -336,14 +404,14 @@ export default {
       }
     }
   },
-  created() {
-    setInterval(() => {
-      this.FirstName = this.$t('FirstName')
-      this.LastName = this.$t('LastName')
-      this.Email = this.$t('Email')
-      this.Password = this.$t('Password')
-      this.ConfirmPassword = this.$t('ConfirmPassword')
-    }, 1);
+  created () {
+    this.$validator.extend('verify_password', {
+      getMessage: field => `The password must contain at least: 2 uppercase letter, 2 lowercase letter, 2 number, and 2 special character`,
+      validate: value => {
+        var strongRegex = new RegExp("^(?=(.*[a-z]){2})(?=(.*[A-Z]){2})(?=(.*[0-9]){2})(?=(.*[!@#?\$%\^&\*]){2})(?=.{8,})");
+        return strongRegex.test(value);
+      }
+    });
   },
 }
 </script>

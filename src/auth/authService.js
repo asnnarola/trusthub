@@ -69,7 +69,7 @@ class AuthService extends EventEmitter {
       })
     }
 
-    renewTokens () {
+  renewTokens () {
       // reject can be used as parameter in promise for using reject
       return new Promise((resolve) => {
         if (localStorage.getItem(localStorageKey) !== 'true') {

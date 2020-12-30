@@ -9,7 +9,7 @@ Author URL: http://www.themeforest.net/user/pixinvent
 
 
 <template>
-  <div class="clearfix">
+  <div class="clearfix tab-wrapper-form">
     <div class="vx-row mt-2">
       <div class="vx-col sm:w-1/2 w-full mb-2">
         <vs-input
@@ -53,7 +53,7 @@ Author URL: http://www.themeforest.net/user/pixinvent
           ref="password"
           :type="passwordType"
           data-vv-validate-on="blur"
-          v-validate="'required|min:7|max: 25'"
+          v-validate="'required|min:8|max: 24|verify_password'"
           name="password"
           :label-placeholder="Password"
           :placeholder="Password"
@@ -87,7 +87,7 @@ Author URL: http://www.themeforest.net/user/pixinvent
       errors.first("confirm_password")
     }}</span>
     <div class="d-flex flex-wrap justify-between">
-      <vs-checkbox v-model="isTermsConditionAccepted" class="mt-1">
+      <vs-checkbox v-model="isTermsConditionAccepted" class="mt-3 mb-2 ml-0">
         {{$t('AcceptTermsConditions')}}
       </vs-checkbox>
       <p class="sub-trial-txt mt-1 text-right mb-10">
@@ -214,18 +214,28 @@ export default {
       }
       return true
     },
-    generatePassword() {
+   generatePassword () {
       // console.log('Data =>', this.characters);
-      let result = "";
-          let charactersVal = "";
-          for (var j = 0; j < this.characters.length; j++) {
-              charactersVal += this.characters[j].value;
-          }
-          for ( var i = 0; i < this.gLength; i++ ) {
-            result += charactersVal.charAt(Math.floor(Math.random() * charactersVal.length));
-          }
-          this.password = result;
-          // console.log('Password =>', charactersVal.length, this.password);
+      let result1 = "";
+      let result2 = "";
+      let charactersVal = "";
+
+      // Storang Password Logic
+      for (var j = 0; j < this.characters.length; j++) {
+        charactersVal = this.characters[j].value;
+        for (var i = 0; i < 2; i++) {
+          result1 += charactersVal.charAt(Math.floor(Math.random() * charactersVal.length));
+        }
+      }
+
+      // Set Remaining charactors Randomly
+      for (var j = 0; j < this.characters.length; j++) {
+        charactersVal += this.characters[j].value;
+      }
+      for (var i = 0; i < 4; i++) {
+        result2 += charactersVal.charAt(Math.floor(Math.random() * charactersVal.length));
+      }
+      this.password = result1 + result2;
     },
     copyPassword(){
       let textToCopy = this.password;
@@ -336,6 +346,13 @@ export default {
     }
   },
   created() {
+    this.$validator.extend('verify_password', {
+        getMessage: field => `The password must contain at least: 2 uppercase letter, 2 lowercase letter, 2 number, and 2 special character`,
+        validate: value => {
+            var strongRegex = new RegExp("^(?=(.*[a-z]){2})(?=(.*[A-Z]){2})(?=(.*[0-9]){2})(?=(.*[!@#?\$%\^&\*]){2})(?=.{8,})");
+            return strongRegex.test(value);
+        }
+    });
     setInterval(() => {
       this.FirstName = this.$t('FirstName')
       this.LastName = this.$t('LastName')

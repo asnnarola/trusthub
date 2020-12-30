@@ -414,7 +414,7 @@
             <div class="pdfview-content">
               <!-- <vue-pdf-viewer class="abd_1" width="100px" height="500px" url="http://www.africau.edu/images/default/sample.pdf"></vue-pdf-viewer> -->
               <VuePdfJs class="gray" :url="FileUrl" v-if="pdfShow" />
-              <img :src="FileUrl" height="750px" width="942px" v-if="imageShow" />
+              <img :src="FileUrl" class="img-fluid m-auto" v-if="imageShow" />
               <!-- <object :data="FileUrl" width="500" height="500" >Not supported</object> -->
               <!-- <iframe :src="FileUrl" height="500px" width="500px" ></iframe> -->
               <!-- <WebViewer initialDoc="http://www.africau.edu/images/default/sample.pdf"/> -->

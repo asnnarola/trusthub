@@ -3,45 +3,49 @@
     <div class="activation-detail mt-4 mb-4 p-3 text-right">
       <p class="fw-500">
         <small>
-          <i>Name: Jhon Doe</i>
+          <i>{{ $t("Name") }}: {{ userDetails.name }}</i>
         </small>
       </p>
       <p class="f-15">
         <i>
-          <b class="txt-dark-gray">User Id:</b>
-          <b class="txt-green">admin@admin.com</b>
+          <b class="txt-dark-gray">{{ $t("UserId") }}:</b>
+          <b class="txt-green">{{ userDetails.userId }}</b>
         </i>
       </p>
       <p class="fw-500">
         <small>
-          <i>Conformation Date: 23/8/2020 15:06</i>
+          <i>{{ $t("ConformationDate") }}:{{ userDetails.RegistrationDate }}</i>
         </small>
       </p>
     </div>
     <div v-if="isEmailverification">
-      <p class="fw-500 txt-dark-gray">{{$t('Register2EmailContent')}}</p>
+      <p class="fw-500 txt-dark-gray">{{ $t("Register2EmailContent") }}</p>
       <!-- <p class="fw-500 txt-dark-gray">Fill the field below with the secret Code you recive by email, sms or card</p> -->
 
       <p class="mt-5 txt-gray">
-        {{$t('Register2Note')}}
+        {{ $t("Register2Note") }}
       </p>
       <div class="text-right d-flex justify-end align-items-center">
         <div class="mt-6 countdown-txt" id="countdown">
           <h4>
-            <b>
-              {{ ttime_email }}
+            <b v-if="emailMinutes >= 0">
+              {{ emailMinutes }}:{{
+                emailSecond < 10 ? "0" + emailSecond : emailSecond
+              }}
+            </b>
+            <b v-else> 00:00
             </b>
           </h4>
         </div>
-        <vs-button class="ml-5 mt-6 btn-gray w-180px" @click="goTostep3()"
-          >{{$t('ResendEmail')}}</vs-button
-        >
+        <vs-button class="ml-5 mt-6 btn-gray w-180px" @click="ReSendEmail">{{
+          $t("ResendEmail")
+        }}</vs-button>
       </div>
       <div>
         <p class="sub-trial-txt mt-3 text-right mb-10">
           <a class="f-size-14" @click="goSMSVerification">
             <b>
-              <u>{{$t('switchToSms')}}</u>
+              <u>{{ $t("switchToSms") }}</u>
             </b>
           </a>
         </p>
@@ -49,9 +53,9 @@
       <div>
         <p class="sub-trial-txt mt-3 mb-10">
           <b>
-            {{$t('Register2EmailWarning')}}
+            {{ $t("Register2EmailWarning") }}
             <a class="f-size-14 txt-blue" @click="goSMSVerification">
-              <u>{{$t('SMS')}}</u>
+              <u>{{ $t("SMS") }}</u>
             </a>
           </b>
         </p>
@@ -59,7 +63,7 @@
     </div>
     <div v-if="isSMSverification">
       <p class="fw-500 txt-dark-gray">
-        {{$t('Register2SMSContent')}}
+        {{ $t("Register2SMSContent") }}
       </p>
       <!-- <p class="fw-500 txt-dark-gray">Fill the field below with the secret Code you recive by email, sms or card</p> -->
       <vs-input
@@ -76,20 +80,23 @@
       <div class="xt-right d-flex justify-end align-items-center">
         <div class="mt-6 countdown-txt" id="countdown">
           <h4>
-            <b>
-              {{ time_sms }}
+            <b v-if="smsMinutes >= 0">
+              {{ smsMinutes }}:{{
+                smsSecond < 10 ? "0" + smsSecond : smsSecond
+              }}
             </b>
+            <b v-else>00:00</b>
           </h4>
         </div>
-        <vs-button class="ml-5 mt-6 btn-green w-180px" @click="goTostep3()"
-          >{{$t('SendSMS')}}</vs-button
-        >
+        <vs-button class="ml-5 mt-6 btn-green w-180px"  @click="sendSMS()">{{
+          $t("SendSMS")
+        }}</vs-button>
       </div>
       <div>
         <p class="sub-trial-txt mt-3 text-right mb-10">
           <a class="f-size-14" @click="goEmailVerification">
             <b>
-              <u>{{$t('BackToEmail')}}</u>
+              <u>{{ $t("BackToEmail") }}</u>
             </b>
           </a>
         </p>
@@ -97,7 +104,7 @@
       <div>
         <p class="sub-trial-txt mt-3 mb-10">
           <b>
-            {{$t('Register2SMSWarning')}}
+            {{ $t("Register2SMSWarning") }}
           </b>
         </p>
       </div>
@@ -105,62 +112,149 @@
   </div>
 </template>
 <script>
-import moment from 'moment'
+import axios from '../../../axios.js'
 export default {
   data () {
     return {
       isEmailverification: true,
       isSMSverification: false,
-      MobileNumber:this.$t('MobileNumber'),
+      MobileNumber: this.$t('MobileNumber'),
       step: {
         step1: true,
         step2: false,
         step3: false,
       },
-      date_email: moment(60 * 10 * 1000).subtract(25,'minutes'),
-      date_sms: moment(60 * 10 * 1000).subtract(25,'minutes'),
-      mobile: ''
-    }
-  },
-  computed: {
-    ttime_email: function () {
-      return this.date_email.format('mm:ss');
-    },
-    time_sms: function () {
-      return this.date_sms.format('mm:ss');
+      mobile: '',
+      userDetails: {
+        name: this.$store.state.RegisterUser.displayName,
+        userId: this.$store.state.RegisterUser.email,
+        RegistrationDate: this.$store.state.RegisterUser.createdDate
+      },
+      uid: this.$store.state.RegisterUser.uid,
+      emailMinutes: 14,
+      emailSecond: 60,
+      smsMinutes: 14,
+      smsSecond: 60,
     }
   },
   mounted: function () {
     setInterval(() => {
-      this.MobileNumber = this.$t('MobileNumber')
-    },1);
-    setInterval(() => {
-      this.date = moment(this.date.subtract(1, 'seconds'))
+      if(this.emailMinutes >= 0){
+        this.emailSecond--
+        if (this.emailSecond == 0) {
+          this.emailMinutes--
+          this.emailSecond = 60
+        }
+      }
     }, 1000);
+
+    if (this.isSMSverification == true) {
+
+      setInterval(() => {
+        if (this.smsMinutes >= 0) {
+          this.smsSecond--
+          if (this.smsSecond == 0) {
+            this.smsMinutes--
+            this.smsSecond = 60
+          }
+        }
+      }, 1000);
+    }
   },
   methods: {
     goSMSVerification () {
       this.isEmailverification = false
       this.isSMSverification = true
-      setInterval(() => {
-        this.date_sms = moment(this.date_sms.subtract(1, 'seconds'))
-      }, 1000);
     },
     goEmailVerification () {
       this.isEmailverification = true
       this.isSMSverification = false
-      setInterval(() => {
-        this.date_email = moment(this.date_email.subtract(1, 'seconds'))
-      }, 1000);
     },
-    goTostep3 () {
-      this.step = {
-        step1: false,
-        step2: false,
-        step3: true,
-      }
-      this.$emit("gosetp", this.step);
+    // goTostep3 () {
+    //   this.step = {
+    //     step1: false,
+    //     step2: false,
+    //     step3: true,
+    //   }
+    //   this.$emit("gosetp", this.step);
+    // }
+    ReSendEmail () {
+      const token = localStorage.getItem('accessToken')
+      axios.post('/auth/users/' + this.uid + '/resend/signup-confirmation', { confirmationMode: 'email' }, {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      })
+      .then(res => {
+        console.log('res =>', res);
+        if(res.status == 200){
+          this.$vs.notify({
+            title: 'Sucess',
+            text: res.data.successCode,
+            iconPack: 'feather',
+            icon: 'icon-mail',
+            color: 'success'
+          })
+        } else{
+          this.$vs.notify({
+            title: 'Error',
+            text: 'Email Resending Failed ..!!',
+            iconPack: 'feather',
+            icon: 'icon-alert-circle',
+            color: 'danger'
+          })
+        }
+      }).catch(error => {
+        this.$vs.loading.close()
+        this.$vs.notify({
+          title: 'Error',
+          text: 'Something is wrong'+ error.message,
+          iconPack: 'feather',
+          icon: 'icon-alert-circle',
+          color: 'danger'
+        })
+      })
+
+    },
+    sendSMS () {
+      const token = localStorage.getItem('accessToken')
+      const mobile = '+'+ this.$store.state.userCountryDetails.calling_code + this.mobile
+      axios.post('/auth/users/' + this.uid + '/resend/signup-confirmation', { confirmationMode: 'sms', mobile:mobile}, {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      })
+      .then(res => {
+        console.log('res =>', res);
+        if(res.status == 200){
+          this.$vs.notify({
+            title: 'Sucess',
+            text: res.data.successCode,
+            iconPack: 'feather',
+            icon: 'icon-mail',
+            color: 'success'
+          })
+        } else{
+          this.$vs.notify({
+            title: 'Error',
+            text: 'SMS Sending Failed ..!!',
+            iconPack: 'feather',
+            icon: 'icon-alert-circle',
+            color: 'danger'
+          })
+        }
+      }).catch(error => {
+        this.$vs.loading.close()
+        this.$vs.notify({
+          title: 'Error',
+          text: 'Something is wrong'+ error.message,
+          iconPack: 'feather',
+          icon: 'icon-alert-circle',
+          color: 'danger'
+        })
+      })
+
     }
-  },
+  }
 }
 </script>

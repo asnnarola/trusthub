@@ -46,11 +46,12 @@ export default {
       }
     );
   },
-  async login(email, pwd) {
+  async login(email, pwd, language) {
     console.log("login called");
      return await axios.post("auth/authenticate", {
       email,
-      password: pwd
+       password: pwd,
+       language
     });
   },
   // login (email, pwd) {
@@ -59,14 +60,9 @@ export default {
   //     password: pwd
   //   })
   // },
-  registerUser(name, email, pwd, cpwd) {
+  registerUser(payload) {
     return axios
-      .post("auth/register", {
-        displayName: name,
-        email,
-        password: pwd,
-        confirmPassword: cpwd
-      })
+      .post("auth/register", payload)
       .then(res => console.log("responce =>", res));
   },
   // registerUser (name, email, pwd) {
@@ -84,11 +80,9 @@ export default {
       })
       .then(res => console.log("responce =>", res));
   },
-  forgotPassword(email) {
+  forgotPassword(payload) {
     return axios
-      .post("auth/forgot-password", {
-        email: email
-      })
+      .post("auth/forgot-password", payload)
       .then(res => console.log("responce =>", res));
   },
   refreshToken() {

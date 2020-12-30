@@ -71,13 +71,12 @@
                     }}</span>
 
                     <div class="flex flex-wrap justify-between mt-5 LT-wrap">
-                      <router-link to="/login" class="mb-3">
+                      <router-link to="/login" class="mb-3 mr-4">
                         <u class="fw-500 txt-dark-gray">{{$t('ReturnLoginPage')}}</u>
                       </router-link>
                       <!-- <vs-button type="border" to="/login" class="btn-green">Back To Login</vs-button> -->
                       <vs-button
                         class="btn-green"
-                        :disabled="validateEmail"
                         @click="forgotPassword"
                         >{{$t('PasswordRecovery')}}</vs-button
                       >
@@ -115,17 +114,17 @@ export default {
   },
   computed: {
     validateEmail () {
-      return !this.errors.any() && this.email == ''
+      return !this.errors.any() && this.email !== ''
     }
   },
   methods: {
-
     forgotPassword () {
       console.log('validEmail', this.validateEmail);
       if (!this.validateEmail) return
       const payload = {
         userDetails: {
-          email: this.email
+          email: this.email,
+          language:localStorage.getItem('selectedLanguage')
         },
         notify: this.$vs.notify
       }

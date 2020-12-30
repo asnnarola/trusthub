@@ -80,9 +80,12 @@
                     $t(item.i18n) || item.name
                   }}</span>
               </v-nav-menu-item>
-                </div>
+            </div>
             </template>
           </template>
+          <div class='menu-collapsed'  :class="isOpen == true ? ' ' : 'close-menu'">
+            <img :src="require('../../../assets/images/sidebar_icon/menu-open.png')" alt=""  @click="toggleReduce(!reduce)">
+          </div>
 
           <ul class="bt-menu-list">
             <li
@@ -152,15 +155,15 @@
                   <img
                     :src="
                       require('../../../assets/images/sidebar_icon/' +
-                        item.icon_url)
+                      item.icon_url)
                     "
                   />
                 </div>
                 <div class="submenu-name">
                   <span class="truncate pl-0 fw-500" style>{{
-                    item.title
+                   $t(item.i18n) ||  item.title
                   }}</span>
-                  <i class="truncate text-white" style>{{ item.sub_title }}</i>
+                  <i class="truncate text-white" style>{{  $t(item.sub_title_i18n) || item.sub_title }}</i>
                 </div>
               </div>
             </a>
@@ -195,7 +198,7 @@
                 </div> -->
                 <div class="submenu-name">
                   <span class="truncate pl-0 fw-500" style>{{
-                    item.title
+                    $t(item.i18n) || item.title
                   }}</span>
                   <!-- <i class="truncate text-white" style>{{item.sub_title}}</i> -->
                 </div>
@@ -240,6 +243,7 @@ export default {
   },
   data: () => ({
     activeSubsidebar: false,
+    isOpen : true,
     activeBottomSubsidebar: false,
     settingBottomSubMenu: [
       {
@@ -247,6 +251,8 @@ export default {
         icon_url: 'subM1.png',
         title: 'Presets',
         sub_title: 'Presets',
+        sub_title_i18n: 'Presets',
+        i18n:'Presets',
         display: false
       },
       {
@@ -254,6 +260,8 @@ export default {
         icon_url: 'subM1.png',
         title: 'Certificators',
         sub_title: 'Presets',
+        sub_title_i18n: 'Presets',
+        i18n:'Certificators',
         display: false
       },
       {
@@ -261,6 +269,8 @@ export default {
         icon_url: 'subM1.png',
         title: 'Operators',
         sub_title: 'Presets',
+        sub_title_i18n: 'Presets',
+        i18n:'Operators',
         display: false
       },
       {
@@ -268,6 +278,8 @@ export default {
         icon_url: 'subM1.png',
         title: 'Seats',
         sub_title: 'Presets',
+        sub_title_i18n: 'Presets',
+        i18n:'Seats',
         display: false
       },
       {
@@ -275,6 +287,8 @@ export default {
         icon_url: 'subM1.png',
         title: 'Devices',
         sub_title: 'Presets',
+        sub_title_i18n: 'Presets',
+        i18n:'Devices',
         display: false
       },
       {
@@ -282,6 +296,8 @@ export default {
         icon_url: 'subM1.png',
         title: 'Licences',
         sub_title: 'Presets',
+        sub_title_i18n: 'Presets',
+        i18n:'Licences',
         display: false
       },
       {
@@ -289,6 +305,8 @@ export default {
         icon_url: 'subM1.png',
         title: 'Wallet',
         sub_title: 'Presets',
+        sub_title_i18n: 'Presets',
+        i18n:'Wallet',
         display: false
       },
       {
@@ -296,6 +314,8 @@ export default {
         icon_url: 'subM1.png',
         title: 'Limits',
         sub_title: 'Presets',
+        sub_title_i18n: 'Presets',
+        i18n:'Limits',
         display: false
       },
     ],
@@ -303,43 +323,57 @@ export default {
       id: 1,
       icon_url: 'subM1.png',
       title: 'Search',
-      sub_title: 'Find Specific Documents'
+      sub_title: 'Find Specific Documents',
+      i18n: 'Search',
+      sub_title_i18n:'FindSpecificDocuments',
     },
     {
       id: 2,
       icon_url: 'subM2.png',
       title: 'New',
-      sub_title: 'Create Documents'
+      sub_title: 'Create Documents',
+      i18n: 'New',
+      sub_title_i18n:'CreateDocuments',
     },
     {
       id: 3,
       icon_url: 'subM3.png',
       title: 'Upload',
-      sub_title: 'Add Documents'
+      sub_title: 'Add Documents',
+      i18n: 'Upload',
+      sub_title_i18n:'AddDocuments',
     },
     {
       id: 4,
       icon_url: 'subM4.png',
       title: 'Signature',
-      sub_title: 'Apply Signature'
+      sub_title: 'Apply Signature',
+      i18n: 'Signature',
+      sub_title_i18n:'ApplySignature',
     },
     {
       id: 5,
       icon_url: 'subM5.png',
       title: 'Cloud',
-      sub_title: 'Storage provide'
+      sub_title: 'Storage provide',
+      i18n: 'Cloud',
+      sub_title_i18n:'StorageProvide',
     },
     {
       id: 6,
       icon_url: 'subM6.png',
       title: 'Setting',
-      sub_title: 'Users Restrictions'
+      sub_title: 'Users Restrictions',
+      i18n: 'Setting',
+      sub_title_i18n:'UsersRestrictions',
     },
     {
       id: 7,
       icon_url: 'subM7.png',
       title: 'Clients',
-      sub_title: 'Download Appliactions'
+      sub_title: 'Download Appliactions',
+      i18n: 'Clients',
+      sub_title_i18n:'DownloadAppliactions',
     },
     ],
     bottom_data: [],
@@ -406,7 +440,7 @@ export default {
         url: '/konwledgebase',
         name: 'Knowledge Base',
         icon_url: 'help.png',
-        i18n: 'Knowledge Base',
+        i18n: 'KnowledgeBase',
         isbottom: true,
       },
       {
@@ -435,7 +469,7 @@ export default {
         url: '/konwledgebase',
         name: 'Knowledge Base',
         icon_url: 'help.png',
-        i18n: 'Knowledge Base',
+        i18n: 'KnowledgeBase',
         isbottom: true,
       },
       {
@@ -464,7 +498,7 @@ export default {
         url: '/konwledgebase',
         name: 'Knowledge Base',
         icon_url: 'help.png',
-        i18n: 'Knowledge Base',
+        i18n: 'KnowledgeBase',
         isbottom: true,
       },
       {
@@ -635,7 +669,6 @@ export default {
       this.isMouseEnter = false
     },
     setVerticalNavMenuWidth () {
-
       if (this.windowWidth > 1200) {
         if (this.layoutType === 'vertical') {
           // Set reduce
@@ -676,7 +709,7 @@ export default {
       this.$store.commit('UPDATE_VERTICAL_NAV_MENU_ITEMS_MIN', false)
     },
     toggleReduce (val) {
-      // console.log('My Value =>', val);
+      this.isOpen == true ? this.isOpen = false : this.isOpen = true
       this.reduceButton = val
       this.setVerticalNavMenuWidth()
     },

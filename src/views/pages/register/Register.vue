@@ -112,6 +112,47 @@
                     v-if="step.step3 == true"
                     @gosetp="step = $event"
                   ></register-jwt3>
+                  <div
+              class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column justify-content-between"
+            >
+              <div class="login-logo footer-attention-txt">
+                <p class="attention-title">{{$t("ATTENTION")}}</p>
+                <p class="attention-text" v-if="step.step1 == true">
+                  {{$t ("AttentionRegisterStep1")}}
+                </p>
+                <p class="attention-text" v-if="step.step2 == true">
+                  {{$t ("AttentionRegisterStep2")}}
+                </p>
+                <p class="attention-text" v-if="step.step3 == true">
+                  {{$t ("AttentionRegisterStep3")}}
+                </p>
+              </div>
+              <div
+                class="appstore-wrapper d-flex mb-5 mr-10 justify-content-end footer-appstore-wrapper"
+              >
+                <router-link to="/">
+                  <img
+                    src="@/assets/images/login_icon/Android-store.png"
+                    alt="Android Store"
+                    class="img-fluid"
+                  />
+                </router-link>
+                <router-link to="/">
+                  <img
+                    src="@/assets/images/login_icon/App-store.png"
+                    alt="Apple Store"
+                    class="img-fluid"
+                  />
+                </router-link>
+                <router-link to="/">
+                  <img
+                    src="@/assets/images/login_icon/download-button.png"
+                    alt="Download"
+                    class="img-fluid"
+                  />
+                </router-link>
+              </div>
+            </div>
                 </div>
               </div>
             </div>
@@ -158,6 +199,20 @@ export default {
   },
   created() {
     this.$i18n.locale = localStorage.getItem('currentLanguage')
+    if(this.$router.currentRoute.fullPath === '/register'){
+      this.step =  {
+        step1 : true,
+        step2 : false,
+        step3 : false,
+      }
+    } else if (this.$router.currentRoute.params) {
+      console.log('===>>>',this.$router.currentRoute.params);
+      this.step =  {
+        step1 : false,
+        step2 : false,
+        step3 : true,
+      }
+    }
   },
 }
 </script>

@@ -3,8 +3,8 @@
     <div class="password-jwt2">
       <vs-input
         data-vv-validate-on="blur"
-        v-validate="'required|min:6|max:10'"
-        type="password"
+        v-validate="'required|min:8|max:24|verify_password'"
+        :type="passwordType"
         name="password"
         icon-no-border
         icon="icon icon-lock"
@@ -85,6 +85,13 @@ export default {
     }
   },
   created () {
+    this.$validator.extend('verify_password', {
+        getMessage: field => `The password must contain at least: 2 uppercase letter, 2 lowercase letter, 2 number, and 2 special character`,
+        validate: value => {
+            var strongRegex = new RegExp("^(?=(.*[a-z]){2})(?=(.*[A-Z]){2})(?=(.*[0-9]){2})(?=(.*[!@#?\$%\^&\*]){2})(?=.{8,})");
+            return strongRegex.test(value);
+        }
+    });
     this.$emit("getPassword", this.password);
     this.$emit("getConfirmPassword", this.re_password);
     setInterval(() => {
@@ -95,17 +102,27 @@ export default {
   methods: {
 
     generatePassword () {
-      console.log('Data =>', this.characters);
-      let result = "";
+      // console.log('Data =>', this.characters);
+      let result1 = "";
+      let result2 = "";
       let charactersVal = "";
+
+      // Storang Password Logic
+      for (var j = 0; j < this.characters.length; j++) {
+        charactersVal = this.characters[j].value;
+        for (var i = 0; i < 2; i++) {
+          result1 += charactersVal.charAt(Math.floor(Math.random() * charactersVal.length));
+        }
+      }
+
+      // Set Remaining charactors Randomly
       for (var j = 0; j < this.characters.length; j++) {
         charactersVal += this.characters[j].value;
       }
-      for (var i = 0; i < this.gLength; i++) {
-        result += charactersVal.charAt(Math.floor(Math.random() * charactersVal.length));
+      for (var i = 0; i < 4; i++) {
+        result2 += charactersVal.charAt(Math.floor(Math.random() * charactersVal.length));
       }
-      this.password = result;
-      // console.log('Password =>', charactersVal.length, this.password);
+      this.password = result1 + result2;
     },
     getPassword () {
       this.$emit("getPassword", this.password);

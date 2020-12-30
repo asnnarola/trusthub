@@ -20,7 +20,7 @@
                   color="gray"
                   class="mr-3 maxw-100 btn-gray border-radius-0 w-100"
                   @click="uploadpopupActive = true"
-                  :disabled = "current_location == '/'"
+                  :disabled="current_location == '/'"
                 >
                   {{ $t("Upload") }}
                 </vs-button>
@@ -43,18 +43,6 @@
                 <span class="text-danger text-sm">{{
                   errors.first("folderName")
                 }}</span>
-                <!-- <vs-input
-                  data-vv-validate-on="blur"
-                  v-validate="'required'"
-                  type="text"
-                  name="folderLocation"
-                  label-placeholder="Folder Location"
-                  v-model="folderLocation"
-                  class="w-full mt-6"
-                /> -->
-                <!-- <span class="text-danger text-sm">{{
-                  errors.first("folderLocation")
-                }}</span> -->
 
                 <div class="flex flex-wrap justify-between mt-5 mb-3 LT-wrap">
                   <vs-button
@@ -90,7 +78,11 @@
                 />
 
                 <div class="flex flex-wrap justify-between mt-5 mb-3 LT-wrap">
-                  <vs-button class="btn-green" @click="uploadFiles()" :disabled="files.length < 1">
+                  <vs-button
+                    class="btn-green"
+                    @click="uploadFiles()"
+                    :disabled="files.length < 1"
+                  >
                     Upload
                     <!-- :disabled="!validateForm" -->
                   </vs-button>
@@ -109,10 +101,6 @@
                   class="p-2 pb-0"
                 ></v-treeview>
               </div>
-
-              <!-- :contextItems="contextItems" -->
-              <!-- @contextSelected="contextSelected" -->
-
               <div class="p-2 submenu-document">
                 <div
                   class="doc-submenu-list"
@@ -120,7 +108,11 @@
                   :key="data.id"
                 >
                   <i :class="data.icon"></i>
-                  <span>{{ $t(data.i18n) || data.title }} ({{ data.children.length }})</span>
+                  <span
+                    >{{ $t(data.i18n) || data.title }} ({{
+                      data.children.length
+                    }})</span
+                  >
                 </div>
               </div>
             </vx-card>
@@ -204,44 +196,47 @@
                         <span>{{ subData.text }}</span>
                       </div>
 
-                    <div
-                      class="file-icon text-center d-flex flex-column justify-content-center align-items-center"
-                      v-else
-                      @click="getFiles(subData)"
-                    >
                       <div
-                        class="file-type d-flex align-items-center justify-content-center"
+                        class="file-icon text-center d-flex flex-column justify-content-center align-items-center"
+                        v-else
+                        @click="getFiles(subData)"
                       >
-                        <img
-                          v-if="subData.extension === 'pdf'"
-                          src="../assets/images/documents_icon/pdf.png"
-                          class="img-fluid"
-                        />
-                        <img
-                          v-else-if="subData.extension === 'excel'"
-                          src="../assets/images/file-icons/excel.png"
-                          class="img-fluid"
-                        />
-                        <img
-                          v-else-if="subData.extension === 'docx'"
-                          src="../assets/images/file-icons/docx.png"
-                          class="img-fluid"
-                        />
-                        <img
-                          v-else-if="subData.extension === 'ppt'"
-                          src="../assets/images/file-icons/ppt.png"
-                          class="img-fluid"
-                        />
-                        <i v-else class="fas fa-file"></i>
+                        <div
+                          class="file-type d-flex align-items-center justify-content-center"
+                        >
+                          <img
+                            v-if="subData.extension === 'pdf'"
+                            src="../assets/images/documents_icon/pdf.png"
+                            class="img-fluid"
+                          />
+                          <img
+                            v-else-if="subData.extension === 'excel'"
+                            src="../assets/images/file-icons/excel.png"
+                            class="img-fluid"
+                          />
+                          <img
+                            v-else-if="subData.extension === 'docx'"
+                            src="../assets/images/file-icons/docx.png"
+                            class="img-fluid"
+                          />
+                          <img
+                            v-else-if="subData.extension === 'ppt'"
+                            src="../assets/images/file-icons/ppt.png"
+                            class="img-fluid"
+                          />
+                          <i v-else class="fas fa-file"></i>
+                        </div>
+                        <span>{{ subData.text }}</span>
                       </div>
-                      <span>{{ subData.text }}</span>
-                    </div>
                     </vx-tooltip>
                   </span>
                 </li>
               </ul>
               <vue-context ref="menu" class="foldersubmenu-main">
-                <li @click="DownloadFile()" :disabled="selectedFile.type == 'Folder'">
+                <li
+                  @click="DownloadFile()"
+                  :disabled="selectedFile.type == 'Folder'"
+                >
                   <i class="fas fa-download"></i>
                   <span>Download</span>
                 </li>
@@ -384,10 +379,6 @@
                       <vs-dropdown-item>Pending</vs-dropdown-item>
                       <vs-dropdown-item>Rejected</vs-dropdown-item>
                       <vs-dropdown-item>Custom label</vs-dropdown-item>
-                      <!-- <vs-dropdown-item>Office</vs-dropdown-item>
-                      <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
-                      <vs-dropdown-item>Only Office</vs-dropdown-item>
-                      <vs-dropdown-item>Zoho Editor</vs-dropdown-item> -->
                     </vs-dropdown-menu>
                   </vs-dropdown>
                 </li>
@@ -430,11 +421,10 @@
               </vue-context>
             </div>
             <div
-              v-if="subFilesdata.length && onList && !onGrid"
+              v-if="onList && !onGrid"
               class="demo w-100 d-flex flex-wrap folder-main"
             >
-              <!-- @click="closeMenu(subFilesdata[subdataIndex])" -->
-              <vs-table class="w-100 list-folder-grid" :data="subFilesdata">
+              <vs-table class="w-100 list-folder-grid" :data="pagenationData">
                 <template slot="thead">
                   <vs-th></vs-th>
                   <vs-th>Name</vs-th>
@@ -443,20 +433,27 @@
                   <vs-th>Owner</vs-th>
                   <vs-th>Size</vs-th>
                 </template>
-                <template class="bg-white shadow overflow-hidden sm:rounded-md">
-                  <!-- <vs-tr :data="tr"> -->
-                  <tr
+                <template
+                  class="bg-white shadow overflow-hidden sm:rounded-md"
+                  slot-scope="{ data }"
+                >
+                  <vs-tr
                     class="list-tr"
-                    v-for="(tr, index) in subFilesdata"
+                    v-for="(tr, index) in data"
                     :key="index"
                     @contextmenu.prevent="$refs.menu.open"
                     @mouseenter="onMouseenter(tr)"
                   >
-                    <vs-td>
-                      <span class="cursor-pointer" @click="getFiles(t)">
+                    <vs-td :data="data[index].type">
+                      <span
+                        class="cursor-pointer"
+                        @click="getFiles(tr)"
+                        @contextmenu.prevent="$refs.menu.open"
+                        @mouseenter="onMouseenter(tr)"
+                      >
                         <div
                           class="file-icon text-center list-svg"
-                          v-if="tr.type === 'Folder'"
+                          v-if="data[index].type === 'Folder'"
                         >
                           <i class="fas fa-folder"></i>
                         </div>
@@ -467,22 +464,22 @@
                         >
                           <div class="file-type">
                             <img
-                              v-if="tr.extension === 'pdf'"
+                              v-if="data[index].extension === 'pdf'"
                               src="../assets/images/documents_icon/pdf.png"
                               class="img-fluid"
                             />
                             <img
-                              v-else-if="tr.extension === 'excel'"
+                              v-else-if="data[index].extension === 'excel'"
                               src="../assets/images/file-icons/excel.png"
                               class="img-fluid"
                             />
                             <img
-                              v-else-if="tr.extension === 'docx'"
+                              v-else-if="data[index].extension === 'docx'"
                               src="../assets/images/file-icons/docx.png"
                               class="img-fluid"
                             />
                             <img
-                              v-else-if="tr.extension === 'ppt'"
+                              v-else-if="data[index].extension === 'ppt'"
                               src="../assets/images/file-icons/ppt.png"
                               class="img-fluid"
                             />
@@ -491,161 +488,46 @@
                         </div>
                       </span>
                     </vs-td>
-                    <vs-td :data="tr.text">
-                      <span class="cursor-pointer" @click="getFiles(tr)">
+                    <vs-td :data="data[index].text" colspan="5">
+                      <span
+                        class="cursor-pointer"
+                        @click="getFiles(tr)"
+                        @contextmenu.prevent="$refs.menu.open"
+                        @mouseenter="onMouseenter(tr)"
+                      >
                         <div class="file-icon text-dark">
-                          <span>{{ tr.text }}</span>
+                          <span>{{ data[index].text }}</span>
                         </div>
                       </span>
                     </vs-td>
-                    <vs-td colspan="4"></vs-td>
-                  </tr>
-                  <!-- </vs-tr> -->
-                  <!-- <vue-context
-                    ref="menu1"
-                    :closeOnClick="false"
-                    class="foldersubmenu-main"
-                  >
-                    <li>
-                      <i class="fas fa-download"></i>
-                      <span>Download</span>
-                    </li>
-                    <li>
-                      <i class="far fa-eye"></i>
-                      <span>Preview</span>
-                    </li>
-                    <li class="hoverfile-menu">
-                      <vs-dropdown class="cursor-pointer">
-                        <a class="flex items-center" href.prevent>Open With</a>
-                        <i class="fas fa-angle-right"></i>
-                        <vs-dropdown-menu class="hoveropen-menu">
-                          <vs-dropdown-item>New Tab</vs-dropdown-item>
-                          <vs-dropdown-item>Media Info</vs-dropdown-item>
-                          <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
-                          <vs-dropdown-item
-                            >Google Docs Editor</vs-dropdown-item
-                          >
-                          <vs-dropdown-item
-                            >Google Docs Viewer</vs-dropdown-item
-                          >
-                          <vs-dropdown-item>Office</vs-dropdown-item>
-                          <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
-                          <vs-dropdown-item>Only Office</vs-dropdown-item>
-                          <vs-dropdown-item>Zoho Editor</vs-dropdown-item>
-                        </vs-dropdown-menu>
-                      </vs-dropdown>
-                    </li>
-                    <li class="hoverfile-menu">
-                      <vs-dropdown class="cursor-pointer icon-menu-btn">
-                        <a class="flex items-center" href.prevent>
-                          <i class="fas fa-share-alt"></i>
-                          Share
-                        </a>
-                        <i class="fas fa-angle-right"></i>
-                        <vs-dropdown-menu class="hoveropen-menu">
-                          <vs-dropdown-item>New Tab</vs-dropdown-item>
-                          <vs-dropdown-item>Media Info</vs-dropdown-item>
-                          <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
-                          <vs-dropdown-item
-                            >Google Docs Editor</vs-dropdown-item
-                          >
-                          <vs-dropdown-item
-                            >Google Docs Viewer</vs-dropdown-item
-                          >
-                          <vs-dropdown-item>Office</vs-dropdown-item>
-                          <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
-                          <vs-dropdown-item>Only Office</vs-dropdown-item>
-                          <vs-dropdown-item>Zoho Editor</vs-dropdown-item>
-                        </vs-dropdown-menu>
-                      </vs-dropdown>
-                    </li>
-                    <li>
-                      <i class="fas fa-comments"></i>
-                      <span>Comment</span>
-                    </li>
-                    <li class="hoverfile-menu">
-                      <vs-dropdown class="cursor-pointer icon-menu-btn">
-                        <a class="flex items-center" href.prevent>
-                          <i class="fas fa-tag"></i>
-                          Label
-                        </a>
-                        <i class="fas fa-angle-right"></i>
-                        <vs-dropdown-menu class="hoveropen-menu">
-                          <vs-dropdown-item>New Tab</vs-dropdown-item>
-                          <vs-dropdown-item>Media Info</vs-dropdown-item>
-                          <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
-                          <vs-dropdown-item
-                            >Google Docs Editor</vs-dropdown-item
-                          >
-                          <vs-dropdown-item
-                            >Google Docs Viewer</vs-dropdown-item
-                          >
-                          <vs-dropdown-item>Office</vs-dropdown-item>
-                          <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
-                          <vs-dropdown-item>Only Office</vs-dropdown-item>
-                          <vs-dropdown-item>Zoho Editor</vs-dropdown-item>
-                        </vs-dropdown-menu>
-                      </vs-dropdown>
-                    </li>
-                    <li>
-                      <i class="fas fa-star"></i>
-                      <span>Add star</span>
-                    </li>
-
-                    <li class="hoverfile-menu">
-                      <vs-dropdown
-                        class="cursor-pointer icon-menu-btn"
-                        vs-custom-content
-                        vs-trigger-click
-                      >
-                        <a class="flex items-center">
-                          <i class="fas fa-ellipsis-v"></i>
-                          More Options
-                        </a>
-                        <i class="fas fa-angle-right"></i>
-                        <vs-dropdown-menu class="hoveropen-menu">
-                          <vs-dropdown-item>New Tab</vs-dropdown-item>
-                          <vs-dropdown-item>Media Info</vs-dropdown-item>
-                          <vs-dropdown-item>Cloud Convert</vs-dropdown-item>
-                          <vs-dropdown-item
-                            >Google Docs Editor</vs-dropdown-item
-                          >
-                          <vs-dropdown-item
-                            >Google Docs Viewer</vs-dropdown-item
-                          >
-                          <vs-dropdown-item>Office</vs-dropdown-item>
-                          <vs-dropdown-item>Office Web Viewer</vs-dropdown-item>
-                          <vs-dropdown-item>Only Office</vs-dropdown-item>
-                          <vs-dropdown-item>Zoho Editor</vs-dropdown-item>
-                        </vs-dropdown-menu>
-                      </vs-dropdown>
-                    </li>
-                    <li class="hoverfile-menu">
-                      <vs-dropdown class="cursor-pointer">
-                        <a class="flex items-center">Copy</a>
-                      </vs-dropdown>
-                    </li>
-                    <li class="hoverfile-menu">
-                      <vs-dropdown class="cursor-pointer">
-                        <a class="flex items-center">Rename</a>
-                      </vs-dropdown>
-                    </li>
-
-                    <li>
-                      <i class="fas fa-trash-alt"></i>
-                      <span>Remove</span>
-                    </li>
-                  </vue-context> -->
+                  </vs-tr>
+                  <!-- <vs-tr v-if="data.length <= 0">
+                    <vs-td colspan="6">
+                      No Data in select Folder
+                    </vs-td>
+                  </vs-tr> -->
                 </template>
               </vs-table>
             </div>
+            <div class="pagination-block">
+              <vs-pagination
+                v-if="pagenationData.length > 0"
+                :total="total"
+                v-model="currentPage"
+                :max="5"
+                @change="onNext($event)"
+              ></vs-pagination>
+            </div>
+            <!-- <div  v-if="pagenationData.length <=0 && onList && !onGrid"> -->
+            <!-- <h4></h4>
+            </div> -->
 
             <vs-row class="border-none mt-auto mb-4 pt-10">
               <div class="col vs-sm-12 vs-md-12 vs-lg-5 pl-5 process-content">
                 <div
                   class="process-txt d-flex justify-content-between flex-wrap"
                 >
-                  <span class="text-dark fw-600">{{$t('Storage')}}</span>
+                  <span class="text-dark fw-600">{{ $t("Storage") }}</span>
                   <span>250 MB of 500 MB</span>
                 </div>
                 <div
@@ -662,10 +544,12 @@
               <div
                 class="col vs-sm-12 vs-md-12 vs-lg-7 pl-6 pr-6 d-flex flex-wrap justify-content-end LTC-btn"
               >
-                <vs-button class="btn-gray w-auto mb-4">{{ $t("Local") }}</vs-button>
-                <vs-button class="btn-gray w-auto ml-2 mb-4"
-                  >{{$t("Trusthub")}}</vs-button
-                >
+                <vs-button class="btn-gray w-auto mb-4">{{
+                  $t("Local")
+                }}</vs-button>
+                <vs-button class="btn-gray w-auto ml-2 mb-4">{{
+                  $t("Trusthub")
+                }}</vs-button>
                 <div class="Cloudsmain-wrapper">
                   <vs-button
                     class="btn-gray w-auto ml-2 mb-4"
@@ -674,7 +558,7 @@
                         ? (cloudModel_show = false)
                         : (cloudModel_show = true)
                     "
-                    >{{$t("Cloud")}}</vs-button
+                    >{{ $t("Cloud") }}</vs-button
                   >
                   <div :hidden="!cloudModel_show" class="cloud-wrapper">
                     <h5 class="w-100 fw-500 ml-3 mb-2 text-white text-left">
@@ -699,26 +583,6 @@
                     </ul>
                   </div>
                 </div>
-                <!-- <vs-dropdown
-                  vs-custom-content
-                  vs-trigger-click
-                  class="cursor-pointer w-auto vs-button ml-2 mb-4 btn-gray"
-                >
-                  Cloud
-                  <vs-dropdown-menu class="cloud-wrapper">
-                    <h5 class="w-100 fw-500 ml-3 mb-2 text-white">Alternative Clouds Accounts</h5>
-                    <ul>
-                      <li v-for="(item, index) in cloudModel" :key="index">
-                        <router-link to="#">
-                          <img
-                            class="img-fluid"
-                            :src="require('../assets/images/documents_icon/cloud_Modal_Icon/' + item.image )"
-                          />
-                        </router-link>
-                      </li>
-                    </ul>
-                  </vs-dropdown-menu>
-                </vs-dropdown> -->
               </div>
             </vs-row>
           </vs-col>
@@ -754,22 +618,22 @@
                   <div class="vs-xs-12 vs-sm-12 vs-md-12">
                     <div class="doc-detail text-right mb-6 mt-6">
                       <p>
-                        <i>{{$t('Name')}}: Portable Document Format</i>
+                        <i>{{ $t("Name") }}: Portable Document Format</i>
                       </p>
                       <p>
-                        <i>{{$t('Type')}}: pdf/A</i>
+                        <i>{{ $t("Type") }}: pdf/A</i>
                       </p>
                       <p>
-                        <i>{{$t('Size')}}:253Kb</i>
+                        <i>{{ $t("Size") }}:253Kb</i>
                       </p>
                       <p>
-                        <i>{{$t('CreationDate')}}: 20/07/2020 15:55:22</i>
+                        <i>{{ $t("CreationDate") }}: 20/07/2020 15:55:22</i>
                       </p>
                       <p>
-                        <i>{{('LastModification')}}: 21/07/2020 18:14:59</i>
+                        <i>{{ "LastModification" }}: 21/07/2020 18:14:59</i>
                       </p>
                       <p>
-                        <i>{{$t('Owner')}}: Reberto Minoletti</i>
+                        <i>{{ $t("Owner") }}: Reberto Minoletti</i>
                       </p>
                     </div>
                   </div>
@@ -794,7 +658,6 @@
         </div>
       </div>
     </vs-row>
-    <!-- <VueDocPreview value="../assets/images/documents_icon/project.docx" type="office" /> -->
   </div>
 </template>
 
@@ -969,39 +832,80 @@ export default {
         {
           image: 'cloud20.jpg'
         },
-      ]
+      ],
+      endData: 2,
+      pageData: 2,
+      startData: 0,
+      currentPage: 1,
+      pagenationData: [],
+      displayTableData: [],
+      total: 0
     }
   },
-  //  async created() {
-  //     this.docList = this.$store.dispatch('document/getFiles')
-  //     console.log('AB Data =>', this.docList)
-  //   },
   async mounted () {
-    axios.get('http://ip-api.com/json').then(res =>{
-      console.log('res => ', res, this.$i18n.locale);
-    })
+    // this.$i18n.locale ='en'
+    // axios.get('http://ip-api.com/json').then(res => {
+    //   console.log('res => ', res, this.$i18n.locale);
+    // })
+    this.startData = this.currentPage * this.startData
+    this.endData = this.currentPage * this.endData
     await this.getDocuments()
   },
   computed: {
     validateForm () {
       return !this.errors.any() && this.folderName !== ''
     },
-    isLoading(){
-      return this.$vs.loading({color: 'yellow'})
+    isLoading () {
+      return this.$vs.loading({ color: 'yellow' })
     }
   },
   methods: {
     getFiles (file) {
       if (file.type === 'Folder') {
         this.subFilesdata = file.children
+        console.log('Folder Data =>', this.subFilesdata);
         this.current_parentID = file.id
         this.current_location = file.location
+        if (this.onList == true) {
+          let tot = Math.floor(this.subFilesdata.length / this.pageData)
+          if (tot < this.subFilesdata.length / this.pageData) {
+            this.total = tot + 1
+          } else {
+            this.total = tot
+          }
+          this.onNext()
+        }
       }
       if (file.type == 'File') {
-        console.log('File=>',JSON.stringify(file));
+        console.log('File=>', JSON.stringify(file));
         localStorage.setItem('activefile', JSON.stringify(file))
         this.$router.push('/document/' + file.id).catch(() => { })
       }
+    },
+    onNext (e) {
+      if (e === undefined) {
+        this.currentPage = 1
+      } else {
+        this.currentPage = e
+      }
+      this.startData = (this.currentPage * this.pageData) - this.pageData
+      this.endData = this.currentPage * this.pageData
+      this.pagenationData = []
+      console.log(e);
+      console.log('startData', this.startData);
+      console.log('endData', this.endData);
+      for (let i = this.startData; i < this.endData; i++) {
+        const element = this.subFilesdata[i];
+        console.log(element);
+        if (element != undefined) {
+          this.pagenationData.push(element)
+        }
+      }
+      this.startData = this.endData
+      console.log(this.pagenationData);
+      console.log('startData', this.startData);
+      console.log('endData', this.endData);
+      console.log('subFilesdata', this.subFilesdata.length);
     },
     onMouseenter (data) {
       console.log('Sub Data =>', data);
@@ -1011,9 +915,28 @@ export default {
       this.current_parentID = node.model.id
       this.current_location = node.model.location
       this.subFilesdata = node.model.children
+      if (this.onList == true) {
+        let tot = Math.floor(this.subFilesdata.length / this.pageData)
+        if (tot < this.subFilesdata.length / this.pageData) {
+          this.total = tot + 1
+        } else {
+          this.total = tot
+        }
+        this.onNext()
+      }
     },
     onListView () {
+      this.onList = true;
+      this.onGrid = false;
+      let tot = Math.floor(this.subFilesdata.length / this.pageData)
+      if (tot < this.subFilesdata.length / this.pageData) {
+        this.total = tot + 1
+      } else {
+        this.total = tot
+      }
+      console.log(this.total, this.subFilesdata.length / this.pageData, tot, this.onList);
       if (this.onList == true) {
+        this.onNext()
         return;
       } else {
         this.onList = true;
@@ -1032,12 +955,14 @@ export default {
       //  setTimeout(() => {
       //    this.folderData = this.$store.getters['document/Documents']
       //  }, 1000);
+
       const token = localStorage.getItem('accessToken')
-      axios.get('folders', {
-        headers: {
-          Authorization: 'Bearer ' + token
-        }
+      axios({
+        method: 'get',
+        url: 'folders',
+        headers: { Authorization: 'Bearer ' + token }
       }).then(res => {
+        console.log('Token =>', token);
         this.folderData = res.data
         this.subFilesdata = res.data
         this.current_parentID = null
@@ -1056,7 +981,7 @@ export default {
             id: this.selectedFile.id,
           }
         }
-        if(this.selectedFile.type == 'File'){
+        if (this.selectedFile.type == 'File') {
           this.$store.dispatch('document/renameFile', payload)
             .then(() => {
               this.$vs.loading.close()
@@ -1067,7 +992,7 @@ export default {
             .errors((err) => {
               console.log('Error =>', err);
             })
-        } else if(this.selectedFile.type == 'Folder'){
+        } else if (this.selectedFile.type == 'Folder') {
           this.$store.dispatch('document/renameFolder', payload)
             .then(() => {
               this.$vs.loading.close()
@@ -1104,6 +1029,7 @@ export default {
       this.folderName = ''
     },
     setFiles (e) {
+      this.files = []
       console.log('Event ', e.target.files);
       e.target.files.forEach(file => {
         this.files.push(file)
@@ -1111,7 +1037,6 @@ export default {
       console.log('Event ', this.files);
     },
     uploadFiles () {
-      // this.isLoading
       const formData = new FormData();
       formData.append('uploadLocation', this.current_location);
       formData.append('parentId', this.current_parentID);
@@ -1133,7 +1058,7 @@ export default {
       this.files = []
     },
     RemoveDocument () {
-      if(this.selectedFile.type == 'Folder'){
+      if (this.selectedFile.type == 'Folder') {
         this.isLoading
         this.$store.dispatch('document/deleteFolder', this.selectedFile.id)
           .then(() => {
@@ -1155,18 +1080,17 @@ export default {
           })
       }
     },
-    DownloadFile(){
+    DownloadFile () {
       console.log(this.selectedFile)
       this.isLoading
       const token = localStorage.getItem('accessToken')
-        // this.$store.dispatch('document/downloadFile', this.selectedFile.id)
-        axios({
-          method: 'get',
-          url: 'files/download-file',
-          headers: {Authorization: 'Bearer ' + token},
-          params:{ fileId: this.selectedFile.id},
-          responseType: 'arraybuffer',
-        })
+      axios({
+        method: 'get',
+        url: 'files/download-file',
+        headers: { Authorization: 'Bearer ' + token },
+        params: { fileId: this.selectedFile.id },
+        responseType: 'arraybuffer',
+      })
         .then((res) => {
           console.log('res =>', res);
           let blob = new Blob([res.data], { type: 'application/pdf' })
@@ -1178,33 +1102,29 @@ export default {
         .catch((err) => {
           console.log('Error =>', err)
         }
-      )
+        )
     },
     RenameDocument () {
-        this.folderpopupActive = true
-        this.isRename = true
-        this.folderName = this.selectedFile.text
+      this.folderpopupActive = true
+      this.isRename = true
+      this.folderName = this.selectedFile.text
     },
-    onSearch(){
+    onSearch () {
       // this.isLoading
-     const dataparam={
-       id: this.current_parentID,
+      const dataparam = {
+        id: this.current_parentID,
         value: this.search
       }
       const token = localStorage.getItem('accessToken')
       return axios({
-      method: 'get',
-      url: 'folders/search/',
-      headers: {Authorization: 'Bearer ' + token},
-      params: {name: this.search, parentId: this.current_parentID}
-    })
-      // axios.get('folders/search', params,header)
-      .then(res => {
-      // this.isLoading.close(
-      // console.log('respo =>', res);
-      this.subFilesdata = res.data
-      // console.log('respo =>', this.subFilesdata);
-    })
+        method: 'get',
+        url: 'folders/search/',
+        headers: { Authorization: 'Bearer ' + token },
+        params: { name: this.search, parentId: this.current_parentID }
+      })
+        .then(res => {
+          this.subFilesdata = res.data
+        })
     },
   },
   components: {

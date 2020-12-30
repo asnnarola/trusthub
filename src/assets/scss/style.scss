@@ -1359,12 +1359,16 @@ a {
               transform: rotate(-135deg);
               z-index: 11;
             }
-            .signpad-arrow1, .signpad-arrow2, .signpad-arrow3, .signpad-arrow4{
-                  img{
-                    &.active{
-                      filter: invert(40%) sepia(75%) saturate(1000%) hue-rotate(375deg) brightness(120%) contrast(100%);
-                    }
-                  }
+            .signpad-arrow1,
+            .signpad-arrow2,
+            .signpad-arrow3,
+            .signpad-arrow4 {
+              img {
+                &.active {
+                  filter: invert(40%) sepia(75%) saturate(1000%)
+                    hue-rotate(375deg) brightness(120%) contrast(100%);
+                }
+              }
             }
           }
           canvas {
@@ -1389,9 +1393,9 @@ a {
               bottom: 0;
               line-height: 0;
               margin: auto;
-              content: '-----------------------------------------';
+              content: "-----------------------------------------";
               letter-spacing: 8px;
-          }
+            }
           }
         }
       }
@@ -1862,7 +1866,7 @@ a {
                               right: 10px;
                               i {
                                 &.vs-icon {
-                                  font-size: 25px;
+                                  font-size: 20px;
                                 }
                               }
                             }
@@ -1905,6 +1909,10 @@ a {
                               margin-left: auto;
                               margin-right: auto;
                             }
+                            &:nth-child(1),
+                        &:nth-child(2) {
+                            background: #fff !important;
+                        }
                           }
                         }
                       }
@@ -2046,14 +2054,16 @@ a {
                 }
               }
               .upload-btn {
-                transform: rotate(-90deg) translateY(50px);
-                padding: 7px 20px 7px 30px;
+                // transform: rotate(-90deg) translateY(50px);
+                padding: 10px;
                 border-radius: 0px;
                 text-transform: uppercase;
                 background: #f9c201 !important;
-                font-size: 18px;
+                font-size: 17px;
                 font-weight: 500;
                 box-shadow: none;
+                width:36px;
+                min-height: 150px;
                 &.closeupload-btn {
                   margin-right: 400px;
                   z-index: -1;
@@ -2061,25 +2071,41 @@ a {
                     display: none;
                   }
                   .vs-button-text {
+                    -webkit-transform: rotate(-90deg);
+                    transform: rotate(-90deg);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    white-space: nowrap;
                     img {
-                      transform: rotate(-90deg) translateX(-2px)
-                        translateY(-15px);
+                      -webkit-transform: rotate(90deg) translateX(0px) translateY(0px);
+                      transform: rotate(90deg) translateX(0px) translateY(0px);
+                      width: 10px;
+                      margin-right: 15px;
                     }
                   }
                 }
                 .vs-button-text {
+                  -webkit-transform: rotate(-90deg);
+                  transform: rotate(-90deg);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  white-space: nowrap;
                   // text-transform: uppercase;
                   img {
-                    transform: rotate(90deg) translateX(2px) translateY(15px);
+                    -webkit-transform: rotate(90deg) translateX(0px) translateY(0px);
+                    transform: rotate(90deg) translateX(0px) translateY(0px);
                     width: 10px;
+                    margin-right: 20px;
                   }
                 }
                 &.flowmodel-btn {
                   top: 10rem !important;
-                  transform: rotate(-90deg) translateY(38px) !important;
+                  // transform: rotate(-90deg) translateY(38px) !important;
                 }
                 &.labelmodel-btn {
-                  transform: rotate(-90deg) translateY(43px) !important;
+                  // transform: rotate(-90deg) translateY(43px) !important;
                 }
                 &.Trakmodel-btn,
                 &.labelmodel-btn {
@@ -2150,6 +2176,61 @@ a {
                         }
                       }
                     }
+                  }
+                }
+                .pagination-block{
+                  .vs-row{
+                    border:none;
+                  .vs-pagination--mb{
+                    border-left:none;
+                    border-right:none;
+                    .con-vs-pagination{
+                      .vs-pagination--nav{
+                       .vs-pagination--buttons{
+                         width: 28px;
+                         height: 28px;
+                         border-radius: 0px;
+                         background: #fff;
+                         border: 1px solid #f9c201;
+                         color: #888888;
+                         &:hover{
+                           background:#f9c201 !important;
+                           color:#fff !important;
+                         }
+                       }
+                       .vs-pagination--ul{
+                         border-radius:0px;
+                         background:#fff;
+                         .vs-pagination--li{
+                           border-radius: 0px;
+                           width: 28px;
+                           height: 28px;
+                           line-height: 1;
+                           background: #fff;
+                           border: 1px solid #f9c201;
+                           color: #888888;
+                           overflow:hidden;
+                           &.is-current{
+                             color:#fff;
+                           }
+                           &:hover{
+                               background:#f9c201 !important;
+                               color:#fff !important;
+                            }
+                           .effect{
+                             border-radius: 0px;
+                             width: 28px;
+                             height: 28px;
+                             background:#f9c201 !important;
+                             color:#fff !important;
+                            //  top: -2px;
+                            //  left: -2px;
+                           }
+                         }
+                       }
+                      }
+                    }
+                  }
                   }
                 }
               }
@@ -2423,6 +2504,7 @@ a {
                             display: -webkit-box;
                             -webkit-box-orient: vertical;
                             -webkit-line-clamp: 2;
+                            word-break: break-all;
                           }
                         }
                       }

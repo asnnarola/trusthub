@@ -23,5 +23,9 @@ export default {
     else isAuthenticated = false
 
     return localStorage.getItem('userInfo') && isAuthenticated
-  }
+  },
+  RegisterUser: [],
+  userCountryDetails: [],
+  selectedLanguage:''
+  // RegisterUser: localStorage.getItem('registerUser')? JSON.stringify(localStorage.getItem('registerUser')): []
 }

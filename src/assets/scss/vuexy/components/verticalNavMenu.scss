@@ -81,16 +81,16 @@
     color: #fff !important;
     border: 2px solid #f1c800 !important;
   }
-  &.h-38{
+  &.h-38 {
     height: 38px;
   }
-  &.pd-0{
+  &.pd-0 {
     padding: 0px !important;
   }
-  &.w-100px{
+  &.w-100px {
     width: 100px !important;
   }
-  &.fw-500{
+  &.fw-500 {
     font-weight: 500 !important;
   }
 }
@@ -109,13 +109,13 @@
   &.mt-25px {
     margin-top: 25px;
   }
-  &.h-38{
+  &.h-38 {
     height: 38px !important;
   }
-  &.pd-0{
+  &.pd-0 {
     padding: 0px !important;
   }
-  &.w-100px{
+  &.w-100px {
     width: 100px !important;
   }
 }
@@ -172,7 +172,7 @@
         li.vs-sidebar--item {
           // &:nth-child(1),
           // &:nth-child(2),&:nth-child(3) {
-            &:nth-child(n) {
+          &:nth-child(n) {
             a {
               background: #707070;
               margin-bottom: 6px;
@@ -187,7 +187,7 @@
               }
             }
           }
-          &:last-child{
+          &:last-child {
             a {
               margin-bottom: 2rem;
               margin-left: 8px;
@@ -198,7 +198,7 @@
               span {
                 text-transform: uppercase;
               }
-              img{
+              img {
                 display: block !important;
               }
             }
@@ -232,8 +232,7 @@
           li.vs-sidebar--item {
             // &:nth-child(1),
             // &:nth-child(2), &:nth-child(3)
-            &:nth-child(n)
-            {
+            &:nth-child(n) {
               a {
                 img {
                   display: block;
@@ -258,7 +257,7 @@
             li.vs-sidebar--item {
               // &:nth-child(1),
               // &:nth-child(2), &:nth-child(3) {
-                &:nth-child(n) {
+              &:nth-child(n) {
                 a {
                   img {
                     display: none;
@@ -334,7 +333,26 @@
     > .vs-sidebar--item {
       padding: 0 0px;
     }
+
+    .menu-collapsed {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-left: 8px;
+      margin-right: 8px;
+      padding: 13px 6px;
+      img {
+        width: 13px;
+        transition:ease 0.25s;
+      }
+      &.close-menu{
+        img{
+        transform:rotate(180deg);
+        }
+      }
+    }
   }
+
 
   .navigation-header {
     font-size: 0.9rem;

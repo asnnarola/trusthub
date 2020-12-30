@@ -100,9 +100,10 @@
 export default {
   data () {
     return {
-      id: this.$store.state.AppActiveUser.email,
+      id: '',
       Id_Label: this.$t('Id'),
       ActivationCode_Label: this.$t('ActivationCode'),
+      ActivationCoad:'',
       step: {},
           Biometrical_Icon1: [
         {
@@ -150,6 +151,8 @@ export default {
 }
   },
 created() {
+  this.getId()
+  this.getactivationcode()
   setInterval(() => {
     this.Id_Label =  this.$t('Id')
     this.ActivationCode_Label =  this.$t('ActivationCode')
@@ -157,10 +160,10 @@ created() {
 },
 methods: {
   getId(){
-    this.$emit("getId", this.id);
+    this.id = this.$router.currentRoute.params.id
   },
   getactivationcode(){
-    this.$emit("getActivatiobCode", this.ActivationCoad);
+    this.ActivationCoad = this.$router.currentRoute.params.code
   },
   goTostep5(){
       this.step = {

@@ -8,4 +8,9 @@
 ==========================================================================================*/
 
 
-export default {}
+export default {
+  RegisterUser: state => {
+    console.log('AB getters=>', state.RegisterUser);
+    return state.RegisterUser
+  }
+}

@@ -17,6 +17,7 @@
 <script>
 import themeConfig from '@/../themeConfig.js'
 import jwt         from '@/http/requests/auth/jwt/index.js'
+import auth from './auth/authService.js'
 
 export default {
   data () {
@@ -78,7 +79,8 @@ export default {
     window.addEventListener('scroll', this.handleScroll)
 
     // Auth0
-    try       { await this.$auth.renewTokens() } catch (e) { console.error(e) }
+    // try       { await this.$auth.renewTokens} catch (e) { console.error(e) }
+    auth.renewTokens()
 
   },
   destroyed () {

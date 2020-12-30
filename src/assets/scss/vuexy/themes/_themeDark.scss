@@ -879,7 +879,8 @@
 
     ~.vs-placeholder-label,
     ~.vs-input--placeholder {
-      color: $theme-dark-text-color;
+      color: #4ec12d !important;
+      //  color: $theme-dark-text-color;
     }
   }
 

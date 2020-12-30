@@ -1,7 +1,7 @@
 body {
   color: #333;
 }
-a{
+a {
   cursor: pointer;
 }
 .txt-gray {
@@ -150,23 +150,23 @@ a{
 
 .login-wrapper {
   @media screen and (max-width: 991px) {
-    padding-top: 2rem;
+    padding-top: 5rem;
     padding-bottom: 2rem;
     height: 100% !important;
   }
   .vx-col {
     &.login-subwrapper {
-      @media screen and (min-width: 1200px) {
+      @media screen and (min-width: 1500px) {
         max-width: 1130px;
         width: 95% !important;
       }
-      @media screen and (min-width: 992px) and (max-width: 1199px) {
+      @media screen and (min-width: 992px) and (max-width: 1499px) {
         max-width: 950px;
         width: 95% !important;
       }
       @media screen and (max-width: 991px) {
         max-width: 500px;
-        width: 90% !important;
+        width: 92% !important;
       }
       .cpy-txt {
         p {
@@ -194,18 +194,41 @@ a{
                 max-width: 85%;
                 margin-left: 3rem !important;
                 margin-top: 3rem;
-                @media screen and (max-width: 991px) {
-                  max-width: 150px;
-                  margin-left: auto !important;
-                  margin-right: auto !important;
-                  margin-top: 2rem !important;
-                }
                 img {
                   max-width: 100%;
                   height: auto;
                 }
                 .attention-text {
                   font-size: 12.75px;
+                }
+                @media screen and (max-width: 991px) {
+                  max-width: 260px;
+                  margin-left: auto !important;
+                  margin-right: auto !important;
+                  margin-top: 2rem !important;
+                  .attention-text,
+                  .attention-title {
+                    display: none !important;
+                  }
+                }
+                &.footer-attention-txt {
+                  max-width: 100%;
+                  @media screen and (min-width: 992px) {
+                    display: none;
+                  }
+                  @media screen and (max-width: 991px) {
+                    margin-top: 0.5rem !important;
+                    .attention-title {
+                      font-size: 13px;
+                    }
+                    .attention-text {
+                      font-size: 11px;
+                    }
+                    .attention-text,
+                    .attention-title {
+                      display: block !important;
+                    }
+                  }
                 }
               }
               .text-center {
@@ -215,6 +238,7 @@ a{
                 @media screen and (max-width: 991px) {
                   margin-top: 15px;
                   margin-right: 0px !important;
+                  display: none !important;
                 }
                 a {
                   max-width: 185px;
@@ -229,6 +253,14 @@ a{
                       height: 40px;
                     }
                   }
+                }
+              }
+              .footer-appstore-wrapper {
+                @media screen and (min-width: 992px) {
+                  display: none !important;
+                }
+                @media screen and (max-width: 991px) {
+                  display: flex !important;
                 }
               }
               &.right-wrapper {
@@ -304,7 +336,8 @@ a{
 
                             & ~ .icon-inputx,
                             & ~ .vs-placeholder-label {
-                              color: #acacac;
+                              // color: #acacac;
+                              color: #4ec12d !important;
                             }
                           }
                         }
@@ -342,27 +375,57 @@ a{
                             background-color: #4ec12d !important;
                             color: #fff !important;
                           }
+                          @media screen and (max-width: 1599px) {
+                            padding: 0.65rem 0;
+                            max-width: 21%;
+                          }
+                          @media screen and (max-width: 767px) {
+                            font-size: 12px;
+                          }
                         }
                         .accessmng-modal {
                           position: absolute;
-                          top: -14rem;
+                          top: -13.5rem;
                           max-width: calc(100% + 65px);
                           width: calc(100% + 65px);
                           z-index: 111;
                           padding: 15px;
+
+                          @media screen and (max-width: 1499px) {
+                            margin-left: -5%;
+                            top: -13rem;
+                          }
+
+                          @media screen and (max-width: 575px) {
+                            margin-left: -7%;
+                            max-width: calc(100% + 45px);
+                            width: calc(100% + 45px);
+                          }
+
+                          @media screen and (max-width: 450px) {
+                            top: -11rem;
+                          }
+
                           ul {
                             &.accessmng-block {
                               display: flex;
                               justify-content: space-between;
                               flex-wrap: wrap;
                               li {
-                                width: 100px;
+                                width: calc(20% - 5px);
+                                max-width: calc(20% - 5px);
                                 height: 100px;
                                 display: flex;
                                 justify-content: center;
                                 align-items: center;
                                 border: none !important;
-                                margin: 0px !important;
+                                margin: 10px 0px 0px !important;
+                                @media screen and (max-width: 1499px) {
+                                  height: 90px;
+                                }
+                                @media screen and (max-width: 450px) {
+                                  height: 70px;
+                                }
                               }
                             }
                           }
@@ -378,6 +441,16 @@ a{
                             position: absolute;
                             right: 4rem;
                             bottom: -18px;
+                            @media screen and (max-width: 1499px) {
+                              right: 7%;
+                            }
+                            @media screen and (max-width: 575px) {
+                              right: 0.35rem;
+                              bottom: -14px;
+                            }
+                            @media screen and (max-width: 450px) {
+                              right: 0.85rem;
+                            }
                           }
                         }
                       }
@@ -416,6 +489,10 @@ a{
                               display: none;
                             }
                           }
+                          @media screen and (max-width: 1499px) {
+                            width: 30px;
+                            height: 30px;
+                          }
                         }
                       }
                     }
@@ -438,6 +515,11 @@ a{
                         }
                       }
                     }
+                    .sub-trial-txt {
+                      @media screen and (max-width: 991px) {
+                        margin-bottom: 1.5rem !important;
+                      }
+                    }
                   }
                   .checkbox-register {
                     li {
@@ -446,6 +528,7 @@ a{
                         font-weight: 500;
                         color: #f9c201;
                         margin-top: 0px;
+                        align-items: center;
                         .checkbox-reginput {
                           margin-right: 0;
                           .vs-checkbox {
@@ -460,6 +543,13 @@ a{
                               }
                             }
                           }
+                        }
+                        @media screen and (max-width: 1499px) {
+                          margin-right: 0.25rem !important;
+                          font-size: 11px;
+                        }
+                        @media screen and (max-width: 991px) {
+                          margin-bottom: 15px;
                         }
                       }
                     }
@@ -525,6 +615,9 @@ a{
                         }
                         img {
                           width: 30px;
+                        }
+                        @media screen and (min-width: 1200px) and (max-width: 1499px) {
+                          padding: 0px 8px;
                         }
                         @media screen and (max-width: 1199px) {
                           padding: 0px 7px 0px 7px !important;
@@ -633,6 +726,9 @@ a{
                     @media screen and (min-width: 1200px) {
                       width: 39% !important;
                     }
+                    @media screen and (max-width: 900px) {
+                      padding-left: 1rem !important;
+                    }
                   }
                   .gender-input {
                     @media screen and (min-width: 1200px) {
@@ -660,6 +756,9 @@ a{
                         }
                       }
                     }
+                    @media screen and (max-width: 900px) {
+                      padding-left: 1rem !important;
+                    }
                   }
                   .joiningcode-inputcontrol {
                     .joiningcode-input {
@@ -671,11 +770,19 @@ a{
                       max-width: 125px;
                     }
                   }
-                  .countdown-txt{
-                    h4{
+                  .countdown-txt {
+                    h4 {
                       color: #6f6f6f;
                     }
                   }
+                }
+                .login-tabs-container {
+                  @media screen and (max-width: 991px) {
+                    padding-top: 0px !important;
+                  }
+                  // .form-wrap{
+
+                  // }
                 }
               }
             }
@@ -688,28 +795,44 @@ a{
               }
             }
           }
+          @media screen and (max-width: 991px) {
+            background: #fff;
+          }
         }
       }
     }
   }
   .uploadmodal-wrapper {
     .upload-btn {
-      -webkit-transform: rotate(-90deg) translateY(44px);
-      transform: rotate(-90deg) translateY(44px);
-      padding: 7px 25px 12px 35px !important;
+      // -webkit-transform: rotate(-90deg) translateY(44px);
+      // transform: rotate(-90deg) translateY(44px);
+      padding: 10px !important;
       border-radius: 0px;
       background: #f9c201 !important;
       box-shadow: none;
       text-transform: uppercase;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 500;
+      width:36px;
+      min-height: 125px;
+
       .vs-button-text {
+        -webkit-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
         // text-transform: uppercase;
         img {
-          -webkit-transform: rotate(90deg) translateX(3px) translateY(15px);
-          transform: rotate(90deg) translateX(3px) translateY(15px);
+          -webkit-transform: rotate(90deg) translateX(0px) translateY(0px);
+          transform: rotate(90deg) translateX(0px) translateY(0px);
           width: 10px;
+          margin-right: 15px;
         }
+      }
+      @media screen and (max-width: 450px) {
+        display: none;
       }
     }
     .vs-content-sidebar {
@@ -728,6 +851,9 @@ a{
               -webkit-transform: rotate(-90deg) translateX(-5px)
                 translateY(-15px);
               transform: rotate(-90deg) translateX(-5px) translateY(-15px);
+            }
+            @media screen and (max-width: 450px) {
+              display: none;
             }
           }
           .customizer-header {

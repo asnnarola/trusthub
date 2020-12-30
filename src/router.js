@@ -1468,7 +1468,25 @@ const router = new Router({
         },
         {
           // path: '/pages/register',
+          path: '/register/:id',
+          name: 'page-register',
+          component: () => import('@/views/pages/register/Register.vue'),
+          meta: {
+            rule: 'editor'
+          }
+        },
+        {
+          // path: '/pages/register',
           path: '/electron-signature-register',
+          name: 'electron-signature-register',
+          component: () => import('@/views/pages/register/RegisterElectronSignature/Electronsignature.vue'),
+          meta: {
+            rule: 'editor'
+          }
+        },
+        {
+          // path: '/pages/register',
+          path: '/electron-signature-register/:id/:code',
           name: 'electron-signature-register',
           component: () => import('@/views/pages/register/RegisterElectronSignature/Electronsignature.vue'),
           meta: {

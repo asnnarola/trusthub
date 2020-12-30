@@ -1,5 +1,5 @@
 <template>
-  <div class="clearfix">
+  <div class="clearfix tab-wrapper-form">
     <br />
     <div class="vx-row">
       <div class="vx-col vs-sm-12 vs-md-12 vs-lg-12">

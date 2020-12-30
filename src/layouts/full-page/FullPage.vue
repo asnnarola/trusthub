@@ -16,12 +16,24 @@
     />
     <div class="selectlanguage-dropdown">
       <vs-dropdown vs-custom-content vs-trigger-click>
-        <a class="flex items-center btn-drop" type="filled" icon="expand_more" href.prevent >{{Language}}</a>
+        <a
+          class="flex items-center btn-drop"
+          type="filled"
+          icon="expand_more"
+          href.prevent
+          >{{ Language }}</a
+        >
         <i class="fas fa-angle-down"></i>
         <vs-dropdown-menu class="language-dropdown">
-          <vs-dropdown-item @click="onLanguageSelect('Spanish')">Spanish</vs-dropdown-item>
-          <vs-dropdown-item @click="onLanguageSelect('English')">English</vs-dropdown-item>
-          <vs-dropdown-item @click="onLanguageSelect('Italian')">Italian</vs-dropdown-item>
+          <vs-dropdown-item @click="onLanguageSelect('Spanish')">
+            Spanish
+          </vs-dropdown-item>
+          <vs-dropdown-item @click="onLanguageSelect('English')">
+            English
+          </vs-dropdown-item>
+          <vs-dropdown-item @click="onLanguageSelect('Italian')">
+            Italian
+          </vs-dropdown-item>
         </vs-dropdown-menu>
       </vs-dropdown>
     </div>
@@ -39,19 +51,25 @@ export default {
           id: 1,
           country: 'argentine',
           countryCode: 'AR',
-          image: 'argentine.jpg'
+          image: 'argentine.jpg',
+          language: 'Spanish',
+          language_code: 'es'
         },
         {
           id: 2,
           country: 'england',
           countryCode: 'UK',
-          image: 'england.jpg'
+          image: 'england.jpg',
+          language: 'English',
+          language_code: 'en'
         },
         {
           id: 3,
-          country: 'Italy',
-          countryCode: 'IT',
-          image: 'italy.jpg'
+          country: 'Europe',
+          countryCode: 'EU',
+          image: 'italy.jpg',
+          language: 'Italian',
+          language_code: 'it'
         },
       ],
       bgImage: 'argentine.jpg',
@@ -59,28 +77,70 @@ export default {
     }
   },
   mounted () {
-    axios.get('http://ip-api.com/json').then(res => {
-      console.log('res => ', res,);
-      if (res.status == 200) {
-        this.backgroundImages.forEach(countryData => {
-          if (res.data.country == countryData.country) {
-            this.bgImage = countryData.image
+    let currentIp = ''
+    axios.get('https://api.ipify.org/?format=json').then(res => {
+      currentIp = res.data.ip
+      console.log(currentIp);
+      axios.get(`https://api.ipdata.co/${res.data.ip}?api-key=test`).then(res => {
+        if (res.status == 200) {
+          console.log(res.data);
+          this.$store.state.userCountryDetails = res.data
+          this.Language = res.data.languages[0].name
+          if (this.Language == 'Spanish') {
+            console.log('1');
+            this.$store.state.selectedLanguage = this.Language
+            localStorage.setItem('selectedLanguage', this.Language)
+            this.$i18n.locale = 'es'
+          } else if (this.Language == 'English') {
+            console.log('2');
+            this.$store.state.selectedLanguage = this.Language
+            localStorage.setItem('selectedLanguage', this.Language)
+            this.$i18n.locale = 'en'
+          } else if (this.Language == 'Italian') {
+            console.log('3');
+            this.$store.state.selectedLanguage = this.Language
+            localStorage.setItem('selectedLanguage', this.Language)
+            this.$i18n.locale = 'it'
+          } else{
+            this.Language = 'English'
+            console.log('4');
+            this.$store.state.selectedLanguage = this.Language
+            localStorage.setItem('selectedLanguage', this.Language)
+            this.$i18n.locale = 'en'
           }
-        });
-      }
+          localStorage.setItem('currentLanguage', this.$i18n.locale)
+          this.backgroundImages.forEach(countryData => {
+            if (res.data.country_name == countryData.country) {
+              this.bgImage = countryData.image
+            }
+          });
+        }
+      })
     })
+    // axios.get('http://ip-api.com/json').then(res => {
+    //   console.log('res => ', res,);
+    //
+    // })
   },
   methods: {
-    onLanguageSelect(language){
+    onLanguageSelect (language) {
       this.Language = language
-      console.log('Language =>', language );
-      if(this.Language == 'Spanish' ){
-        this.$i18n.locale = 'es'
-      } else if(this.Language == 'English' ) {
-        this.$i18n.locale = 'en'
-      }else if(this.Language == 'Italian' ){
-        this.$i18n.locale = 'it'
-      }
+      if (this.Language == 'Spanish') {
+        console.log('Language =>', language);
+        this.$store.state.selectedLanguage = this.Language
+            localStorage.setItem('selectedLanguage', this.Language)
+            this.$i18n.locale = 'es'
+          } else if (this.Language == 'English') {
+            console.log('Language =>', language);
+            this.$store.state.selectedLanguage = this.Language
+            localStorage.setItem('selectedLanguage', this.Language)
+            this.$i18n.locale = 'en'
+          } else if (this.Language == 'Italian') {
+            console.log('Language =>', language);
+            this.$store.state.selectedLanguage = this.Language
+            localStorage.setItem('selectedLanguage', this.Language)
+            this.$i18n.locale = 'it'
+          }
       localStorage.setItem('currentLanguage', this.$i18n.locale)
     }
   },

@@ -142,6 +142,56 @@
                     v-if="step.step5 == true"
                     @gosetp="step = $event"
                   ></Electronsignaturestep5>
+                  <div
+              class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column justify-content-between"
+            >
+              <div class="login-logo footer-attention-txt">
+                <p class="attention-title">{{$t("ATTENTION")}}</p>
+                <p class="attention-text" v-if="step.step1 == true">
+                  {{$t('AttentionElectronStep1')}}
+                </p>
+                <p class="attention-text" v-if="step.step2 == true">
+                  {{$t('AttentionElectronStep2')}}
+                </p>
+                <p class="attention-text" v-if="step.step2 == true">
+                  {{$t('AttentionElectronStep2_2')}}
+                </p>
+                <p class="attention-text" v-if="step.step3 == true">
+                  {{$t('AttentionElectronStep3')}}
+                </p>
+                <p class="attention-text" v-if="step.step4 == true">
+                  {{$t('AttentionElectronStep4')}}
+                </p>
+                <p class="attention-text" v-if="step.step5 == true">
+                  {{$t('AttentionElectronStep5')}}
+                </p>
+              </div>
+              <div
+                class="appstore-wrapper d-flex mb-5 mr-10 justify-content-end footer-appstore-wrapper"
+              >
+                <router-link to="/">
+                  <img
+                    src="@/assets/images/login_icon/Android-store.png"
+                    alt="Android Store"
+                    class="img-fluid"
+                  />
+                </router-link>
+                <router-link to="/">
+                  <img
+                    src="@/assets/images/login_icon/App-store.png"
+                    alt="Apple Store"
+                    class="img-fluid"
+                  />
+                </router-link>
+                <router-link to="/">
+                  <img
+                    src="@/assets/images/login_icon/download-button.png"
+                    alt="Download"
+                    class="img-fluid"
+                  />
+                </router-link>
+              </div>
+            </div>
                 </div>
               </div>
             </div>
@@ -191,6 +241,27 @@ export default {
   methods:{
     openHelp(){
       this.active == true ? this.active = false : this.active = true
+    }
+  },
+  created() {
+    this.$i18n.locale = localStorage.getItem('currentLanguage')
+    if(this.$router.currentRoute.fullPath === '/electron-signature-register'){
+      this.step =  {
+        step1 : true,
+        step2 : false,
+        step3 : false,
+        step4 : false,
+        step : false,
+      }
+    } else if (this.$router.currentRoute.params) {
+      console.log('===>>>',this.$router.currentRoute.params);
+      this.step =  {
+        step1 : false,
+        step2 : false,
+        step3 : false,
+        step4: true,
+        step5: false,
+      }
     }
   },
 }

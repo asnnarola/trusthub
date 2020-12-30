@@ -3,7 +3,7 @@
     class="h-screen flex-column flex w-full bg-img vx-row no-gutter items-center justify-center login-wrapper"
     id="page-login"
   >
-    <help-customizer :active ="active"/>
+    <help-customizer :active="active" />
     <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 sm:m-0 m-4 login-subwrapper">
       <vx-card>
         <div slot="no-body" class="full-page-bg-color">
@@ -18,15 +18,15 @@
                   class="img-fluid"
                 />
 
-                <p class="attention-title">{{$t("ATTENTION")}}</p>
+                <p class="attention-title">{{ $t("ATTENTION") }}</p>
                 <p class="attention-text" v-if="step.step1 == true">
-                  {{$t('SignatureAttentionStep1')}}
+                  {{ $t("SignatureAttentionStep1") }}
                 </p>
                 <p class="attention-text" v-if="step.step2 == true">
-                  {{$t('SignatureAttentionStep2')}}
+                  {{ $t("SignatureAttentionStep2") }}
                 </p>
                 <p class="attention-text" v-if="step.step3 == true">
-                  {{$t('SignatureAttentionStep3')}}
+                  {{ $t("SignatureAttentionStep3") }}
                 </p>
                 <!-- <p>Selecting Different registration Options Will Produce different registration procedure with different users permissions inside of the platform</p>
                 <p> Anyway you will be able to upgrade at any time merging properties.</p> -->
@@ -41,11 +41,17 @@
                       :style="{ width: percentage + '%' }"
                     ></div>
                   </div>
-                  <div class="text-center" v-if="percent > 0 && percent < 99">{{$t('Loading')}}</div>
-                  <div class="text-center" v-else-if="percent >= 100">{{$t('Completed')}}</div>
+                  <div class="text-center" v-if="percent > 0 && percent < 99">
+                    {{ $t("Loading") }}
+                  </div>
+                  <div class="text-center" v-else-if="percent >= 100">
+                    {{ $t("Completed") }}
+                  </div>
                 </div>
               </div>
-              <div class="appstore-wrapper d-flex mb-5 mr-10 justify-content-end">
+              <div
+                class="appstore-wrapper d-flex mb-5 mr-10 justify-content-end"
+              >
                 <router-link to="/">
                   <img
                     src="@/assets/images/login_icon/Android-store.png"
@@ -80,19 +86,19 @@
                   <div
                     class="vx-card__title mb-4 d-flex justify-content-between"
                   >
-                    <div class="wrapper-heading" >
-                      <h4 class="mb-4">{{$t('Activation')}}</h4>
+                    <div class="wrapper-heading">
+                      <h4 class="mb-4">{{ $t("Activation") }}</h4>
                       <p class="fw-500">
-                        {{$t('certificateActivation')}}
+                        {{ $t("certificateActivation") }}
                       </p>
                       <span class="fw-500 txt-gray" v-if="step.step1 == true">
-                        {{$t('step1of3')}}
+                        {{ $t("step1of3") }}
                       </span>
                       <span class="fw-500 txt-gray" v-if="step.step2 == true">
-                        {{$t('step2of3')}}
+                        {{ $t("step2of3") }}
                       </span>
                       <span class="fw-500 txt-gray" v-if="step.step3 == true">
-                        {{$t('step3of3')}}
+                        {{ $t("step3of3") }}
                       </span>
                     </div>
                     <div class="msg-wrapper-icon">
@@ -124,7 +130,7 @@
                   class="txt-or text-center mt-4 mb-4"
                   v-if="step.step1 === true"
                 >
-                  <span>{{$t('AND')}}</span>
+                  <span>{{ $t("AND") }}</span>
                   <div class="separte-border"></div>
                 </div>
                 <div
@@ -190,17 +196,17 @@
                   <div class="vs-sm-12">
                     <div class="txt-wraper mt-2 mb-1" v-if="step.step1 == true">
                       <p>
-                        {{$t('SignatureNotestep1')}}
+                        {{ $t("SignatureNotestep1") }}
                       </p>
                     </div>
                     <div class="txt-wraper mt-2 mb-2" v-if="step.step2 == true">
                       <p>
-                        {{$t('SignatureNotestep2')}}
+                        {{ $t("SignatureNotestep2") }}
                       </p>
                     </div>
                     <div class="txt-wraper mt-2 mb-2" v-if="step.step3 == true">
                       <p>
-                        {{$t('SignatureNotestep3')}}
+                        {{ $t("SignatureNotestep3") }}
                       </p>
                     </div>
                   </div>
@@ -211,28 +217,92 @@
                       class="btn-green mxw-130 float-right"
                       @click="gotoNext()"
                       v-if="step.step1 == true || this.step.step2 == true"
-                      :disabled="
+                      >{{ $t("Next") }}</vs-button
+                    >
+                  </div>
+                      <!-- :disabled="
                         (step.step1 === true &&
                           (userId == '' || ActivationCode == '')) ||
                         (step.step2 == true &&
                           (password == '' || confirm_Password == ''))
-                      "
-                      >{{$t('Next')}}</vs-button
-                    >
-                  </div>
+                      " -->
                 </div>
                 <div class="vs-row" :hidden="step.step0 == true">
                   <div class="vs-sm-12">
                     <div class="mt-4 mb-5">
                       <h6 v-if="step.step1 === true">
-                        {{$t('SignatureWarningstep1')}}
+                        {{ $t("SignatureWarningstep1") }}
                       </h6>
                       <h6 v-if="step.step2 === true">
-                        {{$t('SignatureWarningstep2')}}
+                        {{ $t("SignatureWarningstep2") }}
                       </h6>
                     </div>
                   </div>
                 </div>
+                 <div
+                    class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column justify-content-between"
+                  >
+                    <div class="login-logo footer-attention-txt">
+                      <p class="attention-title">{{ $t("ATTENTION") }}</p>
+                      <p class="attention-text" v-if="step.step1 == true">
+                        {{ $t("SignatureAttentionStep1") }}
+                      </p>
+                      <p class="attention-text" v-if="step.step2 == true">
+                        {{ $t("SignatureAttentionStep2") }}
+                      </p>
+                      <p class="attention-text" v-if="step.step3 == true">
+                        {{ $t("SignatureAttentionStep3") }}
+                      </p>
+                      <!-- <p>Selecting Different registration Options Will Produce different registration procedure with different users permissions inside of the platform</p>
+                <p> Anyway you will be able to upgrade at any time merging properties.</p> -->
+                    </div>
+                    <!-- ProgressBar -->
+                    <!-- <div class="vs-row" v-if="ProgressBar2 === true">
+                      <div class="vs-sm-12 vs-md-12 vs-lg-12">
+                        <div class="loading-bar">
+                          <div class="loading-count">{{ percent }}%</div>
+                          <div
+                            class="percentage"
+                            :style="{ width: percentage + '%' }"
+                          ></div>
+                        </div>
+                        <div
+                          class="text-center"
+                          v-if="percent > 0 && percent < 99"
+                        >
+                          {{ $t("Loading") }}
+                        </div>
+                        <div class="text-center" v-else-if="percent >= 100">
+                          {{ $t("Completed") }}
+                        </div>
+                      </div>
+                    </div> -->
+                    <div
+                      class="appstore-wrapper d-flex mb-5 mr-10 justify-content-end footer-appstore-wrapper"
+                    >
+                      <router-link to="/">
+                        <img
+                          src="@/assets/images/login_icon/Android-store.png"
+                          alt="Android Store"
+                          class="img-fluid"
+                        />
+                      </router-link>
+                      <router-link to="/">
+                        <img
+                          src="@/assets/images/login_icon/App-store.png"
+                          alt="Apple Store"
+                          class="img-fluid"
+                        />
+                      </router-link>
+                      <router-link to="/">
+                        <img
+                          src="@/assets/images/login_icon/download-button.png"
+                          alt="Download"
+                          class="img-fluid"
+                        />
+                      </router-link>
+                    </div>
+                  </div>
               </div>
             </div>
           </div>
@@ -315,6 +385,7 @@ export default {
     HelpCustomizer
   },
   created () {
+    this.$i18n.locale = localStorage.getItem('currentLanguage')
     setInterval(() => {
       if (this.ProgressBar2 === true) {
         var intval = setInterval(() => {
@@ -354,7 +425,7 @@ export default {
         }
       }
     },
-    openHelp(){
+    openHelp () {
       this.active == true ? this.active = false : this.active = true
     }
   },

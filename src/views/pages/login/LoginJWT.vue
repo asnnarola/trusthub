@@ -15,7 +15,7 @@
 
     <vs-input
       data-vv-validate-on="blur"
-      v-validate="'required|min:6|max:10'"
+      v-validate="'required|min:8|max: 24|verify_password'"
       type="password"
       name="password"
       icon-no-border
@@ -70,7 +70,7 @@
 
       <!-- Mdel -->
       <div :hidden="!loginModel_show" class="cloud-wrapper accessmng-modal">
-        <h6 class="text-white mb-4"><b>{{$t('AlternativeAccess')}}</b></h6>
+        <h6 class="text-white"><b>{{$t('AlternativeAccess')}}</b></h6>
         <ul class="accessmng-block">
           <li
             v-for="(item, index) in loginModel"
@@ -103,8 +103,7 @@
         <img class="gray-icon" src="@/assets/images/login_icon/in-icon-gray.png">
       </vs-button>
     </div>
-<!--
-    <facebook-login class="button"
+    <!-- <facebook-login class="button"
       appId="444282176963354"
       @login="onLogin"
       @logout="onLogout"
@@ -116,6 +115,7 @@
 <script>
 import VueRecaptcha from 'vue-recaptcha';
 import facebookLogin from 'facebook-login-vuejs';
+import axios from '../../../axios';
 export default {
   data () {
     return {
@@ -148,10 +148,17 @@ export default {
     }
   },
   created() {
-    setInterval(() => {
-      this.Email_Label =  this.$t('Email')
-      this.Password_Label = this.$t('Password')
-    }, 1);
+    this.$validator.extend('verify_password', {
+      getMessage: field => `The password must contain at least: 2 uppercase letter, 2 lowercase letter, 2 number, and 2 special character`,
+      validate: value => {
+        var strongRegex = new RegExp("^(?=(.*[a-z]){2})(?=(.*[A-Z]){2})(?=(.*[0-9]){2})(?=(.*[!@#?\$%\^&\*]){2})(?=.{8,})");
+        return strongRegex.test(value);
+      }
+    });
+    // setInterval(() => {
+    //   this.Email_Label =  this.$t('Email')
+    //   this.Password_Label = this.$t('Password')
+    // }, 1);
   },
   components: {
     'vue-recaptcha': VueRecaptcha,
@@ -161,28 +168,17 @@ export default {
     validateForm () {
       return !this.errors.any() && this.email !== '' && this.password !== '' && this.robot !== false
     },
-    isLoading(){
-      return this.$vs.loading({color: 'yellow'})
-    }
+    // isLoading(){
+    //   return this.$vs.loading({color: 'yellow'})
+    // }
   },
   methods: {
     async goStep1 () {
       this.showProgressBar = true;
       this.$emit("showProgressBar", this.showProgressBar);
       await setTimeout(() => {
-        //   this.step = {
-        //     step0: false,
-        //     step1: true,
-        //     step2: false,
-        //     step3: false,
-        //   }
-        //   this.showProgressBar = false;
-        //   this.$emit("showProgressBar", this.showProgressBar);
-        //   this.$emit("gosetp", this.step);
         this.$router.push('/dashboard').catch(() => { })
       }, 3900);
-      // this.$router.push('/dashboard').catch(() => { })
-      // this.$emit("startProgressBar",this.startProgressBar() )
     },
     checkLogin () {
       // If user is already logged in notify
@@ -202,23 +198,26 @@ export default {
     },
     loginJWT () {
       console.log('Robot =>', this.robot);
+      console.log('User Country Details =>', this.$store.state.selectedLanguage);
+      console.log('User Country Details =>', localStorage.getItem('selectedLanguage'));
       if (!this.checkLogin()) return
       if (!this.robot) return
 
       // Loading
-      this.isLoading
+      // this.isLoading
       const payload = {
         checkbox_remember_me: this.checkbox_remember_me,
         userDetails: {
           email: this.email,
-          password: this.password
+          password: this.password,
+          language:localStorage.getItem('selectedLanguage')
         }
       }
+        this.goStep1()
 
       this.$store.dispatch('auth/loginJWT', payload)
         .then(() => {
           const token = localStorage.getItem('accessToken')
-          console.log('Token =>', token);
           if (token) {
             this.goStep1()
             this.$vs.loading.close()
@@ -231,6 +230,7 @@ export default {
               icon: 'icon-alert-circle',
               color: 'danger'
             })
+
           }
         })
         .catch(error => {
@@ -263,8 +263,16 @@ export default {
     },
     sdkLoaded (payload) {
       this.isConnected = payload.isConnected
+      console.log('Payload=>', payload);
       this.FB = payload.FB
       if (this.isConnected) this.getUserData()
+    },
+    onLogin () {
+      this.isConnected = true
+      this.getUserData()
+    },
+    onLogout () {
+      this.isConnected = false
     },
     // SocialLogin
       AuthProvider(provider) {
@@ -275,19 +283,15 @@ export default {
         }).catch(err => {
           console.log({err:err})
         })
-
       },
-
-      SocialLogin(provider,response){
-          this.$http.post('/sociallogin/'+provider,response).then(response => {
-              console.log(response.data)
-          }).catch(err => {
-              console.log({err:err})
-          })
-      },
+      // SocialLogin(provider,response){
+      //     this.$http.post('/sociallogin/'+provider,response).then(response => {
+      //         console.log(response.data)
+      //     }).catch(err => {
+      //         console.log({err:err})
+      //     })
+      // },
   }
-
-
 }
 </script>
 

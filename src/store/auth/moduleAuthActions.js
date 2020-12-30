@@ -341,7 +341,7 @@ export default {
     //     })
     // })
 
-    return jwt.login(payload.userDetails.email, payload.userDetails.password)
+    return jwt.login(payload.userDetails.email, payload.userDetails.password,  payload.userDetails.language)
         .then(response => {
           console.log('jwt.login response',response);
           console.log(response);
@@ -363,9 +363,9 @@ export default {
         })
   },
 
-  registerUserJWT ({ commit }, payload) {
+  registerUserJWT ({ commit, state }, payload) {
 
-    const { displayName, email, password, confirmPassword } = payload.userDetails
+    const { email, password, confirmPassword } = payload
 
     return new Promise((resolve, reject) => {
 
@@ -374,12 +374,14 @@ export default {
         reject({message: 'Password doesn\'t match. Please try again.'})
       }
 
-      jwt.registerUser(displayName, email, password, confirmPassword)
+      jwt.registerUser(payload)
         .then(response => {
+          console.log('Response ==>', response);
           // Redirect User
-          router.push(router.currentRoute.query.to || '/login')
+          // router.push(router.currentRoute.query.to || '/login')
 
           // Update data in localStorage
+          state.RegisterUser = response.data.userData
           localStorage.setItem('accessToken', response.data.accessToken)
           commit('UPDATE_USER_INFO', response.data.userData, {root: true})
 
@@ -413,9 +415,9 @@ export default {
     })
   },
   forgotPassword ({ commit }, payload) {
-    const {email } = payload.userDetails
+
     return new Promise((resolve, reject) => {
-      jwt.forgotPassword(email)
+      jwt.forgotPassword(payload.userDetails)
         .then(response => {
           // Redirect User
           router.push(router.currentRoute.query.to || '/login')

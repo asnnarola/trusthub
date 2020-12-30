@@ -1,5 +1,5 @@
 <template>
   <div>
-    <h1>Knowledge Base</h1>
+    <h1>{{$t('KnowledgeBase')}}</h1>
   </div>
 </template>

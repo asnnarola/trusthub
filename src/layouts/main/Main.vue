@@ -254,57 +254,7 @@ export default {
         maxScrollbarLength: 250,
         wheelSpeed: .100
       },
-      biometric_data: [
-        {
-          id: 1,
-          header: 'DOCUMENT IDENTITY',
-          sub_header: 'Scanned Document Information',
-          icon_url: 'id.png'
-        },
-        {
-          id: 2,
-          header: 'DIGITAL CERTIFICATE',
-          sub_header: 'Hardware Stored Certificate',
-          icon_url: 'chip.png'
-        },
-        {
-          id: 3,
-          header: 'FACE RECOGNITION',
-          sub_header: 'Captured Face Recognition Details',
-          icon_url: 'face.png'
-        },
-        {
-          id: 4,
-          header: 'FINGERPRINT TEMPLATE',
-          sub_header: 'Captured Fingerprint Information',
-          icon_url: 'fingerprint.png'
-        },
-        {
-          header: 'PALM SCAN',
-          id: 5,
-          sub_header: 'Captured Palm Information',
-          icon_url: 'palm.png'
-        },
-        {
-          id: 6,
-          header: 'VOICE RECORD',
-          sub_header: 'Registered Voice Frequency',
-          icon_url: 'voice.png'
-        },
 
-        {
-          id: 7,
-          header: 'IRIS MAP',
-          sub_header: 'Captured Iris Map',
-          icon_url: 'eye.png'
-        },
-        {
-          id: 8,
-          header: 'SIGNATURE GRAPH',
-          sub_header: 'Graphometric Signature Information',
-          icon_url: 'signature.png'
-        },
-      ],
       showID: 0,
 
       userRole: this.$store.state.AppActiveUser.userRole,
@@ -319,38 +269,38 @@ export default {
       navMenuItems,
       routerTransition: themeConfig.routerTransition || 'none',
       routeTitle: this.$route.meta.pageTitle,
-      steps: [
-        {
-          target: '#btnVNavMenuMinToggler',
-          content: 'Toggle Collapse Sidebar.'
-        },
-        {
-          target: '.vx-navbar__starred-pages',
-          content: 'Create your own bookmarks. You can also re-arrange them using drag & drop.'
-        },
-        {
-          target: '.i18n-locale',
-          content: 'You can change language from here.'
-        },
-        {
-          target: '.navbar-fuzzy-search',
-          content: 'Try fuzzy search to visit pages in flash.'
-        },
-        {
-          target: '.customizer-btn',
-          content: 'Customize template based on your preference',
-          params: {
-            placement: 'left'
-          }
-        },
-        {
-          target: '.vs-button.buy-now',
-          content: 'Buy this awesomeness at affordable price!',
-          params: {
-            placement: 'top'
-          }
-        }
-      ]
+      // steps: [
+      //   {
+      //     target: '#btnVNavMenuMinToggler',
+      //     content: 'Toggle Collapse Sidebar.'
+      //   },
+      //   {
+      //     target: '.vx-navbar__starred-pages',
+      //     content: 'Create your own bookmarks. You can also re-arrange them using drag & drop.'
+      //   },
+      //   {
+      //     target: '.i18n-locale',
+      //     content: 'You can change language from here.'
+      //   },
+      //   {
+      //     target: '.navbar-fuzzy-search',
+      //     content: 'Try fuzzy search to visit pages in flash.'
+      //   },
+      //   {
+      //     target: '.customizer-btn',
+      //     content: 'Customize template based on your preference',
+      //     params: {
+      //       placement: 'left'
+      //     }
+      //   },
+      //   {
+      //     target: '.vs-button.buy-now',
+      //     content: 'Buy this awesomeness at affordable price!',
+      //     params: {
+      //       placement: 'top'
+      //     }
+      //   }
+      // ]
     }
   },
   watch: {
@@ -452,7 +402,6 @@ export default {
       }
     }, 500);
     const activeUser = JSON.parse(localStorage.getItem('userInfo'))
-    console.log('Active User ==>', activeUser);
     if (activeUser == null || activeUser == undefined) {
       this.$router.push('/login').catch(() => { })
     }

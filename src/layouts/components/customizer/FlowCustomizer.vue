@@ -49,7 +49,7 @@
               v-for="(user, index) in Users"
               :key="index"
               icon-pack="fas"
-              icon-arrow="fa-caret-down"
+              icon-arrow="fa-angle-down"
             >
               <div slot="header" class>{{user.name}}</div>
               <div class="text-right mb-6 mt-6">

@@ -18,9 +18,7 @@
       <vx-card>
         <div slot="no-body" class="full-page-bg-color">
           <div class="vx-row no-gutter justify-center">
-            <div
-              class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column justify-content-between"
-            >
+            <div class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column justify-content-between">
               <div class="login-logo">
                 <img
                   src="@/assets/images/login_icon/logo.png"
@@ -36,7 +34,7 @@
               </div>
               <!-- ProgressBar -->
               <div class="vs-row" v-if="ProgressBar1 === true">
-                <div class="vs-sm-12 vs-md-12 vs-lg-12">
+                <div class="vs-sm-12 vs-md-12 vs-lg-12 header-loading-bar">
                   <div class="loading-bar">
                     <div class="loading-count">{{ percent }}%</div>
                     <div
@@ -52,9 +50,7 @@
                   </div>
                 </div>
               </div>
-              <div
-                class="appstore-wrapper d-flex mb-5 mr-10 justify-content-end"
-              >
+              <div class="appstore-wrapper d-flex mb-5 mr-10 justify-content-end">
                 <router-link to="/">
                   <img
                     src="@/assets/images/login_icon/Android-store.png"
@@ -111,6 +107,23 @@
                   ></login-jwt>
 
                 </div>
+                 <div class="vs-row" v-if="ProgressBar1 === true">
+                <div class="vs-sm-12 vs-md-12 vs-lg-12 footer-loadingbar">
+                  <div class="loading-bar">
+                    <div class="loading-count">{{ percent }}%</div>
+                    <div
+                      class="percentage"
+                      :style="{ width: percentage + '%' }"
+                    ></div>
+                  </div>
+                  <div class="text-center" v-if="percent > 0 && percent < 99">
+                    Loading....
+                  </div>
+                  <div class="text-center" v-else-if="percent >= 100">
+                    Completed
+                  </div>
+                </div>
+              </div>
                 <div class="txt-or text-center mb-2">
                   <span>OR</span>
                   <div class="separte-border"></div>
@@ -159,6 +172,7 @@
                             ref="signPad"
                             class="signature-pad w-100"
                             style="background-color: transparent !important"
+                            @mousemove="onCanvasChange($event)"
                           />
                           <div class="dash-line"></div>
                           <p class="text-center mb-1 fw-500">Make your signature</p>
@@ -200,9 +214,7 @@
                   </div>
                 </vs-popup>
                 <div class="bottom-menu-icon mt-0 mb-2 position-relative">
-                  <ul
-                    class="d-flex flex-wrap align-items-center position-relative"
-                  >
+                  <ul class="d-flex flex-wrap align-items-center position-relative" >
                     <li
                       class="starred-page"
                       v-for="img in Biometrical_Icon1"
@@ -256,6 +268,36 @@
                     </li>
                   </ul>
                 </div>
+                <div class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column justify-content-between">
+                  <div class="login-logo footer-attention-txt">
+                    <p class="attention-title">{{$t("ATTENTION")}}</p>
+                    <p class="attention-text">{{$t("AttentionLoginTest")}}
+                    </p>
+                  </div>
+                  <div class="appstore-wrapper d-flex mb-5 mr-10 justify-content-end footer-appstore-wrapper">
+                    <router-link to="/">
+                      <img
+                        src="@/assets/images/login_icon/Android-store.png"
+                        alt="Android Store"
+                        class="img-fluid"
+                      />
+                    </router-link>
+                    <router-link to="/">
+                      <img
+                        src="@/assets/images/login_icon/App-store.png"
+                        alt="Apple Store"
+                        class="img-fluid"
+                      />
+                    </router-link>
+                    <router-link to="/">
+                      <img
+                        src="@/assets/images/login_icon/download-button.png"
+                        alt="Download"
+                        class="img-fluid"
+                      />
+                    </router-link>
+                  </div>
+                 </div>
               </div>
             </div>
           </div>
@@ -347,20 +389,21 @@ export default {
     HelpCustomizer
   },
   created () {
-    if (!("geolocation" in navigator)) {
-      this.errorStr = 'Geolocation is not available.';
-      return;
-    }
+    this.$i18n.locale = localStorage.getItem('currentLanguage')
+    // if (!("geolocation" in navigator)) {
+    //   this.errorStr = 'Geolocation is not available.';
+    //   return;
+    // }
 
-    this.gettingLocation = true;
+    // this.gettingLocation = true;
     // get position
-    navigator.geolocation.getCurrentPosition(pos => {
-      this.gettingLocation = false;
-      this.location = pos;
-    }, err => {
-      this.gettingLocation = false;
-      this.errorStr = err.message;
-    })
+    // navigator.geolocation.getCurrentPosition(pos => {
+    //   this.gettingLocation = false;
+    //   this.location = pos;
+    // }, err => {
+    //   this.gettingLocation = false;
+    //   this.errorStr = err.message;
+    // })
 
     setInterval(() => {
       if (this.ProgressBar1 === true) {
@@ -372,6 +415,7 @@ export default {
         }, 10);
       }
     }, 0);
+
   },
   computed: {
     percent () {
@@ -416,6 +460,12 @@ export default {
     onBiometricalclick (lable) {
       console.log(lable);
       this.signpadShow()
+    },
+
+    onCanvasChange(e){
+      // console.log('Event =>', e);
+      var data = this.signaturePad.toData();
+      // console.log(data.length);
     }
   },
 }
@@ -482,6 +532,19 @@ export default {
     animation: animate-stripes 4s linear infinite;
   }
 }
+.header-loading-bar{
+    @media screen and (max-width:991px){
+      display:none;
+    }
+  }
+  .footer-loadingbar{
+    @media screen and (min-width:992px){
+      display:none;
+    }
+    @media screen and (max-width:991px){
+      display:block;
+    }
+  }
 
 @keyframes animate-stripes {
   0% {

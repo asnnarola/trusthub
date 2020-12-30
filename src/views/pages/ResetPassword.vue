@@ -54,7 +54,7 @@
                       ref="password"
                       type="password"
                       data-vv-validate-on="blur"
-                      v-validate="'required|min:6|max:10'"
+                      v-validate="'required|min:8|max: 24|verify_password'"
                       name="password"
                       label-placeholder="Password"
                       placeholder="Password"
@@ -81,7 +81,7 @@
                     }}</span>
 
                     <div class="flex flex-wrap justify-between mb-3 LT-wrap">
-                      <router-link to="/login" class="mb-3"
+                      <router-link to="/login" class="mb-3 mr-4"
                         ><u class="fw-500 txt-dark-gray"
                           >Return to Login Page</u
                         ></router-link
@@ -126,6 +126,15 @@ export default {
     validateForm () {
       return !this.errors.any() && this.password !== '' && this.confirm_password !== '' && this.key !== ''
     }
+  },
+  created() {
+    this.$validator.extend('verify_password', {
+      getMessage: field => `The password must contain at least: 2 uppercase letter, 2 lowercase letter, 2 number, and 2 special character`,
+      validate: value => {
+        var strongRegex = new RegExp("^(?=(.*[a-z]){2})(?=(.*[A-Z]){2})(?=(.*[0-9]){2})(?=(.*[!@#?\$%\^&\*]){2})(?=.{8,})");
+        return strongRegex.test(value);
+      }
+    });
   },
   methods: {
     resetPassword(){
