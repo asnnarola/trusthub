@@ -414,21 +414,18 @@ export default {
         .catch(error => { reject(error) })
     })
   },
-  forgotPassword ({ commit }, payload) {
+  // forgotPassword ({ commit }, payload) {
 
-    return new Promise((resolve, reject) => {
-      jwt.forgotPassword(payload.userDetails)
-        .then(response => {
-          // Redirect User
-          router.push(router.currentRoute.query.to || '/login')
-          // Update data in localStorage
-          // localStorage.setItem('accessToken', response.data.accessToken)
-          // commit('UPDATE_USER_INFO', response.data.userData, {root: true})
-          resolve(response)
-        })
-        .catch(error => { reject(error) })
-    })
-  },
+  //   return new Promise((resolve, reject) => {
+  //     jwt.forgotPassword(payload.userDetails)
+  //       .then(response => {
+  //         // Redirect User
+  //         router.push(router.currentRoute.query.to || '/login')
+  //         resolve(response)
+  //       })
+  //       .catch(error => { reject(error) })
+  //   })
+  // },
 
   fetchAccessToken () {
     return new Promise((resolve) => {

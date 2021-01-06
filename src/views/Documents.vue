@@ -509,7 +509,7 @@
                 </template>
               </vs-table>
             </div>
-            <div class="pagination-block">
+            <div v-if="onList && !onGrid" class="pagination-block">
               <vs-pagination
                 v-if="pagenationData.length > 0"
                 :total="total"
@@ -833,8 +833,8 @@ export default {
           image: 'cloud20.jpg'
         },
       ],
-      endData: 2,
-      pageData: 2,
+      endData: 0,
+      pageData: 10,
       startData: 0,
       currentPage: 1,
       pagenationData: [],

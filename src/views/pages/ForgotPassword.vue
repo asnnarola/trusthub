@@ -13,8 +13,8 @@
     class="h-screen flex-column flex w-full bg-img vx-row no-gutter items-center justify-center login-wrapper"
     id="page-login"
   >
-    <help-customizer :active ="active"/>
-    <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4">
+    <help-customizer :active="active" />
+    <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4 login-subwrapper">
       <vx-card>
         <div slot="no-body" class="full-page-bg-color recover-wrapper">
           <div class="vx-row no-gutter justify-center">
@@ -29,7 +29,7 @@
             </div>
 
             <div
-              class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg right-wrapper"
+              class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg right-wrapper w-100"
             >
               <div
                 class="px-8 pt-8 login-tabs-container tab-wrapper d-flex flex-column"
@@ -39,9 +39,9 @@
                     class="vx-card__title mb-4 d-flex justify-content-between"
                   >
                     <div class="wrapper-heading">
-                      <h4 class="mb-4">{{$t('RecoverYourPassword')}}</h4>
+                      <h4 class="mb-4">{{ $t("RecoverYourPassword") }}</h4>
                       <p>
-                        {{$t('ForgotPasswordNote')}}
+                        {{ $t("ForgotPasswordNote") }}
                       </p>
                     </div>
                     <div class="msg-wrapper-icon">
@@ -70,16 +70,24 @@
                       errors.first("email")
                     }}</span>
 
+                    <div class="form-group row mt-6">
+                      <vue-recaptcha
+                        @verify="onVerify"
+                        sitekey="6LczcvwZAAAAADaEiDNCSCRjShHTr6oFSnTeJ6jJ"
+                      >
+                      </vue-recaptcha>
+                    </div>
+
                     <div class="flex flex-wrap justify-between mt-5 LT-wrap">
                       <router-link to="/login" class="mb-3 mr-4">
-                        <u class="fw-500 txt-dark-gray">{{$t('ReturnLoginPage')}}</u>
+                        <u class="fw-500 txt-dark-gray">{{
+                          $t("ReturnLoginPage")
+                        }}</u>
                       </router-link>
                       <!-- <vs-button type="border" to="/login" class="btn-green">Back To Login</vs-button> -->
-                      <vs-button
-                        class="btn-green"
-                        @click="forgotPassword"
-                        >{{$t('PasswordRecovery')}}</vs-button
-                      >
+                      <vs-button class="btn-green" @click="forgotPassword">{{
+                        $t("PasswordRecovery")
+                      }}</vs-button>
                     </div>
                   </div>
                 </div>
@@ -100,37 +108,87 @@
 <script>
 import copyRight from '../../layouts/components/copyright.js'
 import HelpCustomizer from '../../layouts/components/customizer/HelpCustomizer.vue'
+import axios from '../../axios.js'
+import VueRecaptcha from 'vue-recaptcha';
 export default {
   data () {
     return {
       copyRightText: copyRight[0].title,
       email: '',
-      Email:this.$t('Email'),
+      Email: this.$t('Email'),
+      robot: false,
       active: false
     }
   },
-  components:{
-    HelpCustomizer
+  components: {
+    'vue-recaptcha': VueRecaptcha,
+    HelpCustomizer,
   },
   computed: {
     validateEmail () {
-      return !this.errors.any() && this.email !== ''
+      return !this.errors.any() && this.email !== '' && this.robot !== false
     }
   },
   methods: {
     forgotPassword () {
       console.log('validEmail', this.validateEmail);
-      if (!this.validateEmail) return
+      if (!this.validateEmail) {
+        if(this.email || !this.robot ){
+          this.$vs.notify({
+              title: 'Error',
+              text: 'Invalid Data Please Enter Valid Data',
+              iconPack: 'feather',
+              icon: 'icon-alert-circle',
+              color: 'danger'
+            })
+        } else if(!this.email){
+          this.$vs.notify({
+              title: 'Error',
+              text: 'Enter your Registerd Email',
+              iconPack: 'feather',
+              icon: 'icon-alert-circle',
+              color: 'danger'
+            })
+        } else if(!this.robot){
+          this.$vs.notify({
+              title: 'Error',
+              text: 'Invalid Captcha',
+              iconPack: 'feather',
+              icon: 'icon-alert-circle',
+              color: 'danger'
+            })
+        }
+        return
+      }
       const payload = {
         userDetails: {
           email: this.email,
-          language:localStorage.getItem('selectedLanguage')
+          language: localStorage.getItem('selectedLanguage')
         },
         notify: this.$vs.notify
       }
-      this.$store.dispatch('auth/forgotPassword', payload)
+      return axios
+      .post("auth/forgot-password", payload.userDetails)
         .then((res) => {
-          console.log('=>', res);
+          console.log('=> 3', res);
+          if (res.status == 200) {
+          this.$vs.notify({
+              title: 'Sucess',
+              text: res.data.successCode,
+              iconPack: 'feather',
+              icon: 'icon-mail',
+              color: 'success'
+            })
+            this.$router.push('/login').catch(() => { })
+          } else {
+            this.$vs.notify({
+              title: 'Error',
+              text: 'Registration Failed ..!!',
+              iconPack: 'feather',
+              icon: 'icon-alert-circle',
+              color: 'danger'
+            })
+          }
           this.$vs.loading.close()
         })
         .catch(error => {
@@ -144,11 +202,14 @@ export default {
           })
         })
     },
-    openHelp(){
+    onVerify (response) {
+      if (response) this.robot = true;
+    },
+    openHelp () {
       this.active == true ? this.active = false : this.active = true
     }
   },
-  created() {
+  created () {
     setInterval(() => {
       this.Email = this.$t('Email')
     }, 1);

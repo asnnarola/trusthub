@@ -4,7 +4,9 @@
     id="page-login"
   >
     <help-customizer :active="active" />
-    <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/4 sm:m-0 m-4 login-subwrapper">
+    <div
+      class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/4 sm:m-0 m-4 login-subwrapper"
+    >
       <vx-card>
         <div slot="no-body" class="full-page-bg-color">
           <div class="vx-row no-gutter justify-center">
@@ -23,7 +25,7 @@
                 </p>
               </div>
 
-              <div class="vs-row">
+              <!-- <div class="vs-row">
                 <div class="vs-sm-12 vs-md-12 vs-lg-12 header-loading-bar">
                   <div class="loading-bar">
                     <div class="loading-count">{{ percent }}%</div>
@@ -39,7 +41,7 @@
                     Completed
                   </div>
                 </div>
-              </div>
+              </div> -->
 
               <div
                 class="appstore-wrapper d-flex mb-5 mr-10 justify-content-end"
@@ -69,7 +71,7 @@
             </div>
 
             <div
-              class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg right-wrapper"
+              class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg right-wrapper w-100"
             >
               <div
                 class="px-8 pt-8 login-tabs-container tab-wrapper d-flex flex-column"
@@ -109,16 +111,26 @@
                       class="w-full mb-8"
                     />
                   </div>
-                  <div class="vs-row" >
-                <div class="vs-sm-12 vs-md-12 vs-lg-12 footer-loadingbar">
-                  <div class="loading-bar">
-                    <div class="loading-count">{{ percent }}%</div>
-                    <div class="percentage" :style="{'width' : percentage + '%'}"></div>
-                  </div>
-                  <div class="text-center" v-if="percent > 0 && percent < 99">Loading....</div>
-                  <div class="text-center" v-else-if="percent >= 100">Completed</div>
-                </div>
-              </div>
+                  <!-- <div class="vs-row">
+                    <div class="vs-sm-12 vs-md-12 vs-lg-12 footer-loadingbar">
+                      <div class="loading-bar">
+                        <div class="loading-count">{{ percent }}%</div>
+                        <div
+                          class="percentage"
+                          :style="{ width: percentage + '%' }"
+                        ></div>
+                      </div>
+                      <div
+                        class="text-center"
+                        v-if="percent > 0 && percent < 99"
+                      >
+                        Loading....
+                      </div>
+                      <div class="text-center" v-else-if="percent >= 100">
+                        Completed
+                      </div>
+                    </div>
+                  </div> -->
                   <div class="txt-or text-center mb-4 mt-4">
                     <span class="txt-gray">{{ $t("AND") }}</span>
                     <div class="separte-border"></div>
@@ -186,6 +198,13 @@
                       </div>
                     </div>
                   </div>
+                  <div class="form-group row mt-6">
+                    <vue-recaptcha
+                      @verify="onVerify"
+                      sitekey="6LczcvwZAAAAADaEiDNCSCRjShHTr6oFSnTeJ6jJ"
+                    >
+                    </vue-recaptcha>
+                  </div>
                   <div class="vs-row">
                     <div class="vs-sm-12 mt-3 mb-5">
                       <router-link to="/login" class="mt-3 mr-4">
@@ -193,9 +212,10 @@
                           {{ $t("ReturnLoginPage") }}
                         </u>
                       </router-link>
-                      <vs-button class="btn-green mxw-250 mt-2 float-right mb-5">{{
-                        $t("PasswordRecovery")
-                      }}</vs-button>
+                      <vs-button
+                        class="btn-green mxw-250 mt-2 float-right mb-5"
+                        >{{ $t("PasswordRecovery") }}</vs-button
+                      >
                     </div>
                   </div>
                   <div class="vs-row">
@@ -256,6 +276,8 @@
 <script>
 import copyRight from '../../layouts/components/copyright.js'
 import HelpCustomizer from '../../layouts/components/customizer/HelpCustomizer.vue'
+import VueRecaptcha from 'vue-recaptcha';
+
 export default {
   data () {
     return {
@@ -264,6 +286,7 @@ export default {
       pukCode: '',
       UserId: this.$t('UserId'),
       PUKCode: this.$t('PUKCode'),
+      robot: false,
       active: false,
       Biometrical_Icon1: [
         {
@@ -299,7 +322,8 @@ export default {
     }
   },
   components: {
-    HelpCustomizer
+    HelpCustomizer,
+    'vue-recaptcha': VueRecaptcha,
   },
   computed: {
     percent () {
@@ -309,6 +333,9 @@ export default {
   methods: {
     openHelp () {
       this.active == true ? this.active = false : this.active = true
+    },
+    onVerify (response) {
+      if (response) this.robot = true;
     }
   },
   created () {
@@ -316,12 +343,12 @@ export default {
       this.UserId = this.$t('UserId')
       this.PUKCode = this.$t('PUKCode')
     }, 1);
-    var intval = setInterval(() => {
-      if (this.percentage < 100)
-        this.percentage += .1;
-      else
-        clearInterval(intval);
-    }, 10);
+    // var intval = setInterval(() => {
+    //   if (this.percentage < 100)
+    //     this.percentage += .1;
+    //   else
+    //     clearInterval(intval);
+    // }, 10);
   }
 }
 </script>
@@ -387,11 +414,11 @@ export default {
   }
 }
 
-.header-loading-bar{
-    @media screen and (max-width:991px){
-      display:none;
-    }
+.header-loading-bar {
+  @media screen and (max-width: 991px) {
+    display: none;
   }
+}
 
 .footer-loadingbar {
   @media screen and (min-width: 992px) {

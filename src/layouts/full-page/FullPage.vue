@@ -86,27 +86,27 @@ export default {
           console.log(res.data);
           this.$store.state.userCountryDetails = res.data
           this.Language = res.data.languages[0].name
-          if (this.Language == 'Spanish') {
-            console.log('1');
-            this.$store.state.selectedLanguage = this.Language
-            localStorage.setItem('selectedLanguage', this.Language)
-            this.$i18n.locale = 'es'
-          } else if (this.Language == 'English') {
-            console.log('2');
-            this.$store.state.selectedLanguage = this.Language
-            localStorage.setItem('selectedLanguage', this.Language)
-            this.$i18n.locale = 'en'
-          } else if (this.Language == 'Italian') {
-            console.log('3');
-            this.$store.state.selectedLanguage = this.Language
-            localStorage.setItem('selectedLanguage', this.Language)
-            this.$i18n.locale = 'it'
-          } else{
-            this.Language = 'English'
-            console.log('4');
-            this.$store.state.selectedLanguage = this.Language
-            localStorage.setItem('selectedLanguage', this.Language)
-            this.$i18n.locale = 'en'
+          if (!localStorage.getItem('selectedLanguage')) {
+            if (this.Language == 'Spanish') {
+              this.$store.state.selectedLanguage = this.Language
+              localStorage.setItem('selectedLanguage', this.Language)
+              this.$i18n.locale = 'es'
+            } else if (this.Language == 'English') {
+              this.$store.state.selectedLanguage = this.Language
+              localStorage.setItem('selectedLanguage', this.Language)
+              this.$i18n.locale = 'en'
+            } else if (this.Language == 'Italian') {
+              this.$store.state.selectedLanguage = this.Language
+              localStorage.setItem('selectedLanguage', this.Language)
+              this.$i18n.locale = 'it'
+            } else {
+              this.Language = 'English'
+              this.$store.state.selectedLanguage = this.Language
+              localStorage.setItem('selectedLanguage', this.Language)
+              this.$i18n.locale = 'en'
+            }
+          } else {
+            this.Language = localStorage.getItem('selectedLanguage')
           }
           localStorage.setItem('currentLanguage', this.$i18n.locale)
           this.backgroundImages.forEach(countryData => {
@@ -116,11 +116,8 @@ export default {
           });
         }
       })
+
     })
-    // axios.get('http://ip-api.com/json').then(res => {
-    //   console.log('res => ', res,);
-    //
-    // })
   },
   methods: {
     onLanguageSelect (language) {
@@ -128,19 +125,19 @@ export default {
       if (this.Language == 'Spanish') {
         console.log('Language =>', language);
         this.$store.state.selectedLanguage = this.Language
-            localStorage.setItem('selectedLanguage', this.Language)
-            this.$i18n.locale = 'es'
-          } else if (this.Language == 'English') {
-            console.log('Language =>', language);
-            this.$store.state.selectedLanguage = this.Language
-            localStorage.setItem('selectedLanguage', this.Language)
-            this.$i18n.locale = 'en'
-          } else if (this.Language == 'Italian') {
-            console.log('Language =>', language);
-            this.$store.state.selectedLanguage = this.Language
-            localStorage.setItem('selectedLanguage', this.Language)
-            this.$i18n.locale = 'it'
-          }
+        localStorage.setItem('selectedLanguage', this.Language)
+        this.$i18n.locale = 'es'
+      } else if (this.Language == 'English') {
+        console.log('Language =>', language);
+        this.$store.state.selectedLanguage = this.Language
+        localStorage.setItem('selectedLanguage', this.Language)
+        this.$i18n.locale = 'en'
+      } else if (this.Language == 'Italian') {
+        console.log('Language =>', language);
+        this.$store.state.selectedLanguage = this.Language
+        localStorage.setItem('selectedLanguage', this.Language)
+        this.$i18n.locale = 'it'
+      }
       localStorage.setItem('currentLanguage', this.$i18n.locale)
     }
   },

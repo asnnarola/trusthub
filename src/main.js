@@ -80,15 +80,18 @@ Vue.use(VueSocialauth, {
     facebook: {
       clientId: '444282176963354',
       redirectUri: 'http://localhost:8080/login'
-    },
-    linkedin: {
-      clientId: '788lt5uymeqzvd',
-      redirectUri: 'http://localhost:8080/login'
+      // redirectUri: 'http://beta.trusthub.cloud/login'
     },
     twitter: {
-      clientId: 'm2sJm77Y8sy7riBYhtvhTIstf',
+      clientId: 'jaH3uvNvgtzobL2ewSh2K8KsH',
       redirectUri: 'http://localhost:8080/login'
-    }
+      // redirectUri: 'http://beta.trusthub.cloud/login'
+    },
+    linkedin: {
+      clientId:'78l9d81xybkxw6',
+      redirectUri: 'http://localhost:8080/login'
+      // redirectUri: 'http://beta.trusthub.cloud/login'
+    },
   }
 })
 

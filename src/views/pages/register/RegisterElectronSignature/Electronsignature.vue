@@ -74,7 +74,7 @@
             </div>
 
             <div
-              class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg right-wrapper"
+              class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg right-wrapper w-100"
             >
               <div
                 class="px-8 pt-8 login-tabs-container tab-wrapper d-flex flex-column"
@@ -125,9 +125,11 @@
                   <Electronsignaturestep1
                     v-if="step.step1 == true"
                     @gosetp="step = $event"
+                    @RegisterData="RegisterData = $event"
                   ></Electronsignaturestep1>
                   <Electronsignaturestep2
                     v-if="step.step2 == true"
+                    :RegisterData = "RegisterData"
                     @gosetp="step = $event"
                   ></Electronsignaturestep2>
                   <Electronsignaturestep3
@@ -235,6 +237,7 @@ export default {
         step4: false,
         step5: false,
       },
+      RegisterData:{},
       active : false
     }
   },
@@ -244,6 +247,11 @@ export default {
     }
   },
   created() {
+    // if (this.step.step2 == true) {
+      // setInterval(() => {
+      //     console.log('Data=>',this.RegisterData.email, this.step);
+      // }, 1);
+    // }
     this.$i18n.locale = localStorage.getItem('currentLanguage')
     if(this.$router.currentRoute.fullPath === '/electron-signature-register'){
       this.step =  {

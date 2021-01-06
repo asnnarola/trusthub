@@ -582,7 +582,14 @@
 
 import $ from 'jquery'
 // var Fingerprint = require('../../../public/fingerprint.sdk.min.js')
-//console.log('This FingerPrint =>', Fingerprint);
+// console.log('This FingerPrint =>', Fingerprint);
+
+var test = null;
+var state = document.getElementById('content-capture');
+var myVal = ""; // Drop down selected value of reader
+var disabled = true;
+var startEnroll = false;
+var currentFormat = Fingerprint.SampleFormat.PngImage;
 
 var FingerprintSdkTest = (function () {
   function FingerprintSdkTest () {
@@ -661,12 +668,6 @@ var FingerprintSdkTest = (function () {
   return FingerprintSdkTest;
 })();
 
-var test = null;
-var state = document.getElementById('content-capture');
-var myVal = ""; // Drop down selected value of reader
-var disabled = true;
-var startEnroll = false;
-var currentFormat = Fingerprint.SampleFormat.PngImage;
 var deviceTechn = {
   0: "Unknown",
   1: "Optical",
@@ -1272,11 +1273,13 @@ export default {
       this.imageShow = false
       this.xmlShow = false
       this.pdfShow = false
+    } else {
+      window.open(this.FileUrl, '_blank');
     }
     // disableEnable();
-    setTimeout(() => {
-      FingerprintSdkTest();
-    }, 1000);
+    // setTimeout(() => {
+    //   FingerprintSdkTest();
+    // }, 1000);
     this.btnDisabled = disabled;
     console.log('ID =>', this.id);
     localStorage.setItem('docId', this.id)

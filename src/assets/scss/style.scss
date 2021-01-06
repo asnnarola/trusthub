@@ -2607,6 +2607,12 @@ a {
                         }
                       }
                       label {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: -webkit-inline-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        max-width: calc(100% - 50px);
                         .tree-text {
                           position: relative;
                           top: -2px;

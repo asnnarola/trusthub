@@ -1,7 +1,7 @@
 <template>
   <div class="tab-wrapper-form">
     <vs-input
-      v-validate="'required|email|min:3'"
+      v-validate="'required|email'"
       data-vv-validate-on="blur"
       name="email"
       icon-no-border
@@ -103,18 +103,11 @@
         <img class="gray-icon" src="@/assets/images/login_icon/in-icon-gray.png">
       </vs-button>
     </div>
-    <!-- <facebook-login class="button"
-      appId="444282176963354"
-      @login="onLogin"
-      @logout="onLogout"
-      @sdk-loaded="sdkLoaded">
-    </facebook-login> -->
   </div>
 </template>
 
 <script>
 import VueRecaptcha from 'vue-recaptcha';
-import facebookLogin from 'facebook-login-vuejs';
 import axios from '../../../axios';
 export default {
   data () {
@@ -155,14 +148,14 @@ export default {
         return strongRegex.test(value);
       }
     });
-    // setInterval(() => {
-    //   this.Email_Label =  this.$t('Email')
-    //   this.Password_Label = this.$t('Password')
-    // }, 1);
+    setInterval(() => {
+      this.Email_Label =  this.$t('Email')
+      this.Password_Label = this.$t('Password')
+    }, 1);
   },
   components: {
     'vue-recaptcha': VueRecaptcha,
-    facebookLogin
+    // facebookLogin
   },
   computed: {
     validateForm () {
@@ -197,9 +190,6 @@ export default {
       return true
     },
     loginJWT () {
-      console.log('Robot =>', this.robot);
-      console.log('User Country Details =>', this.$store.state.selectedLanguage);
-      console.log('User Country Details =>', localStorage.getItem('selectedLanguage'));
       if (!this.checkLogin()) return
       if (!this.robot) return
 
@@ -213,8 +203,6 @@ export default {
           language:localStorage.getItem('selectedLanguage')
         }
       }
-        this.goStep1()
-
       this.$store.dispatch('auth/loginJWT', payload)
         .then(() => {
           const token = localStorage.getItem('accessToken')
@@ -230,7 +218,6 @@ export default {
               icon: 'icon-alert-circle',
               color: 'danger'
             })
-
           }
         })
         .catch(error => {
@@ -251,31 +238,9 @@ export default {
     onVerify (response) {
       if (response) this.robot = true;
     },
-    getUserData () {
-      this.FB.api('/me', 'GET', { fields: 'id,name,email' },
-        userInformation => {
-          console.warn('Get Data From FaceBook', userInformation)
-          this.personalID = userInformation.id
-          this.email = userInformation.email
-          this.name = userInformation.name
-        }
-      )
-    },
-    sdkLoaded (payload) {
-      this.isConnected = payload.isConnected
-      console.log('Payload=>', payload);
-      this.FB = payload.FB
-      if (this.isConnected) this.getUserData()
-    },
-    onLogin () {
-      this.isConnected = true
-      this.getUserData()
-    },
-    onLogout () {
-      this.isConnected = false
-    },
     // SocialLogin
       AuthProvider(provider) {
+        // window.open('https://api.twitter.com/oauth/authenticate','_self')
         var self = this
         this.$auth.authenticate(provider).then(response =>{
           // self.SocialLogin(provider,response)

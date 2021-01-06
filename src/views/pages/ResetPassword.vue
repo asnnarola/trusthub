@@ -11,6 +11,8 @@
     class="h-screen flex-column flex w-full bg-img vx-row no-gutter items-center justify-center login-wrapper"
     id="page-login"
   >
+    <help-customizer :active="active" />
+
     <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4">
       <vx-card>
         <div slot="no-body" class="full-page-bg-color">
@@ -26,7 +28,7 @@
             </div>
 
             <div
-              class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg right-wrapper"
+              class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg right-wrapper w-100"
             >
               <div
                 class="px-8 pt-8 login-tabs-container tab-wrapper d-flex flex-column"
@@ -39,14 +41,15 @@
                       <h4 class="mb-4">Reset your password</h4>
                       <p>Please enter your new password</p>
                     </div>
-                    <!-- <div class="msg-wrapper-icon">
+                    <div class="msg-wrapper-icon">
                       <img
-                        src="@/assets/images/sidebar_icon/message-gray.png"
+                        src="@/assets/images/sidebar_icon/help_new.png"
                         alt="login"
                         width="45"
                         class="img-fluid"
+                        @click="openHelp"
                       />
-                    </div> -->
+                    </div>
                   </div>
                   <hr class="border-lightgray" />
                   <div class="tab-wrapper-form">
@@ -67,7 +70,7 @@
 
                     <vs-input
                       type="password"
-                      v-validate="'min:6|max:10|confirmed:password'"
+                      v-validate="'min:8|max: 24|confirmed:password'"
                       data-vv-validate-on="blur"
                       data-vv-as="password"
                       name="confirm_password"
@@ -79,7 +82,13 @@
                     <span class="text-danger text-sm">{{
                       errors.first("confirm_password")
                     }}</span>
-
+                    <div class="form-group row mt-6">
+                      <vue-recaptcha
+                        @verify="onVerify"
+                        sitekey="6LczcvwZAAAAADaEiDNCSCRjShHTr6oFSnTeJ6jJ"
+                      >
+                      </vue-recaptcha>
+                    </div>
                     <div class="flex flex-wrap justify-between mb-3 LT-wrap">
                       <router-link to="/login" class="mb-3 mr-4"
                         ><u class="fw-500 txt-dark-gray"
@@ -113,6 +122,8 @@
 
 <script>
 import copyRight from '../../layouts/components/copyright.js'
+import VueRecaptcha from 'vue-recaptcha';
+import HelpCustomizer from '../../layouts/components/customizer/HelpCustomizer.vue'
 export default {
   data () {
     return {
@@ -120,11 +131,17 @@ export default {
       password: '',
       confirm_password: '',
       key: this.$route.params.key,
+       robot: false,
+      active: false
     }
+  },
+  components: {
+    'vue-recaptcha': VueRecaptcha,
+    HelpCustomizer,
   },
   computed: {
     validateForm () {
-      return !this.errors.any() && this.password !== '' && this.confirm_password !== '' && this.key !== ''
+      return !this.errors.any() && this.password !== '' && this.confirm_password !== '' && this.key !== ''&& this.robot !== false
     }
   },
   created() {
@@ -147,6 +164,12 @@ export default {
         notify: this.$vs.notify
       }
       this.$store.dispatch('auth/resetPassword', payload)
+    },
+    onVerify (response) {
+      if (response) this.robot = true;
+    },
+    openHelp () {
+      this.active == true ? this.active = false : this.active = true
     }
   },
 }

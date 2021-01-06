@@ -28,18 +28,24 @@
       <div class="text-right d-flex justify-end align-items-center">
         <div class="mt-6 countdown-txt" id="countdown">
           <h4>
-            <b v-if="emailMinutes >= 0">
+            <b
+              v-if="
+                emailMinutes >= 0 && emailMinutes <= 15 && sendemail == false
+              "
+            >
               {{ emailMinutes }}:{{
                 emailSecond < 10 ? "0" + emailSecond : emailSecond
               }}
             </b>
-            <b v-else> 00:00
-            </b>
+            <b v-else> 00:00 </b>
           </h4>
         </div>
-        <vs-button class="ml-5 mt-6 btn-gray w-180px" @click="ReSendEmail">{{
-          $t("ResendEmail")
-        }}</vs-button>
+        <vs-button
+          class="ml-5 mt-6 btn-gray w-180px"
+          :disabled="sendemail == false"
+          @click="ReSendEmail"
+          >{{ $t("ResendEmail") }}</vs-button
+        >
       </div>
       <div>
         <p class="sub-trial-txt mt-3 text-right mb-10">
@@ -80,7 +86,7 @@
       <div class="xt-right d-flex justify-end align-items-center">
         <div class="mt-6 countdown-txt" id="countdown">
           <h4>
-            <b v-if="smsMinutes >= 0">
+            <b v-if="smsMinutes >= 0 && smsMinutes <= 15 && sendsms == false">
               {{ smsMinutes }}:{{
                 smsSecond < 10 ? "0" + smsSecond : smsSecond
               }}
@@ -88,9 +94,12 @@
             <b v-else>00:00</b>
           </h4>
         </div>
-        <vs-button class="ml-5 mt-6 btn-green w-180px"  @click="sendSMS()">{{
-          $t("SendSMS")
-        }}</vs-button>
+        <vs-button
+          class="ml-5 mt-6 btn-green w-180px"
+          :disabled="sendsms == false"
+          @click="sendSMS()"
+          >{{ $t("SendSMS") }}</vs-button
+        >
       </div>
       <div>
         <p class="sub-trial-txt mt-3 text-right mb-10">
@@ -126,7 +135,7 @@ export default {
       },
       mobile: '',
       userDetails: {
-        name: this.$store.state.RegisterUser.displayName,
+        name: this.$store.state.RegisterUser.displayName + ' ' + this.$store.state.RegisterUser.lastName,
         userId: this.$store.state.RegisterUser.email,
         RegistrationDate: this.$store.state.RegisterUser.createdDate
       },
@@ -135,31 +144,34 @@ export default {
       emailSecond: 60,
       smsMinutes: 14,
       smsSecond: 60,
+      sendsms: true,
+      sendemail: false
     }
   },
   mounted: function () {
     setInterval(() => {
-      if(this.emailMinutes >= 0){
+      if (this.emailMinutes >= 0) {
         this.emailSecond--
         if (this.emailSecond == 0) {
           this.emailMinutes--
           this.emailSecond = 60
         }
+      } else {
+        this.sendemail = true
       }
     }, 1000);
 
-    if (this.isSMSverification == true) {
-
-      setInterval(() => {
-        if (this.smsMinutes >= 0) {
-          this.smsSecond--
-          if (this.smsSecond == 0) {
-            this.smsMinutes--
-            this.smsSecond = 60
-          }
-        }
-      }, 1000);
-    }
+    // setInterval(() => {
+    //   if (this.isSMSverification == true) {
+    //     if (this.smsMinutes >= 0) {
+    //       this.smsSecond--
+    //       if (this.smsSecond == 0) {
+    //         this.smsMinutes--
+    //         this.smsSecond = 60
+    //       }
+    //     }
+    //   }
+    // }, 1000);
   },
   methods: {
     goSMSVerification () {
@@ -180,79 +192,107 @@ export default {
     // }
     ReSendEmail () {
       const token = localStorage.getItem('accessToken')
-      axios.post('/auth/users/' + this.uid + '/resend/signup-confirmation', { confirmationMode: 'email' }, {
-        headers: {
-          Authorization: 'Bearer ' + token
-        }
-      })
-      .then(res => {
-        console.log('res =>', res);
-        if(res.status == 200){
-          this.$vs.notify({
-            title: 'Sucess',
-            text: res.data.successCode,
-            iconPack: 'feather',
-            icon: 'icon-mail',
-            color: 'success'
-          })
-        } else{
-          this.$vs.notify({
-            title: 'Error',
-            text: 'Email Resending Failed ..!!',
-            iconPack: 'feather',
-            icon: 'icon-alert-circle',
-            color: 'danger'
-          })
-        }
-      }).catch(error => {
-        this.$vs.loading.close()
-        this.$vs.notify({
-          title: 'Error',
-          text: 'Something is wrong'+ error.message,
-          iconPack: 'feather',
-          icon: 'icon-alert-circle',
-          color: 'danger'
+      this.emailMinutes = 14,
+        this.emailSecond = 60,
+        axios.post('/auth/users/' + this.uid + '/resend/signup-confirmation', { confirmationMode: 'email' }, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
         })
-      })
+          .then(res => {
+            console.log('res =>', res);
+            if (res.status == 200) {
+              this.sendemail = false
+              this.$vs.notify({
+                title: 'Sucess',
+                text: res.data.successCode,
+                iconPack: 'feather',
+                icon: 'icon-mail',
+                color: 'success'
+              })
+              setInterval(() => {
+                if (this.emailMinutes >= 0) {
+                  this.emailSecond--
+                  if (this.emailSecond == 0) {
+                    this.emailMinutes--
+                    this.emailSecond = 60
+                  }
+                } else {
+                  this.sendemail = true
+                }
+              }, 1000);
+            } else {
+              this.$vs.notify({
+                title: 'Error',
+                text: 'Email Resending Failed ..!!',
+                iconPack: 'feather',
+                icon: 'icon-alert-circle',
+                color: 'danger'
+              })
+            }
+          }).catch(error => {
+            this.$vs.loading.close()
+            this.$vs.notify({
+              title: 'Error',
+              text: 'Something is wrong' + error.message,
+              iconPack: 'feather',
+              icon: 'icon-alert-circle',
+              color: 'danger'
+            })
+          })
 
     },
     sendSMS () {
       const token = localStorage.getItem('accessToken')
-      const mobile = '+'+ this.$store.state.userCountryDetails.calling_code + this.mobile
-      axios.post('/auth/users/' + this.uid + '/resend/signup-confirmation', { confirmationMode: 'sms', mobile:mobile}, {
-        headers: {
-          Authorization: 'Bearer ' + token
-        }
-      })
-      .then(res => {
-        console.log('res =>', res);
-        if(res.status == 200){
-          this.$vs.notify({
-            title: 'Sucess',
-            text: res.data.successCode,
-            iconPack: 'feather',
-            icon: 'icon-mail',
-            color: 'success'
-          })
-        } else{
-          this.$vs.notify({
-            title: 'Error',
-            text: 'SMS Sending Failed ..!!',
-            iconPack: 'feather',
-            icon: 'icon-alert-circle',
-            color: 'danger'
-          })
-        }
-      }).catch(error => {
-        this.$vs.loading.close()
-        this.$vs.notify({
-          title: 'Error',
-          text: 'Something is wrong'+ error.message,
-          iconPack: 'feather',
-          icon: 'icon-alert-circle',
-          color: 'danger'
+      const mobile = '+' + this.$store.state.userCountryDetails.calling_code + this.mobile
+      this.smsMinutes = 14,
+        this.smsSecond = 60,
+        axios.post('/auth/users/' + this.uid + '/resend/signup-confirmation', { confirmationMode: 'sms', mobile: mobile }, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
         })
-      })
+          .then(res => {
+            console.log('res =>', res);
+            if (res.status == 200) {
+              this.sendsms = false
+              this.$vs.notify({
+                title: 'Sucess',
+                text: res.data.successCode,
+                iconPack: 'feather',
+                icon: 'icon-mail',
+                color: 'success'
+              })
+              setInterval(() => {
+                if (this.smsMinutes >= 0) {
+                  this.smsSecond--
+                  if (this.smsSecond == 0) {
+                    this.smsMinutes--
+                    this.smsSecond = 60
+                  }
+                } else {
+                  this.sendsms = true
+                }
+              }, 1000);
+            } else {
+              this.$vs.notify({
+                title: 'Error',
+                text: 'SMS Sending Failed ..!!',
+                iconPack: 'feather',
+                icon: 'icon-alert-circle',
+                color: 'danger'
+              })
+            }
+          }).catch(error => {
+            this.$vs.loading.close()
+            this.$vs.notify({
+              title: 'Error',
+              text: 'Something is wrong' + error.message,
+              iconPack: 'feather',
+              icon: 'icon-alert-circle',
+              color: 'danger'
+            })
+          })
 
     }
   }

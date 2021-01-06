@@ -18,17 +18,17 @@
       <vx-card>
         <div slot="no-body" class="full-page-bg-color">
           <div class="vx-row no-gutter justify-center">
-            <div class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column justify-content-between">
+            <div
+              class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column justify-content-between"
+            >
               <div class="login-logo">
                 <img
                   src="@/assets/images/login_icon/logo.png"
                   alt="login"
                   class="img-fluid"
                 />
-
-                <p class="attention-title">{{$t("ATTENTION")}}</p>
-                <p class="attention-text">{{$t("AttentionLoginTest")}}
-                </p>
+                <p class="attention-title">{{ $t("ATTENTION") }}</p>
+                <p class="attention-text">{{ $t("AttentionLoginTest") }}</p>
                 <!-- <p>Selecting Different registration Options Will Produce different registration procedure with different users permissions inside of the platform</p>
                 <p> Anyway you will be able to upgrade at any time merging properties.</p> -->
               </div>
@@ -50,7 +50,9 @@
                   </div>
                 </div>
               </div>
-              <div class="appstore-wrapper d-flex mb-5 mr-10 justify-content-end">
+              <div
+                class="appstore-wrapper d-flex mb-5 mr-10 justify-content-end"
+              >
                 <router-link to="/">
                   <img
                     src="@/assets/images/login_icon/Android-store.png"
@@ -76,7 +78,7 @@
             </div>
 
             <div
-              class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg right-wrapper"
+              class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg right-wrapper w-100"
             >
               <div
                 class="px-8 pt-8 login-tabs-container tab-wrapper d-flex flex-column"
@@ -88,7 +90,7 @@
                     <div class="wrapper-heading">
                       <h4 class="mb-4">{{ $t("Login") }}</h4>
                       <p class="fw-500">
-                        {{ $t("Loginheader")}}
+                        {{ $t("Loginheader") }}
                       </p>
                     </div>
                     <div class="msg-wrapper-icon">
@@ -105,25 +107,24 @@
                   <login-jwt
                     @showProgressBar="ProgressBar1 = $event"
                   ></login-jwt>
-
                 </div>
-                 <div class="vs-row" v-if="ProgressBar1 === true">
-                <div class="vs-sm-12 vs-md-12 vs-lg-12 footer-loadingbar">
-                  <div class="loading-bar">
-                    <div class="loading-count">{{ percent }}%</div>
-                    <div
-                      class="percentage"
-                      :style="{ width: percentage + '%' }"
-                    ></div>
-                  </div>
-                  <div class="text-center" v-if="percent > 0 && percent < 99">
-                    Loading....
-                  </div>
-                  <div class="text-center" v-else-if="percent >= 100">
-                    Completed
+                <div class="vs-row" v-if="ProgressBar1 === true">
+                  <div class="vs-sm-12 vs-md-12 vs-lg-12 footer-loadingbar">
+                    <div class="loading-bar">
+                      <div class="loading-count">{{ percent }}%</div>
+                      <div
+                        class="percentage"
+                        :style="{ width: percentage + '%' }"
+                      ></div>
+                    </div>
+                    <div class="text-center" v-if="percent > 0 && percent < 99">
+                      Loading....
+                    </div>
+                    <div class="text-center" v-else-if="percent >= 100">
+                      Completed
+                    </div>
                   </div>
                 </div>
-              </div>
                 <div class="txt-or text-center mb-2">
                   <span>OR</span>
                   <div class="separte-border"></div>
@@ -150,21 +151,55 @@
                               </p>
                             </div>
                             <div class="content-right">
-                              <h5 class="txt-dark-gray"><b>00:04:59</b></h5>
+                              <h5
+                                class="txt-dark-gray"
+                                v-if="
+                                  min >= 0 &&
+                                  min <= 15 &&
+                                  signaturTime == false
+                                "
+                              >
+                                <b
+                                  >0{{ min }}:{{
+                                    second >= 10 ? second : "0" + second
+                                  }}</b
+                                >
+                              </h5>
+                              <h5 class="txt-dark-gray" v-else>00:00</h5>
                             </div>
                           </div>
                           <div class="signpad-block">
                             <div class="signpad-arrow1 position-absolute">
-                              <img width="25px" height="25px" src="@/assets/images/login_icon/arrow-green.png" class="img-fluid" />
+                              <img
+                                width="25px"
+                                height="25px"
+                                src="@/assets/images/login_icon/arrow-green.png"
+                                class="img-fluid"
+                              />
                             </div>
                             <div class="signpad-arrow2 position-absolute">
-                              <img width="25px" height="25px" src="@/assets/images/login_icon/arrow-green.png" class="img-fluid active" />
+                              <img
+                                width="25px"
+                                height="25px"
+                                src="@/assets/images/login_icon/arrow-green.png"
+                                class="img-fluid active"
+                              />
                             </div>
                             <div class="signpad-arrow3 position-absolute">
-                              <img width="25px" height="25px" src="@/assets/images/login_icon/arrow-green.png" class="img-fluid" />
+                              <img
+                                width="25px"
+                                height="25px"
+                                src="@/assets/images/login_icon/arrow-green.png"
+                                class="img-fluid"
+                              />
                             </div>
                             <div class="signpad-arrow4 position-absolute">
-                              <img width="25px" height="25px" src="@/assets/images/login_icon/arrow-green.png" class="img-fluid" />
+                              <img
+                                width="25px"
+                                height="25px"
+                                src="@/assets/images/login_icon/arrow-green.png"
+                                class="img-fluid"
+                              />
                             </div>
                           </div>
                           <canvas
@@ -175,7 +210,9 @@
                             @mousemove="onCanvasChange($event)"
                           />
                           <div class="dash-line"></div>
-                          <p class="text-center mb-1 fw-500">Make your signature</p>
+                          <p class="text-center mb-1 fw-500">
+                            Make your signature
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -213,8 +250,145 @@
                     </vs-row>
                   </div>
                 </vs-popup>
+                <vs-popup
+                  class="Signature-popup"
+                  classContent="popup-example"
+                  title
+                  :active.sync="Auth_Show"
+                >
+                  <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-12 mt-2">
+                    <div class="Signature_pad pl-5 pr-5">
+                      <div class="row">
+                        <div class="wrapper position-relative">
+                          <div
+                            class="select-block d-flex justify-content-between pt-6"
+                          >
+                            <div class="content-left">
+                              <h6 class="text-white mb-1 f-15">
+                                <b>OTP</b>
+                              </h6>
+                              <p class="text-white f-13">
+                                Fill the soft token Provided by the related App
+                              </p>
+                            </div>
+                            <div class="content-right">
+                              <h5 class="txt-dark-gray">
+                                <b>Google Authenticator</b>
+                              </h5>
+                            </div>
+                          </div>
+                          <!-- <div class="signpad-block">
+                            <div class="signpad-arrow1 position-absolute">
+                              <img
+                                width="25px"
+                                height="25px"
+                                src="@/assets/images/login_icon/arrow-green.png"
+                                class="img-fluid"
+                              />
+                            </div>
+                            <div class="signpad-arrow2 position-absolute">
+                              <img
+                                width="25px"
+                                height="25px"
+                                src="@/assets/images/login_icon/arrow-green.png"
+                                class="img-fluid active"
+                              />
+                            </div>
+                            <div class="signpad-arrow3 position-absolute">
+                              <img
+                                width="25px"
+                                height="25px"
+                                src="@/assets/images/login_icon/arrow-green.png"
+                                class="img-fluid"
+                              />
+                            </div>
+                            <div class="signpad-arrow4 position-absolute">
+                              <img
+                                width="25px"
+                                height="25px"
+                                src="@/assets/images/login_icon/arrow-green.png"
+                                class="img-fluid"
+                              />
+                            </div>
+                          </div> -->
+                          <!-- <canvas
+                            id="signPad"
+                            ref="signPad"
+                            class="signature-pad w-100"
+                            style="background-color: transparent !important"
+                            @mousemove="onCanvasChange($event)"
+                          /> -->
+                          <div>
+                            <vs-input
+                              v-validate="'required|min:1|max:1'"
+                              data-vv-validate-on="blur"
+                              name="otp.val1"
+                              v-model="otp.val1"
+                              class="w-full"
+                            />
+                            <vs-input
+                              v-validate="'required|min:1|max:1'"
+                              data-vv-validate-on="blur"
+                              name="otp.val2"
+                              v-model="otp.val2"
+                              class="w-full"
+                            />
+                            <vs-input
+                              v-validate="'required|min:1|max:1'"
+                              data-vv-validate-on="blur"
+                              name="otp.val3"
+                              v-model="otp.val3"
+                              class="w-full"
+                            />
+                            <vs-input
+                              v-validate="'required|min:1|max:1'"
+                              data-vv-validate-on="blur"
+                              name="otp.val4"
+                              v-model="otp.val4"
+                              class="w-full"
+                            />
+                            <vs-input
+                              v-validate="'required|min:1|max:1'"
+                              data-vv-validate-on="blur"
+                              name="otp.val5"
+                              v-model="otp.val5"
+                              class="w-full"
+                            />
+                            <vs-input
+                              v-validate="'required|min:1|max:1'"
+                              data-vv-validate-on="blur"
+                              name="otp.val6"
+                              v-model="otp.val6"
+                              class="w-full"
+                            />
+                          </div>
+                          <div class="dash-line"></div>
+                          <p class="text-center mb-1 fw-500">
+                            Place Ypur OTP here
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <vs-divider class="mb-5 mt-0 green-divider pl-5 pr-5" />
+                    <vs-row class="align-items-center pl-5 pr-5">
+                      <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-7">
+                        <vs-button
+                          class="btn green-btn mr-2 mb-2"
+                          @click="clearSignature"
+                          >Clear</vs-button
+                        >
+                        <vs-button class="btn green-btn mr-2 mb-2">
+                          Login
+                        </vs-button>
+                        <!-- @click="undoSignature" -->
+                      </div>
+                    </vs-row>
+                  </div>
+                </vs-popup>
                 <div class="bottom-menu-icon mt-0 mb-2 position-relative">
-                  <ul class="d-flex flex-wrap align-items-center position-relative" >
+                  <ul
+                    class="d-flex flex-wrap align-items-center position-relative"
+                  >
                     <li
                       class="starred-page"
                       v-for="img in Biometrical_Icon1"
@@ -237,6 +411,7 @@
                       class="starred-page"
                       v-for="img in Biometrical_Icon2"
                       :key="img.icon_url"
+                      @click="onBiometricalclick(img.lable)"
                     >
                       <router-link to="#">
                         <img
@@ -268,13 +443,16 @@
                     </li>
                   </ul>
                 </div>
-                <div class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column justify-content-between">
+                <div
+                  class="vx-col hidden lg:block lg:w-1/2 d-flex flex-column justify-content-between"
+                >
                   <div class="login-logo footer-attention-txt">
-                    <p class="attention-title">{{$t("ATTENTION")}}</p>
-                    <p class="attention-text">{{$t("AttentionLoginTest")}}
-                    </p>
+                    <p class="attention-title">{{ $t("ATTENTION") }}</p>
+                    <p class="attention-text">{{ $t("AttentionLoginTest") }}</p>
                   </div>
-                  <div class="appstore-wrapper d-flex mb-5 mr-10 justify-content-end footer-appstore-wrapper">
+                  <div
+                    class="appstore-wrapper d-flex mb-5 mr-10 justify-content-end footer-appstore-wrapper"
+                  >
                     <router-link to="/">
                       <img
                         src="@/assets/images/login_icon/Android-store.png"
@@ -297,7 +475,7 @@
                       />
                     </router-link>
                   </div>
-                 </div>
+                </div>
               </div>
             </div>
           </div>
@@ -327,6 +505,8 @@ export default {
       password: '',
       confirm_Password: '',
       percentage: 0,
+      min: 4,
+      second: 60,
       Biometrical_Icon1: [
         {
           id: 1,
@@ -373,11 +553,21 @@ export default {
           lable: 'signature'
         },
       ],
+      otp: {
+        val1: '',
+        val2: '',
+        val3: '',
+        val4: '',
+        val5: '',
+        val6: ''
+      },
       location: null,
       gettingLocation: false,
       errorStr: null,
       // Signature
       Pad_Show: false,
+      Auth_Show: false,
+      signaturTime: false,
       CurrentDate: new Date().toISOString(),
       signaturePad: SignaturePad,
 
@@ -390,21 +580,10 @@ export default {
   },
   created () {
     this.$i18n.locale = localStorage.getItem('currentLanguage')
-    // if (!("geolocation" in navigator)) {
-    //   this.errorStr = 'Geolocation is not available.';
-    //   return;
-    // }
-
-    // this.gettingLocation = true;
-    // get position
-    // navigator.geolocation.getCurrentPosition(pos => {
-    //   this.gettingLocation = false;
-    //   this.location = pos;
-    // }, err => {
-    //   this.gettingLocation = false;
-    //   this.errorStr = err.message;
-    // })
-
+    const token = localStorage.getItem('accessToken')
+    if (token) {
+      this.$router.push('/dashboard').catch(() => { })
+    }
     setInterval(() => {
       if (this.ProgressBar1 === true) {
         var intval = setInterval(() => {
@@ -429,6 +608,31 @@ export default {
     // Signature Pad
     async signpadShow () {
       this.Pad_Show = true
+      setInterval(() => {
+        if (this.min >= 0) {
+          this.second--
+          if (this.second == 0) {
+            this.min--
+            this.second = 60
+          }
+        } else {
+          this.signaturTime = true
+        }
+      }, 1000);
+      // setInterval(() => {
+      //   if(this.min >= 0){
+      //   this.second--
+      //   if (this.second == 0) {
+      //     this.min--
+      //     if(this.min < 0 && this.second == 0){
+      //       this.min = 0,
+      //       this.second = 0
+      //       clearInterval()
+      //     }
+      //     this.second = 60
+      //   }
+      // }
+      // }, 1000);
       const canvas = await document.getElementById('signPad')
       console.log(this.$refs.signPad);
       console.log(document.getElementById('signPad'));
@@ -437,6 +641,9 @@ export default {
       });
       console.log(this.signaturePad.toData().length)
       window.onresize = this.resizeCanvas(canvas);
+    },
+    authShow () {
+      this.Auth_Show = true
     },
     resizeCanvas (canvas) {
       var ratio = Math.max(window.devicePixelRatio || 1, 1);
@@ -453,16 +660,35 @@ export default {
       }
     },
     clearSignature () {
+      this.min = 4;
+      this.second = 60;
       var data = this.signaturePad.toData();
       console.log(data.length);
       this.signaturePad.clear();
+      this.signaturTime = false
+      setInterval(() => {
+        if (this.min >= 0) {
+          this.second--
+          if (this.second == 0) {
+            this.min--
+            this.second = 60
+          }
+        } else {
+          this.signaturTime = true
+        }
+      }, 1000);
     },
     onBiometricalclick (lable) {
       console.log(lable);
-      this.signpadShow()
+      if (lable == 'signature') {
+        this.signpadShow()
+        // this.authShow()
+      }
+      if (lable == 'finger print') {
+        this.authShow()
+      }
     },
-
-    onCanvasChange(e){
+    onCanvasChange (e) {
       // console.log('Event =>', e);
       var data = this.signaturePad.toData();
       // console.log(data.length);
@@ -532,19 +758,19 @@ export default {
     animation: animate-stripes 4s linear infinite;
   }
 }
-.header-loading-bar{
-    @media screen and (max-width:991px){
-      display:none;
-    }
+.header-loading-bar {
+  @media screen and (max-width: 991px) {
+    display: none;
   }
-  .footer-loadingbar{
-    @media screen and (min-width:992px){
-      display:none;
-    }
-    @media screen and (max-width:991px){
-      display:block;
-    }
+}
+.footer-loadingbar {
+  @media screen and (min-width: 992px) {
+    display: none;
   }
+  @media screen and (max-width: 991px) {
+    display: block;
+  }
+}
 
 @keyframes animate-stripes {
   0% {

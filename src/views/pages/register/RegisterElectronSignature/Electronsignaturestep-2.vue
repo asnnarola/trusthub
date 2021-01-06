@@ -125,6 +125,10 @@
         <vs-button class="mt-6 btn-gray"> {{$t('Verify')}} </vs-button>
       </div>
     </div>
+    <div class="form-group row mt-6">
+      <vue-recaptcha @verify="onVerify" sitekey="6LczcvwZAAAAADaEiDNCSCRjShHTr6oFSnTeJ6jJ">
+      </vue-recaptcha>
+    </div>
     <span class="text-danger text-sm">{{ errors.first("joiningcode") }}</span>
     <p class="txt-gray mt-4">
       {{$t('ElectronStep2Note')}}
@@ -139,6 +143,7 @@
 </template>
 <script>
 import Datepicker from 'vuejs-datepicker';
+import VueRecaptcha from 'vue-recaptcha';
 import vSelect from 'vue-select'
 export default {
   data () {
@@ -149,7 +154,10 @@ export default {
         { id: 3, label: 'Country 3' },
         { id: 2, label: 'Country 2' },
       ],
+      // RegisterData:{},
       selectedCountry: '',
+      robot: false,
+
       Country: this.$t('Country'),
       DocumentType: this.$t('DocumentType'),
       DocumentNumber: this.$t('DocumentNumber'),
@@ -179,7 +187,8 @@ export default {
   },
   components: {
     Datepicker,
-    vSelect
+    vSelect,
+    'vue-recaptcha': VueRecaptcha,
   },
   methods: {
     goTostep3 () {
@@ -191,19 +200,26 @@ export default {
         step5: false
       }
       this.$emit("gosetp", this.step);
-    }
+    },
+    onVerify (response) {
+      if (response) this.robot = true;
+    },
   },
   mounted() {
+    console.log(this.RegisterData);
     setInterval(() => {
-      Country= this.$t('Country')
-      DocumentType= this.$t('DocumentType')
-      DocumentNumber= this.$t('DocumentNumber')
-      Sex= this.$t('Sex')
-      IdentificationCode= this.$t('IdentificationCode')
-      MobilePhone= this.$t('MobilePhone')
-      BirthPlace= this.$t('BirthPlace')
-      CompanyJoiningCode= this.$t('CompanyJoiningCode')
+      this.Country= this.$t('Country')
+      this.DocumentType= this.$t('DocumentType')
+      this.DocumentNumber= this.$t('DocumentNumber')
+      this.Sex= this.$t('Sex')
+      this.IdentificationCode= this.$t('IdentificationCode')
+      this.MobilePhone= this.$t('MobilePhone')
+      this.BirthPlace= this.$t('BirthPlace')
+      this.CompanyJoiningCode= this.$t('CompanyJoiningCode')
     }, 1);
   },
+  props:{
+    RegisterData:{}
+  }
 }
 </script>

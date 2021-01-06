@@ -13,7 +13,7 @@ Author URL: http://www.themeforest.net/user/pixinvent
     <div class="vx-row mt-2">
       <div class="vx-col sm:w-1/2 w-full mb-2">
         <vs-input
-          v-validate="'required|alpha_dash|min:3'"
+          v-validate="'required|alpha_dash|min:3|max:24'"
           data-vv-validate-on="blur"
           :label-placeholder="FirstName"
           name="FirstName"
@@ -25,7 +25,7 @@ Author URL: http://www.themeforest.net/user/pixinvent
       </div>
       <div class="vx-col sm:w-1/2 w-full mb-2">
         <vs-input
-          v-validate="'required|alpha_dash|min:3'"
+          v-validate="'required|alpha_dash|min:3|max:24'"
           data-vv-validate-on="blur"
           :label-placeholder="LastName"
           name="LastName"
@@ -78,7 +78,7 @@ Author URL: http://www.themeforest.net/user/pixinvent
     <span class="text-danger text-sm">{{ errors.first("password") }}</span>
     <vs-input
       type="password"
-      v-validate="'min:7|max:25|confirmed:password'"
+      v-validate="'min:7|max:24|confirmed:password'"
       data-vv-validate-on="blur"
       data-vv-as="password"
       name="confirm_password"
@@ -90,6 +90,10 @@ Author URL: http://www.themeforest.net/user/pixinvent
     <span class="text-danger text-sm">{{
       errors.first("confirm_password")
     }}</span>
+    <div class="form-group row mt-6">
+      <vue-recaptcha @verify="onVerify" sitekey="6LczcvwZAAAAADaEiDNCSCRjShHTr6oFSnTeJ6jJ">
+      </vue-recaptcha>
+    </div>
     <div class="d-flex flex-wrap justify-between mt-2">
       <vs-checkbox v-model="isTermsConditionAccepted" class="mt-1 mb-2 ml-0">
         {{ $t("AcceptTermsConditions") }}
@@ -125,8 +129,9 @@ Author URL: http://www.themeforest.net/user/pixinvent
         class="mt-6 btn-green w-180px"
         @click="registerUserJWt"
         :disabled="!validateForm"
-        >{{ $t("Subscribe") }}</vs-button
       >
+        {{ $t("Subscribe") }}
+      </vs-button>
     </div>
     <div>
       <p class="sub-trial-txt mt-3 text-right mb-10">
@@ -140,6 +145,7 @@ Author URL: http://www.themeforest.net/user/pixinvent
 
 <script>
 import axios from '../../../axios.js'
+import VueRecaptcha from 'vue-recaptcha';
 
 export default {
   data () {
@@ -162,15 +168,12 @@ export default {
       Email: this.$t('Email'),
       Password: this.$t('Password'),
       ConfirmPassword: this.$t('ConfirmPassword'),
+      robot: false,
       // basic: false,
       // electronSignatur: false,
       // qualifiedCertificate: false,
       // abis: false,
       step: {},
-      //     step0: false,
-      //     step1: true,
-      //     step2: false,
-      //     step3: false,
       isTermsConditionAccepted: true,
       characters: [
         {
@@ -214,9 +217,12 @@ export default {
       ]
     }
   },
+  components: {
+    'vue-recaptcha': VueRecaptcha,
+  },
   computed: {
     validateForm () {
-      return !this.errors.any() && this.firstName !== '' && this.lastName !== '' && this.email !== '' && this.password !== '' && this.confirm_password !== '' && this.isTermsConditionAccepted === true
+      return !this.errors.any() && this.firstName !== '' && this.lastName !== '' && this.email !== '' && this.password !== '' && this.confirm_password !== '' && this.isTermsConditionAccepted === true && this.robot !== false
     }
   },
   methods: {
@@ -240,7 +246,6 @@ export default {
       return true
     },
     generatePassword () {
-      // console.log('Data =>', this.characters);
       let result1 = "";
       let result2 = "";
       let charactersVal = "";
@@ -317,6 +322,7 @@ export default {
             })
           }
         }).catch(error => {
+
           this.$vs.loading.close()
           this.$vs.notify({
             title: 'Error',
@@ -402,7 +408,10 @@ export default {
         ]
         this.$router.push('/signature-activation').catch(() => { })
       }
-    }
+    },
+    onVerify (response) {
+      if (response) this.robot = true;
+    },
   },
   created () {
     this.$validator.extend('verify_password', {
@@ -412,6 +421,14 @@ export default {
         return strongRegex.test(value);
       }
     });
+
+    setInterval(() => {
+      this.FirstName = this.$t('FirstName'),
+      this.LastName = this.$t('LastName'),
+      this.Email = this.$t('Email'),
+      this.Password = this.$t('Password'),
+      this.ConfirmPassword = this.$t('ConfirmPassword')
+    }, 1);
   },
 }
 </script>

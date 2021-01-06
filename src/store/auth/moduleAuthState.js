@@ -26,6 +26,7 @@ export default {
   },
   RegisterUser: [],
   userCountryDetails: [],
-  selectedLanguage:''
+  selectedLanguage: '',
+  token:''
   // RegisterUser: localStorage.getItem('registerUser')? JSON.stringify(localStorage.getItem('registerUser')): []
 }

@@ -4,6 +4,9 @@ body {
 a {
   cursor: pointer;
 }
+.w-100 {
+  width: 100%;
+}
 .txt-gray {
   color: #aeaeae;
 }
@@ -686,6 +689,13 @@ a {
                     background: #f4f6f9;
                     p {
                       line-height: 1.55;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                      display: -webkit-box;
+                      -webkit-box-orient: vertical;
+                      -webkit-line-clamp: 1;
+                      white-space:nowrap;
+
                       @media screen and (max-width: 575px) {
                         font-size: 13px;
                       }

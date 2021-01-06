@@ -47,7 +47,9 @@ Author URL: http://www.themeforest.net/user/pixinvent
       class="w-full mt-6"
     />
     <span class="text-danger text-sm">{{ errors.first("email") }}</span>
-    <div class="password-inputcontrol d-flex justify-between align-items-center mt-6">
+    <div
+      class="password-inputcontrol d-flex justify-between align-items-center mt-6"
+    >
       <div class="password-input">
         <vs-input
           ref="password"
@@ -60,15 +62,17 @@ Author URL: http://www.themeforest.net/user/pixinvent
           v-model="password"
           class="w-full mt-0"
         />
-        <a @click="passwordType ='password'" v-if="passwordType == 'text'">
+        <a @click="passwordType = 'password'" v-if="passwordType == 'text'">
           <i class="fas fa-eye-slash hs-password"></i>
         </a>
-        <a @click="passwordType ='text'" v-if="passwordType == 'password'">
+        <a @click="passwordType = 'text'" v-if="passwordType == 'password'">
           <i class="fas fa-eye hs-password d-none"></i>
         </a>
       </div>
       <div class="flex flex-wrap justify-between RF-content generate-btn">
-        <vs-button class="btn-gray" @click="generatePassword">{{$t('Generate')}} </vs-button>
+        <vs-button class="btn-gray" @click="generatePassword"
+          >{{ $t("Generate") }}
+        </vs-button>
       </div>
     </div>
     <span class="text-danger text-sm">{{ errors.first("password") }}</span>
@@ -88,37 +92,44 @@ Author URL: http://www.themeforest.net/user/pixinvent
     }}</span>
     <div class="d-flex flex-wrap justify-between">
       <vs-checkbox v-model="isTermsConditionAccepted" class="mt-3 mb-2 ml-0">
-        {{$t('AcceptTermsConditions')}}
+        {{ $t("AcceptTermsConditions") }}
       </vs-checkbox>
       <p class="sub-trial-txt mt-1 text-right mb-10">
-        <a class="fw-500" v-clipboard:copy="password"><u>{{$t('CopyPassword?')}}</u></a>
+        <a class="fw-500" v-clipboard:copy="password"
+          ><u>{{ $t("CopyPassword?") }}</u></a
+        >
       </p>
     </div>
     <!-- <vs-button  type="border" to="/login" class="mt-6 mb-10 btn-green">Login</vs-button> -->
-    <ul class="demo-alignment checkbox-register d-flex justify-content-between align-items-center flex-wrap">
-      <li class="d-flex flex-wrap mr-2 checkbox-reg-txt" v-for="account in differentAccount" :key="account.id">
-        {{account.label}}<vs-checkbox
+    <ul
+      class="demo-alignment checkbox-register d-flex justify-content-between align-items-center flex-wrap"
+    >
+      <li
+        class="d-flex flex-wrap mr-2 checkbox-reg-txt"
+        v-for="account in differentAccount"
+        :key="account.id"
+      >
+        {{ account.label
+        }}<vs-checkbox
           class="checkbox-reginput"
           color="warning"
           v-model="account.vlue"
-          :checked = "account.value == true"
+          :checked="account.value == true"
           @change="onChecked($event, account.id)"
-          :disabled = "account.id  == 4"
+          :disabled="account.id == 4"
         />
       </li>
     </ul>
     <div class="text-right">
-      <vs-button
-        class="mt-6 btn-green w-225px"
-        @click="registerUserJWt"
-        >{{$t('Subscribe')}}</vs-button
-      >
-        <!-- :disabled="!validateForm" -->
+      <vs-button class="mt-6 btn-green w-225px" @click="registerUserJWt">{{
+        $t("Subscribe")
+      }}</vs-button>
+      <!-- :disabled="!validateForm" -->
     </div>
     <div>
       <p class="sub-trial-txt mt-3 text-right mb-10">
         <a class="f-size-14" href="/login">
-          <u>{{$t('LoginToExisting')}}</u>
+          <u>{{ $t("LoginToExisting") }}</u>
         </a>
       </p>
     </div>
@@ -135,11 +146,11 @@ export default {
       password: '',
       confirm_password: '',
       passwordType: 'password',
-      FirstName : this.$t('FirstName'),
-      LastName : this.$t('LastName'),
-      Email : this.$t('Email'),
-      Password : this.$t('Password'),
-      ConfirmPassword : this.$t('ConfirmPassword'),
+      FirstName: this.$t('FirstName'),
+      LastName: this.$t('LastName'),
+      Email: this.$t('Email'),
+      Password: this.$t('Password'),
+      ConfirmPassword: this.$t('ConfirmPassword'),
       step: {},
       //     step0: false,
       //     step1: true,
@@ -147,24 +158,24 @@ export default {
       //     step3: false,
       isTermsConditionAccepted: true,
       characters: [
-          {
-              name: "Lowercase",
-              value: "abcdefghijklmnopqrstuvwxyz",
-          },
-          {
-              name: "Uppercase",
-              value: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-          },
-          {
-              name: "Numbers",
-              value: "0123456789",
-          },
-          {
-              name: "Special Characters",
-              value: "!?#@$%&",
-          },
-        ],
-        differentAccount:[
+        {
+          name: "Lowercase",
+          value: "abcdefghijklmnopqrstuvwxyz",
+        },
+        {
+          name: "Uppercase",
+          value: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        },
+        {
+          name: "Numbers",
+          value: "0123456789",
+        },
+        {
+          name: "Special Characters",
+          value: "!?#@$%&",
+        },
+      ],
+      differentAccount: [
         {
           id: 1,
           label: 'Basics',
@@ -186,7 +197,7 @@ export default {
           value: false
         }
       ],
-        gLength:12
+      gLength: 12
     }
   },
   computed: {
@@ -214,7 +225,7 @@ export default {
       }
       return true
     },
-   generatePassword () {
+    generatePassword () {
       // console.log('Data =>', this.characters);
       let result1 = "";
       let result2 = "";
@@ -237,7 +248,7 @@ export default {
       }
       this.password = result1 + result2;
     },
-    copyPassword(){
+    copyPassword () {
       let textToCopy = this.password;
       try {
         navigator.clipboard.writeText(textToCopy);
@@ -254,9 +265,16 @@ export default {
         step3: false,
         step4: false,
         step5: false,
-
+      }
+      const RegisterData = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password,
+        confirm_password: this.confirm_password
       }
       this.$emit("gosetp", this.step);
+      this.$emit("RegisterData", RegisterData);
 
       // const payload = {
       //   userDetails: {
@@ -269,11 +287,11 @@ export default {
       // }
       // this.$store.dispatch('auth/registerUserJWT', payload)
     },
-    onChecked(e, id){
+    onChecked (e, id) {
       console.log('==>', e.target.checked, id);
-      if(e.target.checked == true && id == 1){
+      if (e.target.checked == true && id == 1) {
         this.differentAccount = [
-         {
+          {
             id: 1,
             label: 'Basics',
             value: true
@@ -295,9 +313,9 @@ export default {
           }
         ]
         this.$router.push('/register').catch(() => { })
-      } else if(e.target.checked == true && id == 2){
+      } else if (e.target.checked == true && id == 2) {
         this.differentAccount = [
-         {
+          {
             id: 1,
             label: 'Basics',
             value: false
@@ -318,9 +336,9 @@ export default {
             value: false
           }
         ]
-      } else if(e.target.checked == true && id == 3){
+      } else if (e.target.checked == true && id == 3) {
         this.differentAccount = [
-         {
+          {
             id: 1,
             label: 'Basics',
             value: false
@@ -345,13 +363,13 @@ export default {
       }
     }
   },
-  created() {
+  created () {
     this.$validator.extend('verify_password', {
-        getMessage: field => `The password must contain at least: 2 uppercase letter, 2 lowercase letter, 2 number, and 2 special character`,
-        validate: value => {
-            var strongRegex = new RegExp("^(?=(.*[a-z]){2})(?=(.*[A-Z]){2})(?=(.*[0-9]){2})(?=(.*[!@#?\$%\^&\*]){2})(?=.{8,})");
-            return strongRegex.test(value);
-        }
+      getMessage: field => `The password must contain at least: 2 uppercase letter, 2 lowercase letter, 2 number, and 2 special character`,
+      validate: value => {
+        var strongRegex = new RegExp("^(?=(.*[a-z]){2})(?=(.*[A-Z]){2})(?=(.*[0-9]){2})(?=(.*[!@#?\$%\^&\*]){2})(?=.{8,})");
+        return strongRegex.test(value);
+      }
     });
     setInterval(() => {
       this.FirstName = this.$t('FirstName')
