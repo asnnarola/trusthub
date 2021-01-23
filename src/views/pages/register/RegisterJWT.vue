@@ -90,6 +90,11 @@ Author URL: http://www.themeforest.net/user/pixinvent
     <span class="text-danger text-sm">{{
       errors.first("confirm_password")
     }}</span>
+    <p class="sub-trial-txt mt-1 text-right mt-2 mb-2">
+        <a class="fw-500" v-clipboard:copy="password">
+          <u>{{ $t("CopyPassword") }}</u>
+        </a>
+      </p>
     <div class="form-group row mt-6">
       <vue-recaptcha @verify="onVerify" sitekey="6LczcvwZAAAAADaEiDNCSCRjShHTr6oFSnTeJ6jJ">
       </vue-recaptcha>
@@ -98,11 +103,6 @@ Author URL: http://www.themeforest.net/user/pixinvent
       <vs-checkbox v-model="isTermsConditionAccepted" class="mt-1 mb-2 ml-0">
         {{ $t("AcceptTermsConditions") }}
       </vs-checkbox>
-      <p class="sub-trial-txt mt-1 text-right mb-10">
-        <a class="fw-500" v-clipboard:copy="password">
-          <u>{{ $t("CopyPassword?") }}</u>
-        </a>
-      </p>
     </div>
     <!-- <vs-button  type="border" to="/login" class="mt-6 mb-10 btn-green">Login</vs-button> -->
     <ul
@@ -113,7 +113,7 @@ Author URL: http://www.themeforest.net/user/pixinvent
         v-for="account in differentAccount"
         :key="account.id"
       >
-        {{ account.label
+        {{ $t(account.i18n)||account.label
         }}<vs-checkbox
           class="checkbox-reginput"
           color="warning"
@@ -196,23 +196,27 @@ export default {
       differentAccount: [
         {
           id: 1,
-          label: 'Basics',
-          value: true
+          label: 'Basic',
+          value: true,
+          i18n: 'Basic'
         },
         {
           id: 2,
-          label: 'Electron Signatur',
-          value: false
+          label: 'Electronic Signature',
+          value: false,
+          i18n: 'ElectronSignature'
         },
         {
           id: 3,
           label: 'Qualified Certificate',
-          value: false
+          value: false,
+          i18n:'QualifiedCertificate'
         },
         {
           id: 4,
           label: 'ABIS',
-          value: false
+          value: false,
+          i18n: 'ABIS'
         }
       ]
     }
@@ -266,6 +270,7 @@ export default {
         result2 += charactersVal.charAt(Math.floor(Math.random() * charactersVal.length));
       }
       this.password = result1 + result2;
+      this.confirm_password = result1 + result2;
     },
     registerUserJWt () {
       // If form is not validated or user is already login return
@@ -322,11 +327,11 @@ export default {
             })
           }
         }).catch(error => {
-
+          console.log(error.response.data.errorMsg);
           this.$vs.loading.close()
           this.$vs.notify({
             title: 'Error',
-            text: 'Something is wrong'+ error.message,
+            text: error.response.data.errorMsg,
             iconPack: 'feather',
             icon: 'icon-alert-circle',
             color: 'danger'

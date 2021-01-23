@@ -43,10 +43,10 @@
                     ></div>
                   </div>
                   <div class="text-center" v-if="percent > 0 && percent < 99">
-                    Loading....
+                    {{ $t("Loading") }}
                   </div>
                   <div class="text-center" v-else-if="percent >= 100">
-                    Completed
+                    {{ $t("Completed") }}
                   </div>
                 </div>
               </div>
@@ -118,15 +118,15 @@
                       ></div>
                     </div>
                     <div class="text-center" v-if="percent > 0 && percent < 99">
-                      Loading....
+                      {{ $t("Loading") }}
                     </div>
                     <div class="text-center" v-else-if="percent >= 100">
-                      Completed
+                      {{ $t("Completed") }}
                     </div>
                   </div>
                 </div>
                 <div class="txt-or text-center mb-2">
-                  <span>OR</span>
+                  <span class="fw-500">{{ $t("AND_OR") }}</span>
                   <div class="separte-border"></div>
                 </div>
                 <vs-popup
@@ -144,19 +144,17 @@
                           >
                             <div class="content-left">
                               <h6 class="text-white mb-1 f-15">
-                                <b>Graphometric Login</b>
+                                <b>{{ $t("GraphometricLogin") }}</b>
                               </h6>
                               <p class="text-white f-13">
-                                Use your register graphics signature
+                                {{ $t("GraphicSignaturHeading") }}
                               </p>
                             </div>
                             <div class="content-right">
                               <h5
                                 class="txt-dark-gray"
                                 v-if="
-                                  min >= 0 &&
-                                  min <= 15 &&
-                                  signaturTime == false
+                                  min >= 0 && min <= 15 && signaturTime == false
                                 "
                               >
                                 <b
@@ -211,7 +209,7 @@
                           />
                           <div class="dash-line"></div>
                           <p class="text-center mb-1 fw-500">
-                            Make your signature
+                            {{ $t("Makeyoursignature") }}
                           </p>
                         </div>
                       </div>
@@ -222,15 +220,15 @@
                         <vs-button
                           class="btn green-btn mr-2 mb-2"
                           @click="clearSignature"
-                          >Clear</vs-button
+                          >{{ $t("Clear") }}</vs-button
                         >
                         <vs-button
                           class="btn green-btn mr-2 mb-2"
                           @click="undoSignature"
-                          >Undo</vs-button
+                          >{{ $t("Undo") }}</vs-button
                         >
                         <vs-button class="btn green-btn mr-2 mb-2">
-                          Login
+                          {{ $t("Login") }}
                         </vs-button>
                         <!-- @click="undoSignature" -->
                       </div>
@@ -238,7 +236,9 @@
                         class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-5 text-right signdetail-block"
                       >
                         <p class="text-white f-13">
-                          <i>Geolocalization: 40.689263-74.044505</i>
+                          <i
+                            >{{ $t("Geolocalization") }}: 40.689263-74.044505</i
+                          >
                         </p>
                         <p class="text-white f-13">
                           <i>UTC {{ CurrentDate }}</i>
@@ -250,142 +250,7 @@
                     </vs-row>
                   </div>
                 </vs-popup>
-                <vs-popup
-                  class="Signature-popup"
-                  classContent="popup-example"
-                  title
-                  :active.sync="Auth_Show"
-                >
-                  <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-12 mt-2">
-                    <div class="Signature_pad pl-5 pr-5">
-                      <div class="row">
-                        <div class="wrapper position-relative">
-                          <div
-                            class="select-block d-flex justify-content-between pt-6"
-                          >
-                            <div class="content-left">
-                              <h6 class="text-white mb-1 f-15">
-                                <b>OTP</b>
-                              </h6>
-                              <p class="text-white f-13">
-                                Fill the soft token Provided by the related App
-                              </p>
-                            </div>
-                            <div class="content-right">
-                              <h5 class="txt-dark-gray">
-                                <b>Google Authenticator</b>
-                              </h5>
-                            </div>
-                          </div>
-                          <!-- <div class="signpad-block">
-                            <div class="signpad-arrow1 position-absolute">
-                              <img
-                                width="25px"
-                                height="25px"
-                                src="@/assets/images/login_icon/arrow-green.png"
-                                class="img-fluid"
-                              />
-                            </div>
-                            <div class="signpad-arrow2 position-absolute">
-                              <img
-                                width="25px"
-                                height="25px"
-                                src="@/assets/images/login_icon/arrow-green.png"
-                                class="img-fluid active"
-                              />
-                            </div>
-                            <div class="signpad-arrow3 position-absolute">
-                              <img
-                                width="25px"
-                                height="25px"
-                                src="@/assets/images/login_icon/arrow-green.png"
-                                class="img-fluid"
-                              />
-                            </div>
-                            <div class="signpad-arrow4 position-absolute">
-                              <img
-                                width="25px"
-                                height="25px"
-                                src="@/assets/images/login_icon/arrow-green.png"
-                                class="img-fluid"
-                              />
-                            </div>
-                          </div> -->
-                          <!-- <canvas
-                            id="signPad"
-                            ref="signPad"
-                            class="signature-pad w-100"
-                            style="background-color: transparent !important"
-                            @mousemove="onCanvasChange($event)"
-                          /> -->
-                          <div>
-                            <vs-input
-                              v-validate="'required|min:1|max:1'"
-                              data-vv-validate-on="blur"
-                              name="otp.val1"
-                              v-model="otp.val1"
-                              class="w-full"
-                            />
-                            <vs-input
-                              v-validate="'required|min:1|max:1'"
-                              data-vv-validate-on="blur"
-                              name="otp.val2"
-                              v-model="otp.val2"
-                              class="w-full"
-                            />
-                            <vs-input
-                              v-validate="'required|min:1|max:1'"
-                              data-vv-validate-on="blur"
-                              name="otp.val3"
-                              v-model="otp.val3"
-                              class="w-full"
-                            />
-                            <vs-input
-                              v-validate="'required|min:1|max:1'"
-                              data-vv-validate-on="blur"
-                              name="otp.val4"
-                              v-model="otp.val4"
-                              class="w-full"
-                            />
-                            <vs-input
-                              v-validate="'required|min:1|max:1'"
-                              data-vv-validate-on="blur"
-                              name="otp.val5"
-                              v-model="otp.val5"
-                              class="w-full"
-                            />
-                            <vs-input
-                              v-validate="'required|min:1|max:1'"
-                              data-vv-validate-on="blur"
-                              name="otp.val6"
-                              v-model="otp.val6"
-                              class="w-full"
-                            />
-                          </div>
-                          <div class="dash-line"></div>
-                          <p class="text-center mb-1 fw-500">
-                            Place Ypur OTP here
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <vs-divider class="mb-5 mt-0 green-divider pl-5 pr-5" />
-                    <vs-row class="align-items-center pl-5 pr-5">
-                      <div class="vs-xs-12 vs-sm-12 vs-md-12 vs-lg-7">
-                        <vs-button
-                          class="btn green-btn mr-2 mb-2"
-                          @click="clearSignature"
-                          >Clear</vs-button
-                        >
-                        <vs-button class="btn green-btn mr-2 mb-2">
-                          Login
-                        </vs-button>
-                        <!-- @click="undoSignature" -->
-                      </div>
-                    </vs-row>
-                  </div>
-                </vs-popup>
-                <div class="bottom-menu-icon mt-0 mb-2 position-relative">
+                <div class="bottom-menu-icon mt-0 mb-4' position-relative">
                   <ul
                     class="d-flex flex-wrap align-items-center position-relative"
                   >
@@ -493,6 +358,8 @@ import LoginJwt from './LoginJWT.vue';
 import HelpCustomizer from '../../../layouts/components/customizer/HelpCustomizer.vue'
 import copyRight from '../../../layouts/components/copyright.js';
 import SignaturePad from 'signature_pad'
+import axios from '../../../axios';
+
 
 export default {
   data () {
@@ -562,7 +429,6 @@ export default {
         val6: ''
       },
       location: null,
-      gettingLocation: false,
       errorStr: null,
       // Signature
       Pad_Show: false,
@@ -570,7 +436,6 @@ export default {
       signaturTime: false,
       CurrentDate: new Date().toISOString(),
       signaturePad: SignaturePad,
-
     }
 
   },
@@ -579,22 +444,45 @@ export default {
     HelpCustomizer
   },
   created () {
-    this.$i18n.locale = localStorage.getItem('currentLanguage')
-    const token = localStorage.getItem('accessToken')
-    if (token) {
-      this.$router.push('/dashboard').catch(() => { })
-    }
-    setInterval(() => {
-      if (this.ProgressBar1 === true) {
-        var intval = setInterval(() => {
-          if (this.percentage < 100)
-            this.percentage += .1;
-          else
-            clearInterval(intval);
-        }, 10);
-      }
-    }, 0);
+    if (this.$router.currentRoute.query.token) {
+      console.log('===>>>', this.$router.currentRoute.query.token);
+      const token = this.$router.currentRoute.query.token
+      axios({
+        method: 'get',
+        url: 'users/me',
+        headers: { Authorization: 'Bearer ' + token }
+      }).then(res => {
+        console.log(res);
+        if (res.status == 200) {
+          localStorage.setItem('accessToken', token)
+          this.$store.commit('UPDATE_USER_INFO', res.data, { root: true })
+          this.$store.commit('SET_BEARER', token)
+          this.$i18n.locale = localStorage.getItem('currentLanguage')
+          const accessToken = localStorage.getItem('accessToken')
+          if (accessToken) {
+            this.$router.push('/dashboard').catch(() => { })
+          }
+        }
+      })
+    } else {
 
+
+      this.$i18n.locale = localStorage.getItem('currentLanguage')
+      const token = localStorage.getItem('accessToken')
+      if (token) {
+        this.$router.push('/dashboard').catch(() => { })
+      }
+      setInterval(() => {
+        if (this.ProgressBar1 === true) {
+          var intval = setInterval(() => {
+            if (this.percentage < 100)
+              this.percentage += .1;
+            else
+              clearInterval(intval);
+          }, 10);
+        }
+      }, 0);
+    }
   },
   computed: {
     percent () {

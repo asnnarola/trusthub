@@ -130,7 +130,7 @@
                   class="txt-or text-center mt-4 mb-4"
                   v-if="step.step1 === true"
                 >
-                  <span>{{ $t("AND") }}</span>
+                  <span>{{ $t("AND_OR") }}</span>
                   <div class="separte-border"></div>
                 </div>
                 <div

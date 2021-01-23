@@ -8,13 +8,15 @@
       </p>
       <p class="f-15">
         <i>
-          <b class="txt-dark-gray">{{ $t("UserId") }}:</b>
+          <b class="txt-dark-gray">{{ $t("UserId") }}: </b>
           <b class="txt-green">{{ userDetails.userId }}</b>
         </i>
       </p>
       <p class="fw-500">
         <small>
-          <i>{{ $t("ConformationDate") }}:{{ userDetails.RegistrationDate }}</i>
+          <i
+            >{{ $t("RegistrationDate") }}: {{ userDetails.RegistrationDate }}</i
+          >
         </small>
       </p>
     </div>
@@ -72,8 +74,8 @@
         {{ $t("Register2SMSContent") }}
       </p>
       <!-- <p class="fw-500 txt-dark-gray">Fill the field below with the secret Code you recive by email, sms or card</p> -->
-      <vs-input
-        v-validate="'required'"
+      <!-- <vs-input
+        v-validate="'required|min:10|max:10'"
         data-vv-validate-on="blur"
         :label-placeholder="MobileNumber"
         name="mobile"
@@ -81,7 +83,8 @@
         v-model="mobile"
         class="w-full"
       />
-      <span class="text-danger text-sm">{{ errors.first("mobile") }}</span>
+      <span class="text-danger text-sm">{{ errors.first("mobile") }}</span> -->
+      <vue-phone-number-input v-model="mobile"  @update="updateMobilenumber($event)"/>
 
       <div class="xt-right d-flex justify-end align-items-center">
         <div class="mt-6 countdown-txt" id="countdown">
@@ -96,7 +99,9 @@
         </div>
         <vs-button
           class="ml-5 mt-6 btn-green w-180px"
-          :disabled="sendsms == false"
+          :disabled="
+            sendsms == false && !this.errors.any() && this.mobile !== ''
+          "
           @click="sendSMS()"
           >{{ $t("SendSMS") }}</vs-button
         >
@@ -122,6 +127,8 @@
 </template>
 <script>
 import axios from '../../../axios.js'
+import VuePhoneNumberInput from 'vue-phone-number-input';
+import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 export default {
   data () {
     return {
@@ -134,6 +141,8 @@ export default {
         step3: false,
       },
       mobile: '',
+      number:'',
+      resultsMobile:null,
       userDetails: {
         name: this.$store.state.RegisterUser.displayName + ' ' + this.$store.state.RegisterUser.lastName,
         userId: this.$store.state.RegisterUser.email,
@@ -242,59 +251,83 @@ export default {
           })
 
     },
+    updateMobilenumber(e){
+      this.resultsMobile = e;
+      console.log('MobileData=>', this.resultsMobile);
+      this.number = this.resultsMobile.formattedNumber
+      console.log(this.mobile);
+    },
     sendSMS () {
-      const token = localStorage.getItem('accessToken')
-      const mobile = '+' + this.$store.state.userCountryDetails.calling_code + this.mobile
-      this.smsMinutes = 14,
-        this.smsSecond = 60,
-        axios.post('/auth/users/' + this.uid + '/resend/signup-confirmation', { confirmationMode: 'sms', mobile: mobile }, {
-          headers: {
-            Authorization: 'Bearer ' + token
-          }
-        })
-          .then(res => {
-            console.log('res =>', res);
-            if (res.status == 200) {
-              this.sendsms = false
-              this.$vs.notify({
-                title: 'Sucess',
-                text: res.data.successCode,
-                iconPack: 'feather',
-                icon: 'icon-mail',
-                color: 'success'
-              })
-              setInterval(() => {
-                if (this.smsMinutes >= 0) {
-                  this.smsSecond--
-                  if (this.smsSecond == 0) {
-                    this.smsMinutes--
-                    this.smsSecond = 60
-                  }
-                } else {
-                  this.sendsms = true
-                }
-              }, 1000);
-            } else {
-              this.$vs.notify({
-                title: 'Error',
-                text: 'SMS Sending Failed ..!!',
-                iconPack: 'feather',
-                icon: 'icon-alert-circle',
-                color: 'danger'
-              })
-            }
-          }).catch(error => {
-            this.$vs.loading.close()
-            this.$vs.notify({
+      if(!this.resultsMobile.isValid) {
+        this.$vs.notify({
               title: 'Error',
-              text: 'Something is wrong' + error.message,
+              text: 'Please Enter a valid mobile number ..!!',
               iconPack: 'feather',
               icon: 'icon-alert-circle',
               color: 'danger'
             })
+        reture
+      }
+      console.log(this.mobile);
+      const token = localStorage.getItem('accessToken')
+      // const mobile = '+' + this.$store.state.userCountryDetails.calling_code + this.mobile
+      this.smsMinutes = 14,
+        this.smsSecond = 60,
+        console.log(this.number);
+        axios.
+        post(
+          '/auth/users/' + this.uid + '/resend/signup-confirmation',
+          { confirmationMode: 'sms', mobile: this.number },
+          {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
+        .then(res => {
+          console.log('res =>', res);
+          if (res.status == 200) {
+            this.sendsms = false
+            this.$vs.notify({
+              title: 'Sucess',
+              text: res.data.successCode,
+              iconPack: 'feather',
+              icon: 'icon-mail',
+              color: 'success'
+            })
+            setInterval(() => {
+              if (this.smsMinutes >= 0) {
+                this.smsSecond--
+                if (this.smsSecond == 0) {
+                  this.smsMinutes--
+                  this.smsSecond = 60
+                }
+              } else {
+                this.sendsms = true
+              }
+            }, 1000);
+          } else {
+            this.$vs.notify({
+              title: 'Error',
+              text: 'SMS Sending Failed ..!!',
+              iconPack: 'feather',
+              icon: 'icon-alert-circle',
+              color: 'danger'
+            })
+          }
+        }).catch(error => {
+          this.$vs.loading.close()
+          this.$vs.notify({
+            title: 'Error',
+            text: error.response.data.errorMsg,
+            iconPack: 'feather',
+            icon: 'icon-alert-circle',
+            color: 'danger'
           })
-
+        })
     }
-  }
+  },
+  components: {
+    'vue-phone-number-input': VuePhoneNumberInput
+  },
 }
 </script>

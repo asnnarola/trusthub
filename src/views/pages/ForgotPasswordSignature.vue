@@ -132,7 +132,7 @@
                     </div>
                   </div> -->
                   <div class="txt-or text-center mb-4 mt-4">
-                    <span class="txt-gray">{{ $t("AND") }}</span>
+                    <span class="txt-gray">{{ $t("AND_OR") }}</span>
                     <div class="separte-border"></div>
                   </div>
                   <div class="bottom-menu-icon mt-0 mb-2">

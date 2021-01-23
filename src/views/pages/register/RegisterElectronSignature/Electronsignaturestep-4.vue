@@ -29,7 +29,7 @@
     />
     <span class="text-danger text-sm">{{ errors.first("password") }}</span>
     <div class="txt-or text-center mt-4 mb-6">
-      <span class="txt-gray">{{$t('AND')}}</span>
+      <span class="txt-gray">{{$t('AND_OR')}}</span>
       <div class="separte-border"></div>
     </div>
     <div class="bottom-menu-icon mt-0 mb-2 position-relative">

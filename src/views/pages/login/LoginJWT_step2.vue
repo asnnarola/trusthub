@@ -123,6 +123,7 @@ export default {
         result2 += charactersVal.charAt(Math.floor(Math.random() * charactersVal.length));
       }
       this.password = result1 + result2;
+      this.re_password = result1 + result2;
     },
     getPassword () {
       this.$emit("getPassword", this.password);

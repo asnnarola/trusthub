@@ -247,6 +247,7 @@ export default {
         result2 += charactersVal.charAt(Math.floor(Math.random() * charactersVal.length));
       }
       this.password = result1 + result2;
+      this.confirm_password = result1 + result2;
     },
     copyPassword () {
       let textToCopy = this.password;

@@ -28,21 +28,29 @@
               <vs-popup
                 background-color="rgba(255,255,255,.6)"
                 class=""
-                title="Background"
+                :title="!isRename ? Folder_create_title : Folder_rename_title"
                 :active.sync="folderpopupActive"
               >
-                <h3>{{ isRename ? "Rename" : "Create " }}</h3>
+                <h3>{{ isRename ? $t("Rename") : $t("Create") }}</h3>
                 <vs-input
                   v-validate="'required'"
                   data-vv-validate-on="blur"
                   name="folderName"
-                  label-placeholder="Folder Name"
+                  :label-placeholder="Folder_name"
                   v-model="folderName"
                   class="w-full"
+                  @blur="checkValidate"
                 />
-                <span class="text-danger text-sm">{{
-                  errors.first("folderName")
-                }}</span>
+                <span class="text-danger text-sm">
+                  {{
+                    errors.first("folderName")
+                      ? "The Folder name field is required."
+                      : ""
+                  }}
+                </span>
+                <span class="text-danger text-sm" v-if="folderNameErrorStatus">
+                  {{ folderNameErrorMsg }}
+                </span>
 
                 <div class="flex flex-wrap justify-between mt-5 mb-3 LT-wrap">
                   <vs-button
@@ -50,10 +58,10 @@
                     :disabled="!validateForm"
                     @click="createFolder()"
                   >
-                    {{ isRename ? "Rename" : "Creat" }}
+                    {{ isRename ? $t("Rename") : $t("Create") }}
                   </vs-button>
                   <vs-button class="btn-green" @click="folderClear()">
-                    Cancle
+                    {{ $t("Cancel") }}
                   </vs-button>
                 </div>
               </vs-popup>
@@ -174,9 +182,12 @@
             </vx-card>
 
             <div class="frc-wrapper">
+              <h2 class="text-center mt-8" v-if="subFilesdata.length <= 0">
+                {{ $t("NoDataAvailable") }}
+              </h2>
               <ul
                 class="demo w-100 d-flex flex-wrap folder-main"
-                v-if="subFilesdata.length && !onList && onGrid"
+                v-if="subFilesdata.length > 0 && !onList && onGrid"
               >
                 <li
                   class="folder-wrapper"
@@ -421,7 +432,7 @@
               </vue-context>
             </div>
             <div
-              v-if="onList && !onGrid"
+              v-if="pagenationData.length > 0 && onList && !onGrid"
               class="demo w-100 d-flex flex-wrap folder-main"
             >
               <vs-table class="w-100 list-folder-grid" :data="pagenationData">
@@ -682,6 +693,9 @@ export default {
       uploadpopupActive: false,
       isRename: false,
       folderName: '',
+      Folder_create_title: this.$t('CreateFolderHeader'),
+      Folder_rename_title: this.$t('RenameFolderHeader'),
+      Folder_name: this.$t('FolderName'),
       // folderLocation: '',
       cloudModel_show: false,
       items: [
@@ -839,7 +853,9 @@ export default {
       currentPage: 1,
       pagenationData: [],
       displayTableData: [],
-      total: 0
+      total: 0,
+      folderNameErrorMsg: '',
+      folderNameErrorStatus: false
     }
   },
   async mounted () {
@@ -853,7 +869,7 @@ export default {
   },
   computed: {
     validateForm () {
-      return !this.errors.any() && this.folderName !== ''
+      return !this.errors.any() && this.folderName !== '' && this.folderName != 'root' && this.folderName != 'system' && this.folderName != 'inbox' && this.folderName != 'outbox' && this.folderName != 'private' && this.folderName != 'public'
     },
     isLoading () {
       return this.$vs.loading({ color: 'yellow' })
@@ -952,22 +968,84 @@ export default {
       }
     },
     getDocuments () {
-      //  setTimeout(() => {
-      //    this.folderData = this.$store.getters['document/Documents']
-      //  }, 1000);
-
       const token = localStorage.getItem('accessToken')
       axios({
         method: 'get',
-        url: 'folders',
+        url: 'folders/users/private',
+        // url: 'folders',
         headers: { Authorization: 'Bearer ' + token }
       }).then(res => {
-        console.log('Token =>', token);
-        this.folderData = res.data
-        this.subFilesdata = res.data
-        this.current_parentID = null
-        this.current_location = '/'
-        this.selectedFile = []
+        console.log(res);
+        if (res.status == 200) {
+          this.folderData = res.data.children
+          this.subFilesdata = res.data.children
+          this.current_parentID = res.data.id
+          this.current_location = res.data.location
+          this.selectedFile = []
+          this.onNext()
+          // axios({
+          //   method: 'get',
+          //   url: 'folders/' + this.rootId,
+          //   headers: { Authorization: 'Bearer ' + token }
+          // }).then(res => {
+          //   console.log('Token =>', res);
+          //   this.folderData = res.data.children
+          //   this.subFilesdata = res.data.children
+          //   this.current_parentID = res.data.id
+          //   this.current_location = res.data.location
+          //   this.selectedFile = []
+          // })
+        }
+      })
+    },
+    checkValidate () {
+      if (this.folderName != '' && (this.folderName == 'root' || this.folderName == 'ROOT')) {
+        this.folderNameErrorMsg = "You Can't set " + this.folderName + " As Folder name."
+        this.folderNameErrorStatus = true
+      } else if (this.folderName != '' && (this.folderName == 'system' || this.folderName == 'SYSTEM')) {
+        this.folderNameErrorMsg = "You Can't set " + this.folderName + " As Folder name."
+        this.folderNameErrorStatus = true
+      } else if (this.folderName != '' && (this.folderName == 'inbox' || this.folderName == 'INBOX')) {
+        this.folderNameErrorMsg = "You Can't set " + this.folderName + " As Folder name."
+        this.folderNameErrorStatus = true
+      } else if (this.folderName != '' && (this.folderName == 'private' || this.folderName == 'PRIVATE')) {
+        this.folderNameErrorMsg = "You Can't set " + this.folderName + " As Folder name."
+        this.folderNameErrorStatus = true
+      } else if (this.folderName != '' && (this.folderName == 'public' || this.folderName == 'PUBLIC')) {
+        this.folderNameErrorMsg = "You Can't set " + this.folderName + " As Folder name."
+        this.folderNameErrorStatus = true
+      } else {
+        this.folderNameErrorMsg = ''
+      }
+      // || this.folderName == 'system' || this.folderName == 'inbox' || this.folderName == 'outbox' || this.folderName == 'private' || this.folderName != 'public')) {
+    },
+    getDocumentsByID () {
+      // this.getDocuments()
+      const token = localStorage.getItem('accessToken')
+      axios({
+        method: 'get',
+        url: 'folders/' + this.current_parentID,
+        headers: { Authorization: 'Bearer ' + token }
+      }).then(res => {
+        console.log(res);
+        this.subFilesdata = []
+        if (res.status == 200) {
+          axios({
+            method: 'get',
+            url: 'folders/users/private',
+            headers: { Authorization: 'Bearer ' + token }
+          }).then(res => {
+            console.log(res);
+            if (res.status == 200) {
+              this.folderData = res.data.children
+            }
+          })
+          this.subFilesdata = res.data.children
+          this.current_parentID = res.data.id
+          this.current_location = res.data.location
+          this.selectedFile = []
+          this.onNext()
+        }
       })
     },
     createFolder () {
@@ -987,7 +1065,7 @@ export default {
               this.$vs.loading.close()
               this.isRename = false
               this.folderClear()
-              this.getDocuments()
+              this.getDocumentsByID()
             })
             .errors((err) => {
               console.log('Error =>', err);
@@ -998,7 +1076,7 @@ export default {
               this.$vs.loading.close()
               this.isRename = false
               this.folderClear()
-              this.getDocuments()
+              this.getDocumentsByID()
             })
             .errors((err) => {
               console.log('Error =>', err);
@@ -1017,7 +1095,7 @@ export default {
           .then(() => {
             this.$vs.loading.close()
             this.folderClear()
-            this.getDocuments()
+            this.getDocumentsByID()
           })
           .errors((err) => {
             console.log('Error =>', err);
@@ -1027,6 +1105,8 @@ export default {
     folderClear () {
       this.folderpopupActive = false
       this.folderName = ''
+      this.folderNameErrorMsg = ''
+      this.folderNameErrorStatus = false
     },
     setFiles (e) {
       this.files = []
@@ -1046,7 +1126,7 @@ export default {
       this.$store.dispatch('document/uploadFiles', formData)
         .then(() => {
           this.$vs.loading.close()
-          this.getDocuments()
+          this.getDocumentsByID()
           this.uploadClear()
         })
         .catch((err) => {
@@ -1063,7 +1143,7 @@ export default {
         this.$store.dispatch('document/deleteFolder', this.selectedFile.id)
           .then(() => {
             this.$vs.loading.close()
-            this.getDocuments()
+            this.getDocumentsByID()
           })
           .catch((err) => {
             console.log('Error =>', err)
@@ -1073,7 +1153,7 @@ export default {
         this.$store.dispatch('document/deleteFile', this.selectedFile.id)
           .then(() => {
             this.$vs.loading.close()
-            this.getDocuments()
+            this.getDocumentsByID()
           })
           .catch((err) => {
             console.log('Error =>', err)

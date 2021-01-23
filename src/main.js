@@ -22,6 +22,9 @@ Vue.use(Vuesax)
 import axios from './axios.js'
 Vue.prototype.$http = axios
 
+// otp-Input
+import OtpInput from "@bachdgvn/vue-otp-input";
+Vue.component("v-otp-input", OtpInput);
 // API Calls
 import './http/requests'
 
@@ -69,6 +72,10 @@ import store from './store/store'
 // i18n
 import i18n from './i18n/i18n'
 
+// VueCookies
+import VueCookies from 'vue-cookies';
+Vue.use(VueCookies);
+
 // VuePdfReader
 // import VuePdfReader from 'vue-pdf-reader';
 // Vue.use(VuePdfReader);
@@ -79,18 +86,23 @@ Vue.use(VueSocialauth, {
   providers: {
     facebook: {
       clientId: '444282176963354',
-      redirectUri: 'http://localhost:8080/login'
-      // redirectUri: 'http://beta.trusthub.cloud/login'
+      // redirectUri: 'http://localhost:8080/login'
+      // redirectUri: 'http://192.168.100.85:8080/login',
+      redirectUri: 'http://beta.trusthub.cloud/login'
     },
     twitter: {
       clientId: 'jaH3uvNvgtzobL2ewSh2K8KsH',
-      redirectUri: 'http://localhost:8080/login'
-      // redirectUri: 'http://beta.trusthub.cloud/login'
+      // clientSecret: "7IexmcIrefNPTq6jvsgnB8UQzO75TnYCYwbIP1UA3CQboDBWek",
+      // redirectUri: 'http://localhost:8080/login'
+      // redirectUri: 'http://192.168.100.85:8080/login',
+      redirectUri: 'http://beta.trusthub.cloud/login'
     },
     linkedin: {
       clientId:'78l9d81xybkxw6',
-      redirectUri: 'http://localhost:8080/login'
-      // redirectUri: 'http://beta.trusthub.cloud/login'
+      redirectUri: 'http://beta.trusthub.cloud/login',
+      scope:'r_liteprofile%20r_emailaddress%20w_member_social'
+      // redirectUri: 'http://localhost:8080/login',
+      // redirectUri: 'http://192.168.100.85:8080/login',
     },
   }
 })

@@ -49,7 +49,7 @@ export default {
       backgroundImages: [
         {
           id: 1,
-          country: 'argentine',
+          country: 'Argentina ',
           countryCode: 'AR',
           image: 'argentine.jpg',
           language: 'Spanish',
@@ -57,16 +57,16 @@ export default {
         },
         {
           id: 2,
-          country: 'england',
-          countryCode: 'UK',
+          country: 'United Kingdom',
+          countryCode: 'GB',
           image: 'england.jpg',
           language: 'English',
           language_code: 'en'
         },
         {
           id: 3,
-          country: 'Europe',
-          countryCode: 'EU',
+          country: 'Italy',
+          countryCode: 'IT',
           image: 'italy.jpg',
           language: 'Italian',
           language_code: 'it'
@@ -81,7 +81,8 @@ export default {
     axios.get('https://api.ipify.org/?format=json').then(res => {
       currentIp = res.data.ip
       console.log(currentIp);
-      axios.get(`https://api.ipdata.co/${res.data.ip}?api-key=test`).then(res => {
+      // axios.get(`https://api.ipdata.co/	79.53.34.224?api-key=fb9b74fa45e5f73e55ab946a4037d69bbc40a689702fcaa1f8665bca`).then(res => {
+      axios.get(`https://api.ipdata.co/${res.data.ip}?api-key=fb9b74fa45e5f73e55ab946a4037d69bbc40a689702fcaa1f8665bca`).then(res => {
         if (res.status == 200) {
           console.log(res.data);
           this.$store.state.userCountryDetails = res.data
@@ -110,6 +111,7 @@ export default {
           }
           localStorage.setItem('currentLanguage', this.$i18n.locale)
           this.backgroundImages.forEach(countryData => {
+            // console.log(res.data.country_name, '<====>', countryData.country);
             if (res.data.country_name == countryData.country) {
               this.bgImage = countryData.image
             }

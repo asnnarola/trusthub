@@ -20,6 +20,7 @@ export default {
         return response;
       },
       function (error) {
+        console.log('**', error);
         // const { config, response: { status } } = error
         const { config, response } = error;
         const originalRequest = config;
@@ -41,17 +42,24 @@ export default {
         //     });
         //     return retryOriginalRequest;
         //   }
-        //   return Promise.reject(error);
+          return Promise.reject(error);
         // }
       }
     );
   },
-  async login(email, pwd, language) {
+  async loginJWT(email, pwd, language) {
     console.log("login called");
      return await axios.post("auth/authenticate", {
       email,
        password: pwd,
        language
+    });
+  },
+  async loginIAM(email, pwd) {
+    console.log("login called");
+     return await axios.post("keycloak/auth/login", {
+      userName:email,
+       password: pwd,
     });
   },
   // login (email, pwd) {

@@ -1458,6 +1458,15 @@ const router = new Router({
           }
         },
         {
+          // path: '/pages/login',
+          path: '/auth/twitter/callback',
+          name: 'page-login',
+          component: () => import('@/views/pages/login/Login.vue'),
+          meta: {
+            rule: 'editor'
+          }
+        },
+        {
           // path: '/pages/register',
           path: '/register',
           name: 'page-register',
@@ -1467,7 +1476,7 @@ const router = new Router({
           }
         },
         {
-          // path: '/pages/register',
+          // path: '/pages/register',path: '/register/user/:userId/code/:code',
           path: '/register/:id',
           name: 'page-register',
           component: () => import('@/views/pages/register/Register.vue'),

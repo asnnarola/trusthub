@@ -11,7 +11,7 @@ a {
   color: #aeaeae;
 }
 .txt-dark-gray {
-  color: #737373;
+  color: #737373 !important;
 }
 .txt-blue {
   color: #4e9de6 !important;
@@ -499,6 +499,15 @@ a {
                         }
                       }
                     }
+                    .socailbtn-wrapper {
+                      @media screen and (max-width: 575px) {
+                        width: 100%;
+                        text-align: right;
+                        margin-top: 1rem;
+                        .loginsocail-btn {
+                        }
+                      }
+                    }
                     .countdown-txt {
                       h4 {
                         color: #6f6f6f;
@@ -522,6 +531,66 @@ a {
                       @media screen and (max-width: 991px) {
                         margin-bottom: 1.5rem !important;
                       }
+                      &.morelogin-txt {
+                        margin-bottom: 0px !important;
+                      }
+                    }
+                    .login-socail-wrapper {
+                      .loginoption-wrapper {
+                        p {
+                          font-size: 14px;
+                          color: #232323;
+                        }
+                        max-width: 300px;
+                        width: 100%;
+                        .loginoption-input {
+                          display: flex;
+                          .loginoption-select {
+                            max-width: 195px;
+                            width: 100%;
+                            margin-right: 10px;
+                            .vs__selected-options {
+                              max-width: calc(100% - 37px);
+                              .vs__search {
+                                font-size: 13px;
+                                padding: 0px 2px;
+                              }
+                              span {
+                                &.vs__selected {
+                                  white-space: nowrap;
+                                  overflow: hidden;
+                                  text-overflow: ellipsis;
+                                  display: -webkit-box;
+                                  -webkit-box-orient: vertical;
+                                  -webkit-line-clamp: 1;
+                                  font-size: 13px;
+                                  max-width: calc(100% - 10px);
+                                }
+                              }
+                            }
+                            .vs__actions {
+                              .vs__open-indicator {
+                                position: absolute !important;
+                                right: 6px;
+                              }
+                            }
+                          }
+                          button {
+                            &.loginoption-btn {
+                              max-width: 100px;
+                              padding: 0.75rem 1.5rem;
+                            }
+                          }
+                        }
+                        @media screen and (max-width:575px){
+                          max-width: 100%;
+                          .loginoption-input{
+                            .loginoption-select{
+                              max-width: calc(100% - 100px);
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                   .checkbox-register {
@@ -530,8 +599,9 @@ a {
                         font-size: 13.35px;
                         font-weight: 500;
                         color: #f9c201;
-                        margin-top: 0px;
+                        margin-top: 7px;
                         align-items: center;
+                        margin-bottom: 10px;
                         .checkbox-reginput {
                           margin-right: 0;
                           .vs-checkbox {
@@ -568,7 +638,7 @@ a {
                     background: #4ec12d;
                     flex-wrap: wrap;
                     justify-content: space-around;
-                    margin-bottom: 2rem;
+                    margin-bottom: 1rem;
                     max-height: 55px;
                     align-items: center;
                     ul {
@@ -694,7 +764,7 @@ a {
                       display: -webkit-box;
                       -webkit-box-orient: vertical;
                       -webkit-line-clamp: 1;
-                      white-space:nowrap;
+                      white-space: nowrap;
 
                       @media screen and (max-width: 575px) {
                         font-size: 13px;
@@ -823,7 +893,7 @@ a {
       text-transform: uppercase;
       font-size: 17px;
       font-weight: 500;
-      width:36px;
+      width: 36px;
       min-height: 125px;
 
       .vs-button-text {

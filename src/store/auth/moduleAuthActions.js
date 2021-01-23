@@ -341,14 +341,31 @@ export default {
     //     })
     // })
 
-    return jwt.login(payload.userDetails.email, payload.userDetails.password,  payload.userDetails.language)
+    return jwt.loginJWT(payload.userDetails.email, payload.userDetails.password,  payload.userDetails.language)
         .then(response => {
           console.log('jwt.login response',response);
           console.log(response);
           // If there's user data in response
           if (response.data.userData) {
-            // Navigate User to homepage
-            // router.push(router.currentRoute.query.to || '/dashboard')
+            // Set accessToken
+            localStorage.setItem('accessToken', response.data.accessToken)
+            // Update user details
+            commit('UPDATE_USER_INFO', response.data.userData, {root: true})
+            // Set bearer token in axios
+            commit('SET_BEARER', response.data.accessToken)
+          }
+        })
+        .catch(error => {
+          console.log('jwt.login error =>', error);
+          return error
+        })
+  },
+
+  loginIAM ({ commit }, payload) {
+    return jwt.loginIAM(payload.userDetails.email, payload.userDetails.password)
+        .then(response => {
+          // If there's user data in response
+          if (response.data.userData) {
             // Set accessToken
             localStorage.setItem('accessToken', response.data.accessToken)
             // Update user details

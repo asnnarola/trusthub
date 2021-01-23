@@ -75,10 +75,12 @@
                     class="vx-card__title mb-4 d-flex justify-content-between"
                   >
                     <div class="wrapper-heading">
-                      <h4 class="mb-4">{{step.step1 == true ? $t('CreateAccount') : $t('AccountCreated')}}</h4>
-                      <p v-if="step.step1 == true">{{$t ('Registerheader1')}}</p>
-                      <p v-if="step.step2 == true">{{$t ('Registerheader2')}}</p>
-                      <p v-if="step.step3 == true">{{$t ('Registerheader3')}}</p>
+                      <h4 class="mb-4" v-if="step.step1 == true">{{$t('CreateAccount')}}</h4>
+                      <h4 class="mb-4" v-if="step.step2 == true">{{$t('AccountCreated')}}</h4>
+                      <h4 class="mb-4" v-if="step.step3 == true">{{$t('ConfirmedAccount')}}</h4>
+                      <p v-if="step.step1 == true"><b>{{$t ('Registerheader1')}}</b></p>
+                      <p v-if="step.step2 == true"><b>{{$t ('Registerheader2')}}</b></p>
+                      <p v-if="step.step3 == true"><b>{{$t ('Registerheader3')}}</b></p>
                       <span class="fw-500 txt-gray" v-if="step.step1 == true">
                         {{ $t('step1of3')}}
                       </span>
@@ -206,7 +208,7 @@ export default {
         step3 : false,
       }
     } else if (this.$router.currentRoute.params) {
-      console.log('===>>>',this.$router.currentRoute.params);
+      // console.log('===>>>',this.$router.currentRoute.params);
       this.step =  {
         step1 : false,
         step2 : false,

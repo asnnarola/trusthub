@@ -1,26 +1,30 @@
 <template>
   <div>
-    <!-- <h1>Step 3</h1> -->
     <div class="activation-detail mt-4 mb-4 p-3 text-right">
       <p class="fw-500">
         <small>
-          <i>{{ $t("Name") }}:{{userData.name}}{{userData.lastName}}</i>
+          <i>{{ $t("Name") }}: {{userData.name}} {{userData.lastName}}</i>
         </small>
       </p>
       <p class="f-15">
         <i>
-          <b class="txt-dark-gray">{{ $t("UserId") }}:</b>
+          <b class="txt-dark-gray">{{ $t("UserId") }}: </b>
           <b class="txt-green">{{userData.email}}</b>
         </i>
       </p>
       <p class="fw-500">
         <small>
-          <i>{{ $t("ConformationDate") }}: {{userData.confirmationDate}}</i>
+          <i>{{ $t("ConfirmationDate") }}: {{userData.confirmationDate}}</i>
         </small>
       </p>
       <p class="fw-500">
         <small>
-          <i> {{ $t("ConformationMethod") }}:{{userData.confirmationMethod}} </i>
+          <i>{{ $t("RegistrationDate") }}: {{userData.confirmationDate}}</i>
+        </small>
+      </p>
+      <p class="fw-500">
+        <small>
+          <i> {{ $t("ConformationMethod") }}: {{userData.confirmationMethod}} </i>
         </small>
       </p>
     </div>
@@ -77,13 +81,13 @@ export default {
     // axios.put(, params:)
     axios({
       method: 'put',
-      url: '/auth/users/' + this.uid + '/activate-account',
+      url: '/auth/users/activate-account',
       params: { code: this.code }
     })
     .then(res => {
         console.log('res =>', res);
         if(res.status == 200){
-      this.userData = res.data
+          this.userData = res.data
           this.$vs.notify({
             title: 'Sucess',
             text: 'Your Account is Activate..!!',
@@ -99,6 +103,7 @@ export default {
             icon: 'icon-alert-circle',
             color: 'danger'
           })
+          this.$router.push('/error-500' ).catch(() => { })
         }
       }).catch(error => {
         this.$vs.loading.close()
@@ -109,9 +114,8 @@ export default {
           icon: 'icon-alert-circle',
           color: 'danger'
         })
+        this.$router.push('/error-500' ).catch(() => { })
       })
-
-
   },
 }
 </script>

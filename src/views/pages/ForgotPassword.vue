@@ -81,11 +81,11 @@
                     <div class="flex flex-wrap justify-between mt-5 LT-wrap">
                       <router-link to="/login" class="mb-3 mr-4">
                         <u class="fw-500 txt-dark-gray">{{
-                          $t("ReturnLoginPage")
+                          $t("BackToLogin")
                         }}</u>
                       </router-link>
                       <!-- <vs-button type="border" to="/login" class="btn-green">Back To Login</vs-button> -->
-                      <vs-button class="btn-green" @click="forgotPassword">{{
+                      <vs-button class="btn-green" @click="forgotPassword" :disabled="!validateEmail">{{
                         $t("PasswordRecovery")
                       }}</vs-button>
                     </div>
@@ -171,7 +171,7 @@ export default {
       .post("auth/forgot-password", payload.userDetails)
         .then((res) => {
           console.log('=> 3', res);
-          if (res.status == 200) {
+          if (res&&res.status == 200) {
           this.$vs.notify({
               title: 'Sucess',
               text: res.data.successCode,
@@ -195,7 +195,7 @@ export default {
           this.$vs.loading.close()
           this.$vs.notify({
             title: 'Error',
-            text: error.message,
+            text: error.response.data.errorMsg,
             iconPack: 'feather',
             icon: 'icon-alert-circle',
             color: 'danger'

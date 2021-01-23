@@ -688,8 +688,6 @@ var deviceUidType = {
   1: "Volatile"
 }
 
-
-
 function showMessage (message) {
   var _instance = this;
   //var statusWindow = document.getElementById("status");
