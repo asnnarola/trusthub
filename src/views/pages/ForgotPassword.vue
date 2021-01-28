@@ -14,7 +14,9 @@
     id="page-login"
   >
     <help-customizer :active="active" />
-    <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4 login-subwrapper">
+    <div
+      class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4 login-subwrapper"
+    >
       <vx-card>
         <div slot="no-body" class="full-page-bg-color recover-wrapper">
           <div class="vx-row no-gutter justify-center">
@@ -73,6 +75,8 @@
                     <div class="form-group row mt-6">
                       <vue-recaptcha
                         @verify="onVerify"
+                        @expired="onCaptchaExpired"
+                        ref="recaptcha"
                         sitekey="6LczcvwZAAAAADaEiDNCSCRjShHTr6oFSnTeJ6jJ"
                       >
                       </vue-recaptcha>
@@ -85,9 +89,12 @@
                         }}</u>
                       </router-link>
                       <!-- <vs-button type="border" to="/login" class="btn-green">Back To Login</vs-button> -->
-                      <vs-button class="btn-green" @click="forgotPassword" :disabled="!validateEmail">{{
-                        $t("PasswordRecovery")
-                      }}</vs-button>
+                      <vs-button
+                        class="btn-green"
+                        @click="forgotPassword"
+                        :disabled="!validateEmail"
+                        >{{ $t("PasswordRecovery") }}</vs-button
+                      >
                     </div>
                   </div>
                 </div>
@@ -133,30 +140,30 @@ export default {
     forgotPassword () {
       console.log('validEmail', this.validateEmail);
       if (!this.validateEmail) {
-        if(this.email || !this.robot ){
+        if (this.email || !this.robot) {
           this.$vs.notify({
-              title: 'Error',
-              text: 'Invalid Data Please Enter Valid Data',
-              iconPack: 'feather',
-              icon: 'icon-alert-circle',
-              color: 'danger'
-            })
-        } else if(!this.email){
+            title: 'Error',
+            text: 'Invalid Data Please Enter Valid Data',
+            iconPack: 'feather',
+            icon: 'icon-alert-circle',
+            color: 'danger'
+          })
+        } else if (!this.email) {
           this.$vs.notify({
-              title: 'Error',
-              text: 'Enter your Registerd Email',
-              iconPack: 'feather',
-              icon: 'icon-alert-circle',
-              color: 'danger'
-            })
-        } else if(!this.robot){
+            title: 'Error',
+            text: 'Enter your Registerd Email',
+            iconPack: 'feather',
+            icon: 'icon-alert-circle',
+            color: 'danger'
+          })
+        } else if (!this.robot) {
           this.$vs.notify({
-              title: 'Error',
-              text: 'Invalid Captcha',
-              iconPack: 'feather',
-              icon: 'icon-alert-circle',
-              color: 'danger'
-            })
+            title: 'Error',
+            text: 'Invalid Captcha',
+            iconPack: 'feather',
+            icon: 'icon-alert-circle',
+            color: 'danger'
+          })
         }
         return
       }
@@ -168,11 +175,11 @@ export default {
         notify: this.$vs.notify
       }
       return axios
-      .post("auth/forgot-password", payload.userDetails)
+        .post("auth/forgot-password", payload.userDetails)
         .then((res) => {
           console.log('=> 3', res);
-          if (res&&res.status == 200) {
-          this.$vs.notify({
+          if (res && res.status == 200) {
+            this.$vs.notify({
               title: 'Sucess',
               text: res.data.successCode,
               iconPack: 'feather',
@@ -204,6 +211,10 @@ export default {
     },
     onVerify (response) {
       if (response) this.robot = true;
+    },
+    onCaptchaExpired() {
+      this.robot = false
+      this.$refs.recaptcha.reset();
     },
     openHelp () {
       this.active == true ? this.active = false : this.active = true

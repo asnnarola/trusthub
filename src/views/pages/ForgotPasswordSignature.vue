@@ -202,6 +202,8 @@
                     <vue-recaptcha
                       @verify="onVerify"
                       sitekey="6LczcvwZAAAAADaEiDNCSCRjShHTr6oFSnTeJ6jJ"
+                      @expired="onCaptchaExpired"
+                      ref="recaptcha"
                     >
                     </vue-recaptcha>
                   </div>
@@ -336,7 +338,12 @@ export default {
     },
     onVerify (response) {
       if (response) this.robot = true;
-    }
+    },
+    onCaptchaExpired () {
+      this.robot = false
+      this.$refs.recaptcha.reset();
+      console.log(this.robot);
+    },
   },
   created () {
     setInterval(() => {

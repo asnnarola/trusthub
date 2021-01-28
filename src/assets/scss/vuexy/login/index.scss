@@ -538,8 +538,10 @@ a {
                     .login-socail-wrapper {
                       .loginoption-wrapper {
                         p {
-                          font-size: 14px;
-                          color: #232323;
+                          font-size: 13px;
+                          color: #606060;
+                          font-weight: 500;
+                          margin-bottom: 5px;
                         }
                         max-width: 300px;
                         width: 100%;
@@ -574,18 +576,32 @@ a {
                                 right: 6px;
                               }
                             }
+                            #vs1__listbox{
+                              li{
+                                background: #fff !important;
+                                background-color: #fff !important;
+                                color: #6f6f6f !important;
+                                &:hover, &:focus, &:active{
+                                  background: #6f6f6f !important;
+                                  background-color: #6f6f6f !important;
+                                  color: #fff !important;
+                                }
+                              }
+                            }
                           }
                           button {
                             &.loginoption-btn {
                               max-width: 100px;
-                              padding: 0.75rem 1.5rem;
+                              // padding: 0.75rem 1.5rem;
+                              padding: 0 1.5rem;
+                              height: 35px;
                             }
                           }
                         }
-                        @media screen and (max-width:575px){
+                        @media screen and (max-width: 575px) {
                           max-width: 100%;
-                          .loginoption-input{
-                            .loginoption-select{
+                          .loginoption-input {
+                            .loginoption-select {
                               max-width: calc(100% - 100px);
                             }
                           }
@@ -657,7 +673,7 @@ a {
                       }
                       li {
                         padding: 0px 13px 0px 13px;
-                        height: 55px;
+                        height: 50px;
                         display: flex;
                         align-items: center;
                         list-style: none;

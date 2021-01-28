@@ -91,12 +91,17 @@ Author URL: http://www.themeforest.net/user/pixinvent
       errors.first("confirm_password")
     }}</span>
     <p class="sub-trial-txt mt-1 text-right mt-2 mb-2">
-        <a class="fw-500" v-clipboard:copy="password">
-          <u>{{ $t("CopyPassword") }}</u>
-        </a>
-      </p>
+      <a class="fw-500" v-clipboard:copy="password">
+        <u>{{ $t("CopyPassword") }}</u>
+      </a>
+    </p>
     <div class="form-group row mt-6">
-      <vue-recaptcha @verify="onVerify" sitekey="6LczcvwZAAAAADaEiDNCSCRjShHTr6oFSnTeJ6jJ">
+      <vue-recaptcha
+        @verify="onVerify"
+        @expired="onCaptchaExpired"
+        ref="recaptcha"
+        sitekey="6LczcvwZAAAAADaEiDNCSCRjShHTr6oFSnTeJ6jJ"
+      >
       </vue-recaptcha>
     </div>
     <div class="d-flex flex-wrap justify-between mt-2">
@@ -113,7 +118,7 @@ Author URL: http://www.themeforest.net/user/pixinvent
         v-for="account in differentAccount"
         :key="account.id"
       >
-        {{ $t(account.i18n)||account.label
+        {{ $t(account.i18n) || account.label
         }}<vs-checkbox
           class="checkbox-reginput"
           color="warning"
@@ -210,7 +215,7 @@ export default {
           id: 3,
           label: 'Qualified Certificate',
           value: false,
-          i18n:'QualifiedCertificate'
+          i18n: 'QualifiedCertificate'
         },
         {
           id: 4,
@@ -309,7 +314,7 @@ export default {
             }
             this.$emit("gosetp", this.step);
             this.$store.state.RegisterUser = res.data.userData
-            localStorage.setItem('registerUserid',res.data.userData.uid)
+            localStorage.setItem('registerUserid', res.data.userData.uid)
             this.$vs.notify({
               title: 'Sucess',
               text: 'Registration SucessFuly Check your Email for Account Activation',
@@ -417,6 +422,10 @@ export default {
     onVerify (response) {
       if (response) this.robot = true;
     },
+    onCaptchaExpired () {
+      this.robot = false
+      this.$refs.recaptcha.reset();
+    },
   },
   created () {
     this.$validator.extend('verify_password', {
@@ -429,10 +438,10 @@ export default {
 
     setInterval(() => {
       this.FirstName = this.$t('FirstName'),
-      this.LastName = this.$t('LastName'),
-      this.Email = this.$t('Email'),
-      this.Password = this.$t('Password'),
-      this.ConfirmPassword = this.$t('ConfirmPassword')
+        this.LastName = this.$t('LastName'),
+        this.Email = this.$t('Email'),
+        this.Password = this.$t('Password'),
+        this.ConfirmPassword = this.$t('ConfirmPassword')
     }, 1);
   },
 }

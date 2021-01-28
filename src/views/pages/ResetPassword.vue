@@ -38,8 +38,8 @@
                     class="vx-card__title mb-4 d-flex justify-content-between"
                   >
                     <div class="wrapper-heading">
-                      <h4 class="mb-4">{{$t('ResetYourPassword')}}</h4>
-                      <p>{{$t('EnterNewPassword')}}</p>
+                      <h4 class="mb-4">{{ $t("ResetYourPassword") }}</h4>
+                      <p>{{ $t("EnterNewPassword") }}</p>
                     </div>
                     <div class="msg-wrapper-icon">
                       <img
@@ -114,6 +114,8 @@
                     <div class="form-group row mt-6">
                       <vue-recaptcha
                         @verify="onVerify"
+                        @expired="onCaptchaExpired"
+                        ref="recaptcha"
                         sitekey="6LczcvwZAAAAADaEiDNCSCRjShHTr6oFSnTeJ6jJ"
                       >
                       </vue-recaptcha>
@@ -121,7 +123,7 @@
                     <div class="flex flex-wrap justify-between mb-3 LT-wrap">
                       <router-link to="/login" class="mb-3 mr-4">
                         <u class="fw-500 txt-dark-gray">
-                          {{$t('BackToLogin')}}
+                          {{ $t("BackToLogin") }}
                         </u>
                       </router-link>
                       <!-- <vs-button type="border" to="/login" class="btn-green">Back To Login</vs-button> -->
@@ -130,7 +132,7 @@
                         :disabled="!validateForm"
                         @click="resetPassword"
                       >
-                      {{$t('ResetPassword')}}
+                        {{ $t("ResetPassword") }}
                       </vs-button>
                       <!-- <vs-button class="btn-green">Reset Password</vs-button> -->
                     </div>
@@ -205,7 +207,7 @@ export default {
     });
     setInterval(() => {
       this.Password = this.$t('Password'),
-      this.ConfirmPassword = this.$t('ConfirmPassword')
+        this.ConfirmPassword = this.$t('ConfirmPassword')
     }, 1);
   },
   methods: {
@@ -245,6 +247,10 @@ export default {
     },
     onVerify (response) {
       if (response) this.robot = true;
+    },
+    onCaptchaExpired() {
+      this.robot = false
+      this.$refs.recaptcha.reset();
     },
     openHelp () {
       this.active == true ? this.active = false : this.active = true

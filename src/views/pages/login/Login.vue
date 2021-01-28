@@ -51,7 +51,7 @@
                 </div>
               </div>
               <div
-                class="appstore-wrapper d-flex mb-5 mr-10 justify-content-end"
+                class="appstore-wrapper d-flex mb-4 mr-10 justify-content-end"
               >
                 <router-link to="/">
                   <img

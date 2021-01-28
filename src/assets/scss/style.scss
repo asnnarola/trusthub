@@ -1296,7 +1296,7 @@ a {
 // Popup css start
 .Signature-popup {
   .vs-popup {
-    background: #ffffff54 !important;
+    background: #ffffff7a !important;
     border-radius: 0px;
     border: 1px solid #616161;
     max-width: 1100px;
@@ -1430,6 +1430,9 @@ a {
              max-width: 20%;
              margin: auto !important;
             }
+            @media screen and (max-width:767px){
+              transform: scale(0.75);
+            }
           }
         }
         .swiper-button-prev, .swiper-button-next{
@@ -1443,11 +1446,23 @@ a {
          top: 30px;
          width: 100px;
          margin-right: -25px;
+         @media screen and (max-width:767px){
+           height: 20%;
+           top: 50%;
+         }
         }
         .swiper-button-prev{
           transform:rotate(0);
           margin-right:0;
           margin-left: -25px;
+          @media screen and (max-width:767px){
+            margin-left:-45px;
+          }
+        }
+        .swiper-button-next{
+          @media screen and (max-width:767px){
+             margin-right: -45px;
+          }
         }
       }
     }
@@ -1460,12 +1475,42 @@ a {
   &.otp-modal{
    .vs-popup{
      max-width:640px;
+     @media screen and (max-width:575px){
+       width:95%;
+       background: #ffffffa3 !important;
+     }
+     .select-block{
+       .content-left{
+         h6{
+           @media screen and (max-width:575px){
+            color: #333 !important;
+            font-weight: 500;
+           }
+         }
+         p{
+           @media screen and (max-width:575px){
+              font-size: 11px;
+              color: #333 !important;
+              font-weight: 500;
+           }
+         }
+       }
+       .content-right{
+         h5{
+           font-size:13px;
+           text-align: right;
+         }
+       }
+     }
      .otp-wrapper{
        > div{
         > div{
-          &:nth-child(3n){
+          &:nth-child(4n){
             .otp-input{
               margin-right: 20px;
+              @media screen and (max-width:575px){
+                margin-right:10px;
+              }
             }
           }
           &:nth-child(6n){
@@ -2383,6 +2428,7 @@ a {
                           .doc-submenu-list {
                             padding-left: 15px;
                             padding-bottom: 12px;
+                            cursor:pointer;
                             i {
                               font-size: 16px;
                               color: #8e8e8e;

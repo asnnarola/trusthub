@@ -212,8 +212,8 @@ export default {
           if (res.data.g2FA === 'GOOGLE_AUTHENTICATOR') {
             this.Auth_Show = true
             this.qrCode = 'http://beta.trusthub.cloud:8080/google-authenticator/code/generate/' + res.data.email
-          }
-          if (res.data.g2FA == 'GOOGLE_AUTHENTICATOR') {
+          // }
+          // if (res.data.g2FA == 'GOOGLE_AUTHENTICATOR') {
             console.log(res.data.g2FA);
             this.tglSwitch = true
           } else {

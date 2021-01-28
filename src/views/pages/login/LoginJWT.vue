@@ -30,6 +30,8 @@
     <div class="form-group row mt-6">
       <vue-recaptcha
         @verify="onVerify"
+         @expired="onCaptchaExpired"
+         ref="recaptcha"
         sitekey="6LczcvwZAAAAADaEiDNCSCRjShHTr6oFSnTeJ6jJ"
       >
       </vue-recaptcha>
@@ -49,11 +51,9 @@
         <br />
         <!-- <a class="fw-500" href="/forgot-password-signature"> -->
         <span v-for="(item, index) in optionsLoginType" :key="index">
-          <a class="fw-500 text-dark" @click="SelcetLogin(index)">
+          <a class="fw-500 text-dark"  :href="item.id == 1 ?'/forgot-password' : '#'">
             <!-- <u>{{ $t("ForgotSignaturePassword") }}</u> -->
-            <label
-              ><u>{{ item.shortText }} </u></label
-            >
+              <u>{{ item.shortText }} </u>
           </a>
           <span class="pl-1 pr-1" v-if="item.id != 3">|</span>
         </span>
@@ -75,7 +75,7 @@
                 v-model="selectedLoginType"
                 :options="optionsLoginType"
                 placeholder="Select Login Option"
-                class="mt-1 loginoption-select"
+                class="loginoption-select"
                 @input="onLoginChange"
               />
               <!-- {{selectedLoginType}} -->
@@ -176,7 +176,7 @@
           <div class="row">
             <div class="wrapper position-relative">
               <div class="select-block d-flex justify-content-between">
-                <div class="content-left">
+                <div class="content-left pr-6">
                   <h6 class="text-white mb-1 f-15">
                     <b>OTP</b>
                   </h6>
@@ -244,10 +244,10 @@
                 separator=" "
                 :num-inputs="6"
                 :should-auto-focus="true"
-                input-type="text"
+                input-type="password"
                 @on-complete="handleOnComplete"
               />
-              <div>a</div>
+              <!-- <div>a</div> -->
               </div>
                 <!-- @on-change="handleOnChange" -->
               <p class="text-center mb-1 fw-500">Place Your OTP</p>
@@ -302,23 +302,6 @@ export default {
       //   val6: ''
       // },
       Auth_Show: false,
-      loginModel: [
-        {
-          label: 'label 1'
-        },
-        {
-          label: 'label 2'
-        },
-        {
-          label: 'label 3'
-        },
-        {
-          label: 'label 4'
-        },
-        {
-          label: 'label 5'
-        },
-      ],
       MoreLoginOption: [
         {
           id: 1,
@@ -370,11 +353,11 @@ export default {
           }
         }
       },
-      selectedLoginType: { "id": 1, "label": "TrustHub Unique Id" },
+      selectedLoginType: { "id": 1, "label": "TrustHub UUID" },
       optionsLoginType: [
-        { id: 1, label: 'TrustHub Unique Id', shortText: 'Trusthub' },
-        { id: 2, label: 'Certified Signature User', shortText: 'Sign' },
-        { id: 3, label: 'Identity Access Manager', shortText: 'IAM' },
+        { id: 1, label: 'TrustHub UUID', shortText: 'Trusthub' },
+        { id: 2, label: 'Signature User', shortText: 'Sign' },
+        { id: 3, label: 'Advanced IAM', shortText: 'IAM' },
       ],
       isLogin: false
     }
@@ -463,15 +446,15 @@ export default {
         this.Email_Label = this.$t('UserName')
       }
     },
-    SelcetLogin (i) {
-      this.selectedLoginType = this.optionsLoginType[i]
-      console.log('Event', this.selectedLoginType.id);
-      if (this.selectedLoginType.id == 1) {
-        this.Email_Label = this.$t('Email')
-      } else if (this.selectedLoginType.id == 3) {
-        this.Email_Label = this.$t('UserName')
-      }
-    },
+    // SelcetLogin (i) {
+    //   this.selectedLoginType = this.optionsLoginType[i]
+    //   console.log('Event', this.selectedLoginType.id);
+    //   if (this.selectedLoginType.id == 1) {
+    //     this.Email_Label = this.$t('Email')
+    //   } else if (this.selectedLoginType.id == 3) {
+    //     this.Email_Label = this.$t('UserName')
+    //   }
+    // },
     loginJWT () {
       if (!this.checkLogin()) return
       if (!this.robot) return
@@ -631,8 +614,13 @@ export default {
       this.$router.push('/register').catch(() => { })
     },
     onVerify (response) {
-      console.log('res=>', response);
+      // console.log('res=>', response);
       if (response) this.robot = true;
+    },
+    onCaptchaExpired() {
+      this.robot = false
+      this.$refs.recaptcha.reset();
+      console.log(this.robot);
     },
     // SocialLogin
     AuthProvider (provider) {
@@ -731,9 +719,14 @@ export default {
   }
   @media screen and (max-width:575px){
       max-width: 60px;
-      min-width: 40px;
+      min-width: 36px;
       height: 60px;
-      font-size: 26px;
+      font-size: 24px;
+      background-size: 80% 4px;
+      background-position: center 95%;
+  }
+  @media screen and (max-width:425px){
+    height:50px;
   }
 }
 .otp-input::-webkit-inner-spin-button,

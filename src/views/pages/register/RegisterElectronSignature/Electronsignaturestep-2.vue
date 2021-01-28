@@ -122,21 +122,26 @@
         />
       </div>
       <div class="flex flex-wrap justify-between RF-content verify-btn">
-        <vs-button class="mt-6 btn-gray"> {{$t('Verify')}} </vs-button>
+        <vs-button class="mt-6 btn-gray"> {{ $t("Verify") }} </vs-button>
       </div>
     </div>
     <div class="form-group row mt-6">
-      <vue-recaptcha @verify="onVerify" sitekey="6LczcvwZAAAAADaEiDNCSCRjShHTr6oFSnTeJ6jJ">
+      <vue-recaptcha
+        @verify="onVerify"
+        sitekey="6LczcvwZAAAAADaEiDNCSCRjShHTr6oFSnTeJ6jJ"
+        @expired="onCaptchaExpired"
+        ref="recaptcha"
+      >
       </vue-recaptcha>
     </div>
     <span class="text-danger text-sm">{{ errors.first("joiningcode") }}</span>
     <p class="txt-gray mt-4">
-      {{$t('ElectronStep2Note')}}
+      {{ $t("ElectronStep2Note") }}
     </p>
 
     <div class="text-right">
       <vs-button class="mt-2 mb-6 btn-green w-225px" @click="goTostep3()">
-        {{$t('Next')}}
+        {{ $t("Next") }}
       </vs-button>
     </div>
   </div>
@@ -204,22 +209,26 @@ export default {
     onVerify (response) {
       if (response) this.robot = true;
     },
+    onCaptchaExpired () {
+      this.robot = false
+      this.$refs.recaptcha.reset();
+    },
   },
-  mounted() {
+  mounted () {
     console.log(this.RegisterData);
     setInterval(() => {
-      this.Country= this.$t('Country')
-      this.DocumentType= this.$t('DocumentType')
-      this.DocumentNumber= this.$t('DocumentNumber')
-      this.Sex= this.$t('Sex')
-      this.IdentificationCode= this.$t('IdentificationCode')
-      this.MobilePhone= this.$t('MobilePhone')
-      this.BirthPlace= this.$t('BirthPlace')
-      this.CompanyJoiningCode= this.$t('CompanyJoiningCode')
+      this.Country = this.$t('Country')
+      this.DocumentType = this.$t('DocumentType')
+      this.DocumentNumber = this.$t('DocumentNumber')
+      this.Sex = this.$t('Sex')
+      this.IdentificationCode = this.$t('IdentificationCode')
+      this.MobilePhone = this.$t('MobilePhone')
+      this.BirthPlace = this.$t('BirthPlace')
+      this.CompanyJoiningCode = this.$t('CompanyJoiningCode')
     }, 1);
   },
-  props:{
-    RegisterData:{}
+  props: {
+    RegisterData: {}
   }
 }
 </script>

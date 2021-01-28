@@ -41,7 +41,7 @@
                   class="w-full"
                   @blur="checkValidate"
                 />
-                <span class="text-danger text-sm">
+                <span class="text-danger text-sm" v-if="hideFolderError">
                   {{
                     errors.first("folderName")
                       ? "The Folder name field is required."
@@ -115,12 +115,10 @@
                   v-for="data in hilightsData"
                   :key="data.id"
                 >
-                  <i :class="data.icon"></i>
-                  <span
-                    >{{ $t(data.i18n) || data.title }} ({{
-                      data.children.length
-                    }})</span
-                  >
+                  <i :class="data.icon" @click="OnhilightsData(data.id)"></i>
+                  <span @click="OnhilightsData(data.id)">
+                    {{ $t(data.i18n) || data.title }} ({{data.count }})
+                  </span>
                 </div>
               </div>
             </vx-card>
@@ -522,7 +520,7 @@
             </div>
             <div v-if="onList && !onGrid" class="pagination-block">
               <vs-pagination
-                v-if="pagenationData.length > 0"
+                v-if="pagenationData.length > 10"
                 :total="total"
                 v-model="currentPage"
                 :max="5"
@@ -711,35 +709,35 @@ export default {
           id: 1,
           title: 'in',
           icon: "fas fa-sign-in-alt",
-          children: [],
+          count: 0,
           i18n: 'in'
         },
         {
           id: 2,
           title: 'Out',
           icon: "fas fa-sign-out-alt",
-          children: [],
+          count: 0,
           i18n: 'out'
         },
         {
           id: 3,
           title: 'Stared',
           icon: "fas fa-star",
-          children: [],
+          count: 0,
           i18n: 'stared'
         },
         {
           id: 4,
           title: 'Shared Links',
           icon: "fas fa-share-alt",
-          children: [],
+          count: 0,
           i18n: 'SharedLinks'
         },
         {
           id: 5,
           title: 'Trash',
           icon: "fas fa-trash-alt",
-          children: [],
+          count: 0,
           i18n: 'Trash'
         },
       ],
@@ -855,7 +853,8 @@ export default {
       displayTableData: [],
       total: 0,
       folderNameErrorMsg: '',
-      folderNameErrorStatus: false
+      folderNameErrorStatus: false,
+      hideFolderError: true
     }
   },
   async mounted () {
@@ -866,6 +865,8 @@ export default {
     this.startData = this.currentPage * this.startData
     this.endData = this.currentPage * this.endData
     await this.getDocuments()
+    await this.getInboxCount()
+    await this.getOutboxCount()
   },
   computed: {
     validateForm () {
@@ -912,16 +913,11 @@ export default {
       console.log('endData', this.endData);
       for (let i = this.startData; i < this.endData; i++) {
         const element = this.subFilesdata[i];
-        console.log(element);
         if (element != undefined) {
           this.pagenationData.push(element)
         }
       }
       this.startData = this.endData
-      console.log(this.pagenationData);
-      console.log('startData', this.startData);
-      console.log('endData', this.endData);
-      console.log('subFilesdata', this.subFilesdata.length);
     },
     onMouseenter (data) {
       console.log('Sub Data =>', data);
@@ -983,22 +979,11 @@ export default {
           this.current_location = res.data.location
           this.selectedFile = []
           this.onNext()
-          // axios({
-          //   method: 'get',
-          //   url: 'folders/' + this.rootId,
-          //   headers: { Authorization: 'Bearer ' + token }
-          // }).then(res => {
-          //   console.log('Token =>', res);
-          //   this.folderData = res.data.children
-          //   this.subFilesdata = res.data.children
-          //   this.current_parentID = res.data.id
-          //   this.current_location = res.data.location
-          //   this.selectedFile = []
-          // })
         }
       })
     },
     checkValidate () {
+      this.hideFolderError = true
       if (this.folderName != '' && (this.folderName == 'root' || this.folderName == 'ROOT')) {
         this.folderNameErrorMsg = "You Can't set " + this.folderName + " As Folder name."
         this.folderNameErrorStatus = true
@@ -1020,7 +1005,6 @@ export default {
       // || this.folderName == 'system' || this.folderName == 'inbox' || this.folderName == 'outbox' || this.folderName == 'private' || this.folderName != 'public')) {
     },
     getDocumentsByID () {
-      // this.getDocuments()
       const token = localStorage.getItem('accessToken')
       axios({
         method: 'get',
@@ -1103,6 +1087,7 @@ export default {
       }
     },
     folderClear () {
+      this.hideFolderError = false
       this.folderpopupActive = false
       this.folderName = ''
       this.folderNameErrorMsg = ''
@@ -1177,7 +1162,6 @@ export default {
           let link = document.createElement('a')
           link.href = window.URL.createObjectURL(blob)
           this.$vs.loading.close()
-          // this.getDocuments()
         })
         .catch((err) => {
           console.log('Error =>', err)
@@ -1188,6 +1172,47 @@ export default {
       this.folderpopupActive = true
       this.isRename = true
       this.folderName = this.selectedFile.text
+    },
+    OnhilightsData(id){
+      let url = ''
+      if (id == 1) {
+        url = 'folders/system/inbox'
+      } else if (id == 2) {
+        url = 'folders/system/outbox'
+      }
+      const token = localStorage.getItem('accessToken')
+      return axios({
+        method: 'get',
+        url: url,
+        headers: { Authorization: 'Bearer ' + token },
+      }). then( res => {
+        console.log(res);
+        this.subFilesdata = res.data.data
+        // this.hilightsData[id].count = res.data.count
+        this.onNext()
+      })
+    },
+    getInboxCount(){
+      const token = localStorage.getItem('accessToken')
+      return axios({
+        method: 'get',
+        url: 'folders/system/inbox',
+        headers: { Authorization: 'Bearer ' + token },
+      }). then( res => {
+        console.log(res);
+        this.hilightsData[0].count = res.data.count
+      })
+    },
+    getOutboxCount(){
+      const token = localStorage.getItem('accessToken')
+      return axios({
+        method: 'get',
+        url: 'folders/system/outbox',
+        headers: { Authorization: 'Bearer ' + token },
+      }). then( res => {
+        console.log(res);
+        this.hilightsData[1].count = res.data.count
+      })
     },
     onSearch () {
       // this.isLoading
@@ -1203,7 +1228,15 @@ export default {
         params: { name: this.search, parentId: this.current_parentID }
       })
         .then(res => {
-          this.subFilesdata = res.data
+          this.onList = true;
+      this.onGrid = false;
+
+      // if(this.onList == true){
+      //   this.pagenationData = res.data
+      // } else if (this.onGrid == true) {
+        this.subFilesdata = res.data
+      // }
+      this.onNext()
         })
     },
   },
