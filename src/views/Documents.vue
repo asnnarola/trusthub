@@ -13,6 +13,7 @@
                   color="gray"
                   class="maxw-100 btn-gray border-radius-0 w-100 mr-3 mb-3"
                   @click="folderpopupActive = true"
+                  :disabled="isInbox_Outbox"
                 >
                   {{ $t("New") }}
                 </vs-button>
@@ -20,7 +21,7 @@
                   color="gray"
                   class="mr-3 maxw-100 btn-gray border-radius-0 w-100"
                   @click="uploadpopupActive = true"
-                  :disabled="current_location == '/'"
+                  :disabled="isInbox_Outbox"
                 >
                   {{ $t("Upload") }}
                 </vs-button>
@@ -39,7 +40,7 @@
                   :label-placeholder="Folder_name"
                   v-model="folderName"
                   class="w-full"
-                  @blur="checkValidate"
+                  @input="checkValidate"
                 />
                 <span class="text-danger text-sm" v-if="hideFolderError">
                   {{
@@ -55,7 +56,7 @@
                 <div class="flex flex-wrap justify-between mt-5 mb-3 LT-wrap">
                   <vs-button
                     class="btn-green"
-                    :disabled="!validateForm"
+                    :disabled="!validateForm || folderNameErrorMsg != ''"
                     @click="createFolder()"
                   >
                     {{ isRename ? $t("Rename") : $t("Create") }}
@@ -741,7 +742,6 @@ export default {
           i18n: 'Trash'
         },
       ],
-
       search: '',
       onGrid: true,
       imageforGrid: 'grid',
@@ -854,7 +854,8 @@ export default {
       total: 0,
       folderNameErrorMsg: '',
       folderNameErrorStatus: false,
-      hideFolderError: true
+      hideFolderError: true,
+      isInbox_Outbox : false
     }
   },
   async mounted () {
@@ -920,10 +921,11 @@ export default {
       this.startData = this.endData
     },
     onMouseenter (data) {
-      console.log('Sub Data =>', data);
+      // console.log('Sub Data =>', data, '***', this.isInbox_Outbox);
       this.selectedFile = data
     },
     selected (node) {
+      this.isInbox_Outbox = false
       this.current_parentID = node.model.id
       this.current_location = node.model.location
       this.subFilesdata = node.model.children
@@ -984,20 +986,22 @@ export default {
     },
     checkValidate () {
       this.hideFolderError = true
-      if (this.folderName != '' && (this.folderName == 'root' || this.folderName == 'ROOT')) {
-        this.folderNameErrorMsg = "You Can't set " + this.folderName + " As Folder name."
+      const fName = this.folderName.toLowerCase().trim()
+      console.log(fName);
+      if (this.folderName != '' && (fName == 'root')) {
+        this.folderNameErrorMsg = "You can't set " + this.folderName + " As Folder name."
         this.folderNameErrorStatus = true
-      } else if (this.folderName != '' && (this.folderName == 'system' || this.folderName == 'SYSTEM')) {
-        this.folderNameErrorMsg = "You Can't set " + this.folderName + " As Folder name."
+      } else if (this.folderName != '' && (fName == 'system')) {
+        this.folderNameErrorMsg = "You can't set " + this.folderName + " As Folder name."
         this.folderNameErrorStatus = true
-      } else if (this.folderName != '' && (this.folderName == 'inbox' || this.folderName == 'INBOX')) {
-        this.folderNameErrorMsg = "You Can't set " + this.folderName + " As Folder name."
+      } else if (this.folderName != '' && (fName == 'inbox')) {
+        this.folderNameErrorMsg = "You can't set " + this.folderName + " As Folder name."
         this.folderNameErrorStatus = true
-      } else if (this.folderName != '' && (this.folderName == 'private' || this.folderName == 'PRIVATE')) {
-        this.folderNameErrorMsg = "You Can't set " + this.folderName + " As Folder name."
+      } else if (this.folderName != '' && (fName == 'private')) {
+        this.folderNameErrorMsg = "You can't set " + this.folderName + " As Folder name."
         this.folderNameErrorStatus = true
-      } else if (this.folderName != '' && (this.folderName == 'public' || this.folderName == 'PUBLIC')) {
-        this.folderNameErrorMsg = "You Can't set " + this.folderName + " As Folder name."
+      } else if (this.folderName != '' && (fName == 'public')) {
+        this.folderNameErrorMsg = "You can't set " + this.folderName + " As Folder name."
         this.folderNameErrorStatus = true
       } else {
         this.folderNameErrorMsg = ''
@@ -1036,6 +1040,16 @@ export default {
       if (!this.validateForm) return
       // Loading
       if (this.isRename) {
+        if (this.isInbox_Outbox == true) {
+        this.$vs.notify({
+          title: 'Error',
+          text: 'You are not able to Create Folder here',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle',
+          color: 'danger'
+        })
+        return
+      }
         this.isLoading
         const payload = {
           folderDetails: {
@@ -1067,6 +1081,16 @@ export default {
             })
         }
       } else if (!this.isRename) {
+        if (this.isInbox_Outbox == true) {
+        this.$vs.notify({
+          title: 'Error',
+          text: 'You are not able to Rename This File/Folder',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle',
+          color: 'danger'
+        })
+        return
+      }
         this.isLoading
         const payload = {
           folderDetails: {
@@ -1102,6 +1126,16 @@ export default {
       console.log('Event ', this.files);
     },
     uploadFiles () {
+      if (this.isInbox_Outbox == true) {
+        this.$vs.notify({
+          title: 'Error',
+          text: 'You are not able to Upload File in This Folder',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle',
+          color: 'danger'
+        })
+        return
+      }
       const formData = new FormData();
       formData.append('uploadLocation', this.current_location);
       formData.append('parentId', this.current_parentID);
@@ -1123,6 +1157,16 @@ export default {
       this.files = []
     },
     RemoveDocument () {
+      if (this.isInbox_Outbox == true) {
+        this.$vs.notify({
+          title: 'Error',
+          text: 'You are not able to Delete This File/Folder',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle',
+          color: 'danger'
+        })
+        return
+      }
       if (this.selectedFile.type == 'Folder') {
         this.isLoading
         this.$store.dispatch('document/deleteFolder', this.selectedFile.id)
@@ -1146,7 +1190,16 @@ export default {
       }
     },
     DownloadFile () {
-      console.log(this.selectedFile)
+      if (this.selectedFile.type == 'Folder') {
+        this.$vs.notify({
+          title: 'Error',
+          text: 'You can not Download Folder',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle',
+          color: 'danger'
+        })
+        return
+      }
       this.isLoading
       const token = localStorage.getItem('accessToken')
       axios({
@@ -1169,11 +1222,22 @@ export default {
         )
     },
     RenameDocument () {
+      if (this.isInbox_Outbox == true) {
+        this.$vs.notify({
+          title: 'Error',
+          text: 'You are not able to Rename This File/Folder',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle',
+          color: 'danger'
+        })
+        return
+      }
       this.folderpopupActive = true
       this.isRename = true
       this.folderName = this.selectedFile.text
     },
     OnhilightsData(id){
+      this.isInbox_Outbox = true
       let url = ''
       if (id == 1) {
         url = 'folders/system/inbox'
@@ -1228,16 +1292,9 @@ export default {
         params: { name: this.search, parentId: this.current_parentID }
       })
         .then(res => {
-          this.onList = true;
-      this.onGrid = false;
-
-      // if(this.onList == true){
-      //   this.pagenationData = res.data
-      // } else if (this.onGrid == true) {
         this.subFilesdata = res.data
-      // }
-      this.onNext()
-        })
+        this.onNext()
+      })
     },
   },
   components: {
