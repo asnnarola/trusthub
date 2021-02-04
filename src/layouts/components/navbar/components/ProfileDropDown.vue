@@ -3,7 +3,169 @@
     class="the-navbar__user-meta flex items-center justify-content-end"
     v-if="activeUserInfo"
   >
-    <div class="carousel-example w-100">
+    <div
+      class="carousel-example w-100"
+      v-if="
+        activeUserInfo.userRole === 'operator' ||
+        activeUser.userRole === 'operator'
+      "
+    >
+      <swiper
+        :class="subUserData.length < 2 ? 'swiper-nopad' : ''"
+        :options="swiperOption"
+        :dir="$vs.rtl ? 'rtl' : 'ltr'"
+        :key="$vs.rtl"
+      >
+        <swiper-slide :class="subUserData.length < 2 ? 'user_2' : ''">
+          <div
+            class="d-flex flex-wrap slideuser-warpper justify-content-center pr-4 align-items-center"
+          >
+            <div
+              class="text-right leading-tight hidden sm:block text-white slideuser-name"
+            >
+              <p class="font-semibold">{{ activeUserInfo.displayName }}</p>
+              <small class="text-transform-capitalize">{{
+                activeUserInfo.userRole
+              }}</small>
+            </div>
+            <vs-dropdown
+              vs-custom-content
+              vs-trigger-click
+              class="cursor-pointer"
+            >
+              <div class="con-img ml-3">
+                <img
+                  v-if="activeUserInfo.photoURL"
+                  key="onlineImg"
+                  :src="activeUserInfo.photoURL"
+                  alt="user-img"
+                  width="40"
+                  height="40"
+                  class="rounded-full shadow-md cursor-pointer block slideuser-img"
+                />
+              </div>
+
+              <vs-dropdown-menu class="vx-navbar-dropdown">
+                <ul style="min-width: 9rem">
+                  <li
+                    class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
+                  >
+                    <!-- @click="$router.push('/profile').catch(() => {})"> -->
+                    <!-- <feather-icon icon="UserIcon" svgClasses="w-4 h-4" /> -->
+                    <i class="fas fa-user"></i>
+                    <span class="ml-2">Profile</span>
+                  </li>
+
+                  <li
+                    class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
+                  >
+                    <!-- @click="$router.push('/apps/email').catch(() => {})"> -->
+                    <!-- <feather-icon icon="feather icon-settings" svgClasses="w-4 h-4" /> -->
+                    <i class="fas fa-cog"></i>
+                    <span class="ml-2">Settings</span>
+                  </li>
+
+                  <li
+                    class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
+                    @click="$router.push('/apps/todo').catch(() => {})"
+                  >
+                    <!-- <feather-icon icon="CheckSquareIcon" svgClasses="w-4 h-4" /> -->
+                    <i class="fas fa-qrcode"></i>
+                    <span class="ml-2">Sync</span>
+                  </li>
+                  <li
+                    class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
+                    @click="update2FA()"
+                  >
+                    <!-- <feather-icon icon="CheckSquareIcon" svgClasses="w-4 h-4" /> -->
+                    <vs-switch color="success" v-model="tglSwitch" />
+                    <span class="ml-2">2FA</span>
+                  </li>
+                  <vs-divider class="m-1" />
+                  <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white" @click="logout">
+                    <!-- <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4" /> -->
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="ml-2">Logout</span>
+                  </li>
+                </ul>
+              </vs-dropdown-menu>
+            </vs-dropdown>
+          </div>
+        </swiper-slide>
+
+        <swiper-slide
+          v-for="(data, index) in subUserData"
+          :key="index"
+          :class="subUserData.length < 2 ? 'user_2' : ''"
+        >
+          <div
+            class="d-flex flex-wrap slideuser-warpper justify-content-center pr-4 align-items-center"
+          >
+            <div
+              class="text-right leading-tight hidden sm:block text-white slideuser-name"
+            >
+              <p class="font-semibold">{{ data.displayName }}</p>
+              <small class="text-transform-capitalize">{{
+                data.userRole
+              }}</small>
+            </div>
+            <vs-dropdown
+              vs-custom-content
+              vs-trigger-click
+              class="cursor-pointer"
+            >
+              <div class="con-img ml-3">
+                <img
+                  v-if="activeUserInfo.photoURL"
+                  key="onlineImg"
+                  :src="data.photoURL"
+                  alt="user-img"
+                  width="40"
+                  height="40"
+                  class="rounded-full shadow-md cursor-pointer block"
+                />
+              </div>
+
+              <vs-dropdown-menu class="vx-navbar-dropdown">
+                <ul style="min-width: 9rem">
+                  <li
+                    class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
+                  >
+                    <!-- @click="$router.push('/profile').catch(() => {})"> -->
+                    <!-- <feather-icon icon="UserIcon" svgClasses="w-4 h-4" /> -->
+                    <i class="fas fa-user"></i>
+                    <span class="ml-2">Profile</span>
+                  </li>
+
+                  <vs-divider class="m-1" />
+                  <!-- <vs-divider class="mb-0 mt-0" /> -->
+
+                  <li
+                    class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
+                    @click="removeUser(index)"
+                  >
+                    <!-- <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4" /> -->
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="ml-2">Logout</span>
+                  </li>
+                </ul>
+              </vs-dropdown-menu>
+            </vs-dropdown>
+          </div>
+        </swiper-slide>
+        <div
+          class="swiper-button-prev"
+          v-if="subUserData.length > 2"
+          slot="button-prev"
+        ></div>
+        <div
+          class="swiper-button-next"
+          v-if="subUserData.length > 2"
+          slot="button-next"
+        ></div>
+      </swiper>
+    </div>
+    <div class="carousel-example w-100" v-else>
       <div
         class="d-flex flex-wrap slideuser-warpper single-user justify-content-center pr-4 align-items-center"
       >
@@ -93,22 +255,27 @@
             <div class="wrapper position-relative">
               <div class="select-block d-flex justify-content-between">
                 <div class="content-left">
-                <p class="text-white f-13">
-                    Please Scane this QR code to link <br>with the Google Authenticator App
+                  <p class="text-white f-13">
+                    Please Scane this QR code to link <br />with the Google
+                    Authenticator App
                   </p>
                 </div>
                 <div class="content-right">
                   <h5>
-                    <a class="txt-dark-gray" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=it"><b>Google Authenticator</b></a>
+                    <a
+                      class="txt-dark-gray"
+                      href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=it"
+                      ><b>Google Authenticator</b></a
+                    >
                   </h5>
                 </div>
               </div>
-                  <div class="mt-5">
-                  <vs-divider/>
-                  <div class="d-flex align-items-center justify-content-center">
-                    <img :src="qrCode" />
-                  </div>
-                  </div>
+              <div class="mt-5">
+                <vs-divider />
+                <div class="d-flex align-items-center justify-content-center">
+                  <img :src="qrCode" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -161,7 +328,36 @@ export default {
             spaceBetween: 20
           }
         }
-      }
+      },
+      subUserData: [
+        {
+          uid: 1,
+          displayName: 'Jake Paolo',
+          password: 'Password',
+          photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
+          email: 'operator@operator.com',
+          userRole: 'signer',
+          phoneNumber: null
+        },
+        {
+          uid: 2,
+          displayName: 'Lee Paolo',
+          password: 'Password',
+          photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
+          email: 'operator@operator.com',
+          userRole: 'signer',
+          phoneNumber: null
+        },
+        {
+          uid: 3,
+          displayName: 'Hance Paolo',
+          password: 'Password',
+          photoURL: require('@/assets/images/portrait/small/avatar-s-5.jpg'),
+          email: 'operator@operator.com',
+          userRole: 'witness',
+          phoneNumber: null
+        },
+      ]
     }
   },
   components: {
@@ -173,14 +369,14 @@ export default {
       // console.log('User Info =>', this.$store.state.AppActiveUser);
       return this.$store.state.AppActiveUser
     },
-    subUserData () {
-      console.log('Sub Data =>>', this.activeUserInfo)
-      if (this.activeUserInfo.userRole === 'operator') {
-        return this.activeUserInfo.subUsers
-      } else {
-        return []
-      }
-    },
+    // subUserData () {
+    //   console.log('Sub Data =>>', this.activeUserInfo)
+    //   if (this.activeUserInfo.userRole === 'operator') {
+    //     return this.activeUserInfo.subUsers
+    //   } else {
+    //     return []
+    //   }
+    // },
     windowWidth () { return this.$store.state.windowWidth }
   },
   created () {
@@ -211,9 +407,10 @@ export default {
           console.log(res.data.g2FA);
           if (res.data.g2FA === 'GOOGLE_AUTHENTICATOR') {
             this.Auth_Show = true
-            this.qrCode = 'http://beta.trusthub.cloud:8080/google-authenticator/code/generate/' + res.data.email
-          // }
-          // if (res.data.g2FA == 'GOOGLE_AUTHENTICATOR') {
+            this.qrCode = 'https://beta.trusthub.cloud:8080/google-authenticator/code/generate/' + res.data.email
+            // this.qrCode = 'http://192.168.1.243:8081/google-authenticator/code/generate/' + res.data.email
+            // }
+            // if (res.data.g2FA == 'GOOGLE_AUTHENTICATOR') {
             console.log(res.data.g2FA);
             this.tglSwitch = true
           } else {
@@ -222,16 +419,16 @@ export default {
           }
         } else {
           this.$vs.notify({
-              title: 'Error',
-              text: 'Request Fail',
-              iconPack: 'feather',
-              icon: 'icon-alert-circle',
-              color: 'danger'
-            })
+            title: 'Error',
+            text: 'Request Fail',
+            iconPack: 'feather',
+            icon: 'icon-alert-circle',
+            color: 'danger'
+          })
         }
       })
-      .catch(error => {
-        console.log(error.response.data);
+        .catch(error => {
+          console.log(error.response.data);
           this.$vs.loading.close()
           this.$vs.notify({
             title: 'Error',
@@ -243,7 +440,8 @@ export default {
         })
     },
     removeUser (data) {
-      this.activeUserInfo.subUsers.splice(data, 1)
+      // this.activeUserInfo.subUsers.splice(data, 1)
+      this.subUserData.splice(data, 1)
     },
     logout () {
       // if user is logged in via auth0

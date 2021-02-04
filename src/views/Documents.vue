@@ -35,7 +35,7 @@
                 <h3>{{ isRename ? $t("Rename") : $t("Create") }}</h3>
                 <vs-input
                   v-validate="'required'"
-                  data-vv-validate-on="blur"
+                  data-vv-validate-on="input|blur"
                   name="folderName"
                   :label-placeholder="Folder_name"
                   v-model="folderName"
@@ -118,7 +118,7 @@
                 >
                   <i :class="data.icon" @click="OnhilightsData(data.id)"></i>
                   <span @click="OnhilightsData(data.id)">
-                    {{ $t(data.i18n) || data.title }} ({{data.count }})
+                    {{ $t(data.i18n) || data.title }} ({{ data.count }})
                   </span>
                 </div>
               </div>
@@ -135,6 +135,7 @@
                   icon="icon-search"
                   placeholder="Search"
                   v-model="search"
+                  @input="onSearch()"
                 />
                 <template slot="append">
                   <div class="append-text btn-addon">
@@ -245,7 +246,7 @@
               <vue-context ref="menu" class="foldersubmenu-main">
                 <li
                   @click="DownloadFile()"
-                  :disabled="selectedFile.type == 'Folder'"
+                  v-if="selectedFile.type != 'Folder'"
                 >
                   <i class="fas fa-download"></i>
                   <span>Download</span>
@@ -418,13 +419,13 @@
                     <a class="flex items-center">Copy</a>
                   </vs-dropdown>
                 </li>
-                <li @click="RenameDocument()">
+                <li @click="RenameDocument()" v-if="!isInbox_Outbox">
                   <vs-dropdown class="cursor-pointer">
                     <a class="flex items-center">Rename</a>
                   </vs-dropdown>
                 </li>
 
-                <li @click="RemoveDocument()">
+                <li @click="RemoveDocument()" v-if="!isInbox_Outbox">
                   <i class="fas fa-trash-alt"></i>
                   <span>Remove</span>
                 </li>
@@ -521,7 +522,7 @@
             </div>
             <div v-if="onList && !onGrid" class="pagination-block">
               <vs-pagination
-                v-if="pagenationData.length > 10"
+                v-if="subFilesdata.length > pageData"
                 :total="total"
                 v-model="currentPage"
                 :max="5"
@@ -855,7 +856,7 @@ export default {
       folderNameErrorMsg: '',
       folderNameErrorStatus: false,
       hideFolderError: true,
-      isInbox_Outbox : false
+      isInbox_Outbox: false
     }
   },
   async mounted () {
@@ -879,6 +880,7 @@ export default {
   },
   methods: {
     getFiles (file) {
+      this.search = ''
       if (file.type === 'Folder') {
         this.subFilesdata = file.children
         console.log('Folder Data =>', this.subFilesdata);
@@ -910,8 +912,8 @@ export default {
       this.endData = this.currentPage * this.pageData
       this.pagenationData = []
       console.log(e);
-      console.log('startData', this.startData);
-      console.log('endData', this.endData);
+      console.log('startData', this.subFilesdata);
+      // console.log('endData', this.endData);
       for (let i = this.startData; i < this.endData; i++) {
         const element = this.subFilesdata[i];
         if (element != undefined) {
@@ -925,6 +927,7 @@ export default {
       this.selectedFile = data
     },
     selected (node) {
+      this.search = ''
       this.isInbox_Outbox = false
       this.current_parentID = node.model.id
       this.current_location = node.model.location
@@ -997,6 +1000,9 @@ export default {
       } else if (this.folderName != '' && (fName == 'inbox')) {
         this.folderNameErrorMsg = "You can't set " + this.folderName + " As Folder name."
         this.folderNameErrorStatus = true
+      } else if (this.folderName != '' && (fName == 'outbox')) {
+        this.folderNameErrorMsg = "You can't set " + this.folderName + " As Folder name."
+        this.folderNameErrorStatus = true
       } else if (this.folderName != '' && (fName == 'private')) {
         this.folderNameErrorMsg = "You can't set " + this.folderName + " As Folder name."
         this.folderNameErrorStatus = true
@@ -1008,7 +1014,7 @@ export default {
       }
       // || this.folderName == 'system' || this.folderName == 'inbox' || this.folderName == 'outbox' || this.folderName == 'private' || this.folderName != 'public')) {
     },
-    getDocumentsByID () {
+    getDocumentsByID (lastPage) {
       const token = localStorage.getItem('accessToken')
       axios({
         method: 'get',
@@ -1023,7 +1029,6 @@ export default {
             url: 'folders/users/private',
             headers: { Authorization: 'Bearer ' + token }
           }).then(res => {
-            console.log(res);
             if (res.status == 200) {
               this.folderData = res.data.children
             }
@@ -1032,7 +1037,19 @@ export default {
           this.current_parentID = res.data.id
           this.current_location = res.data.location
           this.selectedFile = []
-          this.onNext()
+
+          if (lastPage != 1) {
+            this.onNext()
+          } else {
+            let tot = Math.floor(this.subFilesdata.length / this.pageData)
+            if (tot < this.subFilesdata.length / this.pageData) {
+              this.total = tot + 1
+            } else {
+              this.total = tot
+            }
+            const lPage = Math.ceil(this.subFilesdata.length / this.pageData)
+            this.onNext(lPage)
+          }
         }
       })
     },
@@ -1040,73 +1057,148 @@ export default {
       if (!this.validateForm) return
       // Loading
       if (this.isRename) {
+        console.log('AB here', this.selectedFile.type);
         if (this.isInbox_Outbox == true) {
-        this.$vs.notify({
-          title: 'Error',
-          text: 'You are not able to Create Folder here',
-          iconPack: 'feather',
-          icon: 'icon-alert-circle',
-          color: 'danger'
-        })
-        return
-      }
-        this.isLoading
-        const payload = {
-          folderDetails: {
-            newName: this.folderName,
-            id: this.selectedFile.id,
-          }
+          this.$vs.notify({
+            title: 'Error',
+            text: 'You are not able to Create Folder here',
+            iconPack: 'feather',
+            icon: 'icon-alert-circle',
+            color: 'danger'
+          })
+          return
         }
+        this.isLoading
         if (this.selectedFile.type == 'File') {
-          this.$store.dispatch('document/renameFile', payload)
-            .then(() => {
+          console.log('AB here');
+          const token = localStorage.getItem('accessToken')
+          // this.$store.dispatch('document/renameFile', payload)
+          return axios.put('files/rename', { newName: this.folderName, id: this.selectedFile.id }, {
+            headers: {
+              Authorization: 'Bearer ' + token
+            }
+          }).then((res) => {
+            if (res.status == 200) {
               this.$vs.loading.close()
               this.isRename = false
               this.folderClear()
               this.getDocumentsByID()
-            })
+              this.$vs.notify({
+                title: 'Sucess',
+                text: res.data.successCode,
+                color: 'success'
+              })
+            } else {
+              this.$vs.notify({
+                title: 'Error',
+                text: 'Rename Fail ..!!',
+                iconPack: 'feather',
+                icon: 'icon-alert-circle',
+                color: 'danger'
+              })
+            }
+          })
             .errors((err) => {
-              console.log('Error =>', err);
+              this.$vs.loading.close()
+              this.$vs.notify({
+                title: 'Error',
+                text: error.response.data.errorMsg,
+                iconPack: 'feather',
+                icon: 'icon-alert-circle',
+                color: 'danger'
+              })
             })
         } else if (this.selectedFile.type == 'Folder') {
-          this.$store.dispatch('document/renameFolder', payload)
-            .then(() => {
+          const token = localStorage.getItem('accessToken')
+          // this.$store.dispatch('document/renameFolder', payload)
+          return axios.put('folders/rename', { newName: this.folderName, id: this.selectedFile.id }, {
+            headers: {
+              Authorization: 'Bearer ' + token
+            }
+          }).then((res) => {
+            if (res.status == 200) {
               this.$vs.loading.close()
               this.isRename = false
               this.folderClear()
               this.getDocumentsByID()
-            })
+              this.$vs.notify({
+                title: 'Sucess',
+                text: res.data.successCode,
+                color: 'success'
+              })
+            } else {
+              this.$vs.notify({
+                title: 'Error',
+                text: 'Rename Fail ..!!',
+                iconPack: 'feather',
+                icon: 'icon-alert-circle',
+                color: 'danger'
+              })
+            }
+          })
             .errors((err) => {
-              console.log('Error =>', err);
+              this.$vs.loading.close()
+              this.$vs.notify({
+                title: 'Error',
+                text: error.response.data.errorMsg,
+                iconPack: 'feather',
+                icon: 'icon-alert-circle',
+                color: 'danger'
+              })
             })
         }
       } else if (!this.isRename) {
         if (this.isInbox_Outbox == true) {
-        this.$vs.notify({
-          title: 'Error',
-          text: 'You are not able to Rename This File/Folder',
-          iconPack: 'feather',
-          icon: 'icon-alert-circle',
-          color: 'danger'
-        })
-        return
-      }
-        this.isLoading
-        const payload = {
-          folderDetails: {
-            name: this.folderName,
-            path: this.current_location,
-            parentId: this.current_parentID
-          }
+          this.$vs.notify({
+            title: 'Error',
+            text: 'You are not able to Rename This File/Folder',
+            iconPack: 'feather',
+            icon: 'icon-alert-circle',
+            color: 'danger'
+          })
+          return
         }
-        this.$store.dispatch('document/createFolder', payload)
-          .then(() => {
+        this.isLoading
+        const token = localStorage.getItem('accessToken')
+        return axios.post('folders', { name: this.folderName, path: this.current_location, parentId: this.current_parentID }, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        }).then((res) => {
+          console.log('res', res);
+          if (res.status == 200) {
             this.$vs.loading.close()
             this.folderClear()
-            this.getDocumentsByID()
-          })
-          .errors((err) => {
-            console.log('Error =>', err);
+            if (this.onList) {
+              this.getDocumentsByID(1)
+            } else {
+              this.getDocumentsByID()
+            }
+            this.$vs.notify({
+              title: 'Sucess',
+              text: 'Folder Create Successfully',
+              color: 'success'
+            })
+          } else {
+            this.$vs.notify({
+              title: 'Error',
+              text: 'Folder Create Fail ..!!',
+              iconPack: 'feather',
+              icon: 'icon-alert-circle',
+              color: 'danger'
+            })
+          }
+        })
+          .catch((error) => {
+            console.log(error.response.data.errorMsg);
+            this.$vs.loading.close()
+            this.$vs.notify({
+              title: 'Error',
+              text: error.response.data.errorMsg,
+              iconPack: 'feather',
+              icon: 'icon-alert-circle',
+              color: 'danger'
+            })
           })
       }
     },
@@ -1119,11 +1211,24 @@ export default {
     },
     setFiles (e) {
       this.files = []
-      console.log('Event ', e.target.files);
+      console.log('Event ', e);
       e.target.files.forEach(file => {
         this.files.push(file)
       });
-      console.log('Event ', this.files);
+      console.log(this.files);
+      this.files.forEach((file, index )=> {
+        if(file.size >= 20000000){
+          console.log('Event ', file.name, index);
+          this.$vs.notify({
+          title: 'Error',
+          text: file.name + 'File is to large',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle',
+          color: 'danger'
+        })
+          this.files.splice(index,1)
+        }
+      });
     },
     uploadFiles () {
       if (this.isInbox_Outbox == true) {
@@ -1142,14 +1247,47 @@ export default {
       this.files.forEach(file => {
         formData.append('files', file);
       });
-      this.$store.dispatch('document/uploadFiles', formData)
-        .then(() => {
-          this.$vs.loading.close()
-          this.getDocumentsByID()
-          this.uploadClear()
+      const token = localStorage.getItem('accessToken')
+      return axios.post('files/upload-file', formData, {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then((res) => {
+          if (res.status == 200) {
+            this.$vs.loading.close()
+            this.getDocumentsByID()
+            this.uploadClear()
+            if (this.onList) {
+              this.getDocumentsByID(1)
+            } else {
+              this.getDocumentsByID()
+            }
+            this.$vs.notify({
+              title: 'Sucess',
+              text: 'File Uploaded Successfully',
+              color: 'success'
+            })
+          } else {
+            this.$vs.notify({
+              title: 'Error',
+              text: 'File Uploading Fail ..!!',
+              iconPack: 'feather',
+              icon: 'icon-alert-circle',
+              color: 'danger'
+            })
+          }
         })
-        .catch((err) => {
-          console.log('Error =>', err)
+        .catch((error) => {
+          console.log(error.response.data.errorMsg);
+          this.$vs.loading.close()
+          this.$vs.notify({
+            title: 'Error',
+            text: error.response.data.errorMsg,
+            iconPack: 'feather',
+            icon: 'icon-alert-circle',
+            color: 'danger'
+          })
         })
     },
     uploadClear () {
@@ -1157,6 +1295,7 @@ export default {
       this.files = []
     },
     RemoveDocument () {
+      console.log('$$', this.selectedFile);
       if (this.isInbox_Outbox == true) {
         this.$vs.notify({
           title: 'Error',
@@ -1169,23 +1308,85 @@ export default {
       }
       if (this.selectedFile.type == 'Folder') {
         this.isLoading
-        this.$store.dispatch('document/deleteFolder', this.selectedFile.id)
-          .then(() => {
-            this.$vs.loading.close()
-            this.getDocumentsByID()
+        // this.$store.dispatch('document/deleteFolder', this.selectedFile.id)
+        const token = localStorage.getItem('accessToken')
+        return axios.delete('folders/' + this.selectedFile.id, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then((res) => {
+            console.log('$$', res);
+            if (res.status == 200) {
+              this.$vs.loading.close()
+              this.getDocumentsByID()
+              this.$vs.notify({
+                title: 'Sucess',
+                text: res.data.successCode,
+                color: 'success'
+              })
+            } else {
+              this.$vs.notify({
+                title: 'Error',
+                text: 'Folder Delete Fail ..!!',
+                iconPack: 'feather',
+                icon: 'icon-alert-circle',
+                color: 'danger'
+              })
+            }
           })
-          .catch((err) => {
-            console.log('Error =>', err)
+          .catch((error) => {
+            console.log('$$', error.response.data.errorMsg);
+            this.$vs.loading.close()
+            this.$vs.notify({
+              title: 'Error',
+              text: error.response.data.errorMsg,
+              iconPack: 'feather',
+              icon: 'icon-alert-circle',
+              color: 'danger'
+            })
           })
       } else if (this.selectedFile.type == 'File') {
+        console.log('$$ hjhjkhkhkjhkjhkjhkj');
+        const token = localStorage.getItem('accessToken')
         this.isLoading
-        this.$store.dispatch('document/deleteFile', this.selectedFile.id)
-          .then(() => {
-            this.$vs.loading.close()
-            this.getDocumentsByID()
+        // this.$store.dispatch('document/deleteFile', this.selectedFile.id)
+        return axios({
+          method: 'delete',
+          url: 'files',
+          headers: { Authorization: 'Bearer ' + token },
+          params: { fileId: this.selectedFile.id }
+        })
+          .then((res) => {
+            console.log('$$', res);
+            if (res.status == 200) {
+              this.$vs.loading.close()
+              this.getDocumentsByID()
+              this.$vs.notify({
+                title: 'Sucess',
+                text: res.data.successCode,
+                color: 'success'
+              })
+            } else {
+              this.$vs.notify({
+                title: 'Error',
+                text: 'Folder Delete Fail ..!!',
+                iconPack: 'feather',
+                icon: 'icon-alert-circle',
+                color: 'danger'
+              })
+            }
           })
-          .catch((err) => {
-            console.log('Error =>', err)
+          .catch((error) => {
+            console.log('$$', error.response.data.errorMsg);
+            this.$vs.loading.close()
+            this.$vs.notify({
+              title: 'Error',
+              text: error.response.data.errorMsg,
+              iconPack: 'feather',
+              icon: 'icon-alert-circle',
+              color: 'danger'
+            })
           })
       }
     },
@@ -1236,7 +1437,7 @@ export default {
       this.isRename = true
       this.folderName = this.selectedFile.text
     },
-    OnhilightsData(id){
+    OnhilightsData (id) {
       this.isInbox_Outbox = true
       let url = ''
       if (id == 1) {
@@ -1249,37 +1450,38 @@ export default {
         method: 'get',
         url: url,
         headers: { Authorization: 'Bearer ' + token },
-      }). then( res => {
+      }).then(res => {
         console.log(res);
         this.subFilesdata = res.data.data
         // this.hilightsData[id].count = res.data.count
         this.onNext()
       })
     },
-    getInboxCount(){
+    getInboxCount () {
       const token = localStorage.getItem('accessToken')
       return axios({
         method: 'get',
         url: 'folders/system/inbox',
         headers: { Authorization: 'Bearer ' + token },
-      }). then( res => {
+      }).then(res => {
         console.log(res);
         this.hilightsData[0].count = res.data.count
       })
     },
-    getOutboxCount(){
+    getOutboxCount () {
       const token = localStorage.getItem('accessToken')
       return axios({
         method: 'get',
         url: 'folders/system/outbox',
         headers: { Authorization: 'Bearer ' + token },
-      }). then( res => {
+      }).then(res => {
         console.log(res);
         this.hilightsData[1].count = res.data.count
       })
     },
     onSearch () {
       // this.isLoading
+      if(this.search != ''){
       const dataparam = {
         id: this.current_parentID,
         value: this.search
@@ -1292,9 +1494,12 @@ export default {
         params: { name: this.search, parentId: this.current_parentID }
       })
         .then(res => {
-        this.subFilesdata = res.data
-        this.onNext()
-      })
+          this.subFilesdata = res.data
+          this.onNext()
+        })
+      } else {
+        this.getDocumentsByID()
+      }
     },
   },
   components: {

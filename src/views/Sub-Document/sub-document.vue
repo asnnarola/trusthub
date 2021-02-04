@@ -1150,7 +1150,7 @@ export default {
       CurrentDate: new Date().toISOString(),
       id: this.$route.params.id,
       signaturePad: SignaturePad,
-      BaseUrl: 'http://beta.trusthub.cloud:8080',
+      BaseUrl: 'https://beta.trusthub.cloud:8080',
       // BaseUrl: 'http://192.168.1.243:8081',
       activeFile : JSON.parse(localStorage.getItem('activefile')),
       FileUrl: '',

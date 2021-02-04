@@ -464,9 +464,17 @@ export default {
           }
         }
       })
+    } else if (this.$router.currentRoute.query.error) {
+      console.log('===>>>', this.$router.currentRoute.query.error);
+      this.$vs.notify({
+        title: 'Error',
+        text: this.$router.currentRoute.query.error,
+        iconPack: 'feather',
+        icon: 'icon-alert-circle',
+        color: 'danger'
+      })
+      this.$router.push('/dashboard').catch(() => { })
     } else {
-
-
       this.$i18n.locale = localStorage.getItem('currentLanguage')
       const token = localStorage.getItem('accessToken')
       if (token) {

@@ -676,7 +676,8 @@ export default {
 
     onTwitter () {
       console.log('Twitter call...');
-      window.open("http://beta.trusthub.cloud:8080/auth/social/twitter")
+      window.open("https://beta.trusthub.cloud:8080/auth/social/twitter")
+      // window.open("http://192.168.1.243:8081//auth/social/twitter")
       // axios
       //   .get('auth/social/twitter')
       //   .then(res => {

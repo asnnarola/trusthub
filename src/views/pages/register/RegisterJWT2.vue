@@ -1,11 +1,13 @@
 <template>
   <div class="tab-wrapper-form">
     <div class="activation-detail mt-4 mb-4 p-3 text-right">
+      <vx-tooltip class="text-right" :text="userDetails.name" position="bottom">
       <p class="fw-500">
         <small>
           <i>{{ $t("Name") }}: {{ userDetails.name }}</i>
         </small>
       </p>
+      </vx-tooltip>
       <p class="f-15">
         <i>
           <b class="txt-dark-gray">{{ $t("UserId") }}: </b>

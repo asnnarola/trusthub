@@ -108,30 +108,30 @@ export default {
       }
     })
   },
-  createFolder (name, path, parentId) {
-    const token = localStorage.getItem('accessToken')
-    return axios.post('folders', { name: name, path: path, parentId:parentId }, {
-      headers: {
-        Authorization: 'Bearer ' + token
-      }
-    })
-  },
-  renameFolder (newName, id) {
-    const token = localStorage.getItem('accessToken')
-    return axios.put('folders/rename', { newName: newName, id: id}, {
-      headers: {
-        Authorization: 'Bearer ' + token
-      }
-    })
-  },
-  renameFile (newName, id) {
-    const token = localStorage.getItem('accessToken')
-    return axios.put('files/rename-file', { newName: newName, id: id}, {
-      headers: {
-        Authorization: 'Bearer ' + token
-      }
-    })
-  },
+  // createFolder (name, path, parentId) {
+  //   const token = localStorage.getItem('accessToken')
+  //   return axios.post('folders', { name: name, path: path, parentId:parentId }, {
+  //     headers: {
+  //       Authorization: 'Bearer ' + token
+  //     }
+  //   })
+  // },
+  // renameFolder (newName, id) {
+  //   const token = localStorage.getItem('accessToken')
+  //   return axios.put('folders/rename', { newName: newName, id: id}, {
+  //     headers: {
+  //       Authorization: 'Bearer ' + token
+  //     }
+  //   })
+  // },
+  // renameFile (newName, id) {
+  //   const token = localStorage.getItem('accessToken')
+  //   return axios.put('files/rename-file', { newName: newName, id: id}, {
+  //     headers: {
+  //       Authorization: 'Bearer ' + token
+  //     }
+  //   })
+  // },
   deleteFolder (id) {
     const token = localStorage.getItem('accessToken')
     return axios.delete('folders/' + id, {
@@ -141,20 +141,20 @@ export default {
     })
   },
 
-  deleteFile (id) {
-    const token = localStorage.getItem('accessToken')
-    // return axios.delete('files', {
-    //   headers: {
-    //     Authorization: 'Bearer ' + token
-    //   }
-    // })
-    return axios({
-      method: 'delete',
-      url: 'files',
-      headers: {Authorization: 'Bearer ' + token},
-      params:{ fileId: id}
-    })
-  },
+  // deleteFile (id) {
+  //   const token = localStorage.getItem('accessToken')
+  //   // return axios.delete('files', {
+  //   //   headers: {
+  //   //     Authorization: 'Bearer ' + token
+  //   //   }
+  //   // })
+  //   return axios({
+  //     method: 'delete',
+  //     url: 'files',
+  //     headers: {Authorization: 'Bearer ' + token},
+  //     params:{ fileId: id}
+  //   })
+  // },
   downloadFile (id) {
     const token = localStorage.getItem('accessToken')
     return axios({
